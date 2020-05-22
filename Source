@@ -151,7 +151,7 @@ if not writefile then
 	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher (buggy), SirHurt","Free: KRNL (buggy)","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
-loadstring(game:HttpGet("https://github.com/CMD-X/CMD-X/blob/master/Version",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	repeat wait() until RunDude == true
