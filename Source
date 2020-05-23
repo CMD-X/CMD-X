@@ -5,7 +5,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("Players").LocalPlayer.Character
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.1.9"
+local ver = "1.2.0"
 local nextupd = "15/05/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
