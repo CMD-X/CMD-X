@@ -3437,7 +3437,7 @@ end
 Clip = true
 function noclip()
 	Clip = false
-	local function NoclipLoop()
+	function NoclipLoop()
 		if Clip == false and cmdlp.Character ~= nil then
 			for _, child in pairs(cmdlp.Character:GetDescendants()) do
 				if child:IsA("BasePart") and child.CanCollide == true then
@@ -6806,13 +6806,18 @@ function useCommand.unwalkto()
 	walkto = false
 end
 
+YesGo = false
 function useCommand.refresh()
 	opx("-","Character respawning")
 	if Noclipping then
 		Noclipping:Disconnect()
-		Clip = false
+		YesGo = true
 	end
 	refresh()
+	if YesGo == true then
+	    noclip()
+	    YesGo = false
+	end
 	opx("-","Character respawned")
 end
 
