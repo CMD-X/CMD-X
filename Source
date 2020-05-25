@@ -3526,9 +3526,6 @@ function alignFunctions(getArgs)
 	local cmduis = game:GetService("UserInputService")
 	local cmdteams = game:GetService("Teams")
 	local cmdlp = cmdp.LocalPlayer
-	local cmdc = cmdlp.Character
-	local cmdh = cmdc.Humanoid
-	local cmdhrp = cmdc.HumanoidRootPart
 	local cmdm = cmdlp:GetMouse()
 	arguments = getArgs:split(" ")
 	function getstring(begin)
