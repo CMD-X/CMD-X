@@ -5,7 +5,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("Players").LocalPlayer.Character
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.2.0"
+local ver = "1.2.1"
 local nextupd = "15/05/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -2771,7 +2771,7 @@ CMDN[#CMDN+1] = {N = "removegears", A = {"rgears","removetools","rtools"}, CMD =
 CMDN[#CMDN+1] = {N = "unclicktp", A = {"unctrltp"}, CMD = "308,unclicktp/unctrltp,,()"}
 CMDN[#CMDN+1] = {N = "unswimwalk", A = {"unswim"}, CMD = "309,unswim/unswimwalk,,()"}
 CMDN[#CMDN+1] = {N = "unlagchat", A = {""}, CMD = "310,unlagchat,,()"}
-CMDN[#CMDN+1] = {N = "rocket", A = {""}, CMD = "311,rocket,,Holds the robux rocket launcher or any kind of sniper etc on your back."}
+CMDN[#CMDN+1] = {N = "--", A = {""}, CMD = "311,--,,"}
 CMDN[#CMDN+1] = {N = "clip", A = {"c"}, CMD = "312,clip/c,,()noclip"}
 CMDN[#CMDN+1] = {N = "orbit", A = {"orb"}, CMD = "313,orbit/orb,(plr),Orbits a player.", ARG = "Player"}
 CMDN[#CMDN+1] = {N = "closeorbit", A = {"corb"}, CMD = "314,closeorbit/corb,(plr),Close orbits a player.", ARG = "Player"}
@@ -2804,7 +2804,7 @@ CMDN[#CMDN+1] = {N = "unclientfreeze", A = {"uncfreeze"}, CMD = "338,unclientfre
 CMDN[#CMDN+1] = {N = "respawndead", A = {"redead"}, CMD = "339,respawndead/redead,,Refreshes your character when death occurs."}
 CMDN[#CMDN+1] = {N = "unrespawndead", A = {"unredead"}, CMD = "340,unrespawndead/unredead,,()"}
 CMDN[#CMDN+1] = {N = "god", A = {""}, CMD = "341,god,,Gods your character (wont work on games that use :LoadCharacter())."}
-CMDN[#CMDN+1] = {N = "sniper", A = {""}, CMD = "342,sniper,,Sniper rifle HAT NEEDED: https://www.roblox.com/catalog/4771672981/"}
+CMDN[#CMDN+1] = {N = "-", A = {""}, CMD = "342,-,,"}
 CMDN[#CMDN+1] = {N = "statistics", A = {""}, CMD = "343,statistics,,Shows your most used commands."}
 CMDN[#CMDN+1] = {N = "bluewarn", A = {""}, CMD = "344,bluewarn,(str),Sends a warning to F9 in blue."}
 CMDN[#CMDN+1] = {N = "grabip", A = {"ip"}, CMD = "345,grabip/ip,(plr),Grabs a fake IP designed to scare the player (RANDOM).", ARG = "Player"}
@@ -4166,7 +4166,7 @@ function useCommand.gravity()
 end
 
 function useCommand.defaultgravity()
-	workspace.Gravity = saveGrav
+	workspace.Gravity = 194
 	opx("-","Hipheight set to default ("..saveGrav..")")
 end
 
@@ -9746,8 +9746,6 @@ end
 
 function useCommand.streamermode()
 	opx("-","Streamer Mode enabled")
-	game:GetService("CoreGui").RobloxGui.TopBarContainer.NameHealthContainer.Username.Text = ""
-	game:GetService("CoreGui").RobloxGui.TopBarContainer.NameHealthContainer.AccountType.Text = ""
 	for i,v in pairs(cmdp:GetChildren()) do
 		if v.Name ~= cmdlp.Name and v.Character and v.Character:FindFirstChild("Head") then 
 			local char = v.Character
@@ -9803,15 +9801,15 @@ function useCommand.streamermode()
 			fr.TextLabel.TextButton.Text = ""
 		end
 	end)
-	local Players = game:GetService("CoreGui").RobloxGui.PlayerListMaster:WaitForChild("OffsetFrame").PlayerScrollList.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame
-	for i,fr in pairs(Players:GetChildren()) do
-		if fr:IsA("Frame") then
-			fr.ChildrenFrame.NameFrame.BGFrame.OverlayFrame.PlayerName.PlayerName.Text = ""
+	local Players = game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame
+	for i,fr in pairs(Players:GetDescendants()) do
+		if fr:IsA("TextLabel") then
+			fr.Text = ""
 		end
 	end
-	Players.ChildAdded:Connect(function(fr)
-		if fr:IsA("Frame") then
-			fr.ChildrenFrame.NameFrame.BGFrame.OverlayFrame.PlayerName.PlayerName.Text = ""
+	Players.DescendantAdded:Connect(function(fr)
+		if fr:IsA("TextLabel") then
+			fr.Text = ""
 		end
 	end)
 end
@@ -13202,7 +13200,8 @@ if #enterCMD > 0 then
 	for i = 1,#enterCMD do
 		wait()
 		cmd:CaptureFocus()
-		local cmdsy = findCmd(enterCMD[i].N)
+	    arguments = enterCMD[i].N:split(" ")
+		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nil then
 			pcall(function()
 				useCommand[cmdsy]()
