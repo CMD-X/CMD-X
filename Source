@@ -4,8 +4,8 @@ repeat wait() until game:GetService("Players").LocalPlayer
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("Players").LocalPlayer.Character
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
--- Constraints: -----------------------|
-local ver = "1.2.1"
+-- Constraints: -----------------------|	
+local ver = "1.2.2"
 local nextupd = "15/05/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -28,7 +28,7 @@ for i,GUI in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendan
 end
 
 if game:GetService("UserInputService").VREnabled then
-    getParent = game:GetService("Players").LocalPlayer.PlayerGui
+	getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
 
 Unnamed = Instance.new("ScreenGui")
@@ -136,7 +136,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {[838753790.5] = true, [983858851.7] = true,[4238827073.2] = true, [303591427.1] = true}
+checkArg = {[838753790.5] = "RDite3", [983858851.7] = true,[4238827073.2] = true, [303591427.1] = true}
 --pcall(function()
 --Stand(LoadingPhrase[math.random(1,#LoadingPhrase)],"Please wait...","","","","Run Anyway",false)
 --repeat wait() until game:IsLoaded()
@@ -181,20 +181,31 @@ local Mouses = cmdlp:GetMouse()
 local dp = cmdlp
 cmdm = Mouses
 -- we dont have this many owners just alts
-local Devs = {
-	["pigeoncult"] = "Owner",
-	["Curvn"] = "Dev",
+local Devs = {	
 	["progamer421minus1"] = "Owner",
-	["hockeyred88"] = "Owner",
-	["U0ZT"] = "Dev",
-	["Luyler"] = "Dev",
-	["Himillumine"] = "Dev",
 	["octoberboy68plus1"] = "Owner",
-	["CMD_X"] = "Owner",
-	["pkmnmaster3"] = "Owner",
-	["commando3"] = "Owner",
+	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
-	["coryhofmann"] = "Dev",	
+	["commando3"] = "Owner",
+	["CMD_X"] = "Owner",
+	["Himillumine"] = "Dev",
+	["Luyler"] = "Dev",
+	["Curvn"] = "Dev",
+}	
+local Donors = {	
+	["Zuhqu"] = "Donor",	
+	["Fxalling_Love"] = "Donor",	
+	["onvoltz"] = "Donor",	
+	["skrask"] = "Donor",	
+	["teejay6x"] = "Donor",	
+	["0ccoy"] = "Donor",	
+	["OFFTheBatter"] = "Donor",	
+	["goresyard"] = "Donor",	
+	["DisturbedCult"] = "Donor",	
+	["Schewpid"] = "Donor",	
+	["snoozay"] = "Donor",	
+	["LtsDank"] = "Donor",	
+	["HyperLink3"] = "Donor"	
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
@@ -6812,8 +6823,8 @@ function useCommand.refresh()
 	end
 	refresh()
 	if YesGo == true then
-	    noclip()
-	    YesGo = false
+		noclip()
+		YesGo = false
 	end
 	opx("-","Character respawned")
 end
@@ -10704,21 +10715,27 @@ function useCommand.unclicktp()
 	clicktps = false
 end
 
-function useCommand.scriptusers()
-	opx("-","Showing players using CMD-X")
-	local usageof = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
-		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
-			if Devs[v.Name] == "Dev" then
-				usageof = usageof.."[DEV]"..v.Name.."\n"
-			elseif Devs[v.Name] == "Owner" then
-				usageof = usageof.."[OWNER]"..v.Name.."\n"
-			else
-				usageof = usageof.."[USER]"..v.Name.."\n"
-			end
-		end
-	end
-	opxL("Currently Using",usageof)
+function useCommand.scriptusers()	
+	opx("-","Showing players using CMD-X")	
+	local usageof = ""	
+	for i,v in pairs(cmdp:GetPlayers()) do	
+		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then	
+			if Devs[v.Name] == "Dev" then	
+				usageof = usageof.."[DEV]"..v.Name.."\n"	
+			elseif Devs[v.Name] == "Owner" then	
+				usageof = usageof.."[OWNER]"..v.Name.."\n"	
+			elseif Donors[v.Name] then	
+				if Donors[v.Name] == "Donor" then	
+					usageof = usageof.."[DONOR]"..v.Name.."\n"	
+				else	
+					usageof = usageof.."[TOP 5]"..v.Name.."\n"	
+				end	
+			else	
+				usageof = usageof.."[USER]"..v.Name.."\n"	
+			end	
+		end	
+	end	
+	opxL("Currently Using",usageof)	
 end
 
 function useCommand.mentions()
@@ -10735,18 +10752,34 @@ function useCommand.mentions()
 	end
 end
 
-cmdp.PlayerAdded:connect(function(plr)
-	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
-		msg = plr.OsPlatform
-		v = plr
-		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then
-			msg = msg:sub(1,#msg-6)
-			CreateSCLabel(plr.Name,msg)
-			if string.match(msg,cmdlp.Name) and mentions == true then
-				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
-			end
-		end
-	end)
+cmdp.PlayerAdded:connect(function(plr)	
+	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
+		msg = plr.OsPlatform	
+		v = plr	
+		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then	
+			msg = msg:sub(1,#msg-6)	
+			if Devs[plr.Name] then	
+				local z = Devs[plr.Name]	
+				if z == "Dev" then	
+					CreateSCLabel("DEV",plr.Name,msg)	
+				elseif z == "Owner" then	
+					CreateSCLabel("OWNER",plr.Name,msg)	
+				end	
+			elseif Donors[plr.Name] then	
+				local z = Donors[plr.Name]	
+				if z == "Donor" then	
+					CreateSCLabel("$",plr.Name,msg)	
+				else	
+					CreateSCLabel("$$$",plr.Name,msg)	
+				end	
+			else	
+				CreateSCLabel("USER",plr.Name,msg)	
+			end	
+			if string.match(msg,cmdlp.Name) and mentions == true then	
+				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")	
+			end	
+		end	
+	end)	
 end)
 for i,v in pairs(cmdp:GetPlayers()) do
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
@@ -10765,19 +10798,34 @@ function useCommand.schatbp()
 	opx("*","No longer used")
 end
 
-cmdp.PlayerAdded:connect(function(plr)
-	plr.Chatted:connect(function(msg)
-		if msg:sub(1,3) == "/w " and wLogs == true then
-			CreateLabel(plr.Name,msg)
-		end
-	end)
-end)
-for i,v in pairs(cmdp:GetPlayers()) do
-	v.Chatted:connect(function(msg)
-		if msg:sub(1,3) == "/w " and wLogs == true then
-			CreateLabel(v.Name,msg)
-		end
-	end)
+for i,v in pairs(cmdp:GetPlayers()) do	
+	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
+		msg = v.OsPlatform	
+		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then	
+			msg = msg:sub(1,#msg-6)	
+			local plr = v	
+			if Devs[plr.Name] then	
+				local z = Devs[plr.Name]	
+				if z == "Dev" then	
+					CreateSCLabel("DEV",plr.Name,msg)	
+				elseif z == "Owner" then	
+					CreateSCLabel("OWNER",plr.Name,msg)	
+				end	
+			elseif Donors[plr.Name] then	
+				local z = Donors[plr.Name]	
+				if z == "Donor" then	
+					CreateSCLabel("$",plr.Name,msg)	
+				else	
+					CreateSCLabel("$$$",plr.Name,msg)	
+				end	
+			else	
+				CreateSCLabel("USER",plr.Name,msg)	
+			end	
+			if string.match(msg,cmdlp.Name) and mentions == true then	
+				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")	
+			end	
+		end	
+	end)	
 end
 
 function useCommand.whisperlogs()
@@ -11826,36 +11874,35 @@ function useCommand.randomos()
     cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
 end
 
-function useCommand.depth()
-    DynamicDepth:Enable()
-    if arguments[2] then
-        opx("-","Set DepthOfField to "..arguments[2])
-        DynamicDepth:SetFocusRadius(arguments[2])
-    else
-        opx("-","Set DepthOfField to 15")
-        DynamicDepth:SetFocusRadius(15)
-    end
+function useCommand.depth()	
+	DynamicDepth:Enable()	
+	if arguments[2] then	
+		opx("-","Set DepthOfField to "..arguments[2])	
+		DynamicDepth:SetFocusRadius(arguments[2])	
+	else	
+		opx("-","Set DepthOfField to 15")	
+		DynamicDepth:SetFocusRadius(15)	
+	end	
+end	
+	
+function useCommand.undepth()	
+	opx("-","Disabled DepthOfField")	
+	DynamicDepth:SetFocusRadius(10000)	
+end	
+	
+function useCommand.cinematic()	
+	game:GetService("CoreGui").TopBar.Enabled = false	
+	game:GetService("CoreGui").RobloxGui.Backpack.Visible = false	
+	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = false	
+	opx("-","Enabled cinematic mode")	
+end	
+		
+function useCommand.uncinematic()	
+	game:GetService("CoreGui").TopBar.Enabled = true	
+	game:GetService("CoreGui").RobloxGui.Backpack.Visible = true	
+	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = true	
+	opx("-","Disabled cinematic mode")	
 end
-
-function useCommand.undepth()
-    opx("-","Disabled DepthOfField")
-    DynamicDepth:SetFocusRadius(10000)
-end
-
-function useCommand.cinematic()
-    game:GetService("CoreGui").TopBar.Enabled = false
-    game:GetService("CoreGui").RobloxGui.Backpack.Visible = false
-    game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = false
-    opx("-","Enabled cinematic mode")
-end
-
-function useCommand.uncinematic()
-    game:GetService("CoreGui").TopBar.Enabled = true
-    game:GetService("CoreGui").RobloxGui.Backpack.Visible = true
-    game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = true
-    opx("-","Disabled cinematic mode")
-end
-
 -- freecam by roblox ty roblox lol
 pi    = math.pi
 abs   = math.abs
@@ -12228,7 +12275,7 @@ function StopFreecam()
 	Input.StopCapture()
 	RunService:UnbindFromRenderStep("Freecam")
 	PlayerState.Pop()
-	workspace.Camera.FieldOfView = 70	
+	workspace.Camera.FieldOfView = 70
 end
 
 function useCommand.freecam()
@@ -12826,191 +12873,226 @@ function useCommand.unretard()
 	opx("-","Stopped being a retard")
 end
 
-function useCommand.animationsteal()
-    if arguments[2] then
-        if cmd15(cmdlp) then
-            local target = findplr(arguments[2])
-            if target then
-                if cmd15(target) then
-                    if target.Character:FindFirstChild("Animate") then
-                        if game.Players.LocalPlayer.Character:FindFirstChild("Animate") then
-                            checkifmyanim = game.Players.LocalPlayer.Character:FindFirstChild("animstorage")
-                            if checkifmyanim then
-                                local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")
-                                if z then z:Destroy() end
-                                checkifmyanim.Name = "Animate"
-                                checkifmyanim.Disabled = false
-                            end
-                        end
-                        local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")
-                        if z then
-                            z.Name = "animstorage"
-                            z.Disabled = true
-                        end
-                
-                        local newanim = target.Character.Animate:Clone()
-                        newanim.Parent = game.Players.LocalPlayer.Character
-                        newanim.Name = "Animate"
-                        opx("-","Stole "..target.Name.."'s animations")
-                    else
-                        opx("*","Target is missing proper animations.")
-                    end
-                else
-            		opx("*","Player is not R15!")
-                end
-            else
-                opx("*","Player does not exist!")
-            end
-        else
-            opx("*","R15 required!")
-        end
-	else
-		opx("*","2 arguments are required!")
-    end
-end
+function useCommand.animationsteal()	
+	if arguments[2] then	
+		if cmd15(cmdlp) then	
+			local target = findplr(arguments[2])	
+			if target then	
+				if cmd15(target) then	
+					if target.Character:FindFirstChild("Animate") then	
+						if game.Players.LocalPlayer.Character:FindFirstChild("Animate") then	
+							checkifmyanim = game.Players.LocalPlayer.Character:FindFirstChild("animstorage")	
+							if checkifmyanim then	
+								local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")	
+								if z then z:Destroy() end	
+								checkifmyanim.Name = "Animate"	
+								checkifmyanim.Disabled = false	
+							end	
+						end	
+						local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")	
+						if z then	
+							z.Name = "animstorage"	
+							z.Disabled = true	
+						end	
+					
+						local newanim = target.Character.Animate:Clone()	
+						newanim.Parent = game.Players.LocalPlayer.Character	
+						newanim.Name = "Animate"	
+						opx("-","Stole "..target.Name.."'s animations")	
+					else	
+						opx("*","Target is missing proper animations.")	
+					end	
+				else	
+					opx("*","Player is not R15!")	
+				end	
+			else	
+				opx("*","Player does not exist!")	
+			end	
+		else	
+			opx("*","R15 required!")	
+		end	
+	else	
+		opx("*","2 arguments are required!")	
+	end	
+end	
 
-function useCommand.unanimationsteal()
-    if cmd15(cmdlp) then
-        if cmdlp.Character:FindFirstChild("animstorage") then
-            if cmdlp.Character:FindFirstChild("Animate") then
-                cmdlp.Character:FindFirstChild("Animate"):Destroy()
-            end
-            local as = cmdlp.Character:FindFirstChild("animstorage")
-            as.Name = "Animate"
-            as.Disabled = false
-            opx("-","Animations reverted to normal.")
-        else
-            opx("*","Animations haven't been stolen!")
-        end
-    else
-        opx("*","R15 required!")
-    end
-end
+function useCommand.unanimationsteal()	
+	if cmd15(cmdlp) then	
+		if cmdlp.Character:FindFirstChild("animstorage") then	
+			if cmdlp.Character:FindFirstChild("Animate") then	
+				cmdlp.Character:FindFirstChild("Animate"):Destroy()	
+			end	
+			local as = cmdlp.Character:FindFirstChild("animstorage")	
+			as.Name = "Animate"	
+			as.Disabled = false	
+			opx("-","Animations reverted to normal.")	
+		else	
+			opx("*","Animations haven't been stolen!")	
+		end	
+	else	
+		opx("*","R15 required!")	
+	end	
+end	
+		
+function useCommand.nohurtoverlay()	
+	opx("-","Turned off hurt overlay")	
+	hurtOverlay = true	
+	game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay:GetPropertyChangedSignal("Visible"):Connect(function()	
+		if hurtOverlay == true then	
+			game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay.Visible = false	
+		end	
+	end)	
+end	
 
-function useCommand.nohurtoverlay()
-    opx("-","Turned off hurt overlay")
-    hurtOverlay = true
-    game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay:GetPropertyChangedSignal("Visible"):Connect(function()
-        if hurtOverlay == true then
-            game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay.Visible = false
-        end
-    end)
-end
+function useCommand.yeshurtoverlay()	
+	opx("-","Turned on hurt overlay")	
+	hurtOverlay = false	
+end	
 
-function useCommand.yeshurtoverlay()
-    opx("-","Turned on hurt overlay")
-    hurtOverlay = false
-end
+function useCommand.atmosphere()	
+	if arguments[2] then	
+		opx("-","Set Atmosphere to "..arguments[2])	
+		local atmsky = Instance.new("Sky",cmdl)	
+		local atm = Instance.new("Atmosphere",cmdl)	
+		atm.Density = arguments[2]	
+	else	
+		opx("-","Set Atmosphere to 1")	
+		local atmsky = Instance.new("Sky",cmdl)	
+		local atm = Instance.new("Atmosphere",cmdl)	
+		atm.Density = 1	
+	end	
+end	
+	
+function useCommand.unatmosphere()	
+	opx("-","Removed atmosphere")	
+	local atm = cmdl.Atmosphere	
+	atm:Destroy()	
+end	
+	
+function useCommand.removefx()	
+	opx("-","Removed FX")	
+	for i,v in pairs(cmdl:GetDescendants()) do	
+		if v:IsA("Atmosphere") or v:IsA("SunRaysEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") then	
+			v:Destroy()	
+		end	
+	end	
+end	
 
-function useCommand.atmosphere()
-	if arguments[2] then
-		opx("-","Set Atmosphere to "..arguments[2])
-		local atmsky = Instance.new("Sky",cmdl)
-		local atm = Instance.new("Atmosphere",cmdl)
-		atm.Density = arguments[2]
-    else
-        opx("-","Set Atmosphere to 1")
-		local atmsky = Instance.new("Sky",cmdl)
-		local atm = Instance.new("Atmosphere",cmdl)
-		atm.Density = 1
-	end
-end
-
-function useCommand.unatmosphere()
-	opx("-","Removed atmosphere")
-	local atm = cmdl.Atmosphere
-	atm:Destroy()
-end
-
-function useCommand.removefx()
-    opx("-","Removed FX")
-    for i,v in pairs(cmdl:GetDescendants()) do
-        if v:IsA("Atmosphere") or v:IsA("SunRaysEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") then
-            v:Destroy()
-        end
-    end
-end
-
-Chaos = false
-function useCommand.chaos()
-    Chaos = true
-    opx("-","Chaos mode is now on")
-    repeat
-        for i = 1,30 do
-            local New = math.random(1, #CMDN)
-            if CMDN[New].N ~= "exit" and CMDN[New].N ~= "rejoin" and CMDN[New].N ~= "rejoindiff" then
-                if CMDN[New].N:sub(1,2) ~= "un" and CMDN[New].N:sub(1,3) ~= "yes" then
-                    arguments = CMDN[New].N:split(" ")
-                    useCommand[CMDN[New].N]()
-                    wait(5)
-                    for i,v in pairs(CMDN) do
-                        if CMDN[i].N == "un"..CMDN[New].N or CMDN[i].N == "yes"..CMDN[New].N then
-                            useCommand[CMDN[i].N]()
-                        end
-                    end
-                    break
-                end
-            end
-        end
-    until Chaos == false
-end
-
-function useCommand.unchaos()
-    opx("-","Chaos mode is now off")
-    Chaos = false
-end
-
-function useCommand.gotofreecam()
-    opx("-","Teleported to freecam")
-    cmdlp.Character.HumanoidRootPart.CFrame = workspace.Camera.CFrame
-end
-
-function useCommand.compilecommand()
-    local argSplit = arguments[2]:split("/")
-    local xCMD = 'CMDN[#CMDN+1] = {N = '
-    xCMD = xCMD..'"'..argSplit[1]..'", A = {'
-    if argSplit[2] == "nil" then 
-        xCMD = xCMD..'""}, CMD = "' 
-    else 
-        table.remove(argSplit,1)
-        for i,v in pairs(argSplit) do
-            if i ~= #argSplit then
-                xCMD = xCMD..'"'..argSplit[i]..'",'
-            else
-                xCMD = xCMD..'"'..argSplit[i]..'"}, CMD = "'
-            end
-        end
-    end
-    local argSplit2 = arguments[2]:split("/")
-    if argSplit2[2] == "nil" then table.remove(argSplit2,2) end
-    xCMD = xCMD..currentCMDNUM+1 ..','
-    for i,v in pairs(argSplit2) do
-        if i ~= #argSplit2 then
-            xCMD = xCMD..argSplit2[i]..'/'
-        else
-            xCMD = xCMD..argSplit2[i]..','
-        end
-    end
-    xCMD = xCMD..'('..arguments[3]..'),'
-    xCMD = xCMD..getstring(4)..'"}'
-    setclipboard(xCMD)
-    opx("-","Compiled command to your clipboard.")
-end
-
-function useCommand.newaudios()
-    local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")
-    if not arguments[2] then arguments[2] = "10" end
-    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..arguments[2]))
-    xIds = ""
-    for i,v in pairs(Http) do
-        xIds = xIds..v.AssetId.."\n"
-    end
-    opxL("Newest-IDs",xIds)
-    opx("Listed new audios")
-end
-
-user.Changed:connect(function()
-	user.Text = user.Text:sub(1,13)..">"
+Chaos = false	
+function useCommand.chaos()	
+	Chaos = true	
+	opx("-","Chaos mode is now on")	
+	repeat	
+		for i = 1,30 do	
+			local New = math.random(1, #CMDN)	
+			if CMDN[New].N ~= "exit" and CMDN[New].N ~= "rejoin" and CMDN[New].N ~= "rejoindiff" then	
+				if CMDN[New].N:sub(1,2) ~= "un" and CMDN[New].N:sub(1,3) ~= "yes" then	
+					arguments = CMDN[New].N:split(" ")	
+					useCommand[CMDN[New].N]()	
+					wait(5)	
+					for i,v in pairs(CMDN) do	
+						if CMDN[i].N == "un"..CMDN[New].N or CMDN[i].N == "yes"..CMDN[New].N then	
+							useCommand[CMDN[i].N]()	
+						end	
+					end	
+					break	
+				end	
+			end	
+		end	
+	until Chaos == false	
+end			
+function useCommand.unchaos()	
+	opx("-","Chaos mode is now off")	
+	Chaos = false	
+end	
+	
+function useCommand.gotofreecam()	
+	opx("-","Teleported to freecam")	
+	cmdlp.Character.HumanoidRootPart.CFrame = workspace.Camera.CFrame	
+end	
+	
+function useCommand.compilecommand()	
+	local argSplit = arguments[2]:split("/")	
+	local xCMD = 'CMDN[#CMDN+1] = {N = '	
+	xCMD = xCMD..'"'..argSplit[1]..'", A = {'	
+	if argSplit[2] == "nil" then 	
+		xCMD = xCMD..'""}, CMD = "' 	
+	else 	
+		table.remove(argSplit,1)	
+		for i,v in pairs(argSplit) do	
+			if i ~= #argSplit then	
+				xCMD = xCMD..'"'..argSplit[i]..'",'	
+			else	
+				xCMD = xCMD..'"'..argSplit[i]..'"}, CMD = "'	
+			end	
+		end	
+	end	
+	local argSplit2 = arguments[2]:split("/")	
+	if argSplit2[2] == "nil" then table.remove(argSplit2,2) end	
+	xCMD = xCMD..currentCMDNUM+1 ..','	
+	for i,v in pairs(argSplit2) do	
+		if i ~= #argSplit2 then	
+			xCMD = xCMD..argSplit2[i]..'/'	
+		else	
+			xCMD = xCMD..argSplit2[i]..','	
+		end	
+	end	
+	xCMD = xCMD..'('..arguments[3]..'),'	
+	xCMD = xCMD..getstring(4)..'"}'	
+	setclipboard(xCMD)	
+	opx("-","Compiled command to your clipboard.")	
+end	
+	
+function useCommand.newaudios()	
+	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")	
+	if not arguments[2] then arguments[2] = "10" end	
+	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..arguments[2]))	
+	xIds = ""	
+	for i,v in pairs(Http) do	
+		xIds = xIds..v.AssetId.."\n"	
+	end	
+	opxL("Newest-IDs",xIds)	
+	opx("Listed new audios")	
+end	
+	
+function useCommand.antifling()	
+	if antifling == nil then 	
+		antifling = true	
+	else	
+		antifling = not antifling	
+	end	
+	local function Collisionless(person)	
+		if antifling == true and person.Character then	
+			for _,child in pairs(person.Character:GetDescendants()) do	
+				if child:IsA("BasePart") and child.CanCollide == true then	
+					child.CanCollide = false	
+				end	
+			end	
+		end	
+	end	
+	for _,v in pairs(game:GetService("Players"):GetPlayers()) do	
+		if v ~= cmdlp then	
+			local antifling = game:GetService('RunService').Stepped:connect(function()	
+				Collisionless(v)	
+			end)	
+		end	
+	end	
+	game.Players.PlayerAdded:Connect(function()	
+		if v ~= cmdlp and antifling then	
+			local antifling = game:GetService('RunService').Stepped:connect(function()	
+				Collisionless(v)	
+			end)	
+		end	
+	end)	
+	if antifling == true then	
+		opx("-","Antifling enabled.")	
+	else	
+		opx("-","Antifling disabled.")	
+	end	
+end	
+	
+user.Changed:connect(function()	
+	user.Text = user.Text:sub(1,13)..">"	
 end)
 ---------------------------------------|
 -- GUI Hotkeys: -----------------------|
@@ -13160,29 +13242,29 @@ end)
 ---------------------------------------|
 -- Print Function: --------------------|
 print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..prefix)
-print("\
-		  _____                    _____                    _____                                  \
-		 /\\    \\                  /\\    \\                  /\\    \\                 ______          \
-		/::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
-	   /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
-	  /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
-	 /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
-	/:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
-   /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
-  /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
- /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
-/:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
-\\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
- \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
-  \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
-   \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
-	\\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
-	 \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
-	  \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
-	   \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
-		\\::/    /                \\::/    /                \\__/____/               |::|___|         \
-		 \\/____/                  \\/____/                                          ~~              ")
-print("made by pigeon#1818 & hz#4777")
+print("\	
+	          _____                    _____                    _____                                  \	
+	         /\\    \\                  /\\    \\                  /\\    \\                 ______          \	
+	        /::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \	
+	       /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \	
+	      /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \	
+	     /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \	
+	    /:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \	
+	   /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \	
+	  /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \	
+	 /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \	
+	/:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\	
+	\\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\	
+	 \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \	
+	  \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \	
+	   \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \	
+	    \\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \	
+	     \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \	
+	      \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \	
+	       \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \	
+	        \\::/    /                \\::/    /                \\__/____/               |::|___|         \	
+	         \\/____/                  \\/____/                                          ~~              ")	
+	print("made by pigeon#1818 & hz#4777")
 print("\
 Having trouble?\
 Press U for output\
@@ -13202,7 +13284,7 @@ if #enterCMD > 0 then
 	for i = 1,#enterCMD do
 		wait()
 		cmd:CaptureFocus()
-	    arguments = enterCMD[i].N:split(" ")
+		arguments = enterCMD[i].N:split(" ")
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nil then
 			pcall(function()
@@ -13259,7 +13341,7 @@ tabs.MouseEnter:Connect(function()
 	end) 
 	mmoved = tabs.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement then
-    		mou = input
+    			mou = input
 		end
 	end) 
 	tabs.InputEnded:Connect(function(input)
@@ -13271,7 +13353,7 @@ tabs.MouseEnter:Connect(function()
 	end)
 end)
 tabs.MouseLeave:Connect(function()
-    mdwn:Disconnect()
+	mdwn:Disconnect()
 end)
 ---------------------------------------|
 -- Themes: ----------------------------|
@@ -13429,56 +13511,90 @@ if sDetect == true then
 end
 
 wait(2.638)
-if game:GetService("UserInputService").VREnabled then
-    holder.Size = UDim2.new(0.385, 0,0.361, 0)
-    entry.Size = UDim2.new(1.834, 0,0.152, 0)
-    cmd.Size = UDim2.new(0.67, 0,0.983, 0)
-    user.Size = UDim2.new(0.269, 0,1.011, 0)
-    output.Size = UDim2.new(1.834, 0,1.004, 0)
-    output1.Size = UDim2.new(0.261, 0,0.107, 0)
-    output2.Size = UDim2.new(0.261, 0,0.107, 0)
-    output3.Size = UDim2.new(0.261, 0,0.107, 0)
-    output4.Size = UDim2.new(0.261, 0,0.107, 0)
-    output5.Size = UDim2.new(0.261, 0,0.107, 0)
-    output6.Size = UDim2.new(0.261, 0,0.107, 0)
-    output7.Size = UDim2.new(0.261, 0,0.107, 0)
-    output8.Size = UDim2.new(0.261, 0,0.107, 0)
-    output9.Size = UDim2.new(0.261, 0,0.107, 0)
+if game:GetService("UserInputService").VREnabled then	
+	holder.Size = UDim2.new(0.385, 0,0.361, 0)	
+	entry.Size = UDim2.new(1.834, 0,0.152, 0)	
+	cmd.Size = UDim2.new(0.67, 0,0.983, 0)	
+	user.Size = UDim2.new(0.269, 0,1.011, 0)	
+	output.Size = UDim2.new(1.834, 0,1.004, 0)	
+	output1.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output2.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output3.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output4.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output5.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output6.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output7.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output8.Size = UDim2.new(0.261, 0,0.107, 0)	
+	output9.Size = UDim2.new(0.261, 0,0.107, 0)	
 end
 
 
 Sound2:Destroy()
 
-function RGBDev(Self)
-	RGBDevCheck = true
-	while RGBDevCheck == true do
-		if Self ~= nil then
-			for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
-				if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
-					for i = 0, 255, 1 do 
-						v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)
-						wait(.001)
-					end
-				end
-			end
-		else
-			RGBDevCheck = false
+function RGBDev(Self)	
+	RGBDevCheck = true	
+	if connectionRGBDev then connectionRGBDev:Disconnect() end	
+	coroutine.resume(coroutine.create(function()	
+		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
+			if not debouncergb then	
+				if Self ~= nil then	
+					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
+						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
+							for i = 0, 255, 1 do 	
+								v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)	
+								game:GetService("RunService").Heartbeat:Wait()	
+								debouncergb = true	
+							end	
+						end	
+					end	
+				end	
+			else	
+				for i = 0, 255 do	
+					game:GetService("RunService").Heartbeat:Wait()	
+				end	
+				debouncergb = false	
+			end	
+		end)	
+	end))	
+end	
+
+function colorName(Self,g)	
+	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
+		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
+			if not g then	
+				v.TextColor3 = Color3.fromRGB(255,70,70)	
+			else	
+				v.TextColor3 = Color3.fromRGB(255,215,100)	
+			end	
 		end
-		wait()
-	end
-end
+	end	
+end	
 
-for i,v in pairs(cmdp:GetPlayers()) do
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server (DEV[CMD-X])")
-		RGBDev(v.Name)
-	end
-end
-
-cmdp.PlayerAdded:Connect(function(v)
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server (DEV[CMD-X])")
-		RGBDev(v.Name)
-	end
-end)
+for i,v in pairs(cmdp:GetPlayers()) do	
+	if Devs[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
+		RGBDev(v.Name)	
+	elseif Donors[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		if Donors[v.Name] == "Donor" then	
+			colorName(v.Name, false)	
+		else	
+			colorName(v.Name, true)	
+		end	
+	end	
+end	
+	
+cmdp.PlayerAdded:Connect(function(v)	
+	if Devs[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
+		RGBDev(v.Name)	
+	elseif Donors[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		if Donors[v.Name] == "Donor" then	
+			colorName(v.Name, false)	
+		else	
+			colorName(v.Name, true)	
+		end	
+	end	
+end)	
 -- End --------------------------------|
