@@ -2927,12 +2927,8 @@ CMDN[#CMDN+1] = {N = "removefx", A = {""}, CMD = "450,removefx,,Removes all FX."
 CMDN[#CMDN+1] = {N = "chaos", A = {""}, CMD = "451,chaos,,Executes a random command every 5 seconds."}
 CMDN[#CMDN+1] = {N = "unchaos", A = {""}, CMD = "452,unchaos,,()"}
 CMDN[#CMDN+1] = {N = "funfact", A = {"fact"}, CMD = "453,funfact/fact,,Grabs a funfact from an API."}
+CMDN[#CMDN+1] = {N = "antifling", A = {"afling","noclipothers"}, CMD = "454,antifling/afling/noclipothers,(plr(s)),Nocollides other players to avoid being flung in any way,"}
 currentCMDNUM = "437"
---[[xDMS = ""
-for i,v in pairs(CMDN) do
-	xDMS = xDMS..CMDN[i].CMD.."\n"
-end
-setclipboard(xDMS)]]
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
 output4.Text = Http.text
