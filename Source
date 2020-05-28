@@ -2933,6 +2933,7 @@ CMDN[#CMDN+1] = {N = "simulationradius", A = {"simrad"}, CMD = "456,simulationra
 CMDN[#CMDN+1] = {N = "grabunanchored", A = {"guna"}, CMD = "457,grabunanchored/guna,(model),Updates unanchored parts."}
 CMDN[#CMDN+1] = {N = "clearunanchored", A = {"cuna"}, CMD = "458,clearunanchored/cuna,,()"}
 CMDN[#CMDN+1] = {N = "spinunanchored", A = {"suna"}, CMD = "459,spinunanchored/suna,(offset),Spins unanchored parts around your character."}
+CMDN[#CMDN+1] = {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -12850,7 +12851,9 @@ function grabUnanchored(Model)
     end
 end
 
+IHaveSimmed = false
 function useCommand.simulationradius()
+	IHaveSimmed = true
 	if arguments[2] == "max" then
 		opx("-","Updated simulation radius")
 		coroutine.resume(coroutine.create(function()
@@ -12886,19 +12889,25 @@ function useCommand.simulationradius()
 	end
 end
 
+IHaveGrabbed = false
 function useCommand.grabunanchored()
-	if arguments[2] then
-		opx("-","Updated anchored parts list from "..arguments[2])
-		for i,v in pairs(worksapce:GetDescendants()) do
-			if v.Name == arguments[2] then
-				UnanchoredPart = v.Name
-				break
+	if IHaveSimmed == true then
+		IHaveGrabbed = true
+		if arguments[2] then
+			opx("-","Updated anchored parts list from "..arguments[2])
+			for i,v in pairs(worksapce:GetDescendants()) do
+				if v.Name == arguments[2] then
+					UnanchoredPart = v.Name
+					break
+				end
 			end
+			grabUnanchored(UnanchoredPart)
+		else
+			opx("-","Updated anchored parts list from workspace")
+			grabUnanchored(workspace)
 		end
-		grabUnanchored(UnanchoredPart)
 	else
-		opx("-","Updated anchored parts list from workspace")
-		grabUnanchored(workspace)
+		opx("*","You need to do .simulationradius max first!")
 	end
 end
 
@@ -12908,29 +12917,37 @@ function useCommand.clearunanchored()
 end
 
 function useCommand.bringunanchored()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			opx("-","Brung unanchored parts")
-    		for i,v in pairs(xAnchored) do
-    			if xAnchored[i] ~= nil then
-    				xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
-    			end
-    		end
+	if IHaveGrabbed == true then
+		if arguments[2] then
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Brung unanchored parts")
+		    	for i,v in pairs(xAnchored) do
+		    		if xAnchored[i] ~= nil then
+		    			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
+		    		end
+		    	end
+			else
+				opx("*","Player does not exist!")
+			end
 		else
-			opx("*","Player does not exist!")
+			opx("*","2 arguments are required for this command!")
 		end
 	else
-		opx("*","2 arguments are required for this command!")
+		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
 function useCommand.removeunanchored()
-	opx("-","Removed unanchored parts")
-	for i,v in pairs(xAnchored) do
-		if xAnchored[i] ~= nil then
-			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0,-500,0))
+	if IHaveGrabbed == true then	
+		opx("-","Removed unanchored parts")
+		for i,v in pairs(xAnchored) do
+			if xAnchored[i] ~= nil then
+				xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0,-500,0))
+			end
 		end
+	else
+		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
@@ -12945,35 +12962,37 @@ end
 ActUp = {}
 SpinningFor = false
 function useCommand.spinunanchored()
-	if arguments[2] then
-	    ActUp = {}
-		opx("-","Spinning unanchored parts")
-		SpinningFor = true
-		iffy = arguments[2]
-		normspin = 0
-		function RotatePointAtDist(Point, Angle, Dist)
-            local Rotation = CFrame.Angles(0, math.rad(Angle),0)
-            return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
-        end
-		for i,v in pairs(xAnchored) do
-            normspin = normspin + 30
-            xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
-            ActUp[#ActUp+1] = normspin
-        end
-		game:GetService("RunService").RenderStepped:Connect(function()
-			if SpinningFor == true then
-                for i,v in pairs(xAnchored) do
-                    xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
-                    ActUp[i] = ActUp[i]-.1
-                end
-			end
-		end)
+	if IHaveGrabbed == true then
+		if arguments[2] then
+			ActUp = {}
+			opx("-","Spinning unanchored parts")
+			SpinningFor = true
+			iffy = arguments[2]
+			normspin = 0
+			function RotatePointAtDist(Point, Angle, Dist)
+		        local Rotation = CFrame.Angles(0, math.rad(Angle),0)
+		        return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
+		    end
+			for i,v in pairs(xAnchored) do
+		        normspin = normspin + 30
+		        xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
+		        ActUp[#ActUp+1] = normspin
+		    end
+			game:GetService("RunService").RenderStepped:Connect(function()
+				if SpinningFor == true then
+		            for i,v in pairs(xAnchored) do
+		                xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
+		                ActUp[i] = ActUp[i]-.1
+		            end
+				end
+			end)
+		else
+			opx("-","2 arguments are required!")
+		end
 	else
-		opx("-","2 arguments are required!")
+		opx("*","You need to do .grabunanchored first!")
 	end
 end
-
-CMDN[#CMDN+1] = {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"}
 
 function useCommand.unspinunanchored()
 	opx("-","Stopped spinning unanchored parts")
