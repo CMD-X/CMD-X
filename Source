@@ -11830,9 +11830,11 @@ function useCommand.streamsnipe()
 	end
 end
 
-loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
+-- Thanks to MrAsyncRoblox on github for .depth, full credits.
 
--- Thanks to MrAsyncRoblox on github, full credits.
+pcall(function()
+	loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()	
+end)
 
 function useCommand.timedcmd()
     if arguments[3] then
@@ -11870,7 +11872,7 @@ function useCommand.randomos()
     cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
 end
 
-function useCommand.depth()	
+function useCommand.depth()
 	DynamicDepth:Enable()	
 	if arguments[2] then	
 		opx("-","Set DepthOfField to "..arguments[2])	
