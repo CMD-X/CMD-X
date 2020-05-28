@@ -5,7 +5,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("Players").LocalPlayer.Character
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.2"
+local ver = "1.2.3"
 local nextupd = "15/05/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -2886,7 +2886,7 @@ CMDN[#CMDN+1] = {N = "noprompt", A = {""}, CMD = "409,noprompt,,Stops games from
 CMDN[#CMDN+1] = {N = "yesprompt", A = {""}, CMD = "410,yesprompt,,()."}
 CMDN[#CMDN+1] = {N = "rappu", A = {"rappublic"}, CMD = "411,rappu/rappublic,(plr),Shows players RAP publicly.", ARG = "Player"}
 CMDN[#CMDN+1] = {N = "rappr", A = {"rapprivate"}, CMD = "412,rappr/rapprivate,(plr),Shows players RAP privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "destroyunanchored", A = {"duna"}, CMD = "413,destroyunanchored/duna,,Destroys unanchored parts (works best with .loop)."}
+CMDN[#CMDN+1] = {N = "removeunanchored", A = {"runa"}, CMD = "413,removeunanchored/runa,,Destroys unanchored parts (works best with .loop)."}
 CMDN[#CMDN+1] = {N = "retard", A = {"reet"}, CMD = "414,retard/reet,,.juicewrld but better, has three settings (noArgs, 1, and 2)"}
 CMDN[#CMDN+1] = {N = "unretard", A = {"unreet"}, CMD = "415,unretard/unreet,,()"}
 CMDN[#CMDN+1] = {N = "nocommands", A = {"nocmds"}, CMD = "416,nocommands/nocmds,,Disables all commands."}
@@ -2927,7 +2927,12 @@ CMDN[#CMDN+1] = {N = "removefx", A = {""}, CMD = "450,removefx,,Removes all FX."
 CMDN[#CMDN+1] = {N = "chaos", A = {""}, CMD = "451,chaos,,Executes a random command every 5 seconds."}
 CMDN[#CMDN+1] = {N = "unchaos", A = {""}, CMD = "452,unchaos,,()"}
 CMDN[#CMDN+1] = {N = "funfact", A = {"fact"}, CMD = "453,funfact/fact,,Grabs a funfact from an API."}
-CMDN[#CMDN+1] = {N = "antifling", A = {"afling","noclipothers"}, CMD = "454,antifling/afling/noclipothers,(plr(s)),Nocollides other players to avoid being flung in any way,"}
+CMDN[#CMDN+1] = {N = "antifling", A = {"afling","noclipothers"}, CMD = "454,antifling/afling/noclipothers,(plr(s)),Nocollides other players to avoid being flung in any way."}
+CMDN[#CMDN+1] = {N = "cmdinfo", A = {"?"}, CMD = "455,cmdinfo/?,(cmd),Lists command info seperately."}
+CMDN[#CMDN+1] = {N = "simulationradius", A = {"simrad"}, CMD = "456,simulationradius/simrad,(num/max),Changes simulation radius (MAY BREAK SCHAT AND SUSERS)."}
+CMDN[#CMDN+1] = {N = "grabunanchored", A = {"guna"}, CMD = "457,grabunanchored/guna,(model),Updates unanchored parts."}
+CMDN[#CMDN+1] = {N = "clearunanchored", A = {"cuna"}, CMD = "458,clearunanchored/cuna,,()"}
+CMDN[#CMDN+1] = {N = "spinunanchored", A = {"suna"}, CMD = "459,spinunanchored/suna,(offset),Spins unanchored parts around your character."}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -3557,6 +3562,16 @@ function findCmd(cmd_name)
 			if CMDN[i].N:lower() == cmd_name:lower() or CMDN[i].A[_]:lower() == cmd_name:lower() then
 				v = CMDN[i].N
 				return v
+			end
+		end
+	end
+end
+
+function giveCmd(cmd_name)
+	for i,v in pairs(CMDN)do
+		for _,x in pairs(CMDN[i].A) do
+			if CMDN[i].N:lower() == cmd_name:lower() or CMDN[i].A[_]:lower() == cmd_name:lower() then
+				return CMDN[i]
 			end
 		end
 	end
@@ -9021,7 +9036,7 @@ function useCommand.compliment()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
+			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
 			local value = math.random(1,#compPick)
 			local picked_value = compPick[value]
 			opx("-","You complimented "..target.Name)
@@ -9038,7 +9053,7 @@ function useCommand.roast()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“beautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
+			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“beautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
 			local value = math.random(1,#roastPick)
 			local picked_value = roastPick[value]
 			opx("-","You roasted "..target.Name)
@@ -11376,11 +11391,12 @@ function useCommand.loop()
 		looping = true
 		loopStat = getstring(2)
 		perCmd = arguments[2]
+		GoodNew = findCmd(perCmd)
 		opx("-","Now looping that command")
 		while looping == true do
 			wait()
 			arguments = loopStat:split(" ")
-			useCommand[perCmd]()
+			useCommand[GoodNew]()
 		end
 	else
 		opx("*","2 arguments are needed!")
@@ -11490,71 +11506,6 @@ function useCommand.stubby()
     cmdlp.Character.LeftHand:Destroy()
     cmdlp.Character.RightFoot:Destroy()
     cmdlp.Character.LeftFoot:Destroy()
-end
-
-function useCommand.bringunanchored()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			opx("-","Brung unanchored parts")
-			cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
-			cmdlp.SimulationRadius = math.pow(math.huge,math.huge)*math.huge
-			local unanchoredparts = {}
-			local movers = {}
-			for index, part in pairs(workspace:GetDescendants()) do
-				if part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and part:IsDescendantOf(cmdlp.Character) == false then
-					table.insert(unanchoredparts, part)
-					part.Massless = true
-					part.CanCollide = false
-					if part:FindFirstChildOfClass("BodyPosition") ~= nil then
-						part:FindFirstChildOfClass("BodyPosition"):Destroy()
-					end
-				end
-			end
-			for index, part in pairs(unanchoredparts) do
-				local mover = Instance.new("BodyPosition", part)
-				table.insert(movers, mover)
-				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-			end
-			for index, mover in pairs(movers) do
-				mover.Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0, 0, 5))
-			end
-			cmdlp.SimulationRadius = 139
-			cmdlp.MaximumSimulationRadius = 139
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are required for this command!")
-	end
-end
-
-function useCommand.destroyunanchored()
-	opx("-","Destroyed unanchored parts")
-	cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
-	cmdlp.SimulationRadius = math.pow(math.huge,math.huge)*math.huge
-	local unanchoredparts = {}
-	local movers = {}
-	for index, part in pairs(workspace:GetDescendants()) do
-		if part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and part:IsDescendantOf(cmdlp.Character) == false then
-			table.insert(unanchoredparts, part)
-			part.Massless = true
-			part.CanCollide = false
-			if part:FindFirstChildOfClass("BodyPosition") ~= nil then
-				part:FindFirstChildOfClass("BodyPosition"):Destroy()
-			end
-		end
-	end
-	for index, part in pairs(unanchoredparts) do
-		local mover = Instance.new("BodyPosition", part)
-		table.insert(movers, mover)
-		mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-	end
-	for index, mover in pairs(movers) do
-		mover.Position = cmdlp.Character.HumanoidRootPart.CFrame:PointToWorldSpace(Vector3.new(999999, workspace.FallenPartsDestroyHeight + 5,999999))
-	end
-	cmdlp.SimulationRadius = 139
-	cmdlp.MaximumSimulationRadius = 139
 end
 
 function useCommand.listunanchored()
@@ -11830,20 +11781,20 @@ function useCommand.streamsnipe()
 	end
 end
 
--- Thanks to MrAsyncRoblox on github for .depth, full credits.
-
 pcall(function()
-	loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()	
+    loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
 end)
+-- Thanks to MrAsyncRoblox on github, full credits.
 
 function useCommand.timedcmd()
     if arguments[3] then
         opx("-","Executing command after time given")
         local useOf = arguments[3]
         local useArgs = getstring(3)
+        GoodNewBad = findCmd(useOf)
         wait(arguments[2])
         arguments = useArgs
-        useCommand[useOf]()
+        useCommand[GoodNewBad]()
     else
         opx("*","2 arguments are required!")
     end
@@ -11872,7 +11823,7 @@ function useCommand.randomos()
     cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
 end
 
-function useCommand.depth()
+function useCommand.depth()	
 	DynamicDepth:Enable()	
 	if arguments[2] then	
 		opx("-","Set DepthOfField to "..arguments[2])	
@@ -12405,6 +12356,13 @@ function useCommand.antikick()
 	end)
 end
 
+function useCommand.cmdinfo()
+	local useOf = giveCmd(arguments[2])
+	local CSplus = useOf.CMD:split(",")
+	opx("-",CSplus[1]..". "..CSplus[2].." "..CSplus[3].." = "..CSplus[4])
+	opxL("Command",CSplus[1]..". "..CSplus[2].." "..CSplus[3].." = "..CSplus[4])
+end
+
 function useCommand.sentinelexplorer()
 	opx("-","Loading SENTINEL DEX")
 	loadstring(game:HttpGet("https://pastebin.com/raw/v1pL8YzY", true))()
@@ -12869,6 +12827,157 @@ function useCommand.unretard()
 	if ctAe then ctAe:Stop() end
 	if dtAe then dtAe:Stop() end
 	opx("-","Stopped being a retard")
+end
+
+xAnchored = {}
+
+function grabUnanchored(Model)
+    for i,part in pairs(Model:GetDescendants()) do
+    	if part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and part:IsDescendantOf(cmdlp.Character) == false then
+			part.Massless = true
+			part.CanCollide = false
+			if part:FindFirstChildOfClass("BodyPosition") == nil then
+				local mover = Instance.new("BodyPosition", part)
+				table.insert(xAnchored, mover)
+				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+			else
+			    part.BodyPosition:Destroy()
+			    local mover = Instance.new("BodyPosition", part)
+				table.insert(xAnchored, mover)
+				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+			end
+		end
+    end
+end
+
+function useCommand.simulationradius()
+	if arguments[2] == "max" then
+		opx("-","Updated simulation radius")
+		coroutine.resume(coroutine.create(function()
+			settings().Physics.AllowSleep = false
+			game:GetService("RunService").RenderStepped:Connect(function()
+				for i,v in pairs(cmdp:GetPlayers()) do
+					if v ~= cmdlp then
+						v.MaximumSimulationRadius = 0.1
+						v.SimulationRadius = 0
+					else
+						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
+						v.SimulationRadius = math.pow(math.huge, 2)
+					end
+				end
+			end)
+		end))
+	else
+		opx("-","Updated simulation radius")
+		coroutine.resume(coroutine.create(function()
+			settings().Physics.AllowSleep = false
+			game:GetService("RunService").RenderStepped:Connect(function()
+				for i,v in pairs(cmdp:GetPlayers()) do
+					if v ~= cmdlp then
+						v.MaximumSimulationRadius = 0.1
+						v.SimulationRadius = 0
+					else
+						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
+						v.SimulationRadius = math.pow(arguments[2], 2)
+					end
+				end
+			end)
+		end))
+	end
+end
+
+function useCommand.grabunanchored()
+	if arguments[2] then
+		opx("-","Updated anchored parts list from "..arguments[2])
+		for i,v in pairs(worksapce:GetDescendants()) do
+			if v.Name == arguments[2] then
+				UnanchoredPart = v.Name
+				break
+			end
+		end
+		grabUnanchored(UnanchoredPart)
+	else
+		opx("-","Updated anchored parts list from workspace")
+		grabUnanchored(workspace)
+	end
+end
+
+function useCommand.clearunanchored()
+	xAnchored = {}
+	opx("-","Cleared unanchored parts list")
+end
+
+function useCommand.bringunanchored()
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			opx("-","Brung unanchored parts")
+    		for i,v in pairs(xAnchored) do
+    			if xAnchored[i] ~= nil then
+    				xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
+    			end
+    		end
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are required for this command!")
+	end
+end
+
+function useCommand.removeunanchored()
+	opx("-","Removed unanchored parts")
+	for i,v in pairs(xAnchored) do
+		if xAnchored[i] ~= nil then
+			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0,-500,0))
+		end
+	end
+end
+
+local fullCircle = 2 * math.pi
+local radius = 10
+function getXAndZPositions(angle)
+	local x = math.cos(angle) * radius
+	local z = math.sin(angle) * radius
+	return x, z
+end
+
+ActUp = {}
+SpinningFor = false
+function useCommand.spinunanchored()
+	if arguments[2] then
+	    ActUp = {}
+		opx("-","Spinning unanchored parts")
+		SpinningFor = true
+		iffy = arguments[2]
+		normspin = 0
+		function RotatePointAtDist(Point, Angle, Dist)
+            local Rotation = CFrame.Angles(0, math.rad(Angle),0)
+            return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
+        end
+		for i,v in pairs(xAnchored) do
+            normspin = normspin + 30
+            xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
+            ActUp[#ActUp+1] = normspin
+        end
+		game:GetService("RunService").RenderStepped:Connect(function()
+			if SpinningFor == true then
+                for i,v in pairs(xAnchored) do
+                    xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
+                    ActUp[i] = ActUp[i]-.1
+                end
+			end
+		end)
+	else
+		opx("-","2 arguments are required!")
+	end
+end
+
+CMDN[#CMDN+1] = {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"}
+
+function useCommand.unspinunanchored()
+	opx("-","Stopped spinning unanchored parts")
+	SpinningFor = false
 end
 
 function useCommand.animationsteal()	
