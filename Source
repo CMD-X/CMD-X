@@ -5,8 +5,8 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait() until game:GetService("Players").LocalPlayer.Character
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.3"
-local nextupd = "15/05/2020"
+local ver = "1.2.4"
+local nextupd = "30/05/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
 }
@@ -2934,6 +2934,14 @@ CMDN[#CMDN+1] = {N = "grabunanchored", A = {"guna"}, CMD = "457,grabunanchored/g
 CMDN[#CMDN+1] = {N = "clearunanchored", A = {"cuna"}, CMD = "458,clearunanchored/cuna,,()"}
 CMDN[#CMDN+1] = {N = "spinunanchored", A = {"suna"}, CMD = "459,spinunanchored/suna,(offset),Spins unanchored parts around your character."}
 CMDN[#CMDN+1] = {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"}
+CMDN[#CMDN+1] = {N = "randomcmd", A = {"rcmd"}, CMD = "461,randomcmd/rcmd,,Executes a random command."}
+CMDN[#CMDN+1] = {N = "replayintro", A = {"reintro"}, CMD = "462,replayintro/reintro,,Replays intro."}
+CMDN[#CMDN+1] = {N = "masscmd", A = {""}, CMD = "463,masscmd,(cmd|cmd),Executes multiple commands at once."}
+CMDN[#CMDN+1] = {N = "mass", A = {""}, CMD = "464,mass,(cmd),Loops player arguments on command."}
+CMDN[#CMDN+1] = {N = "touchinterests", A = {"firetouches"}, CMD = "465,touchinterests/firetouches,(model),Fires touch interests."}
+CMDN[#CMDN+1] = {N = "singletouchinterest", A = {"firetouch"}, CMD = "466,singletouchinterest/firetouch,(name),Fires touch interest."}
+CMDN[#CMDN+1] = {N = "clickdetectors", A = {"fireclicks"}, CMD = "467,clickdetectors/fireclicks,(model),Fires click detectors."}
+CMDN[#CMDN+1] = {N = "singleclickdetector", A = {"fireclick"}, CMD = "468,singleclickdetector/fireclick,(name),Fires click detector."}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -13180,7 +13188,104 @@ function useCommand.newaudios()
 	opxL("Newest-IDs",xIds)	
 	opx("Listed new audios")	
 end	
-	
+
+function useCommand.randomcmd()
+	local CCmd = CMDN[math.random(1,#CMDN)]
+	useCommand[CCmd.N]()
+	opx("-",CCmd.N.." use .? (cmd) for more info")
+end
+
+function useCommand.replayintro()
+	opx("-","Replaying intro")
+	local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+	Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
+	Sound2:Play()
+	wait(2.638)
+	Sound2:Destroy()
+end
+
+function useCommand.masscmd()
+	opx("-","Executing CMDs")
+	table.remove(arguments,1)
+	for i,v in pairs(arguments) do
+		useCommand[arguments[i]]()
+	end
+end
+
+function useCommand.mass()
+	opx("-","Executing player command in mass")
+	FinalCMD = findCmd(arguments[2])
+	for i,v in pairs(cmdp:GetPlayers()) do
+		arguments = FinalCMD.." "..v.Name
+		arguments = arguments:split(" ")
+		useCommand[FinalCMD]()
+	end
+end
+
+function FindPart(Name)
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v.Name == Name then
+			return v
+		end
+	end
+end
+
+function useCommand.touchinterests()
+	opx("-","Fired touch interests")
+	if arguments[2] then
+		local Part = FindPart(arguments[2])
+		for i,v in pairs(Part:GetDescendants()) do
+			if v:IsA("TouchInterest") then
+				v.Parent.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+			end
+		end
+	else
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("TouchInterest") then
+				v.Parent.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+			end
+		end
+	end
+end
+
+function useCommand.singletouchinterest()
+	opx("-","Fired touch interest")
+	local touch = FindPart(arguments[2])
+	touch.Parent.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+end
+
+function useCommand.clickdetectors()
+	if fireclickdetector then
+		opx("-","Fired click detectors")
+		if arguments[2] then
+			local Part = FindPart(arguments[2])
+			for i,v in pairs(Part:GetDescendants()) do
+				if v:IsA("ClickDetector") then
+					fireclickdetector(v)
+				end
+			end
+		else
+			for i,v in pairs(workspace:GetDescendants()) do
+				if v:IsA("ClickDetector") then
+					fireclickdetector(v)
+				end
+			end
+		end
+	else
+		opx("*","Your exploit does not support fireclickdetector!")
+	end
+end
+
+function useCommand.singleclickdetector()
+	if fireclickdetector then
+		opx("-","Fired click detector")
+		local touch = FindPart(arguments[2])
+		fireclickdetector(touch)
+	else
+		opx("*","Your exploit does not support fireclickdetector!")
+	end
+end
+
 function useCommand.antifling()	
 	if antifling == nil then 	
 		antifling = true	
