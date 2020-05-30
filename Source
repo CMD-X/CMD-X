@@ -1,4 +1,5 @@
-
+repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
+-- DONT REMOVE THIS PIGEON YOU STUPID FUCK
 -- Constraints: -----------------------|	
 local ver = "1.2.4"
 local nextupd = "30/05/2020"
@@ -131,7 +132,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {[838753790.5] = "RDite3", [983858851.7] = true,[4238827073.2] = true, [303591427.1] = true}
+checkArg = {[838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
 --pcall(function()
 --Stand(LoadingPhrase[math.random(1,#LoadingPhrase)],"Please wait...","","","","Run Anyway",false)
 --repeat wait() until game:IsLoaded()
@@ -150,11 +151,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Ve
 if Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	repeat wait() until RunDude == true
-end
-if cmdlp.Character == nil then
-	Stand("Your character has not loaded fully yet!","CMD-X cannot run.","","","","Run Anyway",true)
-	repeat wait() until cmdlp.Character ~= nil
-	LoadingFrame:Destroy()
 end
 
 local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
@@ -188,19 +184,21 @@ local Devs = {
 	["Curvn"] = "Dev",
 }	
 local Donors = {	
-	["Zuhqu"] = "Donor",	
-	["Fxalling_Love"] = "Donor",	
-	["onvoltz"] = "Donor",	
-	["skrask"] = "Donor",	
-	["teejay6x"] = "Donor",	
-	["0ccoy"] = "Donor",	
-	["OFFTheBatter"] = "Donor",	
-	["goresyard"] = "Donor",	
-	["DisturbedCult"] = "Donor",	
-	["Schewpid"] = "Donor",	
-	["snoozay"] = "Donor",	
-	["LtsDank"] = "Donor",	
-	["HyperLink3"] = "Donor"	
+	["Zuhqu"] = "Donor",
+	["Fxalling_Love"] = "Donor",
+	["onvoltz"] = "Donor",
+	["skrask"] = "Donor",
+	["teejay6x"] = "Donor",
+	["0ccoy"] = "Donor",
+	["OFFTheBatter"] = "Donor",
+	["goresyard"] = "Donor",
+	["DisturbedCult"] = "Donor",
+	["Schewpid"] = "Donor",
+	["snoozay"] = "Donor",
+	["LtsDank"] = "Donor",
+	["HyperLink3"] = "Donor",
+	["Winnzie"] = "Donor",
+	["8dqt"] = "Donor"	
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
