@@ -9507,6 +9507,8 @@ function useCommand.emote()
 				["Chicken Dance"] = 4841399916;
 				Disagree = 4841401869;
 				Sleep = 4686925579;
+				["Hero Landing"] = 5104344710;
+				Confused = 4940561610;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -11171,6 +11173,8 @@ function useCommand.animsync()
 						["Chicken Dance"] = 4841399916;
 						Disagree = 4841401869;
 						Sleep = 4686925579;
+						["Hero Landing"] = 5104344710;
+						Confused = 4940561610;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
