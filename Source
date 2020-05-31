@@ -1,8 +1,7 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
--- DONT REMOVE THIS PIGEON YOU STUPID FUCK
 -- Constraints: -----------------------|	
-local ver = "1.2.4"
-local nextupd = "30/05/2020"
+local ver = "1.2.5"
+local nextupd = "1/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
 }
@@ -2720,8 +2719,8 @@ CMDN[#CMDN+1] = {N = "plugin", A = {""}, CMD = "254,plugin,,Shows plugin GUI so 
 CMDN[#CMDN+1] = {N = "loadcustomsclr", A = {""}, CMD = "255,loadcustomsclr,,Clears all loadcustoms."}
 CMDN[#CMDN+1] = {N = "iq", A = {"iqsize"}, CMD = "256,iq/iqsize,(plr),Shows players IQ (RANDOM).", ARG = "Player"}
 CMDN[#CMDN+1] = {N = "players", A = {""}, CMD = "257,players,,Lists players in your game."}
-CMDN[#CMDN+1] = {N = "freezeunanchored", A = {"funa"}, CMD = "258,freezeunanchored/funa,,Freezes unanchored parts (works best with .loop)."}
-CMDN[#CMDN+1] = {N = "thawunanchored", A = {"tuna"}, CMD = "259,thawunanchored/tuna,,Thaws unanchored parts."}
+CMDN[#CMDN+1] = {N = "freereach", A = {"freach"}, CMD = "258,freereach/freach,(num|num|num),Allows you to control reach freely."}
+CMDN[#CMDN+1] = {N = "jobid", A = {""}, CMD = "259,jobid,,Shows the JobID of your current game useful for rejoining later on."}
 CMDN[#CMDN+1] = {N = "massage", A = {""}, CMD = "260,massage,,Shows all players ages."}
 CMDN[#CMDN+1] = {N = "gearhat", A = {"toolhat"}, CMD = "261,gearhat/toolhat,,Makes your gears into hats."}
 CMDN[#CMDN+1] = {N = "bypass", A = {"bp"}, CMD = "262,bp/bypass,(str),Bypasses text you enter into chat."}
@@ -4229,6 +4228,7 @@ function useCommand.halve()
 	if cmd15(cmdlp) then
 		opx("-","Halved character")
 		cmdlp.Character.UpperTorso.Waist:Destroy()
+		cmdlp.Character.UpperTorso.Anchored = true
 	else
 		opx("*","You need to be R15 for this command!")
 	end
@@ -6411,6 +6411,10 @@ end
 
 function useCommand.gameid()
 	opx("-","The games id you are playing on is "..game.PlaceId)
+end
+
+function useCommand.jobid()
+    opx("-",game.JobId)
 end
 
 function useCommand.error()
@@ -13280,6 +13284,29 @@ function useCommand.singleclickdetector()
 		fireclickdetector(touch)
 	else
 		opx("*","Your exploit does not support fireclickdetector!")
+	end
+end
+
+function useCommand.freereach()
+    if arguments[4] and cmdnum(arguments[4]) then
+		for i,v in pairs(cmdlp.Character:GetDescendants()) do
+			if v:IsA("Tool") then
+				currentToolSize = v.Handle.Size
+				local a = Instance.new("SelectionBox",v.Handle)
+				a.Name = "SelectionBoxCreated"
+				a.Adornee = v.Handle
+				a.Color3 = Color3.new(255, 255, 255)
+				a.LineThickness = 0.01
+				v.Handle.Massless = true
+				v.Handle.Size = Vector3.new(arguments[2],arguments[3],arguments[4])
+				v.GripPos = Vector3.new(0,0,0)
+				v.Parent = cmdlp.Backpack
+				v.Parent = cmdlp.Character
+			end
+		end
+		opx("-","Reach set")
+	else
+		opx("*","4 arguments are needed for this command!")
 	end
 end
 
