@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.5"
+local ver = "1.2.6"
 local nextupd = "1/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -2934,6 +2934,11 @@ CMDN[#CMDN+1] = {N = "touchinterests", A = {"firetouches"}, CMD = "465,touchinte
 CMDN[#CMDN+1] = {N = "singletouchinterest", A = {"firetouch"}, CMD = "466,singletouchinterest/firetouch,(name),Fires touch interest."}
 CMDN[#CMDN+1] = {N = "clickdetectors", A = {"fireclicks"}, CMD = "467,clickdetectors/fireclicks,(model),Fires click detectors."}
 CMDN[#CMDN+1] = {N = "singleclickdetector", A = {"fireclick"}, CMD = "468,singleclickdetector/fireclick,(name),Fires click detector."}
+CMDN[#CMDN+1] = {N = "gotoclass", A = {"toclass"}, CMD = "469,gotoclass/toclass,(class),Teleports player to a part in that class."}
+CMDN[#CMDN+1] = {N = "playingaudios", A = {"paudios"}, CMD = "470,playingaudios/paudios,,Tells you the currently playing audios."}
+CMDN[#CMDN+1] = {N = "testaudio", A = {"taudio"}, CMD = "471,testaudio/taudio,(id),Tests audio out for you."}
+CMDN[#CMDN+1] = {N = "stopdupegears", A = {"stopdupetools"}, CMD = "472,stopdupegears/stopdupetools,,()"}
+CMDN[#CMDN+1] = {N = "stopsing", A = {""}, CMD = "473,stopsing,,()"}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -9084,6 +9089,7 @@ function useCommand.singinfo()
 	To see a sample of what to do, visit: https://pastebin.com/raw/rNcWf8mK")
 end
 
+stopSingMid = false
 function useCommand.sing()
 	if arguments[2] == "genocide" then
 		getSong = "https://pastebin.com/raw/rNcWf8mK"
@@ -9120,11 +9126,18 @@ function useCommand.sing()
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Now singing "..songTitle, "All")
 	table.remove(lyricsTable,1)
 	for i,v in pairs(lyricsTable) do
+		if stopSingMid == true then break end
 		wait(5)
+		if stopSingMid == true then break end
 		game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v, "All")
 	end
 	wait(5)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Finished singing "..songTitle, "All")
+end
+
+function useCommand.stopsing()
+    stopSingMid = true
+    opx("-","Stopped singing")
 end
 
 function useCommand.deletepos()
@@ -9882,12 +9895,14 @@ function useCommand.unloopgoto()
 	opx("-","No longer LoopTping")
 end
 
+stopDupeMid = false
 function useCommand.dupegears() -- fuck off roblox stop looking at my source
 	if cmdnum(arguments[2]) then
 		opx("-","Duping tools until it reaches "..arguments[2])
 		InitialPos = cmdlp.Character.HumanoidRootPart.CFrame
 		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,1000000,0)
 		for i = 1,arguments[2] do
+			if stopDupeMid == true then break end
 			cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,1000000,0)
 			wait(.1)
 			for i,a in pairs(cmdlp.Backpack:GetDescendants()) do
@@ -9902,6 +9917,7 @@ function useCommand.dupegears() -- fuck off roblox stop looking at my source
 			end
 			refresh()
 			wait(.5)
+			if stopDupeMid == true then break end
 		end
 		cmdlp.Character.HumanoidRootPart.CFrame = InitialPos
 		wait(2)
@@ -9917,6 +9933,11 @@ function useCommand.dupegears() -- fuck off roblox stop looking at my source
 	else
 		opx("*","This command requires 2 arguments")
 	end	
+end
+
+function useCommand.stopdupegears()
+    stopDupeMid = true
+    opx("-","Stopped dupe tools")
 end
 
 function useCommand.permwalkspeed()
@@ -13284,6 +13305,41 @@ function useCommand.singleclickdetector()
 		fireclickdetector(touch)
 	else
 		opx("*","Your exploit does not support fireclickdetector!")
+	end
+end
+
+function useCommand.gotoclass()
+	if arguments[2] then
+		opx("-","Teleported to class part")
+		local Part
+		for i,v in pairs(workspace:GetDescendants()) do
+		    if v:IsA(arguments[2]) then Part = v; break end
+		end
+		cmdlp.Character.HumanoidRootPart.CFrame = Part.CFrame
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.playingaudios()
+	opx("-","Showing playing audios")
+	local xAudio = ""
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("Sound") then
+			xAudio = xAudio.."\n"..v.SoundId
+		end
+	end
+	opxL("Audios Playing",xAudio)
+end
+
+function useCommand.testaudio()
+	if cmdnum(arguments[2]) then
+		opx("-","Now testing audio")
+		local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+		Sound2.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+		Sound2:Play()
+	else
+		opx("*","2 arguments are required!")
 	end
 end
 
