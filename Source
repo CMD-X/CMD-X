@@ -463,7 +463,7 @@ end
 local AntiCheat = {
     ScriptDetectOff = false;
     TurboNameSpam = false;
-    HideParentInSX = false;
+    HideParentInSX = false; -- And SirHurt
     HideParentInPG = false;
 }
 if game.PlaceId == 176053469 then
@@ -486,8 +486,10 @@ if AntiCheat.HideParentInSX == true then
         getParent = syn.protect_gui
         syn.protect_gui(Unnamed)
     else
-        Stand("Your exploit does not support syn.protect_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
-        repeat wait() until RunDude == true
+    	if not sirhurt_setup_secure_run then
+            Stand("Your exploit does not support syn.protect_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
+            repeat wait() until RunDude == true
+	end
     end
 end
  
