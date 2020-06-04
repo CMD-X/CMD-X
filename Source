@@ -465,9 +465,11 @@ local AntiCheat = {
     TurboNameSpam = false;
     HideParentInExploit = false;
     HideParentInPG = false;
+    AutoAntiKick = false;
+    RemoveScripts = false;
 }
 if game.PlaceId == 176053469 then
-	AntiCheat.HideParentInPG = true
+	AntiCheat.RemoveScripts = true -- Nigga said, client sided anticheat LMAO
 end
 if game.PlaceId == 17541193 then
     AntiCheat.ScriptDetectOff = true
@@ -486,6 +488,28 @@ if AntiCheat.HideParentInExploit == true then
     else
         Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
         repeat wait() until RunDude == true
+    end
+end
+if AntiCheat.AutoAntiKick == true then
+    local meta = debug.getmetatable(game)
+    local newindex = meta.__newindex
+    local namecall = meta.__namecall
+    setreadonly(meta,false)
+    meta.__namecall = newcclosure(function(self,...)
+    	local args = {...}
+    	local t = getnamecallmethod()
+    	if t == "Kick" then
+    	    print(get_calling_script():GetFullName().." t")
+            return wait(9e9)
+    	end
+    	return namecall(self,...)
+    end)
+end
+if AntiCheat.RemoveScripts == true then
+    for i,v in pairs(game:GetService("Players"):GetDescendants()) do
+        if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
+            v:Destroy()
+        end
     end
 end
  
