@@ -34,6 +34,7 @@ Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
+	RunDude = false
 	LoadingFrame = Instance.new("Frame"); RandomReason = Instance.new("TextLabel")
 	RunQuestion = Instance.new("TextLabel"); Executors = Instance.new("TextLabel")
 	Paid = Instance.new("TextLabel"); Free = Instance.new("TextLabel")
@@ -132,14 +133,6 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
 checkArg = {[838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
---pcall(function()
---Stand(LoadingPhrase[math.random(1,#LoadingPhrase)],"Please wait...","","","","Run Anyway",false)
---repeat wait() until game:IsLoaded()
---LoadingFrame:Destroy()
---end)
--- from dak: fuck you pigeon never add this again
--- ngl i kinda hated it too -hz
--- to hz to dak: sorry that patience is a soft spot, maybe you should get ro-laid so you can chill out.
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 if not writefile then
@@ -466,10 +459,31 @@ for i,x in pairs(Adm) do
 	end
 end
 
--- Known anti-cmd-x and unpatches:
-
+-- Known Anti CMD-X and unpatches:
+local AntiCheat = {
+    ScriptDetectOff = false;
+    TurboNameSpam = false;
+    HideParentInSX = false;
+    HideParentInPG = false;
+}
 if game.PlaceId == 176053469 then
-	getParent = game.Players.LocalPlayer.PlayerGui
+	AntiCheat.HideParentInPG = true
+end
+if game.PlaceId == 17541193 then
+    AntiCheat.ScriptDetectOff = true
+end
+
+if AntiCheat.HideParentInPG == true then
+    getParent = game:GetService("Players").LocalPlayer.PlayerGui
+end
+if AntiCheat.HideParentInSX == true then
+    if syn.protect_gui then
+        getParent = syn.protect_gui
+        syn.protect_gui(Unnamed)
+    else
+        Stand("Your exploit does not support syn.protect_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
+        repeat wait() until RunDude == true
+    end
 end
  
 ---------------------------------------|
@@ -569,13 +583,31 @@ output.Style = Enum.FrameStyle.RobloxRound
 output.Visible = false
 
 local Gui = {}
-for i,v in pairs(getParent:GetDescendants()) do
-	Gui[#Gui+1] = v.Name
-	Gui[#Gui+1] = math.random(-2e9,2e9)
+if AntiCheat.HideParentInSX == false then
+    for i,v in pairs(getParent:GetDescendants()) do
+    	Gui[#Gui+1] = v.Name
+    	Gui[#Gui+1] = math.random(-2e9,2e9)
+    end
 end
 
 game:GetService("RunService").RenderStepped:Connect(function()
-	Unnamed.Name = Gui[math.random(1,#Gui)]
+    if AntiCheat.HideParentInSX == false then
+    	if AntiCheat.TurboNameSpam == false then
+    	    Unnamed.Name = Gui[math.random(1,#Gui)]
+    	else
+    	    for i,v in pairs(Unnamed:GetDescendants()) do
+    	        v.Name = Gui[math.random(1,#Gui)]
+    	    end
+    	end
+    else
+        if AntiCheat.TurboNameSpam == false then
+    	    Unnamed.Name = math.random(1,1000000)
+    	else
+    	    for i,v in pairs(Unnamed:GetDescendants()) do
+    	        v.Name = math.random(1,1000000)
+    	    end
+    	end
+    end
 end)
 
 function Confirm(Reason,Reason2)
@@ -1775,10 +1807,12 @@ function opxL(title,text)
 	opxholder.Visible = true
 end
 
-if sDetect == true then
-	cmdlp.MaximumSimulationRadius = 139
-	cmdlp.SimulationRadius = 139
-	cmdlp.OsPlatform = "CMD-X"
+if AntiCheat.ScriptDetectOff == false then
+    if sDetect == true then
+    	cmdlp.MaximumSimulationRadius = 139
+    	cmdlp.SimulationRadius = 139
+    	cmdlp.OsPlatform = "CMD-X"
+    end
 end
 
 local statholder = Instance.new("Frame")
@@ -13987,10 +14021,12 @@ for i,v in pairs(AdmIG) do
 	end)
 end
 
-if sDetect == true then
-	cmdlp.MaximumSimulationRadius = 139
-	cmdlp.SimulationRadius = 139
-	cmdlp.OsPlatform = "CMD-X"
+if AntiCheat.ScriptDetectOff == false then
+    if sDetect == true then
+    	cmdlp.MaximumSimulationRadius = 139
+    	cmdlp.SimulationRadius = 139
+    	cmdlp.OsPlatform = "CMD-X"
+    end
 end
 
 wait(2.638)
