@@ -463,7 +463,7 @@ end
 local AntiCheat = {
     ScriptDetectOff = false;
     TurboNameSpam = false;
-    HideParentInSX = false;
+    HideParentInExploit = false;
     HideParentInPG = false;
 }
 if game.PlaceId == 176053469 then
@@ -476,12 +476,15 @@ end
 if AntiCheat.HideParentInPG == true then
     getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
-if AntiCheat.HideParentInSX == true then
+if AntiCheat.HideParentInExploit == true then
     if syn.protect_gui then
         getParent = syn.protect_gui
         syn.protect_gui(Unnamed)
+    elseif get_hidden_gui then
+        getParet = get_hidden_gui
+        Unnamed.Parent = get_hidden_gui()
     else
-        Stand("Your exploit does not support syn.protect_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
+        Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
         repeat wait() until RunDude == true
     end
 end
@@ -583,7 +586,7 @@ output.Style = Enum.FrameStyle.RobloxRound
 output.Visible = false
 
 local Gui = {}
-if AntiCheat.HideParentInSX == false then
+if AntiCheat.HideParentInExploit == false then
     for i,v in pairs(getParent:GetDescendants()) do
     	Gui[#Gui+1] = v.Name
     	Gui[#Gui+1] = math.random(-2e9,2e9)
@@ -591,7 +594,7 @@ if AntiCheat.HideParentInSX == false then
 end
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if AntiCheat.HideParentInSX == false then
+    if AntiCheat.HideParentInExploit == false then
     	if AntiCheat.TurboNameSpam == false then
     	    Unnamed.Name = Gui[math.random(1,#Gui)]
     	else
