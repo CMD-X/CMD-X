@@ -9,7 +9,7 @@ getParent = nil
 if game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
 	getParent = game:GetService("CoreGui").RobloxGui
 else
-	game:GetService("CoreGui")
+	getParent = game:GetService("CoreGui")
 end
 for i,GUI in pairs(game:GetService("CoreGui"):GetDescendants()) do
 	if GUI.Name == "holder" then
@@ -144,10 +144,6 @@ if Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	repeat wait() until RunDude == true
 end
-
-local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
-Sound2:Play()
 -- Variables: ------------------------|
 cmdws = workspace
 local player = cmdlp
@@ -467,6 +463,9 @@ local AntiCheat = {
     HideParentInPG = false;
     AutoAntiKick = false;
     RemoveScripts = false;
+    IntroAudioOff = false;
+    DontJumbleNames = false;
+    OneTimeScramble = false;
 }
 if game.PlaceId == 176053469 then
 	AntiCheat.RemoveScripts = true -- Nigga said, client sided anticheat LMAO
@@ -512,7 +511,14 @@ if AntiCheat.RemoveScripts == true then
         end
     end
 end
- 
+if AntiCheat.OneTimeScramble == true then
+    Unnamed.Name = math.random(1,100000)
+end
+if AntiCheat.IntroAudioOff == false then
+    local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+    Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
+    Sound2:Play()
+end
 ---------------------------------------|
 -- GUI Variables: ---------------------|
  
@@ -618,22 +624,24 @@ if AntiCheat.HideParentInExploit == false then
 end
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if AntiCheat.HideParentInExploit == false then
-    	if AntiCheat.TurboNameSpam == false then
-    	    Unnamed.Name = Gui[math.random(1,#Gui)]
-    	else
-    	    for i,v in pairs(Unnamed:GetDescendants()) do
-    	        v.Name = Gui[math.random(1,#Gui)]
-    	    end
-    	end
-    else
-        if AntiCheat.TurboNameSpam == false then
-    	    Unnamed.Name = math.random(1,1000000)
-    	else
-    	    for i,v in pairs(Unnamed:GetDescendants()) do
-    	        v.Name = math.random(1,1000000)
-    	    end
-    	end
+    if AntiCheat.DontJumbleNames == false then
+        if AntiCheat.HideParentInExploit == false then
+        	if AntiCheat.TurboNameSpam == false then
+        	    Unnamed.Name = Gui[math.random(1,#Gui)]
+        	else
+        	    for i,v in pairs(Unnamed:GetDescendants()) do
+        	        v.Name = Gui[math.random(1,#Gui)]
+        	    end
+        	end
+        else
+            if AntiCheat.TurboNameSpam == false then
+        	    Unnamed.Name = math.random(1,1000000)
+        	else
+        	    for i,v in pairs(Unnamed:GetDescendants()) do
+        	        v.Name = math.random(1,1000000)
+        	    end
+        	end
+        end
     end
 end)
 
@@ -14074,8 +14082,9 @@ if game:GetService("UserInputService").VREnabled then
 	output9.Size = UDim2.new(0.261, 0,0.107, 0)	
 end
 
-
-Sound2:Destroy()
+if AntiCheat.IntroAudioOff == false then
+    Sound2:Destroy()
+end
 
 function RGBDev(Self)	
 	RGBDevCheck = true	
