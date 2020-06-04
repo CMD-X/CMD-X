@@ -477,6 +477,11 @@ if AntiCheat.HideParentInPG == true then
     getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
 if AntiCheat.HideParentInSX == true then
+    if get_hidden_gui and sirhurt_setup_secure_run then --sirhurt support :)))))
+    	Unnamed = Instance.new("ScreenGui", get_hidden_gui())
+	Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	Unnamed.ResetOnSpawn = false
+    end
     if syn.protect_gui then
         getParent = syn.protect_gui
         syn.protect_gui(Unnamed)
