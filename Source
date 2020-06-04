@@ -13580,17 +13580,24 @@ function UpdateTracer()
 	end
 	Lines = {}
 	for i,v in pairs(cmdp:GetPlayers()) do
-	    if v and v.Character ~= nil then
-	        local PosChar = workspace.Camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(0, Scale, 0)).p)
-    		local Line = Drawing.new("Line")
-    		Line.Visible = true
-    		Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
-    		Line.To = Vector2.new(PosChar.X, PosChar.Y)
-    		Line.Color = Color3.new(255,255,255)
-    		Line.Thickness = 2
-    		Line.Transparency = 1
-    		Lines[#Lines+1] = Line
-    	end
+    	if v ~= cmdlp then
+    	    if v and v.Character ~= nil then
+    	        Head = v.Character:FindFirstChild("Head")
+        	    if Head ~= nil then
+        	        local PosChar, withinScreenBounds  = workspace.Camera:WorldToViewportPoint(Head.Position)
+            	    if withinScreenBounds then
+                		local Line = Drawing.new("Line")
+                		Line.Visible = true
+                		Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
+                		Line.To = Vector2.new(PosChar.X, PosChar.Y)
+                		Line.Color = Color3.new(255,255,255)
+                		Line.Thickness = 2
+                		Line.Transparency = 1
+                		Lines[#Lines+1] = Line
+                	end
+            	end
+        	end
+        end
 	end
 end
 
