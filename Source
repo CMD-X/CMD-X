@@ -1,7 +1,7 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.6"
-local nextupd = "1/06/2020"
+local ver = "1.2.7"
+local nextupd = "6/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
 }
@@ -2658,7 +2658,7 @@ CMDN[#CMDN+1] = {N = "light", A = {"brightness"}, CMD = "193,light/brightness,(n
 CMDN[#CMDN+1] = {N = "unlight", A = {"unbrightness"}, CMD = "194,unlight/unbrightness,,()"}
 CMDN[#CMDN+1] = {N = "esp", A = {""}, CMD = "195,esp,,Shows where all the players are on your screen."}
 CMDN[#CMDN+1] = {N = "unesp", A = {""}, CMD = "196,unesp,,()"}
-CMDN[#CMDN+1] = {N = "aimbot", A = {"ab"}, CMD = "197,aimbot/ab,,Finds the closest player to you."}
+CMDN[#CMDN+1] = {N = "aimbot", A = {"ab"}, CMD = "197,aimbot/ab,(Team/FFA),Aims at the closest player to you (Left Ctrl to toggle)."}
 CMDN[#CMDN+1] = {N = "unaimbot", A = {"unab"}, CMD = "198,unaimbot/unab,,()"}
 CMDN[#CMDN+1] = {N = "whitelistfriends", A = {"wlf"}, CMD = "199,wlf/whitelistfriends,,Whitelists friends for aimbot."}
 CMDN[#CMDN+1] = {N = "unwhitelistfriends", A = {"unwlf"}, CMD = "200,unwlf/unwhitelistfriends,,Unwhitelists friends for aimbot."}
@@ -2939,6 +2939,8 @@ CMDN[#CMDN+1] = {N = "playingaudios", A = {"paudios"}, CMD = "470,playingaudios/
 CMDN[#CMDN+1] = {N = "testaudio", A = {"taudio"}, CMD = "471,testaudio/taudio,(id),Tests audio out for you."}
 CMDN[#CMDN+1] = {N = "stopdupegears", A = {"stopdupetools"}, CMD = "472,stopdupegears/stopdupetools,,()"}
 CMDN[#CMDN+1] = {N = "stopsing", A = {""}, CMD = "473,stopsing,,()"}
+CMDN[#CMDN+1] = {N = "tracers", A = {""}, CMD = "474,tracers,,Traces players using Drawing API."}
+CMDN[#CMDN+1] = {N = "untracers", A = {""}, CMD = "475,untracers,,()"}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -7089,53 +7091,189 @@ function useCommand.unlight()
 	opx("-","Removed light/brightness from character")
 end
 
-local ESPenabled = false
-function useCommand.esp()
-	opx("-","ESP Enabled")
-	ESPenabled = true
-	for i,v in pairs(cmdp:GetChildren()) do
-		if v.ClassName == "Player" and v.Name ~= cmdp.LocalPlayer.Name then
-			ESP(v)
+Track = false
+
+function Create(xPlayer, xHead)
+	local ESP = Instance.new("BillboardGui", cmdlp.PlayerGui)
+	local ESPSquare = Instance.new("Frame", ESP)
+	local ESPText = Instance.new("TextLabel", ESP)
+	ESP.Name = "ESP"
+	ESP.Adornee = xHead
+	ESP.AlwaysOnTop = true
+	ESP.ExtentsOffset = Vector3.new(0, 1, 0)
+	ESP.Size = UDim2.new(0, 5, 0, 5)
+    for i,v in pairs(xPlayer.Character:GetChildren()) do
+        if v:IsA("BasePart") then
+            local a = Instance.new("BoxHandleAdornment", ESP)
+            a.Name = xPlayer.Name
+            a.Adornee = v
+            a.AlwaysOnTop = true
+            a.ZIndex = 0
+            a.Size = v.Size
+            a.Transparency = 0.5
+            a.Color = xPlayer.TeamColor
+        end
+    end
+	ESPText.Name = "NAME"
+	ESPText.BackgroundColor3 = Color3.new(255, 255, 255)
+	ESPText.BackgroundTransparency = 1
+	ESPText.BorderSizePixel = 0
+	ESPText.Position = UDim2.new(0, 0, 0, -40)
+	ESPText.Size = UDim2.new(1, 0, 10, 0)
+	ESPText.Visible = true
+	ESPText.ZIndex = 10
+	ESPText.Font = "ArialBold"
+	ESPText.TextSize = 20
+	if xPlayer.Team ~= nil then
+	    ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | "..xPlayer.Team
+	else
+	    ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | FFA"
+	end
+	ESPText.TextColor = xPlayer.TeamColor
+end
+
+function Clear()
+	for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
+		if v.Name == "ESP" and v:IsA("BillboardGui") then
+			v:Destroy()
 		end
 	end
+end
+
+function Find()
+	Clear()
+	Track = true
+	while wait() do
+		if Track then
+			Clear()
+			for i,v in pairs(cmdp:GetPlayers()) do
+				if v.Character and v.Character:FindFirstChild("Head") then
+					if v.Character:FindFirstChild("Head") then
+						Create(v, v.Character.Head, true)
+					end
+				end
+			end
+		end
+		wait(1)
+	end
+end
+
+local ESPEnabled = false
+function useCommand.esp()
+	opx("-","ESP Enabled")
+	Find()
+	ESPEnabled = true
+	repeat
+		wait()
+		if ESPEnabled == true then
+			Find()
+		end
+	until ESPEnabled == false
 end
 
 function useCommand.unesp()
 	opx("-","ESP Disabled")
-	ESPenabled = false
-	for i,v in pairs(cmdp:GetChildren()) do
-		local espplr = v
-		for i,c in pairs(cmdlp.PlayerGui:GetChildren()) do
-			if c.Name == espplr.Name..'_ESP' then
-				c:Destroy()
-			end
+	ESPEnabled = false
+	Track = false
+	for i = 1,10 do
+	    Clear()
+	    wait()
+	end
+end
+
+AimFor = "Head"
+
+function GetPlayer()
+    CollectingPositions = {}
+    PlrCollect = {}
+    Players1 = {}
+    for i,v in pairs(cmdp:GetPlayers()) do
+		if v ~= cmdlp then
+			table.insert(Players1, v)
 		end
 	end
-	for i,v in pairs(game.Players:GetPlayers()) do
-		local poop = v
-		local player = v.Name
-		for i,m in pairs(v.Character:GetChildren()) do
-			if m:IsA("Part") or m:IsA("MeshPart") then
-				if m.Name ~= "HumanoidRootPart" and m.Name ~= "Handle" or m:IsA("Part") then
-					m.Material = "Plastic"
+    if Teamed then
+        for i,v in pairs(Players1) do
+            if v and v.Character ~= nil and v.TeamColor ~= Plr.TeamColor then
+                local Aim = v.Character:FindFirstChild(AimFor)
+				if Aim ~= nil then
+					local Pos = (Aim.Position - workspace.CurrentCamera.CoordinateFrame.p).magnitude
+					local Ray  = Ray.new(workspace.CurrentCamera.CoordinateFrame.p, (cmdm.Hit.p - workspace.CurrentCamera.CoordinateFrame.p).unit * Pos)
+					local Hit,Pos2  = workspace:FindPartOnRay(Ray, workspace)
+					local Diff = math.floor((Pos2 - Aim.Position).magnitude)
+                    PlrCollect[v.Name..i] = {Dist = Pos, Player = v, Diff = Diff}
+					table.insert(CollectingPositions, Diff)
 				end
-			elseif m:IsA("Accessory") then
-				m.Handle.Material = "Plastic"
-			end
+            end
+        end
+    else
+        for i,v in pairs(Players1) do
+            if v and v.Character ~= nil then
+                local Aim = v.Character:FindFirstChild(AimFor)
+				if Aim ~= nil then
+					local Pos = (Aim.Position - workspace.CurrentCamera.CoordinateFrame.p).magnitude
+					local Ray  = Ray.new(workspace.CurrentCamera.CoordinateFrame.p, (cmdm.Hit.p - workspace.CurrentCamera.CoordinateFrame.p).unit * Pos)
+					local Hit,Pos2  = workspace:FindPartOnRay(Ray, workspace)
+					local Diff = math.floor((Pos2 - Aim.Position).magnitude)
+					PlrCollect[#PlrCollect+1] = {Dist = Pos, Player = v, Diff = Diff}
+					table.insert(CollectingPositions, Diff)
+				end
+            end
+        end
+    end
+    if unpack(CollectingPositions) == nil then
+		return false
+    end
+    local MagDist = math.floor(math.min(unpack(CollectingPositions)))
+	if MagDist > 20 then
+		return false
+	end
+	for i,v in pairs(PlrCollect) do
+		if v.Diff == MagDist then
+			return v.Player
 		end
 	end
+	return false
 end
 
 function useCommand.aimbot()
-	Enabledaimbot = true
-	opx("-","Aimbot enabled!")
-	BodyAimbot()
+	if arguments[2] then
+		local AimFor = "Head"
+		if arguments[2] == "Team" then Teamed = true else Teamed = false end
+		local Hotkey = 50
+		AimbotIs = true
+		opx("-","Aimbot enabled (Hold down Left Ctrl to aim)")
+		cmdm.KeyDown:connect(function(Key)
+			Key = Key:lower():byte()
+			if AimbotIs and Key == Hotkey then
+				AimbotEnabled = true
+			end
+		end)
+		cmdm.KeyUp:connect(function(Key)
+			Key = Key:lower():byte()
+			if AimbotIs and Key == Hotkey then
+				AimbotEnabled = false
+			end
+		end)
+		game:GetService("RunService").RenderStepped:connect(function()
+			if AimbotIs and AimbotEnabled then
+				local TargetPlayer = GetPlayer()
+				local Aim = TargetPlayer.Character:FindFirstChild(AimFor)
+				if Aim ~= nil then
+					if Aim then
+						workspace.CurrentCamera.CoordinateFrame = CFrame.new(workspace.CurrentCamera.CoordinateFrame.p, Aim.CFrame.p)
+					end
+				end
+			end
+		end)
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.unaimbot()
-	Enabledaimbot = false
-	opx("-","Aimbot disabled!")
-	BodyAimbot()
+	opx("-","Aimbot disabled")
+	AimbotIs = false
 end
 
 function useCommand.whitelistfriends()
@@ -13366,6 +13504,54 @@ function useCommand.freereach()
 	end
 end
 
+Lines = {}
+function UpdateTracer()
+	for i,v in pairs(Lines) do
+		v:Remove()
+	end
+	Lines = {}
+	for i,v in pairs(cmdp:GetPlayers()) do
+	    if v and v.Character ~= nil then
+	        local PosChar = workspace.Camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(0, Scale, 0)).p)
+    		local Line = Drawing.new("Line")
+    		Line.Visible = true
+    		Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
+    		Line.To = Vector2.new(PosChar.X, PosChar.Y)
+    		Line.Color = Color3.new(255,255,255)
+    		Line.Thickness = 2
+    		Line.Transparency = 1
+    		Lines[#Lines+1] = Line
+    	end
+	end
+end
+
+TracerEnabled = false
+function useCommand.tracers()
+	if Drawing then
+		opx("-","Tracers enabled")
+		for i,v in pairs(Lines) do
+			v:Remove()
+		end
+		Lines = {}
+		TracerEnabled = true
+		repeat
+			UpdateTracer()
+			wait(.0001)
+		until TracerEnabled == false
+	else
+		opx("*","Your exploit does not support Drawing API!")
+	end
+end
+
+function useCommand.untracers()
+	opx("-","Tracers disabled")
+	TracerEnabled = false
+	for i,v in pairs(Lines) do
+		v:Remove()
+	end
+	Lines = {}
+end
+
 function useCommand.antifling()	
 	if antifling == nil then 	
 		antifling = true	
@@ -13499,35 +13685,21 @@ cmdm.KeyDown:connect(function(key)
 		end
 	elseif key == hotkeyesp then
 		if ESPenabled == false then
-			ESPenabled = true
-			for i,v in pairs(cmdp:GetChildren()) do
-				if v.ClassName == "Player" and v.Name ~= cmdp.LocalPlayer.Name then
-					ESP(v)
-				end
-			end
+			Find()
+        	ESPEnabled = true
+        	repeat
+        		wait()
+        		if ESPEnabled == true then
+        			Find()
+        		end
+        	until ESPEnabled == false
 		else
-			ESPenabled = false
-			for i,v in pairs(cmdp:GetChildren()) do
-				local espplr = v
-				for i,c in pairs(cmdlp.PlayerGui:GetChildren()) do
-					if c.Name == espplr.Name..'_ESP' then
-						c:Destroy()
-					end
-				end
-			end
-			for i,v in pairs(game.Players:GetPlayers()) do
-				local poop = v
-				local player = v.Name
-				for i,m in pairs(v.Character:GetChildren()) do
-					if m:IsA("Part") or m:IsA("MeshPart") then
-						if m.Name ~= "HumanoidRootPart" and m.Name ~= "Handle" or (m:IsA("Part")) then
-							m.Material = "Plastic"
-						end
-					elseif m:IsA("Accessory") then
-						m.Handle.Material = "Plastic"
-					end
-				end
-			end
+			ESPEnabled = false
+        	Track = false
+        	for i = 1,10 do
+        	    Clear()
+        	    wait()
+        	end
 		end
 	else
 		for i,_ in pairs(hkBinds) do
