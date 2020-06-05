@@ -186,8 +186,7 @@ local Donors = {
 	["LtsDank"] = "Donor",
 	["HyperLink3"] = "Donor",
 	["Winnzie"] = "Donor",
-	["8dqt"] = "Donor",
-	["seethruclip"] = "Donor",	
+	["8dqt"] = "Donor"	
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
@@ -11004,76 +11003,67 @@ cmdp.PlayerAdded:connect(function(plr)
 	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
 		msg = plr.OsPlatform	
 		v = plr	
-		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then	
-			msg = msg:sub(1,#msg-6)	
-			if Devs[plr.Name] then	
-				local z = Devs[plr.Name]	
-				if z == "Dev" then	
-					CreateSCLabel("DEV",plr.Name,msg)	
-				elseif z == "Owner" then	
-					CreateSCLabel("OWNER",plr.Name,msg)	
-				end	
-			elseif Donors[plr.Name] then	
-				local z = Donors[plr.Name]	
-				if z == "Donor" then	
-					CreateSCLabel("$",plr.Name,msg)	
-				else	
-					CreateSCLabel("$$$",plr.Name,msg)	
-				end	
-			else	
-				CreateSCLabel("USER",plr.Name,msg)	
-			end	
-			if string.match(msg,cmdlp.Name) and mentions == true then	
-				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")	
-			end	
-		end	
+    	if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
+    		if msg:sub(#msg-5,#msg) == "nigger" then	
+    			msg = msg:sub(1,#msg-6)	
+    			if Devs[plr.Name] then	
+    				local z = Devs[plr.Name]	
+    				if z == "Dev" then	
+    					CreateSCLabel("DEV"..plr.Name,msg)	
+    				elseif z == "Owner" then	
+    					CreateSCLabel("OWNER"..plr.Name,msg)	
+    				end	
+    			elseif Donors[plr.Name] then	
+    				local z = Donors[plr.Name]	
+    				if z == "Donor" then	
+    					CreateSCLabel("$"..plr.Name,msg)	
+    				else	
+    					CreateSCLabel("$$$"..plr.Name,msg)	
+    				end	
+    			else	
+    				CreateSCLabel("USER"..plr.Name,msg)	
+    			end	
+    			if string.match(msg,cmdlp.Name) and mentions == true then	
+    				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")	
+    			end	
+    		end
+    	end
 	end)	
 end)
 for i,v in pairs(cmdp:GetPlayers()) do
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = v.OsPlatform
-		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then
-			msg = msg:sub(1,#msg-6)
-			CreateSCLabel(v.Name,msg)
-			if string.match(msg,cmdlp.Name) and mentions == true then
-				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
-			end
-		end
+		plr = v
+		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
+    		if msg:sub(#msg-5,#msg) == "nigger" then
+    			msg = msg:sub(1,#msg-6)
+    			if Devs[plr.Name] then	
+    				local z = Devs[plr.Name]	
+    				if z == "Dev" then	
+    					CreateSCLabel("DEV"..plr.Name,msg)	
+    				elseif z == "Owner" then	
+    					CreateSCLabel("OWNER"..plr.Name,msg)	
+    				end	
+    			elseif Donors[plr.Name] then	
+    				local z = Donors[plr.Name]	
+    				if z == "Donor" then	
+    					CreateSCLabel("$"..plr.Name,msg)	
+    				else	
+    					CreateSCLabel("$$$"..plr.Name,msg)	
+    				end	
+    			else	
+    				CreateSCLabel("USER"..plr.Name,msg)	
+    			end
+    			if string.match(msg,cmdlp.Name) and mentions == true then
+    				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
+    			end
+    		end
+    	end
 	end)
 end
 
 function useCommand.schatbp()
 	opx("*","No longer used")
-end
-
-for i,v in pairs(cmdp:GetPlayers()) do	
-	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
-		msg = v.OsPlatform	
-		if v.SimulationRadius == 139 and msg:sub(#msg-5,#msg) == "nigger" then	
-			msg = msg:sub(1,#msg-6)	
-			local plr = v	
-			if Devs[plr.Name] then	
-				local z = Devs[plr.Name]	
-				if z == "Dev" then	
-					CreateSCLabel("DEV",plr.Name,msg)	
-				elseif z == "Owner" then	
-					CreateSCLabel("OWNER",plr.Name,msg)	
-				end	
-			elseif Donors[plr.Name] then	
-				local z = Donors[plr.Name]	
-				if z == "Donor" then	
-					CreateSCLabel("$",plr.Name,msg)	
-				else	
-					CreateSCLabel("$$$",plr.Name,msg)	
-				end	
-			else	
-				CreateSCLabel("USER",plr.Name,msg)	
-			end	
-			if string.match(msg,cmdlp.Name) and mentions == true then	
-				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")	
-			end	
-		end	
-	end)	
 end
 
 function useCommand.whisperlogs()
@@ -14091,9 +14081,7 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 if AntiCheat.IntroAudioOff == false then
-	if Sound2 then
-    	Sound2:Destroy()
-	end
+    Sound2:Destroy()
 end
 
 function RGBDev(Self)	
