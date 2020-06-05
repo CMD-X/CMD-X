@@ -14090,7 +14090,9 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 if AntiCheat.IntroAudioOff == false then
-    Sound2:Destroy()
+	if Sound2 then
+    	Sound2:Destroy()
+	end
 end
 
 function RGBDev(Self)	
