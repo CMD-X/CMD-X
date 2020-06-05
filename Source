@@ -186,7 +186,8 @@ local Donors = {
 	["LtsDank"] = "Donor",
 	["HyperLink3"] = "Donor",
 	["Winnzie"] = "Donor",
-	["8dqt"] = "Donor"	
+	["8dqt"] = "Donor",
+	["seethruclip"] = "Donor",	
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
