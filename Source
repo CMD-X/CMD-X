@@ -1,7 +1,7 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.7"
-local nextupd = "6/06/2020"
+local ver = "1.2.8"
+local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
 }
@@ -165,11 +165,12 @@ local Devs = {
 	["octoberboy68plus1"] = "Owner",
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
-	["commando3"] = "Owner",
+	["commando3"] = "Owner", -- RIP account softlocked by Roblox, fuck you Roblox.
 	["CMD_X"] = "Owner",
 	["Himillumine"] = "Dev",
 	["Luyler"] = "Dev",
 	["Curvn"] = "Dev",
+	["4444445678102"] = "Owner",
 }	
 local Donors = {	
 	["Zuhqu"] = "Donor",
@@ -2843,7 +2844,7 @@ CMDN[#CMDN+1] = {N = "removegears", A = {"rgears","removetools","rtools"}, CMD =
 CMDN[#CMDN+1] = {N = "unclicktp", A = {"unctrltp"}, CMD = "308,unclicktp/unctrltp,,()"}
 CMDN[#CMDN+1] = {N = "unswimwalk", A = {"unswim"}, CMD = "309,unswim/unswimwalk,,()"}
 CMDN[#CMDN+1] = {N = "unlagchat", A = {""}, CMD = "310,unlagchat,,()"}
-CMDN[#CMDN+1] = {N = "--", A = {""}, CMD = "311,--,,"}
+CMDN[#CMDN+1] = {N = "playerstalker", A = {"pstalker"}, CMD = "311,playerstalker/pstalker,,Loads PlayerStalker GUI."}
 CMDN[#CMDN+1] = {N = "clip", A = {"c"}, CMD = "312,clip/c,,()noclip"}
 CMDN[#CMDN+1] = {N = "orbit", A = {"orb"}, CMD = "313,orbit/orb,(plr),Orbits a player.", ARG = "Player"}
 CMDN[#CMDN+1] = {N = "closeorbit", A = {"corb"}, CMD = "314,closeorbit/corb,(plr),Close orbits a player.", ARG = "Player"}
@@ -2876,7 +2877,7 @@ CMDN[#CMDN+1] = {N = "unclientfreeze", A = {"uncfreeze"}, CMD = "338,unclientfre
 CMDN[#CMDN+1] = {N = "respawndead", A = {"redead"}, CMD = "339,respawndead/redead,,Refreshes your character when death occurs."}
 CMDN[#CMDN+1] = {N = "unrespawndead", A = {"unredead"}, CMD = "340,unrespawndead/unredead,,()"}
 CMDN[#CMDN+1] = {N = "god", A = {""}, CMD = "341,god,,Gods your character (wont work on games that use :LoadCharacter())."}
-CMDN[#CMDN+1] = {N = "-", A = {""}, CMD = "342,-,,"}
+CMDN[#CMDN+1] = {N = "avatar", A = {""}, CMD = "342,avatar,(userid),Shows UserId's avatar."}
 CMDN[#CMDN+1] = {N = "statistics", A = {""}, CMD = "343,statistics,,Shows your most used commands."}
 CMDN[#CMDN+1] = {N = "bluewarn", A = {""}, CMD = "344,bluewarn,(str),Sends a warning to F9 in blue."}
 CMDN[#CMDN+1] = {N = "grabip", A = {"ip"}, CMD = "345,grabip/ip,(plr),Grabs a fake IP designed to scare the player (RANDOM).", ARG = "Player"}
@@ -4298,6 +4299,15 @@ function useCommand.bodypositionwalkspeed()
 		wait()
 		rocket.Position = Vector3.new(cmdlp.Character.Torso.Position.X+cmdlp.Character.Humanoid.MoveDirection.X*speed*5.4,cmdlp.Character.Torso.Position.Y,cmdlp.Character.Torso.Position.Z+cmdlp.Character.Humanoid.MoveDirection.Z*speed*5.4)
 	end
+end
+
+function useCommand.avatar()
+    if cmdnum(arguments[2]) then
+        opx("-","Inspecting avatar")
+        game:GetService("GuiService"):InspectPlayerFromUserId(arguments[2])
+    else
+        opx("*","2 arguments are required!")
+    end
 end
 
 function useCommand.halve()
@@ -6039,6 +6049,12 @@ function useCommand.remotespy()
 	opx("-","Loading Mr Spy")
 	loadstring(game:HttpGet("https://pastebin.com/raw/FEKUsHdA", true))()
 	opx("-","Mr Spy has loaded")
+end
+
+function useCommand.playerstalker()
+    opx("-","Loading PlayerStalker")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/PlayerStalkerV2",true))()
+    opx("-","Loaded PlayerStalker")
 end
 
 function useCommand.badger()
