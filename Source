@@ -483,7 +483,7 @@ if AntiCheat.HideParentInExploit == true then
         getParent = syn.protect_gui
         syn.protect_gui(Unnamed)
     elseif get_hidden_gui then
-        getParet = get_hidden_gui
+        getParent = get_hidden_gui
         Unnamed.Parent = get_hidden_gui()
     else
         Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui.","Run Anyway",true)
