@@ -171,6 +171,7 @@ local Devs = {
 	["Luyler"] = "Dev",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
+	["K5RM"] = "Dev",
 }	
 local Donors = {	
 	["Zuhqu"] = "Donor",
