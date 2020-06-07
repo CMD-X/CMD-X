@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.8"
+local ver = "1.2.9"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -3815,7 +3815,7 @@ MangeScrollEnter.BorderSizePixel = 0
 MangeScrollEnter.Position = UDim2.new(0.0268278271, 0, 0.10493198, 0)
 MangeScrollEnter.Size = UDim2.new(0, 401, 0, 214)
 
-function Template(name,entry)
+function Template2(name,entry)
 	local TemplateFrame = Instance.new("Frame")
 	local TemplateName = Instance.new("TextLabel")
 	local TemplateBtnRemove = Instance.new("TextButton")
@@ -3863,6 +3863,7 @@ function Template(name,entry)
 	TemplateBtnRemove.MouseButton1Down:Connect(function()
 		table.remove(enterCMD,entry)
 		TemplateBtnRemove.Parent:Destroy()
+		updatesaves()
 	end)
 
 	TemplateBtnAdd.Name = "TemplateBtnAdd"
@@ -3878,8 +3879,10 @@ function Template(name,entry)
 	TemplateBtnAdd.TextSize = 12.000
 	TemplateBtnAdd.MouseButton1Down:Connect(function()
 		SlideOutEnter.Visible = true
+		SlideOutEnter:TweenSize(UDim2.new(0, 215, 0, 294), 'In', 'Quint', 0.5)
 		CurrentEdit = entry
 		TitleSlideEnter.Text = enterCMD[entry].N
+		updatesaves()
 	end)
 
 	TemplateFrame:TweenPosition(UDim2.new(0,3,0,alls2), 'In', 'Quint', 0.5)
@@ -3897,10 +3900,12 @@ BtnAddEnter.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnAddEnter.TextSize = 14.000
 BtnAddEnter.MouseButton1Down:Connect(function()
 	SlideOutEnter.Visible = true
+	SlideOutEnter:TweenSize(UDim2.new(0, 215, 0, 294), 'In', 'Quint', 0.5)
 	enterCMD[#enterCMD+1] = {N = "Unnamed"}
 	CurrentEdit = #enterCMD
 	TitleSlideEnter.Text = enterCMD[#enterCMD].N
-	Template(enterCMD[#enterCMD].N,#enterCMD)
+	Template2(enterCMD[#enterCMD].N,#enterCMD)
+	updatesaves()
 end)
 
 BtnClearEnter.Name = "BtnClearEnter"
@@ -3920,7 +3925,9 @@ BtnClearEnter.MouseButton1Down:Connect(function()
 	Edit2Enter.Text = ""
 	Edit3Enter.Text = ""
 	SlideOutEnter.Visible = false
+	SlideOutEnter:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 ManageTitleEnter.Name = "ManageTitleEnter"
@@ -3930,7 +3937,7 @@ ManageTitleEnter.BackgroundTransparency = 1.000
 ManageTitleEnter.Position = UDim2.new(0.263266504, 0, 0.00765306223, 0)
 ManageTitleEnter.Size = UDim2.new(0, 200, 0, 32)
 ManageTitleEnter.Font = Enum.Font.GothamSemibold
-ManageTitleEnter.Text = "CMD-X ... MANAGER"
+ManageTitleEnter.Text = "CMD-X EnterCMDs MANAGER"
 ManageTitleEnter.TextColor3 = Color3.fromRGB(255, 255, 255)
 ManageTitleEnter.TextSize = 14.000
 
@@ -3940,7 +3947,7 @@ SlideOutEnter.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 SlideOutEnter.BackgroundTransparency = 0.500
 SlideOutEnter.BorderSizePixel = 0
 SlideOutEnter.Position = UDim2.new(-0.507332683, 0, 0, 0)
-SlideOutEnter.Size = UDim2.new(0, 215, 0, 294)
+SlideOutEnter.Size = UDim2.new(0, 0, 0, 294)
 SlideOutEnter.Visible = false
 
 Edit1Enter.Name = "Edit1Enter"
@@ -4008,6 +4015,7 @@ CancelBtnEnter.MouseButton1Down:Connect(function()
 	Edit2Enter.Text = ""
 	Edit3Enter.Text = ""
 	SlideOutEnter.Visible = false
+	SlideOutEnter:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
 end)
 
@@ -4038,7 +4046,9 @@ ApplyBtnEnter.MouseButton1Down:Connect(function()
 	Edit2Enter.Text = ""
 	Edit3Enter.Text = ""
 	SlideOutEnter.Visible = false
+	SlideOutEnter:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 BtnExitEnter.Name = "BtnExitEnter"
@@ -4063,7 +4073,9 @@ BtnExitEnter.MouseButton1Down:Connect(function()
 	Edit2Enter.Text = ""
 	Edit3Enter.Text = ""
 	SlideOutEnter.Visible = false
+	SlideOutEnter:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 function useCommand.entercmdnew()
@@ -4081,7 +4093,7 @@ function useCommand.entercmds()
 	MangeScrollEnter:ClearAllChildren()
 	ManageHolderEnter.Visible = true
 	for i,v in pairs(enterCMD) do
-		Template(enterCMD[i].N,i)
+		Template2(enterCMD[i].N,i)
 	end
 end
 
@@ -10372,7 +10384,7 @@ MangeScrollHotkey.BorderSizePixel = 0
 MangeScrollHotkey.Position = UDim2.new(0.0268278271, 0, 0.10493198, 0)
 MangeScrollHotkey.Size = UDim2.new(0, 401, 0, 214)
 
-function Template(name,entry)
+function Template1(name,entry)
 	local TemplateFrame = Instance.new("Frame")
 	local TemplateName = Instance.new("TextLabel")
 	local TemplateBtnRemove = Instance.new("TextButton")
@@ -10420,6 +10432,7 @@ function Template(name,entry)
 	TemplateBtnRemove.MouseButton1Down:Connect(function()
 		table.remove(hkBinds,entry)
 		TemplateBtnRemove.Parent:Destroy()
+		updatesaves()
 	end)
 
 	TemplateBtnAdd.Name = "TemplateBtnAdd"
@@ -10435,8 +10448,10 @@ function Template(name,entry)
 	TemplateBtnAdd.TextSize = 12.000
 	TemplateBtnAdd.MouseButton1Down:Connect(function()
 		SlideOutHotkey.Visible = true
+		SlideOutHotkey:TweenSize(UDim2.new(0, 215, 0, 294), 'In', 'Quint', 0.5)
 		CurrentEdit = entry
 		TitleSlideHotkey.Text = hkBinds[entry].C
+		updatesaves()
 	end)
 
 	TemplateFrame:TweenPosition(UDim2.new(0,3,0,alls2), 'In', 'Quint', 0.5)
@@ -10454,10 +10469,12 @@ BtnAddHotkey.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnAddHotkey.TextSize = 14.000
 BtnAddHotkey.MouseButton1Down:Connect(function()
 	SlideOutHotkey.Visible = true
-	hkBinds[#hkBinds+1] = {K "N/A", C = "Unnamed"}
+	SlideOutHotkey:TweenSize(UDim2.new(0, 215, 0, 294), 'In', 'Quint', 0.5)
+	hkBinds[#hkBinds+1] = {K = "N/A", C = "Unnamed"}
 	CurrentEdit = #hkBinds
 	TitleSlideHotkey.Text = hkBinds[#hkBinds].C
-	Template(hkBinds[#hkBinds].C,#hkBinds)
+	Template1(hkBinds[#hkBinds].C,#hkBinds)
+	updatesaves()
 end)
 
 BtnClearHotkey.Name = "BtnClearHotkey"
@@ -10477,7 +10494,9 @@ BtnClearHotkey.MouseButton1Down:Connect(function()
 	Edit2Hotkey.Text = ""
 	Edit3Hotkey.Text = ""
 	SlideOutHotkey.Visible = false
+	SlideOutHotkey:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 ManageTitleHotkey.Name = "ManageTitleHotkey"
@@ -10497,7 +10516,7 @@ SlideOutHotkey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 SlideOutHotkey.BackgroundTransparency = 0.500
 SlideOutHotkey.BorderSizePixel = 0
 SlideOutHotkey.Position = UDim2.new(-0.507332683, 0, 0, 0)
-SlideOutHotkey.Size = UDim2.new(0, 215, 0, 294)
+SlideOutHotkey.Size = UDim2.new(0, 0, 0, 294)
 SlideOutHotkey.Visible = false
 
 Edit1Hotkey.Name = "Edit1Hotkey"
@@ -10595,7 +10614,9 @@ ApplyBtnHotkey.MouseButton1Down:Connect(function()
 	Edit2Hotkey.Text = ""
 	Edit3Hotkey.Text = ""
 	SlideOutHotkey.Visible = false
+	SlideOutHotkey:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 BtnExitHotkey.Name = "BtnExitHotkey"
@@ -10620,7 +10641,9 @@ BtnExitHotkey.MouseButton1Down:Connect(function()
 	Edit2Hotkey.Text = ""
 	Edit3Hotkey.Text = ""
 	SlideOutHotkey.Visible = false
+	SlideOutHotkey:TweenSize(UDim2.new(0, 0, 0, 294), 'Out', 'Quint', 0.5)
 	CurrentEdit = ""
+	updatesaves()
 end)
 
 function useCommand.hotkeynew()
@@ -10635,10 +10658,11 @@ function useCommand.hotkeynew()
 end
 
 function useCommand.hotkeys()
+	opx("-","Hotkeys opened")
 	MangeScrollHotkey:ClearAllChildren()
 	ManageHolderHotkey.Visible = true
 	for i,v in pairs(hkBinds) do
-		Template(hkBinds[i].C,i)
+		Template1(hkBinds[i].C,i)
 	end
 end
 
