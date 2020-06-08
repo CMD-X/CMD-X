@@ -9762,6 +9762,8 @@ function useCommand.emote()
 				Sleep = 4686925579;
 				["Hero Landing"] = 5104344710;
 				Confused = 4940561610;
+				Cower = 4940563117;
+				Tantrum = 5104341999;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -11439,6 +11441,8 @@ function useCommand.animsync()
 						Sleep = 4686925579;
 						["Hero Landing"] = 5104344710;
 						Confused = 4940561610;
+						Cower = 4940563117;
+						Tantrum = 5104341999;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
