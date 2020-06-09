@@ -470,7 +470,11 @@ local AntiCheat = {
     PrintingOff = false;
     NoGui = false;
 }
-
+if game.PlaceId == 2377868063 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
 if game.PlaceId == 3664995855 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
@@ -487,7 +491,25 @@ if game.PlaceId == 4802536077 then
     AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 176053469 then
-	AntiCheat.RemoveScripts = true -- Nigga said, client sided anticheat LMAO
+    local M = Instance.new("Message",workspace); M.Text = "Breaking dummiez hurr-durr clientsided anticheat LLLLLLLLL poggers @hz#4777 poggers @pigeon#1818, please wait 20 seconds (YOUR GAME WILL LAG)."
+    local lp = game:GetService("Players").LocalPlayer.PlayerScripts
+    local mtable = getrawmetatable(lp)
+    local oldindex = mtable.__index
+    
+    setreadonly(mtable, false)
+    mtable.__index = newcclosure(function(...)
+        if not checkcaller() and get_calling_script().Parent == nil then
+            return nil
+        end
+        return oldindex(...)
+    end)
+    setreadonly(mtable, true)
+    
+    wait(20)
+    setreadonly(mtable, false)
+    mtable.__index = oldindex
+    setreadonly(mtable,true)
+    M:Destroy()
 end
 if game.PlaceId == 17541193 then
     AntiCheat.ScriptDetectOff = true
