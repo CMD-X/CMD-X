@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.2.9"
+local ver = "1.3.0"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -2908,7 +2908,7 @@ CMDN[#CMDN+1] = {N = "noshow", A = {""}, CMD = "368,noshow,(on/off),Turns on or 
 CMDN[#CMDN+1] = {N = "rejoindiff", A = {"rjdiff"}, CMD = "369,rejoindiff/rjdiff,(smallest/small/largest/quick),Rejoins but takes you to a differnt server (Server Hopper)."}
 CMDN[#CMDN+1] = {N = "antikick", A = {""}, CMD = "370,antikick,,Stops you from being kicked."}
 CMDN[#CMDN+1] = {N = "servers", A = {""}, CMD = "371,servers,,Lists servers."}
-CMDN[#CMDN+1] = {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(userid|gameid),Streamsnipes a user."}
+CMDN[#CMDN+1] = {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."}
 CMDN[#CMDN+1] = {N = "listentercmds", A = {""}, CMD = "373,listentercmds,,Lists enter cmds."}
 CMDN[#CMDN+1] = {N = "listhotkeys", A = {""}, CMD = "374,listhotkeys,,Lists hotkeys."}
 CMDN[#CMDN+1] = {N = "spoofos", A = {""}, CMD = "375,spoofos,(str),Spoofs your OS."}
@@ -3012,6 +3012,8 @@ CMDN[#CMDN+1] = {N = "stopdupegears", A = {"stopdupetools"}, CMD = "472,stopdupe
 CMDN[#CMDN+1] = {N = "stopsing", A = {""}, CMD = "473,stopsing,,()"}
 CMDN[#CMDN+1] = {N = "tracers", A = {""}, CMD = "474,tracers,,Traces players using Drawing API."}
 CMDN[#CMDN+1] = {N = "untracers", A = {""}, CMD = "475,untracers,,()"}
+CMDN[#CMDN+1] = {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dirjoin,(placeid/this|guid),Directly joins the GUID in question."}
+CMDN[#CMDN+1] = {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."}
 currentCMDNUM = "437"
 local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
@@ -12030,12 +12032,17 @@ end
 
 function useCommand.streamsnipe()
 	if arguments[3] then
+	    arguments[2] = cmdp:GetUserIdFromNameAsync(arguments[2])
 		opx("-","Scanning games, this may take a while...")
 		local res = game:HttpGet("https://www.roblox.com/headshot-thumbnail/json?userId="..arguments[2].."&width=48&height=48")
 		local HttpURL = json.decode(res)
 		local ThumbGrab = HttpURL["Url"]
 		local Thumb = ThumbGrab
-		local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..arguments[3].."&startindex=")
+		if arguments[3] == "this" then
+		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
+		else
+		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..arguments[3].."&startindex=")    
+	    end
 		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL2.."0"))
 		for i = 0,Http.TotalCollectionSize do
 			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL2..i))
@@ -12053,6 +12060,30 @@ function useCommand.streamsnipe()
 	else
 		opx("*","3 arguments are needed!")
 	end
+end
+
+function useCommand.irltime()
+    for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
+        if v:IsA("Sky") then v:Destroy() end
+    end
+    local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer)
+    local URL = ("https://restcountries.eu/rest/v2/alpha/"..reg)
+    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    print(Http.latlng[1])
+    game:GetService("Lighting").GeographicLatitude = Http.latlng[1]
+    while wait(1) do
+    	game:GetService("Lighting").TimeOfDay = os.date("!*t").hour + 1 ..":"..os.date("!*t").min..":00"
+    end
+end
+
+function useCommand.directjoin()
+    if arguments[3] then
+        opx("-","Joining server")
+        if arguments[2] == "this" then arguments[2] = game.PlaceId end
+        game:GetService("TeleportService"):TeleportToPlaceInstance(arguments[2],arguments[3],cmdlp)
+    else
+        opx("*","3 arguments are required!")
+    end
 end
 
 pcall(function()
