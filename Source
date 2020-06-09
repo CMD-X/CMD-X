@@ -26,19 +26,18 @@ if game:GetService("UserInputService").VREnabled then
 	getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
 
-Unnamed = Instance.new("ScreenGui")
+Unnamed = Instance.new("ScreenGui", getParent)
 
 Unnamed.Name = "Unnamed"
-Unnamed.Parent = getParent
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
-	LoadingFrame = Instance.new("Frame"); RandomReason = Instance.new("TextLabel")
-	RunQuestion = Instance.new("TextLabel"); Executors = Instance.new("TextLabel")
-	Paid = Instance.new("TextLabel"); Free = Instance.new("TextLabel")
-	Help = Instance.new("TextLabel"); HmmButton = Instance.new("TextButton")
+	LoadingFrame = Instance.new("Frame", getParent); RandomReason = Instance.new("TextLabel", getParent)
+	RunQuestion = Instance.new("TextLabel", getParent); Executors = Instance.new("TextLabel", getParent)
+	Paid = Instance.new("TextLabel", getParent); Free = Instance.new("TextLabel", getParent)
+	Help = Instance.new("TextLabel", getParent); HmmButton = Instance.new("TextButton", getParent)
 
 	LoadingFrame.Name = "LoadingFrame"
 	LoadingFrame.Parent = Unnamed
@@ -468,7 +467,25 @@ local AntiCheat = {
     IntroAudioOff = false;
     DontJumbleNames = false;
     OneTimeScramble = false;
+    PrintingOff = false;
+    NoGui = false;
 }
+
+if game.PlaceId == 3664995855 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
+if game.PlaceId == 4160228187 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
+if game.PlaceId == 4802536077 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
 if game.PlaceId == 176053469 then
 	AntiCheat.RemoveScripts = true -- Nigga said, client sided anticheat LMAO
 end
@@ -525,87 +542,87 @@ end
 -- GUI Variables: ---------------------|
  
 -- Holder --
-holder = Instance.new("Frame")
+holder = Instance.new("Frame", getParent)
 -- Output --
-output = Instance.new("Frame")
-output1 = Instance.new("TextLabel")
-output2 = Instance.new("TextLabel")
-output3 = Instance.new("TextLabel")
-output4 = Instance.new("TextLabel")
-output5 = Instance.new("TextLabel")
-output6 = Instance.new("TextLabel")
-output7 = Instance.new("TextLabel")
-output8 = Instance.new("TextLabel")
-output9 = Instance.new("TextLabel")
+output = Instance.new("Frame", getParent)
+output1 = Instance.new("TextLabel", getParent)
+output2 = Instance.new("TextLabel", getParent)
+output3 = Instance.new("TextLabel", getParent)
+output4 = Instance.new("TextLabel", getParent)
+output5 = Instance.new("TextLabel", getParent)
+output6 = Instance.new("TextLabel", getParent)
+output7 = Instance.new("TextLabel", getParent)
+output8 = Instance.new("TextLabel", getParent)
+output9 = Instance.new("TextLabel", getParent)
 -- CMDBar --
-entry = Instance.new("Frame")
-user = Instance.new("TextLabel")
-cmd = Instance.new("TextBox")
-cmdsu = Instance.new("TextLabel")
+entry = Instance.new("Frame", getParent)
+user = Instance.new("TextLabel", getParent)
+cmd = Instance.new("TextBox", getParent)
+cmdsu = Instance.new("TextLabel", getParent)
 -- Random --
-name = Instance.new("Frame")
-local ehcmdshit = Instance.new("ScrollingFrame")
-local cmdslool = Instance.new("TextLabel")
-local shitlabeljpeg = Instance.new("TextLabel")
-local ScreenGuipoo = Instance.new("ScreenGui")
-local TextButtonpoo = Instance.new("TextButton")
+name = Instance.new("Frame", getParent)
+local ehcmdshit = Instance.new("ScrollingFrame", getParent)
+local cmdslool = Instance.new("TextLabel", getParent)
+local shitlabeljpeg = Instance.new("TextLabel", getParent)
+local ScreenGuipoo = Instance.new("ScreenGui", getParent)
+local TextButtonpoo = Instance.new("TextButton", getParent)
 -- Command GUIs --
-local ScrollingFrame = Instance.new("ScrollingFrame")
-local logsframe = Instance.new("Frame")
-local logstitle = Instance.new("TextButton")
-local cmdiframe = Instance.new("Frame")
-local cmdititle = Instance.new("TextButton")
-local xcmdi = Instance.new("TextButton")
-local CMDlist = Instance.new("Frame")
-local cmdstitle = Instance.new("TextButton")
-local profile = Instance.new("TextLabel")
-local avatarframe = Instance.new("Frame")
-local avatartitle = Instance.new("TextButton")
-local avatarimage = Instance.new("ImageLabel")
-local profileview = Instance.new("TextLabel")
-local accountage = Instance.new("TextLabel")
-local userid = Instance.new("TextLabel")
-local fecheck = Instance.new("TextLabel")
-local operatingsystem = Instance.new("TextLabel")
-local vrheadset = Instance.new("TextLabel")
-local creditsavatar = Instance.new("TextLabel")
-local hs = Instance.new("TextButton")
-local at = Instance.new("TextButton")
-local ab = Instance.new("TextButton")
-local hss = Instance.new("TextButton")
-local gameframe = Instance.new("Frame")
-local gametitle = Instance.new("TextButton")
-local gameimage = Instance.new("ImageLabel")
-local gameview = Instance.new("TextLabel")
-local gameid = Instance.new("TextLabel")
-local uptime = Instance.new("TextLabel")
-local creditsgame = Instance.new("TextLabel")
-local textl = Instance.new("TextLabel")
-local xgameinfo = Instance.new("TextButton")
-local configframe = Instance.new("Frame")
-local configtitle = Instance.new("TextButton")
-local af2 = Instance.new("ScrollingFrame")
-local osconfigtext = Instance.new("TextButton")
-local osconfigtext2 = Instance.new("TextButton")
-local oscheck2 = Instance.new("TextLabel")
-local oscheck = Instance.new("TextLabel")
-local xlogs = Instance.new("TextButton")
-local xconfig = Instance.new("TextButton")
-local xavatar = Instance.new("TextButton")
-local xcmds = Instance.new("TextButton")
-local tabs = Instance.new("Frame")
-local tabsbar = Instance.new("TextButton")
-local cmdsbar = Instance.new("TextButton")
-local logsbar = Instance.new("TextButton")
-local avatarbar = Instance.new("TextButton")
-local gamebar = Instance.new("TextButton")
-local incomingbar = Instance.new("TextButton")
-local incomingbar2 = Instance.new("TextButton")
-local Scrollingad = Instance.new("ScrollingFrame")
-local adframe = Instance.new("Frame")
-local adtitle = Instance.new("TextButton")
-local xad = Instance.new("TextButton")
-local adbar = Instance.new("TextButton")
+local ScrollingFrame = Instance.new("ScrollingFrame", getParent)
+local logsframe = Instance.new("Frame", getParent)
+local logstitle = Instance.new("TextButton", getParent)
+local cmdiframe = Instance.new("Frame", getParent)
+local cmdititle = Instance.new("TextButton", getParent)
+local xcmdi = Instance.new("TextButton", getParent)
+local CMDlist = Instance.new("Frame", getParent)
+local cmdstitle = Instance.new("TextButton", getParent)
+local profile = Instance.new("TextLabel", getParent)
+local avatarframe = Instance.new("Frame", getParent)
+local avatartitle = Instance.new("TextButton", getParent)
+local avatarimage = Instance.new("ImageLabel", getParent)
+local profileview = Instance.new("TextLabel", getParent)
+local accountage = Instance.new("TextLabel", getParent)
+local userid = Instance.new("TextLabel", getParent)
+local fecheck = Instance.new("TextLabel", getParent)
+local operatingsystem = Instance.new("TextLabel", getParent)
+local vrheadset = Instance.new("TextLabel", getParent)
+local creditsavatar = Instance.new("TextLabel", getParent)
+local hs = Instance.new("TextButton", getParent)
+local at = Instance.new("TextButton", getParent)
+local ab = Instance.new("TextButton", getParent)
+local hss = Instance.new("TextButton", getParent)
+local gameframe = Instance.new("Frame", getParent)
+local gametitle = Instance.new("TextButton", getParent)
+local gameimage = Instance.new("ImageLabel", getParent)
+local gameview = Instance.new("TextLabel", getParent)
+local gameid = Instance.new("TextLabel", getParent)
+local uptime = Instance.new("TextLabel", getParent)
+local creditsgame = Instance.new("TextLabel", getParent)
+local textl = Instance.new("TextLabel", getParent)
+local xgameinfo = Instance.new("TextButton", getParent)
+local configframe = Instance.new("Frame", getParent)
+local configtitle = Instance.new("TextButton", getParent)
+local af2 = Instance.new("ScrollingFrame", getParent)
+local osconfigtext = Instance.new("TextButton", getParent)
+local osconfigtext2 = Instance.new("TextButton", getParent)
+local oscheck2 = Instance.new("TextLabel", getParent)
+local oscheck = Instance.new("TextLabel", getParent)
+local xlogs = Instance.new("TextButton", getParent)
+local xconfig = Instance.new("TextButton", getParent)
+local xavatar = Instance.new("TextButton", getParent)
+local xcmds = Instance.new("TextButton", getParent)
+local tabs = Instance.new("Frame", getParent)
+local tabsbar = Instance.new("TextButton", getParent)
+local cmdsbar = Instance.new("TextButton", getParent)
+local logsbar = Instance.new("TextButton", getParent)
+local avatarbar = Instance.new("TextButton", getParent)
+local gamebar = Instance.new("TextButton", getParent)
+local incomingbar = Instance.new("TextButton", getParent)
+local incomingbar2 = Instance.new("TextButton", getParent)
+local Scrollingad = Instance.new("ScrollingFrame", getParent)
+local adframe = Instance.new("Frame", getParent)
+local adtitle = Instance.new("TextButton", getParent)
+local xad = Instance.new("TextButton", getParent)
+local adbar = Instance.new("TextButton", getParent)
 ---------------------------------------|
 -- GUI Objects: -----------------------|
 output.Name = "output"
@@ -618,45 +635,47 @@ output.Style = Enum.FrameStyle.RobloxRound
 output.Visible = false
 
 local Gui = {}
-if AntiCheat.HideParentInExploit == false then
+if AntiCheat.HideParentInExploit == false and getParent ~= game then
     for i,v in pairs(getParent:GetDescendants()) do
     	Gui[#Gui+1] = v.Name
     	Gui[#Gui+1] = math.random(-2e9,2e9)
     end
 end
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    if AntiCheat.DontJumbleNames == false then
-        if AntiCheat.HideParentInExploit == false then
-        	if AntiCheat.TurboNameSpam == false then
-        	    Unnamed.Name = Gui[math.random(1,#Gui)]
-        	else
-        	    for i,v in pairs(Unnamed:GetDescendants()) do
-        	        v.Name = Gui[math.random(1,#Gui)]
-        	    end
-        	end
-        else
-            if AntiCheat.TurboNameSpam == false then
-        	    Unnamed.Name = math.random(1,1000000)
-        	else
-        	    for i,v in pairs(Unnamed:GetDescendants()) do
-        	        v.Name = math.random(1,1000000)
-        	    end
-        	end
+if getParent ~= game then
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if AntiCheat.DontJumbleNames == false then
+            if AntiCheat.HideParentInExploit == false then
+            	if AntiCheat.TurboNameSpam == false then
+            	    Unnamed.Name = Gui[math.random(1,#Gui)]
+            	else
+            	    for i,v in pairs(Unnamed:GetDescendants()) do
+            	        v.Name = Gui[math.random(1,#Gui)]
+            	    end
+            	end
+            else
+                if AntiCheat.TurboNameSpam == false then
+            	    Unnamed.Name = math.random(1,1000000)
+            	else
+            	    for i,v in pairs(Unnamed:GetDescendants()) do
+            	        v.Name = math.random(1,1000000)
+            	    end
+            	end
+            end
         end
-    end
-end)
+    end)
+end
 
 function Confirm(Reason,Reason2)
 	Confirmation = false
 	HeyDestroyed = false
 	
-	ConfirmationFrame = Instance.new("Frame")
-	Sure = Instance.new("TextLabel")
-	Not = Instance.new("TextLabel")
-	Help2 = Instance.new("TextLabel")
-	Yes = Instance.new("TextButton")
-	No = Instance.new("TextButton")
+	ConfirmationFrame = Instance.new("Frame", getParent)
+	Sure = Instance.new("TextLabel", getParent)
+	Not = Instance.new("TextLabel", getParent)
+	Help2 = Instance.new("TextLabel", getParent)
+	Yes = Instance.new("TextButton", getParent)
+	No = Instance.new("TextButton", getParent)
 
 	ConfirmationFrame.Name = "ConfirmationFrame"
 	ConfirmationFrame.Parent = Unnamed
@@ -839,8 +858,10 @@ xad.MouseButton1Down:connect(function()
 	adframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() adframe.Visible = false end)
 end)
  
-adframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() adframe.Visible = false end)
- 
+if getParent ~= game then
+    adframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() adframe.Visible = false end)
+end
+
 cmdititle.Name = "cmdititle"
 cmdititle.Parent = cmdiframe
 cmdititle.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
@@ -1150,14 +1171,16 @@ xcmds.TextSize = 20
 xcmds.MouseButton1Down:connect(function()
 	CMDlist:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() CMDlist.Visible = false end)
 end)
- 
-CMDlist:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() CMDlist.Visible = false end)
-avatarframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() avatarframe.Visible = false end)
-logsframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() logsframe.Visible = false end)
-gameframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() gameframe.Visible = false end)
-configframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() configframe.Visible = false end)
-cmdiframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() cmdiframe.Visible = false end)
- 
+
+if getParent ~= game then
+    CMDlist:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() CMDlist.Visible = false end)
+    avatarframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() avatarframe.Visible = false end)
+    logsframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() logsframe.Visible = false end)
+    gameframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() gameframe.Visible = false end)
+    configframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() configframe.Visible = false end)
+    cmdiframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() cmdiframe.Visible = false end)
+end
+
 avatartitle.Name = "avatartitle"
 avatartitle.Parent = avatarframe
 avatartitle.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
@@ -1555,7 +1578,7 @@ TextButtonpoo.TextSize = 14
 TextButtonpoo.TextWrapped = true
 TextButtonpoo.Visible = false
  
-local On = Instance.new("StringValue")
+local On = Instance.new("StringValue", getParent)
 
 On.Parent = TextButtonpoo
 On.Value = "Off"
@@ -1755,13 +1778,13 @@ cmdlp.CharacterAdded:Connect(function(char)
 end)
 
 
-opxholder = Instance.new("Frame")
-opxviewertitle = Instance.new("TextLabel")
-xoutofopx = Instance.new("TextButton")
-opxscrollholder = Instance.new("Frame")
-opxreferer = Instance.new("TextLabel")
-opxsplitting = Instance.new("Frame")
-opxScrolling = Instance.new("TextLabel")
+opxholder = Instance.new("Frame", getParent)
+opxviewertitle = Instance.new("TextLabel", getParent)
+xoutofopx = Instance.new("TextButton", getParent)
+opxscrollholder = Instance.new("Frame", getParent)
+opxreferer = Instance.new("TextLabel", getParent)
+opxsplitting = Instance.new("Frame", getParent)
+opxScrolling = Instance.new("TextLabel", getParent)
 
 opxholder.Name = "opxholder"
 opxholder.Parent = Unnamed
@@ -1852,14 +1875,14 @@ if AntiCheat.ScriptDetectOff == false then
     end
 end
 
-local statholder = Instance.new("Frame")
-local statviewertitle = Instance.new("TextLabel")
-local xoutofstats = Instance.new("TextButton")
-local statscrollholder = Instance.new("Frame")
-local referer = Instance.new("TextLabel")
-local splitting = Instance.new("Frame")
-local Scrollingstats = Instance.new("ScrollingFrame")
-local Save = Instance.new("TextButton")
+local statholder = Instance.new("Frame", getParent)
+local statviewertitle = Instance.new("TextLabel", getParent)
+local xoutofstats = Instance.new("TextButton", getParent)
+local statscrollholder = Instance.new("Frame", getParent)
+local referer = Instance.new("TextLabel", getParent)
+local splitting = Instance.new("Frame", getParent)
+local Scrollingstats = Instance.new("ScrollingFrame", getParent)
+local Save = Instance.new("TextButton", getParent)
 
 statholder.Name = "statholder"
 statholder.Parent = Unnamed
@@ -2198,14 +2221,14 @@ cmdlp.CharacterAdded:connect(function()
 	end
 end)
 
-logsholding2 = Instance.new("Frame")
-logsviewertitle2 = Instance.new("TextLabel")
-xoutoflogs2 = Instance.new("TextButton")
-logsscrollholder2 = Instance.new("Frame")
-refereral2 = Instance.new("TextLabel")
-splittinger2 = Instance.new("Frame")
-Scrollinglogs2 = Instance.new("ScrollingFrame")
-Save22 = Instance.new("TextBox")
+logsholding2 = Instance.new("Frame", getParent)
+logsviewertitle2 = Instance.new("TextLabel", getParent)
+xoutoflogs2 = Instance.new("TextButton", getParent)
+logsscrollholder2 = Instance.new("Frame", getParent)
+refereral2 = Instance.new("TextLabel", getParent)
+splittinger2 = Instance.new("Frame", getParent)
+Scrollinglogs2 = Instance.new("ScrollingFrame", getParent)
+Save22 = Instance.new("TextBox", getParent)
 
 logsholding2.Name = "logsholding2"
 logsholding2.Parent = Unnamed
@@ -2346,14 +2369,14 @@ function CreateSCLabel(Name, Text)
 	tl.TextTransparency = 0
 end
 
-logsholding = Instance.new("Frame")
-logsviewertitle = Instance.new("TextLabel")
-xoutoflogs = Instance.new("TextButton")
-logsscrollholder = Instance.new("Frame")
-refereral = Instance.new("TextLabel")
-splittinger = Instance.new("Frame")
-Scrollinglogs = Instance.new("ScrollingFrame")
-Save2 = Instance.new("TextButton")
+logsholding = Instance.new("Frame", getParent)
+logsviewertitle = Instance.new("TextLabel", getParent)
+xoutoflogs = Instance.new("TextButton", getParent)
+logsscrollholder = Instance.new("Frame", getParent)
+refereral = Instance.new("TextLabel", getParent)
+splittinger = Instance.new("Frame", getParent)
+Scrollinglogs = Instance.new("ScrollingFrame", getParent)
+Save2 = Instance.new("TextButton", getParent)
 
 logsholding.Name = "logsholding"
 logsholding.Parent = Unnamed
@@ -3092,14 +3115,14 @@ cmduis.InputBegan:Connect(function()
 	end
 end)
 
-local cmdsholder = Instance.new("Frame")
-local Cmdsearch = Instance.new("TextBox")
-local cmdviewertitle = Instance.new("TextLabel")
-local xoutofcmds = Instance.new("TextButton")
-local scrollholder = Instance.new("Frame")
-local ref = Instance.new("TextLabel")
-local splitter = Instance.new("Frame")
-local Scrollingcmdi = Instance.new("ScrollingFrame")
+local cmdsholder = Instance.new("Frame", getParent)
+local Cmdsearch = Instance.new("TextBox", getParent)
+local cmdviewertitle = Instance.new("TextLabel", getParent)
+local xoutofcmds = Instance.new("TextButton", getParent)
+local scrollholder = Instance.new("Frame", getParent)
+local ref = Instance.new("TextLabel", getParent)
+local splitter = Instance.new("Frame", getParent)
+local Scrollingcmdi = Instance.new("ScrollingFrame", getParent)
 
 cmdsholder.Name = "cmdsholder"
 cmdsholder.Parent = Unnamed
@@ -3281,7 +3304,7 @@ function IESP(v)
 		a.Transparency = 0.8
 		a.Color = v.BrickColor
 		local BillboardGui = Instance.new("BillboardGui", IESPholder)
-		local TextLabel = Instance.new("TextLabel")
+		local TextLabel = Instance.new("TextLabel", getParent)
 		BillboardGui.Adornee = v
 		BillboardGui.Name = v.Name
 		BillboardGui.Size = UDim2.new(0, 100, 0, 150)
@@ -3356,7 +3379,7 @@ function ESP(plr)
 		end
 	if plr.Character and plr.Character:FindFirstChild('Head') then
 		local BillboardGui = Instance.new("BillboardGui", ESPholder)
-		local TextLabel = Instance.new("TextLabel")
+		local TextLabel = Instance.new("TextLabel", getParent)
 		BillboardGui.Adornee = plr.Character.Head
 		BillboardGui.Name = plr.Name
 		BillboardGui.Size = UDim2.new(0, 100, 0, 150)
@@ -3785,19 +3808,19 @@ function useCommand.hotkeyfocus()
 	end
 end
 
-ManageHolderEnter = Instance.new("Frame")
-MangeScrollEnter = Instance.new("ScrollingFrame")
-BtnAddEnter = Instance.new("TextButton")
-BtnClearEnter = Instance.new("TextButton")
-ManageTitleEnter = Instance.new("TextLabel")
-SlideOutEnter = Instance.new("Frame")
-Edit1Enter = Instance.new("TextBox")
-Edit2Enter = Instance.new("TextBox")
-Edit3Enter = Instance.new("TextBox")
-TitleSlideEnter = Instance.new("TextLabel")
-CancelBtnEnter = Instance.new("TextButton")
-ApplyBtnEnter = Instance.new("TextButton")
-BtnExitEnter = Instance.new("TextButton")
+ManageHolderEnter = Instance.new("Frame", getParent)
+MangeScrollEnter = Instance.new("ScrollingFrame", getParent)
+BtnAddEnter = Instance.new("TextButton", getParent)
+BtnClearEnter = Instance.new("TextButton", getParent)
+ManageTitleEnter = Instance.new("TextLabel", getParent)
+SlideOutEnter = Instance.new("Frame", getParent)
+Edit1Enter = Instance.new("TextBox", getParent)
+Edit2Enter = Instance.new("TextBox", getParent)
+Edit3Enter = Instance.new("TextBox", getParent)
+TitleSlideEnter = Instance.new("TextLabel", getParent)
+CancelBtnEnter = Instance.new("TextButton", getParent)
+ApplyBtnEnter = Instance.new("TextButton", getParent)
+BtnExitEnter = Instance.new("TextButton", getParent)
 
 ManageHolderEnter.Name = "ManageHolderEnter"
 ManageHolderEnter.Parent = Unnamed
@@ -3818,10 +3841,10 @@ MangeScrollEnter.Position = UDim2.new(0.0268278271, 0, 0.10493198, 0)
 MangeScrollEnter.Size = UDim2.new(0, 401, 0, 214)
 
 function Template2(name,entry)
-	local TemplateFrame = Instance.new("Frame")
-	local TemplateName = Instance.new("TextLabel")
-	local TemplateBtnRemove = Instance.new("TextButton")
-	local TemplateBtnAdd = Instance.new("TextButton")
+	local TemplateFrame = Instance.new("Frame", getParent)
+	local TemplateName = Instance.new("TextLabel", getParent)
+	local TemplateBtnRemove = Instance.new("TextButton", getParent)
+	local TemplateBtnAdd = Instance.new("TextButton", getParent)
 	local alls2 = 5
 	for i,v in pairs(MangeScrollEnter:GetChildren()) do
 		if v then
@@ -6301,8 +6324,8 @@ end
 
 function useCommand.fps()
 	opx("-","FPS will now show - Credit to Curvn")
-	local ToolNameGrabber = Instance.new("ScreenGui")
-	local ToolNameTxt = Instance.new("TextLabel")
+	local ToolNameGrabber = Instance.new("ScreenGui", getParent)
+	local ToolNameTxt = Instance.new("TextLabel", getParent)
 	local player = game.Players.LocalPlayer
 	ToolNameGrabber.Name = "ToolNameGrabber"
 	ToolNameGrabber.Parent = game.CoreGui
@@ -8189,25 +8212,25 @@ function useCommand.loadcustoms()
 	opxL("Plugins",xPins)
 end
 
-local HolderOfP = Instance.new("Frame")
-local PExplain = Instance.new("Frame")
-local P2 = Instance.new("TextLabel")
-local P1 = Instance.new("TextLabel")
-local PText = Instance.new("Frame")
-local PB = Instance.new("TextButton")
-local PA = Instance.new("TextButton")
-local PTextBox = Instance.new("TextBox")
-local PCopy = Instance.new("TextButton")
-local PC = Instance.new("TextLabel")
-local PRemove = Instance.new("Frame")
-local PPlugin = Instance.new("TextLabel")
-local PImage3 = Instance.new("ImageButton")
-local PImage1 = Instance.new("ImageButton")
-local PImage2 = Instance.new("ImageButton")
-local PExit = Instance.new("TextButton")
-local PAliases = Instance.new("TextBox")
-local PName = Instance.new("TextBox")
-local PDesc = Instance.new("TextBox")
+local HolderOfP = Instance.new("Frame", getParent)
+local PExplain = Instance.new("Frame", getParent)
+local P2 = Instance.new("TextLabel", getParent)
+local P1 = Instance.new("TextLabel", getParent)
+local PText = Instance.new("Frame", getParent)
+local PB = Instance.new("TextButton", getParent)
+local PA = Instance.new("TextButton", getParent)
+local PTextBox = Instance.new("TextBox", getParent)
+local PCopy = Instance.new("TextButton", getParent)
+local PC = Instance.new("TextLabel", getParent)
+local PRemove = Instance.new("Frame", getParent)
+local PPlugin = Instance.new("TextLabel", getParent)
+local PImage3 = Instance.new("ImageButton", getParent)
+local PImage1 = Instance.new("ImageButton", getParent)
+local PImage2 = Instance.new("ImageButton", getParent)
+local PExit = Instance.new("TextButton", getParent)
+local PAliases = Instance.new("TextBox", getParent)
+local PName = Instance.new("TextBox", getParent)
+local PDesc = Instance.new("TextBox", getParent)
 
 HolderOfP.Name = "HolderOfP"
 HolderOfP.Parent = Unnamed
@@ -10356,19 +10379,19 @@ function useCommand.adminclr()
 	opx("-","Cleared all admins, please re-execute")
 end
 
-ManageHolderHotkey = Instance.new("Frame")
-MangeScrollHotkey = Instance.new("ScrollingFrame")
-BtnAddHotkey = Instance.new("TextButton")
-BtnClearHotkey = Instance.new("TextButton")
-ManageTitleHotkey = Instance.new("TextLabel")
-SlideOutHotkey = Instance.new("Frame")
-Edit1Hotkey = Instance.new("TextBox")
-Edit2Hotkey = Instance.new("TextBox")
-Edit3Hotkey = Instance.new("TextBox")
-TitleSlideHotkey = Instance.new("TextLabel")
-CancelBtnHotkey = Instance.new("TextButton")
-ApplyBtnHotkey = Instance.new("TextButton")
-BtnExitHotkey = Instance.new("TextButton")
+ManageHolderHotkey = Instance.new("Frame", getParent)
+MangeScrollHotkey = Instance.new("ScrollingFrame", getParent)
+BtnAddHotkey = Instance.new("TextButton", getParent)
+BtnClearHotkey = Instance.new("TextButton", getParent)
+ManageTitleHotkey = Instance.new("TextLabel", getParent)
+SlideOutHotkey = Instance.new("Frame", getParent)
+Edit1Hotkey = Instance.new("TextBox", getParent)
+Edit2Hotkey = Instance.new("TextBox", getParent)
+Edit3Hotkey = Instance.new("TextBox", getParent)
+TitleSlideHotkey = Instance.new("TextLabel", getParent)
+CancelBtnHotkey = Instance.new("TextButton", getParent)
+ApplyBtnHotkey = Instance.new("TextButton", getParent)
+BtnExitHotkey = Instance.new("TextButton", getParent)
 
 ManageHolderHotkey.Name = "ManageHolderHotkey"
 ManageHolderHotkey.Parent = Unnamed
@@ -10389,10 +10412,10 @@ MangeScrollHotkey.Position = UDim2.new(0.0268278271, 0, 0.10493198, 0)
 MangeScrollHotkey.Size = UDim2.new(0, 401, 0, 214)
 
 function Template1(name,entry)
-	local TemplateFrame = Instance.new("Frame")
-	local TemplateName = Instance.new("TextLabel")
-	local TemplateBtnRemove = Instance.new("TextButton")
-	local TemplateBtnAdd = Instance.new("TextButton")
+	local TemplateFrame = Instance.new("Frame", getParent)
+	local TemplateName = Instance.new("TextLabel", getParent)
+	local TemplateBtnRemove = Instance.new("TextButton", getParent)
+	local TemplateBtnAdd = Instance.new("TextButton", getParent)
 	local alls2 = 5
 	for i,v in pairs(MangeScrollHotkey:GetChildren()) do
 		if v then
@@ -12150,8 +12173,8 @@ function useCommand.cinematic()
 	game:GetService("CoreGui").RobloxGui.Backpack.Visible = false	
 	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = false	
 	opx("-","Enabled cinematic mode")	
-end	
-		
+end
+
 function useCommand.uncinematic()	
 	game:GetService("CoreGui").TopBar.Enabled = true	
 	game:GetService("CoreGui").RobloxGui.Backpack.Visible = true	
@@ -13850,11 +13873,12 @@ cmdm.KeyDown:connect(function(key)
 			if key == hkBinds[i].K then
 				wait()
 				alignFunctions(hkBinds[i].C)
-				local cmdsy = findCmd(hkBinds[i].C)
+				arguments = hkBinds[i].C:split(" ")
+				local cmdsy = findCmd(arguments[1])
 				if cmdsy ~= nil then
-					--pcall(function()
+					pcall(function()
 						useCommand[cmdsy]()
-					--end)
+					end)
 				else
 					local invalidString = getstring(1)
 					if #invalidString > 38 then
@@ -13868,43 +13892,58 @@ cmdm.KeyDown:connect(function(key)
 end)
 ---------------------------------------|
 -- Print Function: --------------------|
-print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..prefix)
-print("\
-              _____                    _____                    _____                                  \
-             /\\    \\                  /\\    \\                  /\\    \\                 ______          \
-            /::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
-           /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
-          /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
-         /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
-        /:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
-       /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
-      /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
-     /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
-    /:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
-    \\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
-     \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
-      \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
-       \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
-        \\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
-         \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
-          \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
-           \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
-            \\::/    /                \\::/    /                \\__/____/               |::|___|         \
-             \\/____/                  \\/____/                                          ~~              ") 
-print("made by pigeon#1818 & hz#4777")
-print("\
-Having trouble?\
-Press U for output\
-Press Q to close and open\
-Press ; to auto focus\
-(Free exploits do not work with CMD-X)\
-Type support into the cmd bar for anymore support (if needed)\
-To use chat commands use the prefix '"..prefix.."'")
- 
-local StarterGui = game:GetService("StarterGui")
-StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
-StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Press U for output and F9 for more info!";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
-StarterGui:SetCore("ChatMakeSystemMessage", {Text = "To use chat commands use the prefix '"..prefix.."'";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
+if AntiCheat.PrintingOff == false then
+    print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..prefix)
+    print("\
+                  _____                    _____                    _____                                  \
+                 /\\    \\                  /\\    \\                  /\\    \\                 ______          \
+                /::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
+               /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
+              /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
+             /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
+            /:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
+           /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
+          /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
+         /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
+        /:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
+        \\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
+         \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
+          \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
+           \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
+            \\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
+             \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
+              \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
+               \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
+                \\::/    /                \\::/    /                \\__/____/               |::|___|         \
+                 \\/____/                  \\/____/                                          ~~              ") 
+    print("made by pigeon#1818 & hz#4777")
+    print("\
+    Having trouble?\
+    Press U for output\
+    Press Q to close and open\
+    Press ; to auto focus\
+    (Free exploits do not work with CMD-X)\
+    Type support into the cmd bar for anymore support (if needed)\
+    To use chat commands use the prefix '"..prefix.."'")
+
+
+    local StarterGui = game:GetService("StarterGui")
+    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
+    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Press U for output and F9 for more info!";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
+    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "To use chat commands use the prefix '"..prefix.."'";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
+end
+
+if AntiCheat.ScriptDetectOff then opx("*","Script detection is off due to anticheat") end
+if AntiCheat.TurboNameSpam then opx("*","Turbo name spam has been turned on due to anticheat") end
+if AntiCheat.HideParentInExploit then opx("*","Hidden parent in exploit due to anticheat") end
+if AntiCheat.HideParentInPG then opx("*","Hidden parent in playergui due to anticheat") end
+if AntiCheat.AutoAntiKick then opx("*","Turned on antikick due to anticheat") end
+if AntiCheat.RemoveScripts then opx("*","Removed local scripts due to anticheat") end
+if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
+if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
+if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
+if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
+
 ---------------------------------------|
 -- Start CMDs: ------------------------|
 if #enterCMD > 0 then
