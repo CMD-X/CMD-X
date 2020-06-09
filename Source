@@ -12063,6 +12063,7 @@ function useCommand.streamsnipe()
 end
 
 function useCommand.irltime()
+    opx("-","Set time to IRL")
     for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
         if v:IsA("Sky") then v:Destroy() end
     end
