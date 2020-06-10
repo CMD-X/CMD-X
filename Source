@@ -12561,7 +12561,7 @@ end
 
 function StartFreecam()
 	local cameraCFrame = Camera.CFrame
-	cameraRot = Vector2.new(cameraCFrame:toEulerAnglesYXZ())
+	cameraRot = Vector2.new(cameraCFrame.X,cameraCFrame.Y)
 	cameraPos = cameraCFrame.p
 	cameraFov = Camera.FieldOfView
 
