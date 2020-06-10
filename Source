@@ -3048,8 +3048,9 @@ CMDN[#CMDN+1] = {N = "untracers", A = {""}, CMD = "475,untracers,,()"}
 CMDN[#CMDN+1] = {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dirjoin,(placeid/this|guid),Directly joins the GUID in question."}
 CMDN[#CMDN+1] = {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."}
 currentCMDNUM = "437"
-local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
-local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
+fuck = game:HttpGet(URL)
+local Http = game:GetService("HttpService"):JSONDecode(fuck)
 output4.Text = Http.text
 PCs = {"far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 cmd.Changed:Connect(function()
@@ -11003,7 +11004,8 @@ end
 
 function useCommand.funfact()
     local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
-    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    local fuck = game:HttpGet(URL)
+    local Http = game:GetService("HttpService"):JSONDecode(fuck)
     opx("-",Http.text)
     cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(Http.text,"All")
 end
@@ -11971,11 +11973,13 @@ function useCommand.rejoindiff()
 	if not arguments[2] then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+		local fuck = game:HttpGet(URL.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..i))
+		    local fuck = game:HttpGet(URL..i)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
 				if SplitCapacityForNum[1] ~= v.Capacity then
@@ -11990,10 +11994,12 @@ function useCommand.rejoindiff()
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[math.random(1,#PPlaces)].GUID,cmdlp)
 	elseif arguments[2] == "quick" then
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+		local fuck = game:HttpGet(URL.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places...")
 		for i = 0,30 do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..math.random(1,30)))
+		    local fuck = game:HttpGet(URL..math.random(1,30))
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
 				if SplitCapacityForNum[1] ~= v.Capacity then
@@ -12006,11 +12012,13 @@ function useCommand.rejoindiff()
 	elseif arguments[2] == "smallest" then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+		local fuck = game:HttpGet(URL.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..i))
+		    local fuck = game:HttpGet(URL..i)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				opx("-","Possible server, Guid: "..v.Guid)
 				PPlaces[#PPlaces+1] = {GUID = v.Guid}
@@ -12021,11 +12029,13 @@ function useCommand.rejoindiff()
 	elseif arguments[2] == "small" then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+		local fuck = game:HttpGet(URL.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..i))
+		    local fuck = game:HttpGet(URL..i)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				MathPC = v.PlayersCapacity:split(" ")
 				if MathPC[1] == "7" or MathPC[1] == "6" or MathPC[1] == "5" or MathPC[1] == "4" or MathPC[1] == "3" or MathPC[1] == "2" or MathPC[1] == "1" then
@@ -12041,11 +12051,13 @@ function useCommand.rejoindiff()
 	elseif arguments[2] == "largest" then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+		local fuck = game:HttpGet(URL.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..i))
+		    local fuck = game:HttpGet(URL..i)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				MathPC = v.PlayersCapacity:split(" ")
 				if MathPC[1] ~= v.Capacity then
@@ -12075,10 +12087,12 @@ function useCommand.streamsnipe()
 		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
 		else
 		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..arguments[3].."&startindex=")    
-	    end
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL2.."0"))
+		end
+        local fuck = game:HttpGet(URL2.."0")
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		for i = 0,Http.TotalCollectionSize do
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL2..i))
+		    local fuck = game:HttpGet(URL2..i)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for x,n in pairs(Http.Collection) do
 				for _,v in pairs(n.CurrentPlayers) do
 					if v.Thumbnail.Url == Thumb then
@@ -12102,7 +12116,8 @@ function useCommand.irltime()
     end
     local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer)
     local URL = ("https://restcountries.eu/rest/v2/alpha/"..reg)
-    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    local fuck = game:HttpGet(URL)
+    local Http = game:GetService("HttpService"):JSONDecode(fuck)
     print(Http.latlng[1])
     game:GetService("Lighting").GeographicLatitude = Http.latlng[1]
     while wait(1) do
@@ -12664,11 +12679,13 @@ end
 
 function useCommand.servers()
 	local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
-	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."0"))
+	local fuck = game:HttpGet(URL.."0")
+	local Http = game:GetService("HttpService"):JSONDecode(fuck)
 	opx("-","Searching places, this may take a while...")
 	local xServers = Http.TotalCollectionSize.." | "
 	for i = 0,Http.TotalCollectionSize do
-		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..i))
+	    local fuck = game:HttpGet(URL..i)
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		for i,v in pairs(Http.Collection) do
 			MathPC = v.PlayersCapacity:split(" ")
 			opx("-","Possible server, Guid: "..v.Guid)
@@ -12951,7 +12968,8 @@ function useCommand.rappu()
 		local target = findplr(arguments[2])
 		if target then
 			local URL = ("https://inventory.roblox.com/v1/users/"..target.UserId.."/assets/collectibles?sortOrder=Asc&limit=100")
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+			local fuck = game:HttpGet(URL)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			local RAP = 0
 			function ListItems(Look)
 				for i,v in pairs(Look.data) do
@@ -12964,7 +12982,8 @@ function useCommand.rappu()
 			Pages = 1
 			for i = 1,500 do
 				if Http.nextPageCursor ~= null then
-					Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."&cursor="..Http.nextPageCursor))
+				    local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
+					Http = game:GetService("HttpService"):JSONDecode(fuck)
 					ListItems(Http)
 					Pages = Pages+1
 				else
@@ -12986,7 +13005,8 @@ function useCommand.rappr()
 		local target = findplr(arguments[2])
 		if target then
 			local URL = ("https://inventory.roblox.com/v1/users/"..target.UserId.."/assets/collectibles?sortOrder=Asc&limit=100")
-			local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+			local fuck = game:HttpGet(URL)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			local RAP = 0
 			function ListItems(Look)
 				for i,v in pairs(Look.data) do
@@ -12999,7 +13019,8 @@ function useCommand.rappr()
 			Pages = 1
 			for i = 1,500 do
 				if Http.nextPageCursor ~= null then
-					Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL.."&cursor="..Http.nextPageCursor))
+				    local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
+					Http = game:GetService("HttpService"):JSONDecode(fuck)
 					ListItems(Http)
 					Pages = Pages+1
 				else
@@ -13509,8 +13530,9 @@ end
 	
 function useCommand.newaudios()	
 	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")	
-	if not arguments[2] then arguments[2] = "10" end	
-	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL..arguments[2]))	
+	if not arguments[2] then arguments[2] = "10" end
+    local fuck = ame:HttpGet(URL..arguments[2])
+	local Http = game:GetService("HttpService"):JSONDecode(fuck)	
 	xIds = ""	
 	for i,v in pairs(Http) do	
 		xIds = xIds..v.AssetId.."\n"	
