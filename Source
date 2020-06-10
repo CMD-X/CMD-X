@@ -491,25 +491,13 @@ if game.PlaceId == 4802536077 then
     AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 176053469 then
-    local M = Instance.new("Message",workspace); M.Text = "Breaking dummiez hurr-durr clientsided anticheat LLLLLLLLL poggers @hz#4777 poggers @pigeon#1818, please wait 20 seconds (YOUR GAME WILL LAG)."
-    local lp = game:GetService("Players").LocalPlayer.PlayerScripts
-    local mtable = getrawmetatable(lp)
-    local oldindex = mtable.__index
-    
-    setreadonly(mtable, false)
-    mtable.__index = newcclosure(function(...)
-        if not checkcaller() and get_calling_script().Parent == nil then
-            return nil
+    local old
+    old = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self,...)
+        if self.Name == "TimeEvent" then
+            return
         end
-        return oldindex(...)
-    end)
-    setreadonly(mtable, true)
-    
-    wait(20)
-    setreadonly(mtable, false)
-    mtable.__index = oldindex
-    setreadonly(mtable,true)
-    M:Destroy()
+        return old(self, ...)
+    end))
 end
 if game.PlaceId == 17541193 then
     AntiCheat.ScriptDetectOff = true
