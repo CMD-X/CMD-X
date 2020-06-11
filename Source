@@ -131,7 +131,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {[838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
+checkArg = {[117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 if not writefile then
