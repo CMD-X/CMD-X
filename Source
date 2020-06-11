@@ -171,6 +171,7 @@ local Devs = {
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 	["K5RM"] = "Dev",
+    ["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }	
 local Donors = {	
 	["Zuhqu"] = "Donor",
@@ -187,7 +188,8 @@ local Donors = {
 	["LtsDank"] = "Donor",
 	["HyperLink3"] = "Donor",
 	["Winnzie"] = "Donor",
-	["8dqt"] = "Donor"	
+	["8dqt"] = "Donor",
+    ["iozz"] = "Donor"	
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
