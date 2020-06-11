@@ -3713,6 +3713,11 @@ cmd.FocusLost:connect(function()
 		local matchCommand = ""
 		wait(.1)
 		alignFunctions(cmd.Text)
+		--\\ Temp fix
+		if arguments[2] == nil then
+		    arguments[1] = arguments[1]:sub(1,#arguments[1]-1)
+		end
+		--//
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nil then
 			History[#History+1] = cmd.Text
@@ -3723,7 +3728,7 @@ cmd.FocusLost:connect(function()
 			end
 			updatesaves()
 			cmd.Text = ""
-			--pcall(function()
+			print(cmdsy.."s")
 			if commandsLoaded() and noCMD == false then
 				useCommand[cmdsy]()
 			elseif noCMD == true and cmdsy == "yescommands" then
@@ -3731,7 +3736,6 @@ cmd.FocusLost:connect(function()
 			else
 				opx("*","Need help? Join our discord! discord.gg/DD2w2cZ")
 			end
-			--end)
 		else
 			cmd.Text = ""
 			local invalidString = getstring(1)
