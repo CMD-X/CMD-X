@@ -6474,7 +6474,7 @@ function useCommand.unxray()
 end
 
 function useCommand.tabs()
-    if aruments[2] == "off" then
+    if arguments[2] == "off" then
         opx("-","Turned off tabs")
         TabsOn = false
         HoldTab.Visible = false
