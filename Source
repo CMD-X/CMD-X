@@ -491,6 +491,9 @@ if game.PlaceId == 4802536077 then
     AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 176053469 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
     local old
     old = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self,...)
         if self.Name == "TimeEvent" then
