@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.3.0"
+local ver = "1.3.1"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -250,6 +250,8 @@ defaultsettings = {
 	SavedPos = {X = 800, Y = 300};
 	hotkeynoclip = "";
 	ChatBind = false;
+	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
+	TabsOn = true;
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -308,7 +310,9 @@ function saves()
 				if json.SavedPos ~= nil then SavedPos = json.SavedPos else SavedPos = {X = 800, Y = 300} end
 				if json.hotkeynoclip ~= nil then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
 				if json.ChatBind ~= nil then ChatBind = json.ChatBind else ChatBind = false end
-			else
+			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
+		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
+		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
 				saves()
@@ -356,6 +360,8 @@ function saves()
 				SavedPos = {X = 800, Y = 300}
 				hotkeynoclip = ""
 				ChatBind = false
+				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
+			    TabsOn = true
 			end
 		end
 	else
@@ -396,6 +402,8 @@ function saves()
 		SavedPos = {X = 800, Y = 300}
 		hotkeynoclip = ""
 		ChatBind = false
+		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
+	    TabsOn = true
 	end
 end
  
@@ -441,6 +449,8 @@ function updatesaves()
 		SavedPos = SavedPos;
 		hotkeynoclip = hotkeynoclip;
 		ChatBind = ChatBind;
+		CMDTab = CMDTab;
+		TabsOn = TabsOn;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -1342,7 +1352,59 @@ holder.Changed:Connect(function()
 	SavedPos = {X = holder.AbsolutePosition.X, Y = holder.AbsolutePosition.Y}
 	updatesaves()
 end)
- 
+
+HoldTab = Instance.new("Frame",getParent)
+TnOT = Instance.new("TextLabel",getParent)
+Splitz = Instance.new("Frame",getParent)
+T1 = Instance.new("TextLabel",getParent)
+XE = Instance.new("TextButton",getParent)
+T2 = Instance.new("TextLabel",getParent)
+XE_2 = Instance.new("TextButton",getParent)
+T4 = Instance.new("TextLabel",getParent)
+XE_3 = Instance.new("TextButton",getParent)
+T3 = Instance.new("TextLabel",getParent)
+XE_4 = Instance.new("TextButton",getParent)
+T8 = Instance.new("TextLabel",getParent)
+XE_5 = Instance.new("TextButton",getParent)
+T6 = Instance.new("TextLabel",getParent)
+XE_6 = Instance.new("TextButton",getParent)
+T5 = Instance.new("TextLabel",getParent)
+XE_7 = Instance.new("TextButton",getParent)
+T7 = Instance.new("TextLabel",getParent)
+XE_8 = Instance.new("TextButton",getParent)
+T9 = Instance.new("TextLabel",getParent)
+XE_9 = Instance.new("TextButton",getParent)
+
+HoldTab.Name = "HoldTab"
+HoldTab.Parent = Unnamed
+HoldTab.Active = true
+HoldTab.Draggable = true
+HoldTab.BackgroundColor3 = Color3.new(0.219608, 0.219608, 0.219608)
+HoldTab.BorderSizePixel = 0
+HoldTab.Position = UDim2.new(0.745833397, 0, 0.518735349, 0)
+HoldTab.Size = UDim2.new(0, 148, 0, 306)
+
+if TabsOn == false then HoldTab.Visible = false end
+
+TnOT.Name = "TnOT"
+TnOT.Parent = HoldTab
+TnOT.BackgroundColor3 = Color3.new(1, 1, 1)
+TnOT.BackgroundTransparency = 1
+TnOT.BorderSizePixel = 0
+TnOT.Position = UDim2.new(-0.00416688668, 0, -0.000872443721, 0)
+TnOT.Size = UDim2.new(0, 148, 0, 23)
+TnOT.Font = Enum.Font.GothamBold
+TnOT.Text = "CMD TABS"
+TnOT.TextColor3 = Color3.new(1, 1, 1)
+TnOT.TextSize = 20
+
+Splitz.Name = "Splitz"
+Splitz.Parent = HoldTab
+Splitz.BackgroundColor3 = Color3.new(1, 1, 1)
+Splitz.BorderSizePixel = 0
+Splitz.Position = UDim2.new(-0.00416660309, 0, 0.074290961, 0)
+Splitz.Size = UDim2.new(0, 148, 0, 1)
+
 entry.Name = "entry"
 entry.Parent = holder
 entry.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
@@ -3050,6 +3112,8 @@ CMDN[#CMDN+1] = {N = "tracers", A = {""}, CMD = "474,tracers,,Traces players usi
 CMDN[#CMDN+1] = {N = "untracers", A = {""}, CMD = "475,untracers,,()"}
 CMDN[#CMDN+1] = {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dirjoin,(placeid/this|guid),Directly joins the GUID in question."}
 CMDN[#CMDN+1] = {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."}
+CMDN[#CMDN+1] = {N = "tabs", A = {""}, CMD = "478,tabs,(on/off),Turns tabs on or off."}
+CMDN[#CMDN+1] = {N = "changetab", A = {"ctab"}, CMD = "479,changetab/ctab,(1-9),Changes a tab from 1-9."}
 currentCMDNUM = "437"
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
 fuck = game:HttpGet(URL)
@@ -4983,6 +5047,240 @@ function useCommand.unglue()
 	opx("-","No longer glued")
 end
 
+T1.Name = "T1"
+T1.Parent = HoldTab
+T1.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T1.BorderSizePixel = 0
+T1.Position = UDim2.new(0, 0, 0.110238664, 0)
+T1.Size = UDim2.new(0, 141, 0, 18)
+T1.Text = ""
+T1.TextColor3 = Color3.new(1, 1, 1)
+T1.TextSize = 12
+
+XE.Name = "XE"
+XE.Parent = T1
+XE.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE.BorderSizePixel = 0
+XE.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE.Size = UDim2.new(0, 19, 0, 18)
+XE.Font = Enum.Font.SourceSansBold
+XE.Text = "+"
+XE.TextColor3 = Color3.new(1, 1, 1)
+XE.TextSize = 14
+XE.MouseButton1Down:Connect(function()
+    arguments = T1.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T2.Name = "T2"
+T2.Parent = HoldTab
+T2.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T2.BorderSizePixel = 0
+T2.Position = UDim2.new(0, 0, 0.188670039, 0)
+T2.Size = UDim2.new(0, 141, 0, 18)
+T2.Text = ""
+T2.TextColor3 = Color3.new(1, 1, 1)
+T2.TextSize = 12
+
+XE_2.Name = "XE"
+XE_2.Parent = T2
+XE_2.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_2.BorderSizePixel = 0
+XE_2.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_2.Size = UDim2.new(0, 19, 0, 18)
+XE_2.Font = Enum.Font.SourceSansBold
+XE_2.Text = "+"
+XE_2.TextColor3 = Color3.new(1, 1, 1)
+XE_2.TextSize = 14
+XE_2.MouseButton1Down:Connect(function()
+    arguments = T2.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T4.Name = "T4"
+T4.Parent = HoldTab
+T4.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T4.BorderSizePixel = 0
+T4.Position = UDim2.new(-9.31322575e-10, 0, 0.348800778, 0)
+T4.Size = UDim2.new(0, 141, 0, 18)
+T4.Text = ""
+T4.TextColor3 = Color3.new(1, 1, 1)
+T4.TextSize = 12
+
+XE_3.Name = "XE"
+XE_3.Parent = T4
+XE_3.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_3.BorderSizePixel = 0
+XE_3.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_3.Size = UDim2.new(0, 19, 0, 18)
+XE_3.Font = Enum.Font.SourceSansBold
+XE_3.Text = "+"
+XE_3.TextColor3 = Color3.new(1, 1, 1)
+XE_3.TextSize = 14
+XE_3.MouseButton1Down:Connect(function()
+    arguments = T4.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T3.Name = "T3"
+T3.Parent = HoldTab
+T3.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T3.BorderSizePixel = 0
+T3.Position = UDim2.new(-9.31322575e-10, 0, 0.270369381, 0)
+T3.Size = UDim2.new(0, 141, 0, 18)
+T3.Text = ""
+T3.TextColor3 = Color3.new(1, 1, 1)
+T3.TextSize = 12
+
+XE_4.Name = "XE"
+XE_4.Parent = T3
+XE_4.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_4.BorderSizePixel = 0
+XE_4.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_4.Size = UDim2.new(0, 19, 0, 18)
+XE_4.Font = Enum.Font.SourceSansBold
+XE_4.Text = "+"
+XE_4.TextColor3 = Color3.new(1, 1, 1)
+XE_4.TextSize = 14
+XE_4.MouseButton1Down:Connect(function()
+    arguments = T3.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T8.Name = "T8"
+T8.Parent = HoldTab
+T8.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T8.BorderSizePixel = 0
+T8.Position = UDim2.new(-9.31322575e-10, 0, 0.669062257, 0)
+T8.Size = UDim2.new(0, 141, 0, 18)
+T8.Text = ""
+T8.TextColor3 = Color3.new(1, 1, 1)
+T8.TextSize = 12
+
+XE_5.Name = "XE"
+XE_5.Parent = T8
+XE_5.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_5.BorderSizePixel = 0
+XE_5.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_5.Size = UDim2.new(0, 19, 0, 18)
+XE_5.Font = Enum.Font.SourceSansBold
+XE_5.Text = "+"
+XE_5.TextColor3 = Color3.new(1, 1, 1)
+XE_5.TextSize = 14
+XE_5.MouseButton1Down:Connect(function()
+    arguments = T8.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+T6.Name = "T6"
+T6.Parent = HoldTab
+T6.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T6.BorderSizePixel = 0
+T6.Position = UDim2.new(0, 0, 0.508931518, 0)
+T6.Size = UDim2.new(0, 141, 0, 18)
+T6.Text = ""
+T6.TextColor3 = Color3.new(1, 1, 1)
+T6.TextSize = 12
+
+XE_6.Name = "XE"
+XE_6.Parent = T6
+XE_6.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_6.BorderSizePixel = 0
+XE_6.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_6.Size = UDim2.new(0, 19, 0, 18)
+XE_6.Font = Enum.Font.SourceSansBold
+XE_6.Text = "+"
+XE_6.TextColor3 = Color3.new(1, 1, 1)
+XE_6.TextSize = 14
+XE_6.MouseButton1Down:Connect(function()
+    arguments = T6.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T5.Name = "T5"
+T5.Parent = HoldTab
+T5.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T5.BorderSizePixel = 0
+T5.Position = UDim2.new(0, 0, 0.43050012, 0)
+T5.Size = UDim2.new(0, 141, 0, 18)
+T5.Text = ""
+T5.TextColor3 = Color3.new(1, 1, 1)
+T5.TextSize = 12
+
+XE_7.Name = "XE"
+XE_7.Parent = T5
+XE_7.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_7.BorderSizePixel = 0
+XE_7.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_7.Size = UDim2.new(0, 19, 0, 18)
+XE_7.Font = Enum.Font.SourceSansBold
+XE_7.Text = "+"
+XE_7.TextColor3 = Color3.new(1, 1, 1)
+XE_7.TextSize = 14
+XE_7.MouseButton1Down:Connect(function()
+    arguments = T5.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T7.Name = "T7"
+T7.Parent = HoldTab
+T7.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T7.BorderSizePixel = 0
+T7.Position = UDim2.new(-9.31322575e-10, 0, 0.590630829, 0)
+T7.Size = UDim2.new(0, 141, 0, 18)
+T7.Text = ""
+T7.TextColor3 = Color3.new(1, 1, 1)
+T7.TextSize = 12
+
+XE_8.Name = "XE"
+XE_8.Parent = T7
+XE_8.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_8.BorderSizePixel = 0
+XE_8.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_8.Size = UDim2.new(0, 19, 0, 18)
+XE_8.Font = Enum.Font.SourceSansBold
+XE_8.Text = "+"
+XE_8.TextColor3 = Color3.new(1, 1, 1)
+XE_8.TextSize = 14
+XE_8.MouseButton1Down:Connect(function()
+    arguments = T7.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T9.Name = "T9"
+T9.Parent = HoldTab
+T9.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+T9.BorderSizePixel = 0
+T9.Position = UDim2.new(-1.39698386e-09, 0, 0.750761628, 0)
+T9.Size = UDim2.new(0, 141, 0, 18)
+T9.Text = ""
+T9.TextColor3 = Color3.new(1, 1, 1)
+T9.TextSize = 12
+
+XE_9.Name = "XE"
+XE_9.Parent = T9
+XE_9.BackgroundColor3 = Color3.new(0.101961, 0.101961, 0.101961)
+XE_9.BorderSizePixel = 0
+XE_9.Position = UDim2.new(0.861749768, 0, -0.0032687718, 0)
+XE_9.Size = UDim2.new(0, 19, 0, 18)
+XE_9.Font = Enum.Font.SourceSansBold
+XE_9.Text = "+"
+XE_9.TextColor3 = Color3.new(1, 1, 1)
+XE_9.TextSize = 14
+XE_9.MouseButton1Down:Connect(function()
+    arguments = T9.Text:split(" ")
+    useCommand[arguments[1]]()
+end)
+
+T1.Text = CMDTab[1]
+T2.Text = CMDTab[2]
+T3.Text = CMDTab[3]
+T4.Text = CMDTab[4]
+T5.Text = CMDTab[5]
+T6.Text = CMDTab[6]
+T7.Text = CMDTab[7]
+T8.Text = CMDTab[8]
+T9.Text = CMDTab[9]
+
 function useCommand.nugget()
 	opx("-","Changed character into a nugget")
 	if cmd15(cmdlp) then
@@ -6173,6 +6471,58 @@ function useCommand.unxray()
 	transparent = false
 	x(transparent)
 	opx("-","X-Ray disabled")
+end
+
+function useCommand.tabs()
+    if aruments[2] == "off" then
+        opx("-","Turned off tabs")
+        TabsOn = false
+        HoldTab.Visible = false
+        updatesaves()
+    elseif arguments[2] == "on" then
+        opx("-","Turned on tabs")
+        TabsOn = true
+        HoldTab.Visible = true
+        updatesaves()
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+function useCommand.changetab()
+    if arguments[3] then
+        MoreArg = getstring(3)
+        if arguments[2] == "1" then
+            T1.Text = MoreArg
+            CMDTab[1] = MoreArg
+        elseif arguments[2] == "2" then
+            T2.Text = MoreArg
+            CMDTab[2] = MoreArg
+        elseif arguments[2] == "3" then
+            T3.Text = MoreArg
+            CMDTab[3] = MoreArg
+        elseif arguments[2] == "4" then
+            T4.Text = MoreArg
+            CMDTab[4] = MoreArg
+        elseif arguments[2] == "5" then
+            T5.Text = MoreArg
+            CMDTab[5] = MoreArg
+        elseif arguments[2] == "6" then
+            T6.Text = MoreArg
+            CMDTab[6] = MoreArg
+        elseif arguments[2] == "7" then
+            T7.Text = MoreArg
+            CMDTab[7] = MoreArg
+        elseif arguments[2] == "8" then
+            T8.Text = MoreArg
+            CMDTab[8] = MoreArg
+        elseif arguments[2] == "9" then
+            T9.Text = MoreArg
+            CMDTab[9] = MoreArg
+        end
+    else
+        opx("*","3 arguments are required!")
+    end
 end
 
 function useCommand.lockws()
