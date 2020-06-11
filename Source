@@ -3782,13 +3782,6 @@ cmd.FocusLost:connect(function()
 		local matchCommand = ""
 		wait(.1)
 		alignFunctions(cmd.Text)
-		--\\ Temp fix
-		for i,v in pairs(arguments) do
-		    if i == #arguments then
-		        arguments[i] = arguments[i]:sub(1,#arguments[i]-1)
-		    end
-		end
-		--//
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nil then
 			History[#History+1] = cmd.Text
