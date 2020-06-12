@@ -14595,11 +14595,6 @@ pcall(function()
 end)
 
 pcall(function()
-	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
-            if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
-                v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-            end
-        end
 	function RGBDev(Self)	
 		RGBDevCheck = true	
 		if connectionRGBDev then connectionRGBDev:Disconnect() end	
@@ -14611,7 +14606,9 @@ pcall(function()
 							if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
 								for i = 0, 255, 1 do 	
 									v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)	
-									game:GetService("RunService").Heartbeat:Wait()	
+									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+									game:GetService("RunService").Heartbeat:Wait()
+									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
 									debouncergb = true	
 								end	
 							end	
