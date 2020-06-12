@@ -14594,32 +14594,39 @@ pcall(function()
     end
 end)
 
-function RGBDev(Self)	
-	RGBDevCheck = true	
-	if connectionRGBDev then connectionRGBDev:Disconnect() end	
-	coroutine.resume(coroutine.create(function()	
-		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
-			if not debouncergb then	
-				if Self ~= nil then	
-					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
-						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
-							for i = 0, 255, 1 do 	
-								v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)	
-								game:GetService("RunService").Heartbeat:Wait()	
-								debouncergb = true	
+pcall(function()
+	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
+            if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
+                v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+            end
+        end
+	function RGBDev(Self)	
+		RGBDevCheck = true	
+		if connectionRGBDev then connectionRGBDev:Disconnect() end	
+		coroutine.resume(coroutine.create(function()	
+			connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
+				if not debouncergb then	
+					if Self ~= nil then	
+						for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
+							if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
+								for i = 0, 255, 1 do 	
+									v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)	
+									game:GetService("RunService").Heartbeat:Wait()	
+									debouncergb = true	
+								end	
 							end	
 						end	
 					end	
+				else	
+					for i = 0, 255 do	
+						game:GetService("RunService").Heartbeat:Wait()	
+					end	
+					debouncergb = false	
 				end	
-			else	
-				for i = 0, 255 do	
-					game:GetService("RunService").Heartbeat:Wait()	
-				end	
-				debouncergb = false	
-			end	
-		end)	
-	end))	
-end	
+			end)	
+		end))	
+	end
+end)	
 
 function colorName(Self,g)	
 	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
