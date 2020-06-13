@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.3.1"
+local ver = "1.3.2"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -11,12 +11,12 @@ if game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
 else
 	getParent = game:GetService("CoreGui")
 end
-for i,GUI in pairs(game:GetService("CoreGui"):GetDescendants()) do
+for _,GUI in next, game:GetService("CoreGui"):GetDescendants() do
 	if GUI.Name == "holder" then
 		GUI.Parent:Destroy()
 	end
 end
-for i,GUI in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants()) do
+for _,GUI in next, game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants() do
 	if GUI.Name == "holder" then
 		GUI.Parent:Destroy()
 	end
@@ -131,13 +131,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {
-    [838753790.5] = "RDite3", 
-    [983858851.7] = "nolBased",
-    [4238827073.2] = true, 
-    [303591427.1] = true,
-    [117849776.6] = "skid"
-}
+checkArg = {[117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 if not writefile then
@@ -466,10 +460,10 @@ end
  
 AdmIG = {}
 
-for i,x in pairs(Adm) do
-	for _,v in pairs(game:GetService("Players"):GetChildren()) do
-		if Adm[i] == v.Name then
-			AdmIG[#AdmIG+1] = Adm[i]
+for _,x in next, Adm do
+	for _,v in next, game:GetService("Players"):GetPlayers() do --Shit to change
+		if x == v.Name then
+			table.insert(AdmIG,x)
 		end
 	end
 end
@@ -555,7 +549,7 @@ if AntiCheat.AutoAntiKick == true then
     end)
 end
 if AntiCheat.RemoveScripts == true then
-    for i,v in pairs(game:GetService("Players"):GetDescendants()) do
+    for _,v in next, game:GetService("Players"):GetDescendants() do
         if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
             v:Destroy()
         end
@@ -666,10 +660,10 @@ output.Style = Enum.FrameStyle.RobloxRound
 output.Visible = false
 
 local Gui = {}
-if AntiCheat.HideParentInExploit == false and getParent ~= game then
-    for i,v in pairs(getParent:GetDescendants()) do
-    	Gui[#Gui+1] = v.Name
-    	Gui[#Gui+1] = math.random(-2e9,2e9)
+if not AntiCheat.HideParentInExploit and getParent ~= game then
+    for _,v in next, getParent:GetDescendants() do
+    	table.insert(Gui,v.Name)
+    	table.insert(Gui,math.random(-2e9,2e9))
     end
 end
 
@@ -678,18 +672,18 @@ if getParent ~= game then
         if AntiCheat.DontJumbleNames == false then
             if AntiCheat.HideParentInExploit == false then
             	if AntiCheat.TurboNameSpam == false then
-            	    Unnamed.Name = Gui[math.random(1,#Gui)]
+            	    Unnamed.Name = Gui[math.random(#Gui)]
             	else
-            	    for i,v in pairs(Unnamed:GetDescendants()) do
-            	        v.Name = Gui[math.random(1,#Gui)]
+            	    for _,v in next, Unnamed:GetDescendants() do
+            	        v.Name = Gui[math.random(#Gui)]
             	    end
             	end
             else
                 if AntiCheat.TurboNameSpam == false then
-            	    Unnamed.Name = math.random(1,1000000)
+            	    Unnamed.Name = math.random(1000000)
             	else
-            	    for i,v in pairs(Unnamed:GetDescendants()) do
-            	        v.Name = math.random(1,1000000)
+            	    for _,v in next, Unnamed:GetDescendants() do
+            	        v.Name = math.random(1000000)
             	    end
             	end
             end
@@ -825,10 +819,10 @@ logstitle.TextColor3 = Color3.new(1, 1, 1)
 logstitle.TextSize = 14
 
 function findCmd(cmd_name)
-	for i,v in pairs(CMDN)do
-		for _,x in pairs(CMDN[i].A) do
-			if CMDN[i].N:lower() == cmd_name:lower() or CMDN[i].A[_]:lower() == cmd_name:lower() then
-				v = CMDN[i].N
+	for _,v in next, CMDN do
+		for _,x in next, v.A do
+			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
+				v = v.N
 				return v
 			end
 		end
@@ -1796,11 +1790,11 @@ end
 ---------------------------------------|
 -- Aimbot Whitelist: ------------------|
 PlayersWLsystem = {}
- 
-for i,p in pairs(cmdp:GetPlayers()) do
+--Shit to change
+for i,p in pairs(cmdp:GetPlayers()) do 
 	PlayersWLsystem[p.Name] = false
 end
- 
+ --Shit to change
 cmdp.PlayerAdded:Connect(function(plr)
 	PlayersWLsystem[plr.Name] = false
 	for n,p in pairs(Devs) do
@@ -1811,7 +1805,7 @@ cmdp.PlayerAdded:Connect(function(plr)
 		end
 	end
 end)
- 
+--Shit to change
 cmdp.PlayerRemoving:Connect(function(plr)
 	for i,a in pairs(PlayersWLsystem) do
 		if a == plr.Name then
@@ -2048,12 +2042,12 @@ Save.TextColor3 = Color3.new(1, 1, 1)
 Save.TextSize = 14
 Save.MouseButton1Down:Connect(function()
 	writestats = "\n"
-	for i,v in pairs(CMDStat) do
-		if CMDStat[i].T ~= 0 then
-			writestats = writestats.."\n"..CMDStat[i].N.." "..CMDStat[i].T
+	for _,v in next, CMDStat do
+		if v.T ~= 0 then
+			writestats = writestats.."\n"..v.N.." "..v.T
 		end
 	end
-	writefile("CMD-X Stats "..math.random(1,1000)..".txt",tostring(writestats))
+	writefile("CMD-X Stats "..math.random(1000)..".txt",tostring(writestats))
 end)
 
 function CreateStatLabel(cmd,times,today)
@@ -2062,7 +2056,7 @@ function CreateStatLabel(cmd,times,today)
 		sf2:ClearAllChildren()
 	end
 	local alls2 = 0
-	for i,v in pairs(sf2:GetChildren()) do
+	for _,v in next, sf2:GetChildren() do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2
 		end
@@ -2163,67 +2157,67 @@ end
 function findplr(args)
 	if args == "me" then
 		return cmdlp
-	elseif args == "random" then
+	elseif args == "random" then --Shit to change
 		return cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
 	elseif args == "new" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetPlayers()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v.AccountAge < 30 then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "old" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetPlayers()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v.AccountAge > 30 then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "bacon" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "friend" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "notfriend" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if not v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "ally" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v.Team == cmdlp.Team then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "enemy" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v.Team ~= cmdlp.Team then
 				vAges[#vAges+1] = v
 			end
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "near" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v ~= cmdlp then
 				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
 				if math < 30 then
@@ -2233,8 +2227,8 @@ function findplr(args)
 		end
 		return vAges[math.random(1,#vAges)]
 	elseif args == "far" then
-		local vAges = {}
-		for _,v in pairs(cmdp:GetChildren()) do
+		local vAges = {} --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
 			if v ~= cmdlp then
 				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
 				if math > 30 then
@@ -2243,16 +2237,9 @@ function findplr(args)
 			end
 		end
 		return vAges[math.random(1,#vAges)]
-	else
-		local potentialplayer = ""
-		local target = ""
-		local z = ""
-		local potentialtarget = ""
-		for i,v in pairs(cmdp:GetPlayers()) do
-			potentialplayer = string.lower(v.Name)
-			potentialtarget = string.lower(args)
-			local z = string.find(potentialplayer,potentialtarget)
-			if z ~= nil then
+	else --Shit to change
+		for _,v in next, cmdp:GetPlayers() do
+			if string.find(string.lower(v.Name),string.lower(args)) then
 				return v
 			end
 		end
@@ -2411,7 +2398,7 @@ function CreateSCLabel(Name, Text)
 		sf:ClearAllChildren()
 	end
 	local alls = 0
-	for i,v in pairs(sf:GetChildren()) do
+	for _,v in next, sf:GetChildren() do
 		if v then
 			alls = v.Size.Y.Offset + alls
 		end
@@ -2542,10 +2529,10 @@ Save2.TextColor3 = Color3.new(1, 1, 1)
 Save2.TextSize = 14
 Save2.MouseButton1Down:Connect(function()
 	writestats2 = "\n"
-	for i,v in pairs(Scrollinglogs:GetChildren()) do
+	for _,v in next, Scrollinglogs:GetChildren() do
 		writestats2 = writestats2.."\n"..v.Text
 	end
-	writefile("CMD-X Logs "..math.random(1,1000)..".txt",tostring(writestats2))
+	writefile("CMD-X Logs "..math.random(1000)..".txt",tostring(writestats2))
 end)
 
 function CreateLabel(Name, Text)
@@ -2555,7 +2542,7 @@ function CreateLabel(Name, Text)
 		sf:ClearAllChildren()
 	end
 	local alls = 0
-	for i,v in pairs(sf:GetChildren()) do
+	for _,v in next, sf:GetChildren() do
 		if v then
 			alls = v.Size.Y.Offset + alls
 		end
@@ -2601,7 +2588,7 @@ function CreateADLabel(name,rank)
 		sf3:ClearAllChildren()
 	end
 	local alls3 = 0
-	for i,v in pairs(sf3:GetChildren()) do
+	for _,v in next, sf3:GetChildren() do
 		if v then
 			alls3 = v.Size.Y.Offset + alls3
 		end
@@ -2639,489 +2626,489 @@ function CreateADLabel(name,rank)
 end
 local CMDN = {}
 local CS = {}
-CMDN[#CMDN+1] = {N = "prefix", A = {""}, CMD = "1,prefix,,Shows you the chat prefix."}
-CMDN[#CMDN+1] = {N = "promptnew", A = {""}, CMD = "2,promptnew,(str/name),Changes your prompt text to something else."}
-CMDN[#CMDN+1] = {N = "prefixnew", A = {""}, CMD = "3,prefixnew,(str),Changes chat prefix."}
-CMDN[#CMDN+1] = {N = "hotkeyopen", A = {""}, CMD = "4,hotkeyopen,(str),Changes your hotkey for opening the GUI."}
-CMDN[#CMDN+1] = {N = "hotkeyoutput", A = {""}, CMD = "5,hotkeyoutput,(str),Changes your hotkey for opening the output GUI."}
-CMDN[#CMDN+1] = {N = "hotkeyfocus", A = {""}, CMD = "6,hotkeyfocus,(str),Changes your hotkey for focusing on the cmdbar."}
-CMDN[#CMDN+1] = {N = "entercmdnew", A = {""}, CMD = "7,entercmdnew,(str),Adds a new command to the list of commands that are activated when you first execute CMD-X."}
-CMDN[#CMDN+1] = {N = "entercmds", A = {""}, CMD = "8,entercmds,,Allows you to add entercmds."}
-CMDN[#CMDN+1] = {N = "entercmddel", A = {""}, CMD = "9,entercmddel,(str),Deletes a command in the entercmds list."}
-CMDN[#CMDN+1] = {N = "entercmdsclr", A = {""}, CMD = "10,entercmdsclr,,Clears the entercmds."}
-CMDN[#CMDN+1] = {N = "eightballpu", A = {"8ballpu"}, CMD = "11,eightballpu/8ballpu,(str),Ask 8Ball a question publicly."}
-CMDN[#CMDN+1] = {N = "eightballpr", A = {"8ballpr"}, CMD = "12,eightballpr/8ballpr,(str),Ask 8Ball a question privately."}
-CMDN[#CMDN+1] = {N = "friendjoin", A = {"fjoin"}, CMD = "13,friendjoin/fjoin,(full plr name),Joins your friends game."}
-CMDN[#CMDN+1] = {N = "support", A = {""}, CMD = "14,support/help,(CB/COPY),If you need support while using CMD-X use this command!"}
-CMDN[#CMDN+1] = {N = "commands", A = {"cmds","help"}, CMD = "15,cmds/commands,,Shows this page."}
-CMDN[#CMDN+1] = {N = "config", A = {"settings"}, CMD = "16,config/settings,,Configure CMD-X."}
-CMDN[#CMDN+1] = {N = "advertise", A = {"adv"}, CMD = "17,adv/advertise,,Help spread CMD-X by doing this cmd in game! (<3)"}
-CMDN[#CMDN+1] = {N = "unadvertise", A = {"unadv"}, CMD = "18,unadv/unadvertise,,()"}
-CMDN[#CMDN+1] = {N = "version", A = {"ver","v"}, CMD = "19,version/ver/v,,Shows version."}
-CMDN[#CMDN+1] = {N = "nextupdate", A = {""}, CMD = "20,nextupdate,,Shows you when the next update may be coming out."}
-CMDN[#CMDN+1] = {N = "walkspeed", A = {"ws"}, CMD = "21,ws/walkspeed,(num),Sets your characters walkspeed."}
-CMDN[#CMDN+1] = {N = "defaultwalkspeed", A = {"dws"}, CMD = "22,dws/defaultwalkspeed,,()"}
-CMDN[#CMDN+1] = {N = "jumppower", A = {"jp"}, CMD = "23,jp/jumppower,(num),Sets your characters jumppower."}
-CMDN[#CMDN+1] = {N = "defaultjumppower", A = {"djp"}, CMD = "24,djp/deafultjumppower,,()"}
-CMDN[#CMDN+1] = {N = "hipheight", A = {"hh"}, CMD = "25,hh/hipheight,(num),Sets your characters hipheight."}
-CMDN[#CMDN+1] = {N = "defaulthipheight", A = {"dhh"}, CMD = "26,dhh/defaulthipheight,,()"}
-CMDN[#CMDN+1] = {N = "gravity", A = {"grav"}, CMD = "27,gravity/grav,(num),Sets your characters gravity."}
-CMDN[#CMDN+1] = {N = "defaultgravity", A = {"dgrav"}, CMD = "28,dgrav/defaultgravity,,()"}
-CMDN[#CMDN+1] = {N = "bodypositionwalkspeed", A = {"bpws"}, CMD = "29,bpws/bodypositionwalkspeed,(num),Modifies your characters bodyposition walkspeed. (R6 ONLY) (AC BYPASS)"}
-CMDN[#CMDN+1] = {N = "halve", A = {"decapitate"}, CMD = "30,halve/decapitate,,Splits your character into two. (R15 ONLY)"}
-CMDN[#CMDN+1] = {N = "removehands", A = {"rhands"}, CMD = "31,rhands/removehands,,Removes your characters hands. (R15 ONLY)"}
-CMDN[#CMDN+1] = {N = "removefeet", A = {"rfeet"}, CMD = "32,rfeet/removefeet,,Removes your characters feet. (R15 ONLY)"}
-CMDN[#CMDN+1] = {N = "removeleftleg", A = {"rlleg"}, CMD = "33,rlleg/removeleftleg,,Removes your left leg."}
-CMDN[#CMDN+1] = {N = "removerightleg", A = {"rrleg"}, CMD = "34,rrleg/removerightleg,,Removes your right leg."}
-CMDN[#CMDN+1] = {N = "removeleftarm", A = {"rlarm"}, CMD = "35,rlarm/removeleftarm,,Removes your left arm."}
-CMDN[#CMDN+1] = {N = "removerightarm", A = {"rrarm"}, CMD = "36,rrarm/removerightarm,,Removes your right arm."}
-CMDN[#CMDN+1] = {N = "removearms", A = {"rarms"}, CMD = "37,rarms/removearms,,Removes your characters arms."}
-CMDN[#CMDN+1] = {N = "removelegs", A = {"rlegs"}, CMD = "38,rlegs/removelegs,,Removes your characters legs."}
-CMDN[#CMDN+1] = {N = "removelimbs", A = {"rlimbs"}, CMD = "39,rlimbs/removelimbs,,Removes your characters limbs."}
-CMDN[#CMDN+1] = {N = "removeanim", A = {"ranim"}, CMD = "40,ranim/removeanim,,Removes your characters animations."}
-CMDN[#CMDN+1] = {N = "restoreanim", A = {"reanim"}, CMD = "41,reanim/restoreanim,,Restores your characters animations."}
-CMDN[#CMDN+1] = {N = "removeshirt", A = {"rshirt"}, CMD = "42,rshirt/removeshirt,,Removes your characters shirt."}
-CMDN[#CMDN+1] = {N = "removetshirt", A = {"rtshirt"}, CMD = "43,rtshirt/removetshirt,,Removes your characters tshirt"}
-CMDN[#CMDN+1] = {N = "removepants", A = {"rpants"}, CMD = "44,rpants/removepants,,Removes your characters pants."}
-CMDN[#CMDN+1] = {N = "removeclothes", A = {"naked","rclothes"}, CMD = "45,naked/rclothes/removeclothes,,Removes your character clothes."}
-CMDN[#CMDN+1] = {N = "removehatsmesh", A = {"rhatsmesh","rhm"}, CMD = "46,rhatsmesh/rhm/removehatsmesh,,Removes your characters hat meshes."}
-CMDN[#CMDN+1] = {N = "removegearmesh", A = {"rgearmesh","rgm","rtoolmesh","rtm","removetoolmesh"}, CMD = "47,rgearmesh/rgm/rtoolmesh/rtm/removetoolmesh/removegearmesh,,Removes your current characters gear mesh."}
-CMDN[#CMDN+1] = {N = "changelog", A = {"clog"}, CMD = "48,changelog/clog,,Opens changelog."}
-CMDN[#CMDN+1] = {N = "drophats", A = {""}, CMD = "49,drophats,,Drops your characters hats on the map."}
-CMDN[#CMDN+1] = {N = "dropgears", A = {"droptools"}, CMD = "50,dropgears/droptools,,Drops your characters gears on the map."}
-CMDN[#CMDN+1] = {N = "hatspam", A = {""}, CMD = "51,hatspam,,Spams your hats onto the map."}
-CMDN[#CMDN+1] = {N = "unhatspam", A = {""}, CMD = "52,unhatspam,,()"}
-CMDN[#CMDN+1] = {N = "removeface", A = {"rface"}, CMD = "53,rface/removeface,,Removes your characters face."}
-CMDN[#CMDN+1] = {N = "removehats", A = {"rhats"}, CMD = "54,rhats/removehats,,Removes your characters hats."}
-CMDN[#CMDN+1] = {N = "rheadmesh", A = {"rhdm"}, CMD = "55,rheadmesh/rhdm,,Removes the mesh of your characters head."}
-CMDN[#CMDN+1] = {N = "equip", A = {"equipall"}, CMD = "56,equip/equipall,,Equips all gears in your characters backpack."}
-CMDN[#CMDN+1] = {N = "banlands", A = {""}, CMD = "57,banlands,(plr),Teleports player to banlands (NEED A HAT AND TOOL).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "flip", A = {""}, CMD = "58,flip,,Allows your character to flip."}
-CMDN[#CMDN+1] = {N = "unflip", A = {""}, CMD = "59,unflip,,()"}
-CMDN[#CMDN+1] = {N = "doubleflip", A = {"duoflip"}, CMD = "60,duoflip/doubleflip,,Allows your character to double flip."}
-CMDN[#CMDN+1] = {N = "undoubleflip", A = {"unduoflip"}, CMD = "61,unduoflip/undoubleflip,,()"}
-CMDN[#CMDN+1] = {N = "glue", A = {"stick"}, CMD = "62,glue/stick,(plr),Sticks your character to the target.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unglue", A = {"unstick"}, CMD = "63,unglue/unstick,,()"}
-CMDN[#CMDN+1] = {N = "nugget", A = {""}, CMD = "64,nugget,,Makes your character look like a nugget."}
-CMDN[#CMDN+1] = {N = "cartwheel", A = {""}, CMD = "65,cartwheel,,Makes your character do a cartwheel."}
-CMDN[#CMDN+1] = {N = "uncartwheel", A = {""}, CMD = "66,uncartwheel,,()"}
-CMDN[#CMDN+1] = {N = "seizure", A = {"juicewrld"}, CMD = "67,seizure/juicewrld,,Makes your character have a seizure."}
-CMDN[#CMDN+1] = {N = "unseizure", A = {"unjuicewrld"}, CMD = "68,unseizure/unjuicewrld,,()"}
-CMDN[#CMDN+1] = {N = "fling", A = {""}, CMD = "69,fling,(plr),Flings player. (COLLISION ONLY)", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "invisiblefling", A = {"invisfling","ifling"}, CMD = "70,invisiblefling/invisfling/ifling,,Invisibly flings players. (COLLISION ONLY)"}
-CMDN[#CMDN+1] = {N = "freefling", A = {"ffling"}, CMD = "71,freefling/ffling,,Flings players. (COLLISION ONLY)"}
-CMDN[#CMDN+1] = {N = "unfling", A = {""}, CMD = "72,unfling,,()"}
-CMDN[#CMDN+1] = {N = "cleanfling", A = {"cfling"}, CMD = "73,cleanfling/cfling,,Flings players in an undetected way. (COLLISION ONLY)"}
-CMDN[#CMDN+1] = {N = "lag", A = {"stutter"}, CMD = "74,lag/stutter,,Appears like your character is stuttering or lagging."}
-CMDN[#CMDN+1] = {N = "unlag", A = {"unstutter"}, CMD = "75,unlag/unstutter,,()"}
-CMDN[#CMDN+1] = {N = "annoy", A = {""}, CMD = "76,annoy,(plr),Annoys the player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unannoy", A = {""}, CMD = "77,unannoy,,()"}
-CMDN[#CMDN+1] = {N = "weaken", A = {"weak"}, CMD = "78,weak/weaken,,Weakens your character."}
-CMDN[#CMDN+1] = {N = "strengthen", A = {"strong"}, CMD = "79,strong/strengthen,,Strengthens your character."}
-CMDN[#CMDN+1] = {N = "noresult", A = {"		","  ",""}, CMD = "80,,,Saved CMD NUM"}
-CMDN[#CMDN+1] = {N = "unweak", A = {"unstrong"}, CMD = "81,unweak/unstrong,,()"}
-CMDN[#CMDN+1] = {N = "plague", A = {""}, CMD = "82,plague,(name),Starts a plague."}
-CMDN[#CMDN+1] = {N = "parts", A = {""}, CMD = "83,parts,(name),Lists parts."}
-CMDN[#CMDN+1] = {N = "bringunanchored", A = {"buna"}, CMD = "84,bringunanchored/buna,,Brings unachored parts (works best with .loop).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "listunanchored", A = {"luna"}, CMD = "85,listunanchored/luna,,Lists unanchored parts."}
-CMDN[#CMDN+1] = {N = "credits", A = {""}, CMD = "86,credits,,Lists credits for CMD-X."}
-CMDN[#CMDN+1] = {N = "animation", A = {"anim"}, CMD = "87,anim/animation,(num1) (num2),Plays the AnimationID you state in num1 and speeds it up in num2. (R6 ONLY)"}
-CMDN[#CMDN+1] = {N = "unanimation", A = {"unanim"}, CMD = "88,unanim/unanimation,,Stops all animations."}
-CMDN[#CMDN+1] = {N = "uninsane", A = {"unspas"}, CMD = "89,uninsane/unspas,,()"}
-CMDN[#CMDN+1] = {N = "monstermash", A = {"mashdance"}, CMD = "90,monstermash/mashdance,,Monster mashes your character. (R6 ONLY)"}
-CMDN[#CMDN+1] = {N = "ragdoll", A = {"stun"}, CMD = "91,ragdoll/stun,,Stuns your character."}
-CMDN[#CMDN+1] = {N = "unragdoll", A = {"unstun"}, CMD = "92,unragdoll/unstun,,()"}
-CMDN[#CMDN+1] = {N = "animpack", A = {""}, CMD = "93,animpack,(animation),Loads the animation you state; toy/ pirate/ knight/ astronaut/ vampire/ robot/ levitation/ bubbly/ werewolf/ stylish/ mage/ cartoony/ zombie/ superhero/ ninja/ elder/ old. (R15 ONLY)"}
-CMDN[#CMDN+1] = {N = "spin", A = {"beybladeletitrip"}, CMD = "94,spin/baybladeletitrip,(num),Spins your character around like a beyblade."}
-CMDN[#CMDN+1] = {N = "unspin", A = {""}, CMD = "95,unspin,,()"}
-CMDN[#CMDN+1] = {N = "hatspin", A = {""}, CMD = "96,hatspin,,Spins your characters hats around your head."}
-CMDN[#CMDN+1] = {N = "unhatspin", A = {""}, CMD = "97,unhatspin,,()"}
-CMDN[#CMDN+1] = {N = "facefuck", A = {"facerape"}, CMD = "98,facefuck/facerape,(plr),Sits your character in front of their face to create the illusion of facefucking.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unfacefuck", A = {"unfacerape"}, CMD = "99,unfacefuck/unfacerape,,()"}
-CMDN[#CMDN+1] = {N = "facefuckanim", A = {"facerapeanim"}, CMD = "100,facefuckanim/facerapeanim,(plr),Places your character in front of their face with an animation to create the illusion of facefucking.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unfacefuckanim", A = {"unfacerapeanim"}, CMD = "101,unfacefuckanim/unfacerapeanim,,()"}
-CMDN[#CMDN+1] = {N = "piggyback", A = {"ride"}, CMD = "102,piggyback/ride,(plr),Sits your character behind their head to create the illusion of a piggy back.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unpiggyback", A = {"unride"}, CMD = "103,unpiggyback/unride,,()"}
-CMDN[#CMDN+1] = {N = "fuck", A = {"rape"}, CMD = "104,fuck/rape,(plr),Rapes player you stated using an animation.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unfuck", A = {"unrape"}, CMD = "105,unfuck/unrape,,()"}
-CMDN[#CMDN+1] = {N = "follow", A = {"stalk"}, CMD = "106,follow/stalk,(plr),Follows player you stated at a safe distance.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unfollow", A = {"unstalk"}, CMD = "107,unfollow/unstalk,,()"}
-CMDN[#CMDN+1] = {N = "oldroblox", A = {"oldrblx"}, CMD = "108,oldrblx/oldroblox,,Makes your game look like old roblox."}
-CMDN[#CMDN+1] = {N = "savegame", A = {"sg"}, CMD = "109,savegame/sg,,Saves the current game instance to your workspace folder. (SYNAPSE ONLY)"}
-CMDN[#CMDN+1] = {N = "btools", A = {"bt"}, CMD = "110,btools/bt,,Gives you building tools. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "fex", A = {"f3x"}, CMD = "111,f3x/fex,,Gives you advanced building tools. (CLIENT SIDED) (GUI)"}
-CMDN[#CMDN+1] = {N = "remotespy", A = {"r2s"}, CMD = "112,r2s/remotespy,,Spies remotes. (GUI)"}
-CMDN[#CMDN+1] = {N = "badger", A = {""}, CMD = "113,badger,,Opens badger V2. (GUI) (<3)"}
-CMDN[#CMDN+1] = {N = "explorer", A = {"dex"}, CMD = "114,explorer/dex,,Spies workspace. (GUI)"}
-CMDN[#CMDN+1] = {N = "removeeffects", A = {"reffects"}, CMD = "115,reffects/removeeffects,,Removes all effects in the game. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "removeseats", A = {"rseats"}, CMD = "116,rseats/removeseats,,Removes all seats in game. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "removelocalscripts", A = {"rls"}, CMD = "117,removelocalscripts/rls,,Removes all local scripts, useful for bypassing anti exploits. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "xray", A = {"x"}, CMD = "118,xray/x,,Changes all items to 0.5 Transparency."}
-CMDN[#CMDN+1] = {N = "unxray", A = {"unx"}, CMD = "119,unxray/unx,,()"}
-CMDN[#CMDN+1] = {N = "lockws", A = {"lws"}, CMD = "120,lockws/lws,,Locks all of workspace."}
-CMDN[#CMDN+1] = {N = "unlockws", A = {"uws"}, CMD = "121,unlockws/uws,,Unlocks all of workspace."}
-CMDN[#CMDN+1] = {N = "day", A = {"time14"}, CMD = "122,day/time14,,Turns the skybox time to day (18:00). (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "night", A = {"time0"}, CMD = "123,night/time0,,Turns the skybox time to night (00:00). (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "removesky", A = {"rsky"}, CMD = "124,rsky/removesky,,Removes the games skybox. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "restorelighting", A = {"relighting"}, CMD = "125,relighting/restorelighting,,Restores games lighting. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "restorecamera", A = {"recamera"}, CMD = "126,recamera/restorecamera,,Restores your characters camera."}
-CMDN[#CMDN+1] = {N = "unscramble", A = {""}, CMD = "127,unscramble,,Unscrambles games variable names."}
-CMDN[#CMDN+1] = {N = "removeinviswalls", A = {"riw"}, CMD = "128,riw/removeinviswalls,,Removes invisible walls in game. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "gameinfo", A = {"placeinfo"}, CMD = "129,gameinfo/placeinfo,,Provides various information on the game you are playing in."}
-CMDN[#CMDN+1] = {N = "closegameinfo", A = {""}, CMD = "130,closegameinfo,,()"}
-CMDN[#CMDN+1] = {N = "math", A = {"calc","calculate"}, CMD = "131,math/calc/calculate,(num) (+,-,/,*) (num) (CB/COPY),Multiplicates numbers together."}
-CMDN[#CMDN+1] = {N = "hidechat", A = {""}, CMD = "132,hidechat,,Turns off chat."}
-CMDN[#CMDN+1] = {N = "showchat", A = {""}, CMD = "133,showchat,,Turns on chat."}
-CMDN[#CMDN+1] = {N = "switchteam", A = {""}, CMD = "134,switchteam,(str),Switches your team to str if it exists."}
-CMDN[#CMDN+1] = {N = "ping", A = {""}, CMD = "135,ping,,Shows your ping."}
-CMDN[#CMDN+1] = {N = "fps", A = {""}, CMD = "136,fps,,Shows your FPS."}
-CMDN[#CMDN+1] = {N = "unfps", A = {""}, CMD = "137,unfps,,()"}
-CMDN[#CMDN+1] = {N = "fuckoff", A = {"killgui"}, CMD = "138,killgui/fuckoff,,Closes the GUI."}
-CMDN[#CMDN+1] = {N = "messagebox", A = {"message","msg"}, CMD = "139,message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"}
-CMDN[#CMDN+1] = {N = "filtering", A = {"fe"}, CMD = "140,fe/filter,,Checks if a game is filtered or not."}
-CMDN[#CMDN+1] = {N = "gameid", A = {"placeid"}, CMD = "141,gameid/placeid,,Lets you know the GameID of the game you are in."}
-CMDN[#CMDN+1] = {N = "error", A = {""}, CMD = "142,error,(str),Tests error in F9."}
-CMDN[#CMDN+1] = {N = "print", A = {""}, CMD = "143,print,(str),Tests print in F9."}
-CMDN[#CMDN+1] = {N = "warn", A = {""}, CMD = "144,warn,(str),Tests warn in F9."}
-CMDN[#CMDN+1] = {N = "output", A = {""}, CMD = "145,output,(str),Tests output."}
-CMDN[#CMDN+1] = {N = "forceshiftlock", A = {"sl","shiftlock"}, CMD = "146,sl/shiftlock/forceshiftlock,,If the developer of the game your playing on has disabled Shift Lock this will enable it for your character."}
-CMDN[#CMDN+1] = {N = "maxcamunlock", A = {"camunlock"}, CMD = "147,maxcamunlock/camunlock,,Unlocks your characters max zooming distance."}
-CMDN[#CMDN+1] = {N = "position", A = {"pos"}, CMD = "148,pos/position,(CB/COPY),Sends your characters position to output."}
-CMDN[#CMDN+1] = {N = "audiolog", A = {"audioid"}, CMD = "149,audiolog/audioid,(plr) (CB/COPY),Logs what a user is playing.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "cambobble", A = {""}, CMD = "150,cambobble,,Bobbles camera when you walk."}
-CMDN[#CMDN+1] = {N = "uncambobble", A = {""}, CMD = "151,uncambobble,,()"}
-CMDN[#CMDN+1] = {N = "grapple", A = {"spiderman"}, CMD = "152,grapple/spiderman,,Grapples to your mouse."}
-CMDN[#CMDN+1] = {N = "ungrapple", A = {"unspiderman"}, CMD = "153,ungrapple/unspiderman,,()"}
-CMDN[#CMDN+1] = {N = "remind", A = {""}, CMD = "154,remind,(num) (h/m/s) (str),Reminds you of str when num is done counting."}
-CMDN[#CMDN+1] = {N = "step", A = {""}, CMD = "155,step,,Allows you to walk up a building."}
-CMDN[#CMDN+1] = {N = "unstep", A = {""}, CMD = "156,unstep,,()"}
-CMDN[#CMDN+1] = {N = "antiafk", A = {"afk"}, CMD = "157,antiafk/afk,,Prevents you from idling."}
-CMDN[#CMDN+1] = {N = "nosit", A = {""}, CMD = "158,nosit,,Stops your character from being sat down."}
-CMDN[#CMDN+1] = {N = "yessit", A = {""}, CMD = "159,yessit,,()"}
-CMDN[#CMDN+1] = {N = "nostun", A = {""}, CMD = "160,nostun,,Stops your character from being PlatformStood."}
-CMDN[#CMDN+1] = {N = "yesstun", A = {""}, CMD = "161,yesstun,,()"}
-CMDN[#CMDN+1] = {N = "badges", A = {""}, CMD = "162,badges,,Gets all badges if there are any named (Default: BadgeAwarder)."}
-CMDN[#CMDN+1] = {N = "spawnpoint", A = {"spawn"}, CMD = "163,spawnpoint/spawn,,Sets spawnpoint to your current position."}
-CMDN[#CMDN+1] = {N = "bunnyhop", A = {"bhop"}, CMD = "164,bhop/bunnyhop,,Bunny hops your character."}
-CMDN[#CMDN+1] = {N = "unbunnyhop", A = {"unbhop"}, CMD = "165,unbhop/unbunnyhop,,()"}
-CMDN[#CMDN+1] = {N = "invisible", A = {"invis"}, CMD = "166,invisible/invis,,Makes your character invisible."}
-CMDN[#CMDN+1] = {N = "sit", A = {"seat"}, CMD = "167,sit/seat,,Sits your character."}
-CMDN[#CMDN+1] = {N = "sitwalk", A = {"seatwalk"}, CMD = "168,sitwalk/seatwalk,,Sits your character but allows your character to move around.,"}
-CMDN[#CMDN+1] = {N = "freeze", A = {"anchored"}, CMD = "169,freeze/anchored,,Freezes your character."}
-CMDN[#CMDN+1] = {N = "thaw", A = {"unfreeze","unanchored"}, CMD = "170,thaw/unfreeze/unanchored,,()"}
-CMDN[#CMDN+1] = {N = "goto", A = {"to","tp"}, CMD = "171,goto/to/tp,(plr),Teleports your character to the player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "walkto", A = {"moveto"}, CMD = "172,walkto/moveto,(plr),Walks your character to the player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unwalkto", A = {"unmoveto"}, CMD = "173,unwalkto/unmoveto,,()"}
-CMDN[#CMDN+1] = {N = "refresh", A = {"re"}, CMD = "174,refresh/re,,Respawns your character on the location of entering this command."}
-CMDN[#CMDN+1] = {N = "reset", A = {"r"}, CMD = "175,reset/r,,Resets your character."}
-CMDN[#CMDN+1] = {N = "savepos", A = {"spos"}, CMD = "176,savepos/spos,(str),Saves your characters position."}
-CMDN[#CMDN+1] = {N = "loadpos", A = {"lpos"}, CMD = "177,loadpos/lpos,(str),()"}
-CMDN[#CMDN+1] = {N = "platform", A = {"pf"}, CMD = "178,platform/pf,,Allows your character to walk on an invisible platform."}
-CMDN[#CMDN+1] = {N = "unplatform", A = {"unpf"}, CMD = "179,unplatform/unpf,,()"}
-CMDN[#CMDN+1] = {N = "clicktp", A = {"ctrltp"}, CMD = "180,clicktp/ctrltp,,Press CTRL to teleport your character to your cursor."}
-CMDN[#CMDN+1] = {N = "infjump", A = {"ij"}, CMD = "181,infjump/ij,,Allows you to infinitely go higher by pressing space."}
-CMDN[#CMDN+1] = {N = "uninfjump", A = {"unij"}, CMD = "182,uninfjump/unij,,()"}
-CMDN[#CMDN+1] = {N = "fly", A = {""}, CMD = "183,fly,,Allows your character to fly."}
-CMDN[#CMDN+1] = {N = "vehiclefly", A = {"vfly"}, CMD = "184,vehiclefly/vfly,,Allows your character to fly around in vehicles."}
-CMDN[#CMDN+1] = {N = "unfly", A = {""}, CMD = "185,unfly,,()"}
-CMDN[#CMDN+1] = {N = "flyspeed", A = {"fs"}, CMD = "186,flyspeed/fs,(num),Changes fly speed."}
-CMDN[#CMDN+1] = {N = "rejoin", A = {"rj"}, CMD = "187,rejoin/rj,,Rejoins the game."}
-CMDN[#CMDN+1] = {N = "game", A = {"place"}, CMD = "188,game/place,(num),Joins the GameID you stated in num."}
-CMDN[#CMDN+1] = {N = "reach", A = {""}, CMD = "189,reach,(num),Edits your tools size value."}
-CMDN[#CMDN+1] = {N = "boxreach", A = {"breach"}, CMD = "190,boxreach/breach,(num),Edits your tools size value in a box formation."}
-CMDN[#CMDN+1] = {N = "unreach", A = {""}, CMD = "191,unreach,,()"}
-CMDN[#CMDN+1] = {N = "noclip", A = {"nc"}, CMD = "192,noclip/nc,,Allows your character to walk through anything, also blocks most flings."}
-CMDN[#CMDN+1] = {N = "light", A = {"brightness"}, CMD = "193,light/brightness,(num),Gives your character a light. (CLIENT SIDED)"}
-CMDN[#CMDN+1] = {N = "unlight", A = {"unbrightness"}, CMD = "194,unlight/unbrightness,,()"}
-CMDN[#CMDN+1] = {N = "esp", A = {""}, CMD = "195,esp,,Shows where all the players are on your screen."}
-CMDN[#CMDN+1] = {N = "unesp", A = {""}, CMD = "196,unesp,,()"}
-CMDN[#CMDN+1] = {N = "aimbot", A = {"ab"}, CMD = "197,aimbot/ab,(Team/FFA),Aims at the closest player to you (Left Ctrl to toggle)."}
-CMDN[#CMDN+1] = {N = "unaimbot", A = {"unab"}, CMD = "198,unaimbot/unab,,()"}
-CMDN[#CMDN+1] = {N = "whitelistfriends", A = {"wlf"}, CMD = "199,wlf/whitelistfriends,,Whitelists friends for aimbot."}
-CMDN[#CMDN+1] = {N = "unwhitelistfriends", A = {"unwlf"}, CMD = "200,unwlf/unwhitelistfriends,,Unwhitelists friends for aimbot."}
-CMDN[#CMDN+1] = {N = "whitelist", A = {"wl"}, CMD = "201,wl/whitelist,(plr),Whitelists player for aimbot.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unwhitelist", A = {"unwl"}, CMD = "202,unwl/unwhitelist,(plr),Unwhitelists player for aimbot.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "showwhitelist", A = {"swl"}, CMD = "203,swl/showwhitelist,,Shows whitelist for aimbot."}
-CMDN[#CMDN+1] = {N = "spectate", A = {"view"}, CMD = "204,view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unspectate", A = {"unview"}, CMD = "205,unview/unspectate,,()"}
-CMDN[#CMDN+1] = {N = "osprivate", A = {"ospr"}, CMD = "206,ospr/osprivate,(plr),Says stated users Operating System privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "ospublic", A = {"ospu"}, CMD = "207,ospu/ospublic,(plr),Says stated users Operating System publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "ageprivate", A = {"agepr"}, CMD = "208,agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "agepublic", A = {"agepu"}, CMD = "209,agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "idprivate", A = {"idpr"}, CMD = "210,idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "idpublic", A = {"idpu"}, CMD = "211,idpu/idpublic,(plr),Says stated users ID publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "vrprivate", A = {"vrpr"}, CMD = "212,vrpr/vrprivate,(plr),Says stated users Virtual Reality System privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "vrpublic", A = {"vrpu"}, CMD = "213,vrpu/vrpublic,(plr),Says stated users Virtual Reality System publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "profileinfo", A = {"profile"}, CMD = "214,profileinfo/profile,(plr),Lists various information of the player stated and shows a bodyshot of the player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "closeprofileinfo", A = {"closeprofile"}, CMD = "215,closeprofile/closeprofileinfo,,()"}
-CMDN[#CMDN+1] = {N = "nazispam", A = {"asciinazi"}, CMD = "216,nazispam/asciinazi,,Spams nazi signs in the chat."}
-CMDN[#CMDN+1] = {N = "unnazispam", A = {"unasciinazi"}, CMD = "217,unnazispam/unasciinazi,,()"}
-CMDN[#CMDN+1] = {N = "spam", A = {"s"}, CMD = "218,spam/s,(str),Spams the text you entered."}
-CMDN[#CMDN+1] = {N = "unspam", A = {"uns"}, CMD = "219,unspam/uns,,()"}
-CMDN[#CMDN+1] = {N = "pmspam", A = {""}, CMD = "220,pmspam,(plr) (str),Spams the text you entered in someones PM.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unpmspam", A = {""}, CMD = "221,unpmspam,,()"}
-CMDN[#CMDN+1] = {N = "spamspeed", A = {"ss"}, CMD = "222,spamspeed/ss,(num),Changes the speed of the spam."}
-CMDN[#CMDN+1] = {N = "dicepublic", A = {"dicepu"}, CMD = "223,dicepu/dicepublic,,Rolls a dice publicly."}
-CMDN[#CMDN+1] = {N = "diceprivate", A = {"dicepr"}, CMD = "224,dicepr/diceprivate,,Rolls a dice privately."}
-CMDN[#CMDN+1] = {N = "numberpublic", A = {"numberpu"}, CMD = "225,numberpu/numberpublic,(num1) (num2),Calls a random number you stated between 2 numbers publicly."}
-CMDN[#CMDN+1] = {N = "numberprivate", A = {"numberpr"}, CMD = "226,numberpr/numberprivate,(num1) (num2),Calls a random number you stated between 2 numbers privately."}
-CMDN[#CMDN+1] = {N = "loadcustoms", A = {""}, CMD = "227,loadcustoms,,Lists custom scripts."}
-CMDN[#CMDN+1] = {N = "loadcustom", A = {"pluginload","p_"}, CMD = "228,loadcustom/pluginload/p_,(name),Loads custom script that you stated."}
-CMDN[#CMDN+1] = {N = "find", A = {""}, CMD = "229,find,(plr),Locates where your stated user is using the ESP command - (WARNING: May cause log spam.).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unfind", A = {""}, CMD = "230,unfind,(plr),()", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "clickdelete", A = {"clickdel"}, CMD = "231,clickdel/clickdelete,,Deletes any part you click on. (WARNING: Broken :/ )"}
-CMDN[#CMDN+1] = {N = "logs", A = {""}, CMD = "232,logs,,Logs all chats including whispers in a GUI."}
-CMDN[#CMDN+1] = {N = "test", A = {""}, CMD = "233,test,,Old ESP test. (WARNING: Will literally lag your game please don't use this lol)"}
-CMDN[#CMDN+1] = {N = "testa", A = {"test-1"}, CMD = "234,testa/test-1,,DHBaby morph remover."}
-CMDN[#CMDN+1] = {N = "time", A = {""}, CMD = "235,time,(timezone),Lists the current time of this timezone."}
-CMDN[#CMDN+1] = {N = "removeforces", A = {"rforces"}, CMD = "236,rforces/removeforces,,Removes forces from your character."}
-CMDN[#CMDN+1] = {N = "audiologger", A = {""}, CMD = "237,audiologger,,Logs all audios it finds from players in a loop."}
-CMDN[#CMDN+1] = {N = "audiologgersave", A = {""}, CMD = "238,audiologgersave,,Saves all logged audios from audiologger."}
-CMDN[#CMDN+1] = {N = "antilag", A = {"lowgraphics"}, CMD = "239,lowgraphics/antilag,,Attempts to minimize lag as much as possible best works with Graphics set to 1."}
-CMDN[#CMDN+1] = {N = "clear", A = {"clr"}, CMD = "240,clr/clear,,Deletes all hats and gears dropped into the workspace."}
-CMDN[#CMDN+1] = {N = "removeterrain", A = {"rterrain"}, CMD = "241,rterrain/removeterrain,,Removes all terrain."}
-CMDN[#CMDN+1] = {N = "outputlarger", A = {"outputl"}, CMD = "242,outputlarger/outputl,(str),Makes an output-larger."}
-CMDN[#CMDN+1] = {N = "compliment", A = {""}, CMD = "243,compliment,(plr),Compliments player", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "roast", A = {""}, CMD = "244,roast,(plr),Roasts player", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "singinfo", A = {""}, CMD = "245,singinfo,,Lists how to make your own song compatible with sing command."}
-CMDN[#CMDN+1] = {N = "sing", A = {""}, CMD = "246,sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/babyshark/evilfantasy/$harkattack/dora/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"}
-CMDN[#CMDN+1] = {N = "deletepos", A = {"dpos"}, CMD = "247,dpos/deletepos,(str),Deletes specified waypoint."}
-CMDN[#CMDN+1] = {N = "clearpos", A = {"cpos"}, CMD = "248,cpos/clearpos,,Clears all waypoints."}
-CMDN[#CMDN+1] = {N = "gotopos", A = {""}, CMD = "249,gotopos,(behind/infront/left/right/above/under),Modifies how and where you tp to the character."}
-CMDN[#CMDN+1] = {N = "autokey", A = {""}, CMD = "250,autokey,(key),Auto key presses the key you enter (SYNAPSE ONLY)."}
-CMDN[#CMDN+1] = {N = "unautokey", A = {""}, CMD = "251,unautokey,,()"}
-CMDN[#CMDN+1] = {N = "swimwalk", A = {"swim"}, CMD = "252,swim/swimwalk,,Allows you to swim on land."}
-CMDN[#CMDN+1] = {N = "instances", A = {""}, CMD = "253,instances,,Shows you how many instances are in the game."}
-CMDN[#CMDN+1] = {N = "plugin", A = {""}, CMD = "254,plugin,,Shows plugin GUI so you can add plugins to CMD-X."}
-CMDN[#CMDN+1] = {N = "loadcustomsclr", A = {""}, CMD = "255,loadcustomsclr,,Clears all loadcustoms."}
-CMDN[#CMDN+1] = {N = "iq", A = {"iqsize"}, CMD = "256,iq/iqsize,(plr),Shows players IQ (RANDOM).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "players", A = {""}, CMD = "257,players,,Lists players in your game."}
-CMDN[#CMDN+1] = {N = "freereach", A = {"freach"}, CMD = "258,freereach/freach,(num|num|num),Allows you to control reach freely."}
-CMDN[#CMDN+1] = {N = "jobid", A = {""}, CMD = "259,jobid,,Shows the JobID of your current game useful for rejoining later on."}
-CMDN[#CMDN+1] = {N = "massage", A = {""}, CMD = "260,massage,,Shows all players ages."}
-CMDN[#CMDN+1] = {N = "gearhat", A = {"toolhat"}, CMD = "261,gearhat/toolhat,,Makes your gears into hats."}
-CMDN[#CMDN+1] = {N = "bypass", A = {"bp"}, CMD = "262,bp/bypass,(str),Bypasses text you enter into chat."}
-CMDN[#CMDN+1] = {N = "emote", A = {"e"}, CMD = "263,e/emote,(id),Plays the emote you enter by name (R15 ONLY)."}
-CMDN[#CMDN+1] = {N = "printcommands", A = {"pcmds"}, CMD = "262,pcmds/printcommands,,Prints commands."}
-CMDN[#CMDN+1] = {N = "chatframe", A = {"cf"}, CMD = "263,chatframe/cf,(plr/str),Forces player to chat something so you can frame them (CLIENT SIDED).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "forcebubblechat", A = {"fbc"}, CMD = "264,forcebubblechat/fbc,,Forces bubble chat to appear for players chatting (CLIENT SIDED)."}
-CMDN[#CMDN+1] = {N = "unforcebubblechat", A = {"unfbc"}, CMD = "265,unforcebubblechat/unfbc,,()"}
-CMDN[#CMDN+1] = {N = "itemesp", A = {"iesp"}, CMD = "266,itemesp/iesp,,Creates ESP's for in-game items as best as possible."}
-CMDN[#CMDN+1] = {N = "unitemesp", A = {"uniesp"}, CMD = "267,unitemesp/uniesp,,()"}
-CMDN[#CMDN+1] = {N = "setdiscord", A = {""}, CMD = "268,setdiscord,(str),Put your discord name in here for use of the command saydiscord."}
-CMDN[#CMDN+1] = {N = "saydiscord", A = {"sd"}, CMD = "269,saydiscord/sd,(cb/copy),Says your discord name in chat."}
-CMDN[#CMDN+1] = {N = "removecustombodyparts", A = {"rcbp","rcustombp"}, CMD = "270,rcbp/rcustombp/removecustombodyparts,,Removes custom body parts set by games."}
-CMDN[#CMDN+1] = {N = "insane", A = {"spas"}, CMD = "271,insane/spas,,Makes your character spas out. (R6 ONLY)"}
-CMDN[#CMDN+1] = {N = "hotkeyaimbot", A = {""}, CMD = "272,hotkeyaimbot,(key),Changes your hotkey for activating aimbot."}
-CMDN[#CMDN+1] = {N = "hotkeyesp", A = {""}, CMD = "273,hotkeyesp,(key),Changes your hotkey for activating ESP."}
-CMDN[#CMDN+1] = {N = "admindetect", A = {"ad"}, CMD = "274,admindetect/ad,,Detects admins in the game (If the game has HDAdmin do ;admins before running the command)(SUPPORTS: HD/KOHLS)"}
-CMDN[#CMDN+1] = {N = "streamermode", A = {"hidenames"}, CMD = "275,streamermode/hidenames,,Hides all names in games (Suitable for streamers or people showcasing CMD-X <3)."}
-CMDN[#CMDN+1] = {N = "permflyspeed", A = {"pfs"}, CMD = "276,permflyspeed/pfs,(num),Fly speed is set to this every time you fly."}
-CMDN[#CMDN+1] = {N = "loopgoto", A = {"loopto","looptp"}, CMD = "277,loopgoto/loopto/looptp,(plr),Loop teleports to the player."}
-CMDN[#CMDN+1] = {N = "unloopgoto", A = {"unloopto","unlooptp"}, CMD = "278,unloopgoto/unloopto/unlooptp,,()"}
-CMDN[#CMDN+1] = {N = "dupegears", A = {"dupetools"}, CMD = "279,dupetools/dupegears,(num),Dupes tools until it reaches the set amount."}
-CMDN[#CMDN+1] = {N = "permwalkspeed", A = {"pws"}, CMD = "280,permwalkspeed/pws,(num),Walk speed is set to this every time you use walkspeed."}
-CMDN[#CMDN+1] = {N = "permjumppower", A = {"pjp"}, CMD = "281,permjumppower/pjp,(num),Jump power is set to this every time you use jumppower."}
-CMDN[#CMDN+1] = {N = "permhipheight", A = {"phh"}, CMD = "282,permhipheight/phh,(num),Hip height is set to this every time you use hipheight."}
-CMDN[#CMDN+1] = {N = "permgravity", A = {"pgrav"}, CMD = "283,permgravity/pgrav,(num),Gravity is set to this every time you use gravity."}
-CMDN[#CMDN+1] = {N = "gotobp", A = {"tobp","tpbp"}, CMD = "284,gotobp/tobp/tpbp,(plr),Teleports to a player while bypassing any anti-teleport.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "mute", A = {""}, CMD = "285,mute,,Mutes players sounds in a loop including radios."}
-CMDN[#CMDN+1] = {N = "unmute", A = {""}, CMD = "286,unmute,,()"}
-CMDN[#CMDN+1] = {N = "vgoto", A = {"vto","vtp"}, CMD = "287,vgoto/vto/vtp,(plr),Teleports to a player while in a vehicle.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "admin", A = {""}, CMD = "288,admin,(plr),Allows a player to run commands on you (RE-EXECUTE AFTER RUNNING).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unadmin", A = {""}, CMD = "289,unadmin,(plr),() (RE-EXECUTE AFTER RUNNING)"}
-CMDN[#CMDN+1] = {N = "admins", A = {""}, CMD = "290,admins,,Lists all admins."}
-CMDN[#CMDN+1] = {N = "adminclr", A = {""}, CMD = "291,adminclr,,Removes all admins (RE-EXECUTE AFTER RUNNING)."}
-CMDN[#CMDN+1] = {N = "hotkeynew", A = {""}, CMD = "292,hotkeynew,(key/cmd),Adds a new hotkey to the list of hotkeys that are activated when you press the keybind."}
-CMDN[#CMDN+1] = {N = "hotkeys", A = {""}, CMD = "293,hotkeys,,Allows you to add hotkeys."}
-CMDN[#CMDN+1] = {N = "hotkeydel", A = {""}, CMD = "294,hotkeydel,(cmd),Deletes a hotkey in the hotkeys list."}
-CMDN[#CMDN+1] = {N = "hotkeysclr", A = {""}, CMD = "295,hotkeysclr,,Clears the hotkeys."}
-CMDN[#CMDN+1] = {N = "changestyle", A = {"cs"}, CMD = "296,cs/changestyle,(style),Changes the style of your CMD-X refer to csinfo for more info on this command."}
-CMDN[#CMDN+1] = {N = "csinfo", A = {""}, CMD = "297,csinfo,,Lists info about changestyle/cs."}
-CMDN[#CMDN+1] = {N = "chat", A = {""}, CMD = "298,chat,(str),Forces you to chat whatever you put in str (Bypasses any mute)."}
-CMDN[#CMDN+1] = {N = "curvetools", A = {""}, CMD = "299,curvetools,,Curves your tools."}
-CMDN[#CMDN+1] = {N = "spiraltools", A = {""}, CMD = "300,spiraltools,,Spirals your tools."}
-CMDN[#CMDN+1] = {N = "toggleconfly", A = {"tcfly"}, CMD = "301,tcfly/toggleconfly,(on/off),Toggles if your fly starts again after a reset."}
-CMDN[#CMDN+1] = {N = "audioglitch", A = {"aglitch"}, CMD = "302,aglitch/audioglitch,(plr/all/others|num),Glitches players audios."}
-CMDN[#CMDN+1] = {N = "unaudioglitch", A = {"unaglitch"}, CMD = "303,unaglitch/unaudioglitch,,()"}
-CMDN[#CMDN+1] = {N = "lagchat", A = {""}, CMD = "304,lagchat,,Lags chat using _'s."}
-CMDN[#CMDN+1] = {N = "trollchat", A = {"tc"}, CMD = "305,trollchat/tc,,Picks a random trolly/ annoying chat."}
-CMDN[#CMDN+1] = {N = "unbodypositionwalkspeed", A = {"unbpws"}, CMD = "306,unbpws/unbodypositionwalkspeed,,()bpws"}
-CMDN[#CMDN+1] = {N = "removegears", A = {"rgears","removetools","rtools"}, CMD = "307,removegears/rgears/removetools/rtools,,Removes all your tools."}
-CMDN[#CMDN+1] = {N = "unclicktp", A = {"unctrltp"}, CMD = "308,unclicktp/unctrltp,,()"}
-CMDN[#CMDN+1] = {N = "unswimwalk", A = {"unswim"}, CMD = "309,unswim/unswimwalk,,()"}
-CMDN[#CMDN+1] = {N = "unlagchat", A = {""}, CMD = "310,unlagchat,,()"}
-CMDN[#CMDN+1] = {N = "playerstalker", A = {"pstalker"}, CMD = "311,playerstalker/pstalker,,Loads PlayerStalker GUI."}
-CMDN[#CMDN+1] = {N = "clip", A = {"c"}, CMD = "312,clip/c,,()noclip"}
-CMDN[#CMDN+1] = {N = "orbit", A = {"orb"}, CMD = "313,orbit/orb,(plr),Orbits a player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "closeorbit", A = {"corb"}, CMD = "314,closeorbit/corb,(plr),Close orbits a player.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unorbit", A = {"unorb"}, CMD = "315,unorbit/unorb,,()"}
-CMDN[#CMDN+1] = {N = "suggestions", A = {""}, CMD = "316,suggestions,(on/off),Turns CMD suggestions on or off."}
-CMDN[#CMDN+1] = {N = "clientbring", A = {"cbring"}, CMD = "317,clientbring/cbring,(plr),Brings user to you (CLIENT SIDED).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unclientbring", A = {"uncbring"}, CMD = "318,unclientbring/uncbring,,()"}
-CMDN[#CMDN+1] = {N = "bring", A = {""}, CMD = "319,bring,(plr),Brings the player to you (NEED A HAT AND TOOL).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "kill", A = {""}, CMD = "320,kill,(plr),Kills the player (NEED A HAT AND TOOL).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "give", A = {""}, CMD = "321,give,(plr),Gives the player your tool.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "using", A = {"script","iuse"}, CMD = "322,using/script/iuse,,Specifies that you are using CMD-X. <3"}
-CMDN[#CMDN+1] = {N = "playercases", A = {""}, CMD = "323,playercases,,Lists player cases you can use in your second argument."}
-CMDN[#CMDN+1] = {N = "coronavirus", A = {""}, CMD = "324,coronavirus,(country/none),Provides information about coronavirus using an API."}
-CMDN[#CMDN+1] = {N = "joindateprivate", A = {"jdpr"}, CMD = "325,joindateprivate/jdpr,(plr),Shows players join date privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "autoobby", A = {""}, CMD = "326,autoobby,,Allows you to complete an obby without pressing spacebar."}
-CMDN[#CMDN+1] = {N = "unautoobby", A = {""}, CMD = "327,unautoobby,,()"}
-CMDN[#CMDN+1] = {N = "joindatepublic", A = {"jdpu"}, CMD = "328,joindatepublic/jdpu,(plr),Shows players join date publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "ppsize", A = {"pp"}, CMD = "329,ppsize/pp,(plr),Shows players PP size. (RANDOM)", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "gaysize", A = {"gay"}, CMD = "330,gaysize/gay,(plr),Shows how gay a player is. (RANDOM)", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "matchmake", A = {"match"}, CMD = "330,matchmake/match,(plr|plr2),Shows how much of a match 2 players are. (RANDOM)"}
-CMDN[#CMDN+1] = {N = "height", A = {""}, CMD = "330,height,(plr),Shows how tall a player is. (RANDOM)", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "randomchat", A = {"rc"}, CMD = "331,randomchat/rc,,Chats a randomly generated message."}
-CMDN[#CMDN+1] = {N = "grabtools", A = {"gtools"}, CMD = "332,grabtools/gtools,,Grabs tools that enter workspace."}
-CMDN[#CMDN+1] = {N = "ungrabtools", A = {"ungtools"}, CMD = "333,ungrabtools/ungtools,,()"}
-CMDN[#CMDN+1] = {N = "earrape", A = {""}, CMD = "334,earrape,,Plays all sounds in workspace."}
-CMDN[#CMDN+1] = {N = "respectfiltering", A = {"rfe"}, CMD = "335,respectfiltering/rfe,,Checks if respect filtering is enabled or disabled."}
-CMDN[#CMDN+1] = {N = "removefog", A = {"rfog"}, CMD = "336,removefog/rfog,,Removes fog."}
-CMDN[#CMDN+1] = {N = "clientfreeze", A = {"cfreeze"}, CMD = "337,clientfreeze/cfreeze,(plr),Freezes player on client.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unclientfreeze", A = {"uncfreeze"}, CMD = "338,unclientfreeze/uncfreeze,(plr),()", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "respawndead", A = {"redead"}, CMD = "339,respawndead/redead,,Refreshes your character when death occurs."}
-CMDN[#CMDN+1] = {N = "unrespawndead", A = {"unredead"}, CMD = "340,unrespawndead/unredead,,()"}
-CMDN[#CMDN+1] = {N = "god", A = {""}, CMD = "341,god,,Gods your character (wont work on games that use :LoadCharacter())."}
-CMDN[#CMDN+1] = {N = "avatar", A = {""}, CMD = "342,avatar,(userid),Shows UserId's avatar."}
-CMDN[#CMDN+1] = {N = "statistics", A = {""}, CMD = "343,statistics,,Shows your most used commands."}
-CMDN[#CMDN+1] = {N = "bluewarn", A = {""}, CMD = "344,bluewarn,(str),Sends a warning to F9 in blue."}
-CMDN[#CMDN+1] = {N = "grabip", A = {"ip"}, CMD = "345,grabip/ip,(plr),Grabs a fake IP designed to scare the player (RANDOM).", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "enablereset", A = {""}, CMD = "346,enablereset,,Force enables the reset button incase a game has disabled it."}
-CMDN[#CMDN+1] = {N = "disablereset", A = {""}, CMD = "347,disablereset,,Disables the reset button."}
-CMDN[#CMDN+1] = {N = "massjoindate", A = {"massjd"}, CMD = "348,massjoindate/massjd,,Shows all players joindates."}
-CMDN[#CMDN+1] = {N = "loop", A = {""}, CMD = "349,loop,(str),Loops command with arguments."}
-CMDN[#CMDN+1] = {N = "unloop", A = {""}, CMD = "350,unloop,,()"}
-CMDN[#CMDN+1] = {N = "savetools", A = {"savegears","sgears","stools"}, CMD = "351,savetools/savegears/sgears/stools,,Saves tools."}
-CMDN[#CMDN+1] = {N = "loadtools", A = {"loadgears","lgears","ltools"}, CMD = "352,loadtools/loadgears/lgears/ltools,,Loads tools."}
-CMDN[#CMDN+1] = {N = "hotkeyfly", A = {""}, CMD = "353,hotkeyfly,(key),Saves a toggle for fly."}
-CMDN[#CMDN+1] = {N = "hotkeyxray", A = {""}, CMD = "354,hotkeyxray,(key),Saves a toggle for x-ray"}
-CMDN[#CMDN+1] = {N = "ungod", A = {""}, CMD = "355,ungod,,()"}
-CMDN[#CMDN+1] = {N = "animsync", A = {"async"}, CMD = "356,animsync/async,(plr),Syncs anim with player if caller is /e or .e", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "unanimsync", A = {"unasync"}, CMD = "357,unanimsync/unasync,,()"}
-CMDN[#CMDN+1] = {N = "clicktphotkey", A = {""}, CMD = "358,clicktphotkey,(key),Changes the hotkey for clicktp."}
-CMDN[#CMDN+1] = {N = "permspamspeed", A = {"pss"}, CMD = "359,permspamspeed/pss,(num),Changes the perm spam speed."}
-CMDN[#CMDN+1] = {N = "scriptusers", A = {"susers"}, CMD = "360,scriptusers/susers,,Shows people who are using CMD-X in your lobby."}
-CMDN[#CMDN+1] = {N = "massid", A = {""}, CMD = "361,massid,,Shows all players IDs."}
-CMDN[#CMDN+1] = {N = "massos", A = {""}, CMD = "362,massos,,Shows all players OSs."}
-CMDN[#CMDN+1] = {N = "scriptchat", A = {"schat"}, CMD = "363,scriptchat/schat,,Allows you to talk with other people using CMD-X."}
-CMDN[#CMDN+1] = {N = "schatbp", A = {"#"}, CMD = "364,schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."}
-CMDN[#CMDN+1] = {N = "mentions", A = {""}, CMD = "365,mentions,(on/off),Turns scriptchat mentions on or off."}
-CMDN[#CMDN+1] = {N = "whisperlogs", A = {"wlogs"}, CMD = "366,whisperlogs/wlogs,,Logs any whispers specifically."}
-CMDN[#CMDN+1] = {N = "playerlogs", A = {"plogs"}, CMD = "367,playerlogs/plogs,(plr),Logs messages by player specifically.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "noshow", A = {""}, CMD = "368,noshow,(on/off),Turns on or off detection on .susers."}
-CMDN[#CMDN+1] = {N = "rejoindiff", A = {"rjdiff"}, CMD = "369,rejoindiff/rjdiff,(smallest/small/largest/quick),Rejoins but takes you to a differnt server (Server Hopper)."}
-CMDN[#CMDN+1] = {N = "antikick", A = {""}, CMD = "370,antikick,,Stops you from being kicked."}
-CMDN[#CMDN+1] = {N = "servers", A = {""}, CMD = "371,servers,,Lists servers."}
-CMDN[#CMDN+1] = {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."}
-CMDN[#CMDN+1] = {N = "listentercmds", A = {""}, CMD = "373,listentercmds,,Lists enter cmds."}
-CMDN[#CMDN+1] = {N = "listhotkeys", A = {""}, CMD = "374,listhotkeys,,Lists hotkeys."}
-CMDN[#CMDN+1] = {N = "spoofos", A = {""}, CMD = "375,spoofos,(str),Spoofs your OS."}
-CMDN[#CMDN+1] = {N = "hotkeynoclip", A = {""}, CMD = "376,hotkeynoclip,(key),Adds a hotkey for noclip."}
-CMDN[#CMDN+1] = {N = "enabledrops", A = {""}, CMD = "377,enabledrops,,Enables tools dropping features."}
-CMDN[#CMDN+1] = {N = "disabledrops", A = {""}, CMD = "378,disabledrops,,Disables tools dropping features."}
-CMDN[#CMDN+1] = {N = "novoid", A = {""}, CMD = "379,novoid,,Stops you from being voided."}
-CMDN[#CMDN+1] = {N = "yesvoid", A = {""}, CMD = "380,yesvoid,,()."}
-CMDN[#CMDN+1] = {N = "sentinelexplorer", A = {"sdex"}, CMD = "381,sentinelexplorer/sdex,,Opens sentinel dex."}
-CMDN[#CMDN+1] = {N = "truesight", A = {"ts"}, CMD = "382,truesight/ts,,Shows invisible objects."}
-CMDN[#CMDN+1] = {N = "untruesight", A = {"unts"}, CMD = "383,untruesight/unts,,()."}
-CMDN[#CMDN+1] = {N = "disableplayer", A = {""}, CMD = "384,disableplayer,(plr),Removes a player from your client.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "enableplayer", A = {""}, CMD = "385,enableplayer,(plr),Brings back a player on your client.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "gotopart", A = {"topart"}, CMD = "386,gotopart/topart,(part),Teleports your character to the part."}
-CMDN[#CMDN+1] = {N = "clientbringpart", A = {"cbpart"}, CMD = "387,clientbringpart/cbpart,(part),Brings part to you."}
-CMDN[#CMDN+1] = {N = "clientdeletepart", A = {"cdpart"}, CMD = "388,clientdeletepart/cdpart,(part),Deletes part."}
-CMDN[#CMDN+1] = {N = "copyoutput", A = {""}, CMD = "389,copyoutput,(start|break),Copies output."}
-CMDN[#CMDN+1] = {N = "copypath", A = {""}, CMD = "390,copypath,(part),Copies parts path."}
-CMDN[#CMDN+1] = {N = "outputbind", A = {""}, CMD = "391,outputbind,(chat/default),Changes output bind."}
-CMDN[#CMDN+1] = {N = "boobsize", A = {"bbsize"}, CMD = "392,boobsize/bbsize,(plr),Tells you the size of players boobs.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "clearoutput", A = {""}, CMD = "393,clearoutput,,Cleared output."}
-CMDN[#CMDN+1] = {N = "gotospawn", A = {"tospawn"}, CMD = "394,gotospawn/tospawn,,Teleports you to a spawn point."}
-CMDN[#CMDN+1] = {N = "clearwaves", A = {""}, CMD = "395,clearwaves,,Clears waves on your client."}
-CMDN[#CMDN+1] = {N = "calmwaves", A = {""}, CMD = "396,calmwaves,,Calms waves on your client."}
-CMDN[#CMDN+1] = {N = "fov", A = {""}, CMD = "397,fov,(num),Changes FOV."}
-CMDN[#CMDN+1] = {N = "mousesensitivity", A = {"sens"}, CMD = "398,mousesensitivity/sens,(1-10),Changes mouse sensitivity."}
-CMDN[#CMDN+1] = {N = "volume", A = {"vol"}, CMD = "399,volume/vol,(0-1),Changes Master Volume."}
-CMDN[#CMDN+1] = {N = "graphics", A = {""}, CMD = "400,graphics,(1-10),Changes Master Graphics."}
-CMDN[#CMDN+1] = {N = "freecam", A = {"fc"}, CMD = "401,freecam/fc,,Activates freecam."}
-CMDN[#CMDN+1] = {N = "unfreecam", A = {"unfc"}, CMD = "402,unfreecam/unfc,,()"}
-CMDN[#CMDN+1] = {N = "reload", A = {""}, CMD = "403,reload,,Reloads CMD-X."}
-CMDN[#CMDN+1] = {N = "backpack", A = {"viewpack"}, CMD = "404,backpack/viewpack,(plr),Lists tools in players backpack.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "partesp", A = {"pesp"}, CMD = "405,partesp/pesp,(name/class|item),Shows all items that have the name or the class of what you enter."}
-CMDN[#CMDN+1] = {N = "unpartesp", A = {"unpesp"}, CMD = "406,unpartesp/unpesp,,()"}
-CMDN[#CMDN+1] = {N = "console", A = {"cprint"}, CMD = "407,console/cprint,(str),Prints to console."}
-CMDN[#CMDN+1] = {N = "animspeed", A = {"emotespeed"}, CMD = "408,animspeed/emotespeed,(num),Speeds up animations (works best with .loop)."}
-CMDN[#CMDN+1] = {N = "noprompt", A = {""}, CMD = "409,noprompt,,Stops games from pushing purchase prompts."}
-CMDN[#CMDN+1] = {N = "yesprompt", A = {""}, CMD = "410,yesprompt,,()."}
-CMDN[#CMDN+1] = {N = "rappu", A = {"rappublic"}, CMD = "411,rappu/rappublic,(plr),Shows players RAP publicly.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "rappr", A = {"rapprivate"}, CMD = "412,rappr/rapprivate,(plr),Shows players RAP privately.", ARG = "Player"}
-CMDN[#CMDN+1] = {N = "removeunanchored", A = {"runa"}, CMD = "413,removeunanchored/runa,,Destroys unanchored parts (works best with .loop)."}
-CMDN[#CMDN+1] = {N = "retard", A = {"reet"}, CMD = "414,retard/reet,,.juicewrld but better, has three settings (noArgs, 1, and 2)"}
-CMDN[#CMDN+1] = {N = "unretard", A = {"unreet"}, CMD = "415,unretard/unreet,,()"}
-CMDN[#CMDN+1] = {N = "nocommands", A = {"nocmds"}, CMD = "416,nocommands/nocmds,,Disables all commands."}
-CMDN[#CMDN+1] = {N = "yescommands", A = {"yescmds"}, CMD = "417,yescommands/yescmds,,()."}
-CMDN[#CMDN+1] = {N = "forceplay", A = {""}, CMD = "418,forceplay,,Forcefully plays your sound if muted."}
-CMDN[#CMDN+1] = {N = "unforceplay", A = {""}, CMD = "419,unforceplay,,()."}
-CMDN[#CMDN+1] = {N = "timepos", A = {""}, CMD = "420,timepos,(num),Sets your sounds timepos."}
-CMDN[#CMDN+1] = {N = "noguis", A = {""}, CMD = "421,noguis,,Disables player GUIs."}
-CMDN[#CMDN+1] = {N = "yesguis", A = {""}, CMD = "422,yesguis,,()."}
-CMDN[#CMDN+1] = {N = "guitruesight", A = {"gts"}, CMD = "423,guitruesight/gts,,Shows you hidden GUIs."}
-CMDN[#CMDN+1] = {N = "unguitruesight", A = {"ungts"}, CMD = "424,unguitruesight/ungts,,()."}
-CMDN[#CMDN+1] = {N = "freecamspeed", A = {"fcs"}, CMD = "425,freecamspeed/fcs,(num),Changes speed of freecam."}
-CMDN[#CMDN+1] = {N = "permfreecamspeed", A = {"pfcs"}, CMD = "426,permfreecamspeed/pfcs,(num),Changes perm speed of freecam."}
-CMDN[#CMDN+1] = {N = "nobillboardguis", A = {"nobgs"}, CMD = "427,nobillboardguis/nobgs,,Deletes all billboard guis."}
-CMDN[#CMDN+1] = {N = "yesbillboardguis", A = {"yesbgs"}, CMD = "428,yesbillboardguis/yesbgs,,()."}
-CMDN[#CMDN+1] = {N = "grippos", A = {"grip"}, CMD = "429,grippos/grip,(num1|num2|num3),Changes tools grip."}
-CMDN[#CMDN+1] = {N = "shiftwalkspeed", A = {"shiftws"}, CMD = "430,shiftwalkspeed/shiftws,(num),If pressing shift your walkspeed will change."}
-CMDN[#CMDN+1] = {N = "unshiftwalkspeed", A = {"unshiftws"}, CMD = "431,unshiftwalkspeed/unshiftws,,()."}
-CMDN[#CMDN+1] = {N = "animationsteal", A = {"animsteal","animrob","asteal"}, CMD = "432,animationsteal/animsteal/animrob/asteal,,Copies a players animations."}
-CMDN[#CMDN+1] = {N = "unanimationsteal", A = {"unanimsteal","unanimrob","unasteal"}, CMD = "433,unanimationsteal/unanimsteal/unanimrob/unasteal,,()"}
-CMDN[#CMDN+1] = {N = "nohurtoverlay", A = {"nohurtol"}, CMD = "434,nohurtoverlay/nohurtol,,Turns off hurt overlay/animation."}
-CMDN[#CMDN+1] = {N = "yeshurtoverlay", A = {"yeshurtol"}, CMD = "435,yeshurtoverlay/yeshurtol,,()"}
-CMDN[#CMDN+1] = {N = "gotofreecam", A = {"tofreecam","gotofc","tofc"}, CMD = "436,gotofreecam/tofreecam/gotofc/tofc,,Teleports your character to freecams current position."}
-CMDN[#CMDN+1] = {N = "compilecommand", A = {"ccmd"}, CMD = "437,compilecommand/ccmd,(READ PIN IN SHARE PLUGINS),Compiles a command in table form."}
-CMDN[#CMDN+1] = {N = "restorelocalscripts", A = {"relocalscripts","rels"}, CMD = "438,restorelocalscripts/relocalscripts/rels,,Restores local scripts."}
-CMDN[#CMDN+1] = {N = "newaudios", A = {""}, CMD = "439,newaudios,(amount),Lists newest audio IDs uploaded to roblox."}
-CMDN[#CMDN+1] = {N = "removecustomnametag", A = {"rcnt"}, CMD = "440,removecustomnametag/rcnt,,Removes custom nametag if the game gives it to you."}
-CMDN[#CMDN+1] = {N = "stubby", A = {""}, CMD = "441,stubby,,Makes you stubby."}
-CMDN[#CMDN+1] = {N = "timedcmd", A = {""}, CMD = "442,timedcmd,(secs|command),Runs a command after the given amount of time."}
-CMDN[#CMDN+1] = {N = "randomos", A = {""}, CMD = "443,randomos,,Spoofs your OS to a random string."}
-CMDN[#CMDN+1] = {N = "depth", A = {"dof"}, CMD = "444,depth/dof,(num),Changes your depth of field."}
-CMDN[#CMDN+1] = {N = "undepth", A = {"undof"}, CMD = "445,undepth/undof,,()"}
-CMDN[#CMDN+1] = {N = "cinematic", A = {"cmode"}, CMD = "446,cinematic/cmode,,Enables cinematic mode."}
-CMDN[#CMDN+1] = {N = "uncinematic", A = {"uncmode"}, CMD = "447,uncinematic/uncmode,,()"}
-CMDN[#CMDN+1] = {N = "atmosphere", A = {"atm"}, CMD = "448,atmosphere/atm,(num),Changes atmosphere of your game."}
-CMDN[#CMDN+1] = {N = "unatmosphere", A = {"unatm"}, CMD = "449,unatmosphere/unatm,,()"}
-CMDN[#CMDN+1] = {N = "removefx", A = {""}, CMD = "450,removefx,,Removes all FX."}
-CMDN[#CMDN+1] = {N = "chaos", A = {""}, CMD = "451,chaos,,Executes a random command every 5 seconds."}
-CMDN[#CMDN+1] = {N = "unchaos", A = {""}, CMD = "452,unchaos,,()"}
-CMDN[#CMDN+1] = {N = "funfact", A = {"fact"}, CMD = "453,funfact/fact,,Grabs a funfact from an API."}
-CMDN[#CMDN+1] = {N = "antifling", A = {"afling","noclipothers"}, CMD = "454,antifling/afling/noclipothers,(plr(s)),Nocollides other players to avoid being flung in any way."}
-CMDN[#CMDN+1] = {N = "cmdinfo", A = {"?"}, CMD = "455,cmdinfo/?,(cmd),Lists command info seperately."}
-CMDN[#CMDN+1] = {N = "simulationradius", A = {"simrad"}, CMD = "456,simulationradius/simrad,(num/max),Changes simulation radius (MAY BREAK SCHAT AND SUSERS)."}
-CMDN[#CMDN+1] = {N = "grabunanchored", A = {"guna"}, CMD = "457,grabunanchored/guna,(model),Updates unanchored parts."}
-CMDN[#CMDN+1] = {N = "clearunanchored", A = {"cuna"}, CMD = "458,clearunanchored/cuna,,()"}
-CMDN[#CMDN+1] = {N = "spinunanchored", A = {"suna"}, CMD = "459,spinunanchored/suna,(offset),Spins unanchored parts around your character."}
-CMDN[#CMDN+1] = {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"}
-CMDN[#CMDN+1] = {N = "randomcmd", A = {"rcmd"}, CMD = "461,randomcmd/rcmd,,Executes a random command."}
-CMDN[#CMDN+1] = {N = "replayintro", A = {"reintro"}, CMD = "462,replayintro/reintro,,Replays intro."}
-CMDN[#CMDN+1] = {N = "masscmd", A = {""}, CMD = "463,masscmd,(cmd|cmd),Executes multiple commands at once."}
-CMDN[#CMDN+1] = {N = "mass", A = {""}, CMD = "464,mass,(cmd),Loops player arguments on command."}
-CMDN[#CMDN+1] = {N = "touchinterests", A = {"firetouches"}, CMD = "465,touchinterests/firetouches,(model),Fires touch interests."}
-CMDN[#CMDN+1] = {N = "singletouchinterest", A = {"firetouch"}, CMD = "466,singletouchinterest/firetouch,(name),Fires touch interest."}
-CMDN[#CMDN+1] = {N = "clickdetectors", A = {"fireclicks"}, CMD = "467,clickdetectors/fireclicks,(model),Fires click detectors."}
-CMDN[#CMDN+1] = {N = "singleclickdetector", A = {"fireclick"}, CMD = "468,singleclickdetector/fireclick,(name),Fires click detector."}
-CMDN[#CMDN+1] = {N = "gotoclass", A = {"toclass"}, CMD = "469,gotoclass/toclass,(class),Teleports player to a part in that class."}
-CMDN[#CMDN+1] = {N = "playingaudios", A = {"paudios"}, CMD = "470,playingaudios/paudios,,Tells you the currently playing audios."}
-CMDN[#CMDN+1] = {N = "testaudio", A = {"taudio"}, CMD = "471,testaudio/taudio,(id),Tests audio out for you."}
-CMDN[#CMDN+1] = {N = "stopdupegears", A = {"stopdupetools"}, CMD = "472,stopdupegears/stopdupetools,,()"}
-CMDN[#CMDN+1] = {N = "stopsing", A = {""}, CMD = "473,stopsing,,()"}
-CMDN[#CMDN+1] = {N = "tracers", A = {""}, CMD = "474,tracers,,Traces players using Drawing API."}
-CMDN[#CMDN+1] = {N = "untracers", A = {""}, CMD = "475,untracers,,()"}
-CMDN[#CMDN+1] = {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dirjoin,(placeid/this|guid),Directly joins the GUID in question."}
-CMDN[#CMDN+1] = {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."}
-CMDN[#CMDN+1] = {N = "tabs", A = {""}, CMD = "478,tabs,(on/off),Turns tabs on or off."}
-CMDN[#CMDN+1] = {N = "changetab", A = {"ctab"}, CMD = "479,changetab/ctab,(1-9),Changes a tab from 1-9."}
+table.insert(CMDN, {N = "prefix", A = {""}, CMD = "1,prefix,,Shows you the chat prefix."})
+table.insert(CMDN, {N = "promptnew", A = {""}, CMD = "2,promptnew,(str/name),Changes your prompt text to something else."})
+table.insert(CMDN, {N = "prefixnew", A = {""}, CMD = "3,prefixnew,(str),Changes chat prefix."})
+table.insert(CMDN, {N = "hotkeyopen", A = {""}, CMD = "4,hotkeyopen,(str),Changes your hotkey for opening the GUI."})
+table.insert(CMDN, {N = "hotkeyoutput", A = {""}, CMD = "5,hotkeyoutput,(str),Changes your hotkey for opening the output GUI."})
+table.insert(CMDN, {N = "hotkeyfocus", A = {""}, CMD = "6,hotkeyfocus,(str),Changes your hotkey for focusing on the cmdbar."})
+table.insert(CMDN, {N = "entercmdnew", A = {""}, CMD = "7,entercmdnew,(str),Adds a new command to the list of commands that are activated when you first execute CMD-X."})
+table.insert(CMDN, {N = "entercmds", A = {""}, CMD = "8,entercmds,,Allows you to add entercmds."})
+table.insert(CMDN, {N = "entercmddel", A = {""}, CMD = "9,entercmddel,(str),Deletes a command in the entercmds list."})
+table.insert(CMDN, {N = "entercmdsclr", A = {""}, CMD = "10,entercmdsclr,,Clears the entercmds."})
+table.insert(CMDN, {N = "eightballpu", A = {"8ballpu"}, CMD = "11,eightballpu/8ballpu,(str),Ask 8Ball a question publicly."})
+table.insert(CMDN, {N = "eightballpr", A = {"8ballpr"}, CMD = "12,eightballpr/8ballpr,(str),Ask 8Ball a question privately."})
+table.insert(CMDN, {N = "friendjoin", A = {"fjoin"}, CMD = "13,friendjoin/fjoin,(full plr name),Joins your friends game."})
+table.insert(CMDN, {N = "support", A = {""}, CMD = "14,support/help,(CB/COPY),If you need support while using CMD-X use this command!"})
+table.insert(CMDN, {N = "commands", A = {"cmds","help"}, CMD = "15,cmds/commands,,Shows this page."})
+table.insert(CMDN, {N = "config", A = {"settings"}, CMD = "16,config/settings,,Configure CMD-X."})
+table.insert(CMDN, {N = "advertise", A = {"adv"}, CMD = "17,adv/advertise,,Help spread CMD-X by doing this cmd in game! (<3)"})
+table.insert(CMDN, {N = "unadvertise", A = {"unadv"}, CMD = "18,unadv/unadvertise,,()"})
+table.insert(CMDN, {N = "version", A = {"ver","v"}, CMD = "19,version/ver/v,,Shows version."})
+table.insert(CMDN, {N = "nextupdate", A = {""}, CMD = "20,nextupdate,,Shows you when the next update may be coming out."})
+table.insert(CMDN, {N = "walkspeed", A = {"ws"}, CMD = "21,ws/walkspeed,(num),Sets your characters walkspeed."})
+table.insert(CMDN, {N = "defaultwalkspeed", A = {"dws"}, CMD = "22,dws/defaultwalkspeed,,()"})
+table.insert(CMDN, {N = "jumppower", A = {"jp"}, CMD = "23,jp/jumppower,(num),Sets your characters jumppower."})
+table.insert(CMDN, {N = "defaultjumppower", A = {"djp"}, CMD = "24,djp/deafultjumppower,,()"})
+table.insert(CMDN, {N = "hipheight", A = {"hh"}, CMD = "25,hh/hipheight,(num),Sets your characters hipheight."})
+table.insert(CMDN, {N = "defaulthipheight", A = {"dhh"}, CMD = "26,dhh/defaulthipheight,,()"})
+table.insert(CMDN, {N = "gravity", A = {"grav"}, CMD = "27,gravity/grav,(num),Sets your characters gravity."})
+table.insert(CMDN, {N = "defaultgravity", A = {"dgrav"}, CMD = "28,dgrav/defaultgravity,,()"})
+table.insert(CMDN, {N = "bodypositionwalkspeed", A = {"bpws"}, CMD = "29,bpws/bodypositionwalkspeed,(num),Modifies your characters bodyposition walkspeed. (R6 ONLY) (AC BYPASS)"})
+table.insert(CMDN, {N = "halve", A = {"decapitate"}, CMD = "30,halve/decapitate,,Splits your character into two. (R15 ONLY)"})
+table.insert(CMDN, {N = "removehands", A = {"rhands"}, CMD = "31,rhands/removehands,,Removes your characters hands. (R15 ONLY)"})
+table.insert(CMDN, {N = "removefeet", A = {"rfeet"}, CMD = "32,rfeet/removefeet,,Removes your characters feet. (R15 ONLY)"})
+table.insert(CMDN, {N = "removeleftleg", A = {"rlleg"}, CMD = "33,rlleg/removeleftleg,,Removes your left leg."})
+table.insert(CMDN, {N = "removerightleg", A = {"rrleg"}, CMD = "34,rrleg/removerightleg,,Removes your right leg."})
+table.insert(CMDN, {N = "removeleftarm", A = {"rlarm"}, CMD = "35,rlarm/removeleftarm,,Removes your left arm."})
+table.insert(CMDN, {N = "removerightarm", A = {"rrarm"}, CMD = "36,rrarm/removerightarm,,Removes your right arm."})
+table.insert(CMDN, {N = "removearms", A = {"rarms"}, CMD = "37,rarms/removearms,,Removes your characters arms."})
+table.insert(CMDN, {N = "removelegs", A = {"rlegs"}, CMD = "38,rlegs/removelegs,,Removes your characters legs."})
+table.insert(CMDN, {N = "removelimbs", A = {"rlimbs"}, CMD = "39,rlimbs/removelimbs,,Removes your characters limbs."})
+table.insert(CMDN, {N = "removeanim", A = {"ranim"}, CMD = "40,ranim/removeanim,,Removes your characters animations."})
+table.insert(CMDN, {N = "restoreanim", A = {"reanim"}, CMD = "41,reanim/restoreanim,,Restores your characters animations."})
+table.insert(CMDN, {N = "removeshirt", A = {"rshirt"}, CMD = "42,rshirt/removeshirt,,Removes your characters shirt."})
+table.insert(CMDN, {N = "removetshirt", A = {"rtshirt"}, CMD = "43,rtshirt/removetshirt,,Removes your characters tshirt"})
+table.insert(CMDN, {N = "removepants", A = {"rpants"}, CMD = "44,rpants/removepants,,Removes your characters pants."})
+table.insert(CMDN, {N = "removeclothes", A = {"naked","rclothes"}, CMD = "45,naked/rclothes/removeclothes,,Removes your character clothes."})
+table.insert(CMDN, {N = "removehatsmesh", A = {"rhatsmesh","rhm"}, CMD = "46,rhatsmesh/rhm/removehatsmesh,,Removes your characters hat meshes."})
+table.insert(CMDN, {N = "removegearmesh", A = {"rgearmesh","rgm","rtoolmesh","rtm","removetoolmesh"}, CMD = "47,rgearmesh/rgm/rtoolmesh/rtm/removetoolmesh/removegearmesh,,Removes your current characters gear mesh."})
+table.insert(CMDN, {N = "changelog", A = {"clog"}, CMD = "48,changelog/clog,,Opens changelog."})
+table.insert(CMDN, {N = "drophats", A = {""}, CMD = "49,drophats,,Drops your characters hats on the map."})
+table.insert(CMDN, {N = "dropgears", A = {"droptools"}, CMD = "50,dropgears/droptools,,Drops your characters gears on the map."})
+table.insert(CMDN, {N = "hatspam", A = {""}, CMD = "51,hatspam,,Spams your hats onto the map."})
+table.insert(CMDN, {N = "unhatspam", A = {""}, CMD = "52,unhatspam,,()"})
+table.insert(CMDN, {N = "removeface", A = {"rface"}, CMD = "53,rface/removeface,,Removes your characters face."})
+table.insert(CMDN, {N = "removehats", A = {"rhats"}, CMD = "54,rhats/removehats,,Removes your characters hats."})
+table.insert(CMDN, {N = "rheadmesh", A = {"rhdm"}, CMD = "55,rheadmesh/rhdm,,Removes the mesh of your characters head."})
+table.insert(CMDN, {N = "equip", A = {"equipall"}, CMD = "56,equip/equipall,,Equips all gears in your characters backpack."})
+table.insert(CMDN, {N = "banlands", A = {""}, CMD = "57,banlands,(plr),Teleports player to banlands (NEED A HAT AND TOOL).", ARG = "Player"})
+table.insert(CMDN, {N = "flip", A = {""}, CMD = "58,flip,,Allows your character to flip."})
+table.insert(CMDN, {N = "unflip", A = {""}, CMD = "59,unflip,,()"})
+table.insert(CMDN, {N = "doubleflip", A = {"duoflip"}, CMD = "60,duoflip/doubleflip,,Allows your character to double flip."})
+table.insert(CMDN, {N = "undoubleflip", A = {"unduoflip"}, CMD = "61,unduoflip/undoubleflip,,()"})
+table.insert(CMDN, {N = "glue", A = {"stick"}, CMD = "62,glue/stick,(plr),Sticks your character to the target.", ARG = "Player"})
+table.insert(CMDN, {N = "unglue", A = {"unstick"}, CMD = "63,unglue/unstick,,()"})
+table.insert(CMDN, {N = "nugget", A = {""}, CMD = "64,nugget,,Makes your character look like a nugget."})
+table.insert(CMDN, {N = "cartwheel", A = {""}, CMD = "65,cartwheel,,Makes your character do a cartwheel."})
+table.insert(CMDN, {N = "uncartwheel", A = {""}, CMD = "66,uncartwheel,,()"})
+table.insert(CMDN, {N = "seizure", A = {"juicewrld"}, CMD = "67,seizure/juicewrld,,Makes your character have a seizure."})
+table.insert(CMDN, {N = "unseizure", A = {"unjuicewrld"}, CMD = "68,unseizure/unjuicewrld,,()"})
+table.insert(CMDN, {N = "fling", A = {""}, CMD = "69,fling,(plr),Flings player. (COLLISION ONLY)", ARG = "Player"})
+table.insert(CMDN, {N = "invisiblefling", A = {"invisfling","ifling"}, CMD = "70,invisiblefling/invisfling/ifling,,Invisibly flings players. (COLLISION ONLY)"})
+table.insert(CMDN, {N = "freefling", A = {"ffling"}, CMD = "71,freefling/ffling,,Flings players. (COLLISION ONLY)"})
+table.insert(CMDN, {N = "unfling", A = {""}, CMD = "72,unfling,,()"})
+table.insert(CMDN, {N = "cleanfling", A = {"cfling"}, CMD = "73,cleanfling/cfling,,Flings players in an undetected way. (COLLISION ONLY)"})
+table.insert(CMDN, {N = "lag", A = {"stutter"}, CMD = "74,lag/stutter,,Appears like your character is stuttering or lagging."})
+table.insert(CMDN, {N = "unlag", A = {"unstutter"}, CMD = "75,unlag/unstutter,,()"})
+table.insert(CMDN, {N = "annoy", A = {""}, CMD = "76,annoy,(plr),Annoys the player.", ARG = "Player"})
+table.insert(CMDN, {N = "unannoy", A = {""}, CMD = "77,unannoy,,()"})
+table.insert(CMDN, {N = "weaken", A = {"weak"}, CMD = "78,weak/weaken,,Weakens your character."})
+table.insert(CMDN, {N = "strengthen", A = {"strong"}, CMD = "79,strong/strengthen,,Strengthens your character."})
+table.insert(CMDN, {N = "noresult", A = {"		","  ",""}, CMD = "80,,,Saved CMD NUM"})
+table.insert(CMDN, {N = "unweak", A = {"unstrong"}, CMD = "81,unweak/unstrong,,()"})
+table.insert(CMDN, {N = "plague", A = {""}, CMD = "82,plague,(name),Starts a plague."})
+table.insert(CMDN, {N = "parts", A = {""}, CMD = "83,parts,(name),Lists parts."})
+table.insert(CMDN, {N = "bringunanchored", A = {"buna"}, CMD = "84,bringunanchored/buna,,Brings unachored parts (works best with .loop).", ARG = "Player"})
+table.insert(CMDN, {N = "listunanchored", A = {"luna"}, CMD = "85,listunanchored/luna,,Lists unanchored parts."})
+table.insert(CMDN, {N = "credits", A = {""}, CMD = "86,credits,,Lists credits for CMD-X."})
+table.insert(CMDN, {N = "animation", A = {"anim"}, CMD = "87,anim/animation,(num1) (num2),Plays the AnimationID you state in num1 and speeds it up in num2. (R6 ONLY)"})
+table.insert(CMDN, {N = "unanimation", A = {"unanim"}, CMD = "88,unanim/unanimation,,Stops all animations."})
+table.insert(CMDN, {N = "uninsane", A = {"unspas"}, CMD = "89,uninsane/unspas,,()"})
+table.insert(CMDN, {N = "monstermash", A = {"mashdance"}, CMD = "90,monstermash/mashdance,,Monster mashes your character. (R6 ONLY)"})
+table.insert(CMDN, {N = "ragdoll", A = {"stun"}, CMD = "91,ragdoll/stun,,Stuns your character."})
+table.insert(CMDN, {N = "unragdoll", A = {"unstun"}, CMD = "92,unragdoll/unstun,,()"})
+table.insert(CMDN, {N = "animpack", A = {""}, CMD = "93,animpack,(animation),Loads the animation you state; toy/ pirate/ knight/ astronaut/ vampire/ robot/ levitation/ bubbly/ werewolf/ stylish/ mage/ cartoony/ zombie/ superhero/ ninja/ elder/ old. (R15 ONLY)"})
+table.insert(CMDN, {N = "spin", A = {"beybladeletitrip"}, CMD = "94,spin/baybladeletitrip,(num),Spins your character around like a beyblade."})
+table.insert(CMDN, {N = "unspin", A = {""}, CMD = "95,unspin,,()"})
+table.insert(CMDN, {N = "hatspin", A = {""}, CMD = "96,hatspin,,Spins your characters hats around your head."})
+table.insert(CMDN, {N = "unhatspin", A = {""}, CMD = "97,unhatspin,,()"})
+table.insert(CMDN, {N = "facefuck", A = {"facerape"}, CMD = "98,facefuck/facerape,(plr),Sits your character in front of their face to create the illusion of facefucking.", ARG = "Player"})
+table.insert(CMDN, {N = "unfacefuck", A = {"unfacerape"}, CMD = "99,unfacefuck/unfacerape,,()"})
+table.insert(CMDN, {N = "facefuckanim", A = {"facerapeanim"}, CMD = "100,facefuckanim/facerapeanim,(plr),Places your character in front of their face with an animation to create the illusion of facefucking.", ARG = "Player"})
+table.insert(CMDN, {N = "unfacefuckanim", A = {"unfacerapeanim"}, CMD = "101,unfacefuckanim/unfacerapeanim,,()"})
+table.insert(CMDN, {N = "piggyback", A = {"ride"}, CMD = "102,piggyback/ride,(plr),Sits your character behind their head to create the illusion of a piggy back.", ARG = "Player"})
+table.insert(CMDN, {N = "unpiggyback", A = {"unride"}, CMD = "103,unpiggyback/unride,,()"})
+table.insert(CMDN, {N = "fuck", A = {"rape"}, CMD = "104,fuck/rape,(plr),Rapes player you stated using an animation.", ARG = "Player"})
+table.insert(CMDN, {N = "unfuck", A = {"unrape"}, CMD = "105,unfuck/unrape,,()"})
+table.insert(CMDN, {N = "follow", A = {"stalk"}, CMD = "106,follow/stalk,(plr),Follows player you stated at a safe distance.", ARG = "Player"})
+table.insert(CMDN, {N = "unfollow", A = {"unstalk"}, CMD = "107,unfollow/unstalk,,()"})
+table.insert(CMDN, {N = "oldroblox", A = {"oldrblx"}, CMD = "108,oldrblx/oldroblox,,Makes your game look like old roblox."})
+table.insert(CMDN, {N = "savegame", A = {"sg"}, CMD = "109,savegame/sg,,Saves the current game instance to your workspace folder. (SYNAPSE ONLY)"})
+table.insert(CMDN, {N = "btools", A = {"bt"}, CMD = "110,btools/bt,,Gives you building tools. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "fex", A = {"f3x"}, CMD = "111,f3x/fex,,Gives you advanced building tools. (CLIENT SIDED) (GUI)"})
+table.insert(CMDN, {N = "remotespy", A = {"r2s"}, CMD = "112,r2s/remotespy,,Spies remotes. (GUI)"})
+table.insert(CMDN, {N = "badger", A = {""}, CMD = "113,badger,,Opens badger V2. (GUI) (<3)"})
+table.insert(CMDN, {N = "explorer", A = {"dex"}, CMD = "114,explorer/dex,,Spies workspace. (GUI)"})
+table.insert(CMDN, {N = "removeeffects", A = {"reffects"}, CMD = "115,reffects/removeeffects,,Removes all effects in the game. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "removeseats", A = {"rseats"}, CMD = "116,rseats/removeseats,,Removes all seats in game. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "removelocalscripts", A = {"rls"}, CMD = "117,removelocalscripts/rls,,Removes all local scripts, useful for bypassing anti exploits. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "xray", A = {"x"}, CMD = "118,xray/x,,Changes all items to 0.5 Transparency."})
+table.insert(CMDN, {N = "unxray", A = {"unx"}, CMD = "119,unxray/unx,,()"})
+table.insert(CMDN, {N = "lockws", A = {"lws"}, CMD = "120,lockws/lws,,Locks all of workspace."})
+table.insert(CMDN, {N = "unlockws", A = {"uws"}, CMD = "121,unlockws/uws,,Unlocks all of workspace."})
+table.insert(CMDN, {N = "day", A = {"time14"}, CMD = "122,day/time14,,Turns the skybox time to day (18:00). (CLIENT SIDED)"})
+table.insert(CMDN, {N = "night", A = {"time0"}, CMD = "123,night/time0,,Turns the skybox time to night (00:00). (CLIENT SIDED)"})
+table.insert(CMDN, {N = "removesky", A = {"rsky"}, CMD = "124,rsky/removesky,,Removes the games skybox. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "restorelighting", A = {"relighting"}, CMD = "125,relighting/restorelighting,,Restores games lighting. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "restorecamera", A = {"recamera"}, CMD = "126,recamera/restorecamera,,Restores your characters camera."})
+table.insert(CMDN, {N = "unscramble", A = {""}, CMD = "127,unscramble,,Unscrambles games variable names."})
+table.insert(CMDN, {N = "removeinviswalls", A = {"riw"}, CMD = "128,riw/removeinviswalls,,Removes invisible walls in game. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "gameinfo", A = {"placeinfo"}, CMD = "129,gameinfo/placeinfo,,Provides various information on the game you are playing in."})
+table.insert(CMDN, {N = "closegameinfo", A = {""}, CMD = "130,closegameinfo,,()"})
+table.insert(CMDN, {N = "math", A = {"calc","calculate"}, CMD = "131,math/calc/calculate,(num) (+,-,/,*) (num) (CB/COPY),Multiplicates numbers together."})
+table.insert(CMDN, {N = "hidechat", A = {""}, CMD = "132,hidechat,,Turns off chat."})
+table.insert(CMDN, {N = "showchat", A = {""}, CMD = "133,showchat,,Turns on chat."})
+table.insert(CMDN, {N = "switchteam", A = {""}, CMD = "134,switchteam,(str),Switches your team to str if it exists."})
+table.insert(CMDN, {N = "ping", A = {""}, CMD = "135,ping,,Shows your ping."})
+table.insert(CMDN, {N = "fps", A = {""}, CMD = "136,fps,,Shows your FPS."})
+table.insert(CMDN, {N = "unfps", A = {""}, CMD = "137,unfps,,()"})
+table.insert(CMDN, {N = "fuckoff", A = {"killgui"}, CMD = "138,killgui/fuckoff,,Closes the GUI."})
+table.insert(CMDN, {N = "messagebox", A = {"message","msg"}, CMD = "139,message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"})
+table.insert(CMDN, {N = "filtering", A = {"fe"}, CMD = "140,fe/filter,,Checks if a game is filtered or not."})
+table.insert(CMDN, {N = "gameid", A = {"placeid"}, CMD = "141,gameid/placeid,,Lets you know the GameID of the game you are in."})
+table.insert(CMDN, {N = "error", A = {""}, CMD = "142,error,(str),Tests error in F9."})
+table.insert(CMDN, {N = "print", A = {""}, CMD = "143,print,(str),Tests print in F9."})
+table.insert(CMDN, {N = "warn", A = {""}, CMD = "144,warn,(str),Tests warn in F9."})
+table.insert(CMDN, {N = "output", A = {""}, CMD = "145,output,(str),Tests output."})
+table.insert(CMDN, {N = "forceshiftlock", A = {"sl","shiftlock"}, CMD = "146,sl/shiftlock/forceshiftlock,,If the developer of the game your playing on has disabled Shift Lock this will enable it for your character."})
+table.insert(CMDN, {N = "maxcamunlock", A = {"camunlock"}, CMD = "147,maxcamunlock/camunlock,,Unlocks your characters max zooming distance."})
+table.insert(CMDN, {N = "position", A = {"pos"}, CMD = "148,pos/position,(CB/COPY),Sends your characters position to output."})
+table.insert(CMDN, {N = "audiolog", A = {"audioid"}, CMD = "149,audiolog/audioid,(plr) (CB/COPY),Logs what a user is playing.", ARG = "Player"})
+table.insert(CMDN, {N = "cambobble", A = {""}, CMD = "150,cambobble,,Bobbles camera when you walk."})
+table.insert(CMDN, {N = "uncambobble", A = {""}, CMD = "151,uncambobble,,()"})
+table.insert(CMDN, {N = "grapple", A = {"spiderman"}, CMD = "152,grapple/spiderman,,Grapples to your mouse."})
+table.insert(CMDN, {N = "ungrapple", A = {"unspiderman"}, CMD = "153,ungrapple/unspiderman,,()"})
+table.insert(CMDN, {N = "remind", A = {""}, CMD = "154,remind,(num) (h/m/s) (str),Reminds you of str when num is done counting."})
+table.insert(CMDN, {N = "step", A = {""}, CMD = "155,step,,Allows you to walk up a building."})
+table.insert(CMDN, {N = "unstep", A = {""}, CMD = "156,unstep,,()"})
+table.insert(CMDN, {N = "antiafk", A = {"afk"}, CMD = "157,antiafk/afk,,Prevents you from idling."})
+table.insert(CMDN, {N = "nosit", A = {""}, CMD = "158,nosit,,Stops your character from being sat down."})
+table.insert(CMDN, {N = "yessit", A = {""}, CMD = "159,yessit,,()"})
+table.insert(CMDN, {N = "nostun", A = {""}, CMD = "160,nostun,,Stops your character from being PlatformStood."})
+table.insert(CMDN, {N = "yesstun", A = {""}, CMD = "161,yesstun,,()"})
+table.insert(CMDN, {N = "badges", A = {""}, CMD = "162,badges,,Gets all badges if there are any named (Default: BadgeAwarder)."})
+table.insert(CMDN, {N = "spawnpoint", A = {"spawn"}, CMD = "163,spawnpoint/spawn,,Sets spawnpoint to your current position."})
+table.insert(CMDN, {N = "bunnyhop", A = {"bhop"}, CMD = "164,bhop/bunnyhop,,Bunny hops your character."})
+table.insert(CMDN, {N = "unbunnyhop", A = {"unbhop"}, CMD = "165,unbhop/unbunnyhop,,()"})
+table.insert(CMDN, {N = "invisible", A = {"invis"}, CMD = "166,invisible/invis,,Makes your character invisible."})
+table.insert(CMDN, {N = "sit", A = {"seat"}, CMD = "167,sit/seat,,Sits your character."})
+table.insert(CMDN, {N = "sitwalk", A = {"seatwalk"}, CMD = "168,sitwalk/seatwalk,,Sits your character but allows your character to move around.,"})
+table.insert(CMDN, {N = "freeze", A = {"anchored"}, CMD = "169,freeze/anchored,,Freezes your character."})
+table.insert(CMDN, {N = "thaw", A = {"unfreeze","unanchored"}, CMD = "170,thaw/unfreeze/unanchored,,()"})
+table.insert(CMDN, {N = "goto", A = {"to","tp"}, CMD = "171,goto/to/tp,(plr),Teleports your character to the player.", ARG = "Player"})
+table.insert(CMDN, {N = "walkto", A = {"moveto"}, CMD = "172,walkto/moveto,(plr),Walks your character to the player.", ARG = "Player"})
+table.insert(CMDN, {N = "unwalkto", A = {"unmoveto"}, CMD = "173,unwalkto/unmoveto,,()"})
+table.insert(CMDN, {N = "refresh", A = {"re"}, CMD = "174,refresh/re,,Respawns your character on the location of entering this command."})
+table.insert(CMDN, {N = "reset", A = {"r"}, CMD = "175,reset/r,,Resets your character."})
+table.insert(CMDN, {N = "savepos", A = {"spos"}, CMD = "176,savepos/spos,(str),Saves your characters position."})
+table.insert(CMDN, {N = "loadpos", A = {"lpos"}, CMD = "177,loadpos/lpos,(str),()"})
+table.insert(CMDN, {N = "platform", A = {"pf"}, CMD = "178,platform/pf,,Allows your character to walk on an invisible platform."})
+table.insert(CMDN, {N = "unplatform", A = {"unpf"}, CMD = "179,unplatform/unpf,,()"})
+table.insert(CMDN, {N = "clicktp", A = {"ctrltp"}, CMD = "180,clicktp/ctrltp,,Press CTRL to teleport your character to your cursor."})
+table.insert(CMDN, {N = "infjump", A = {"ij"}, CMD = "181,infjump/ij,,Allows you to infinitely go higher by pressing space."})
+table.insert(CMDN, {N = "uninfjump", A = {"unij"}, CMD = "182,uninfjump/unij,,()"})
+table.insert(CMDN, {N = "fly", A = {""}, CMD = "183,fly,,Allows your character to fly."})
+table.insert(CMDN, {N = "vehiclefly", A = {"vfly"}, CMD = "184,vehiclefly/vfly,,Allows your character to fly around in vehicles."})
+table.insert(CMDN, {N = "unfly", A = {""}, CMD = "185,unfly,,()"})
+table.insert(CMDN, {N = "flyspeed", A = {"fs"}, CMD = "186,flyspeed/fs,(num),Changes fly speed."})
+table.insert(CMDN, {N = "rejoin", A = {"rj"}, CMD = "187,rejoin/rj,,Rejoins the game."})
+table.insert(CMDN, {N = "game", A = {"place"}, CMD = "188,game/place,(num),Joins the GameID you stated in num."})
+table.insert(CMDN, {N = "reach", A = {""}, CMD = "189,reach,(num),Edits your tools size value."})
+table.insert(CMDN, {N = "boxreach", A = {"breach"}, CMD = "190,boxreach/breach,(num),Edits your tools size value in a box formation."})
+table.insert(CMDN, {N = "unreach", A = {""}, CMD = "191,unreach,,()"})
+table.insert(CMDN, {N = "noclip", A = {"nc"}, CMD = "192,noclip/nc,,Allows your character to walk through anything, also blocks most flings."})
+table.insert(CMDN, {N = "light", A = {"brightness"}, CMD = "193,light/brightness,(num),Gives your character a light. (CLIENT SIDED)"})
+table.insert(CMDN, {N = "unlight", A = {"unbrightness"}, CMD = "194,unlight/unbrightness,,()"})
+table.insert(CMDN, {N = "esp", A = {""}, CMD = "195,esp,,Shows where all the players are on your screen."})
+table.insert(CMDN, {N = "unesp", A = {""}, CMD = "196,unesp,,()"})
+table.insert(CMDN, {N = "aimbot", A = {"ab"}, CMD = "197,aimbot/ab,(Team/FFA),Aims at the closest player to you (Left Ctrl to toggle)."})
+table.insert(CMDN, {N = "unaimbot", A = {"unab"}, CMD = "198,unaimbot/unab,,()"})
+table.insert(CMDN, {N = "whitelistfriends", A = {"wlf"}, CMD = "199,wlf/whitelistfriends,,Whitelists friends for aimbot."})
+table.insert(CMDN, {N = "unwhitelistfriends", A = {"unwlf"}, CMD = "200,unwlf/unwhitelistfriends,,Unwhitelists friends for aimbot."})
+table.insert(CMDN, {N = "whitelist", A = {"wl"}, CMD = "201,wl/whitelist,(plr),Whitelists player for aimbot.", ARG = "Player"})
+table.insert(CMDN, {N = "unwhitelist", A = {"unwl"}, CMD = "202,unwl/unwhitelist,(plr),Unwhitelists player for aimbot.", ARG = "Player"})
+table.insert(CMDN, {N = "showwhitelist", A = {"swl"}, CMD = "203,swl/showwhitelist,,Shows whitelist for aimbot."})
+table.insert(CMDN, {N = "spectate", A = {"view"}, CMD = "204,view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"})
+table.insert(CMDN, {N = "unspectate", A = {"unview"}, CMD = "205,unview/unspectate,,()"})
+table.insert(CMDN, {N = "osprivate", A = {"ospr"}, CMD = "206,ospr/osprivate,(plr),Says stated users Operating System privately.", ARG = "Player"})
+table.insert(CMDN, {N = "ospublic", A = {"ospu"}, CMD = "207,ospu/ospublic,(plr),Says stated users Operating System publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "ageprivate", A = {"agepr"}, CMD = "208,agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"})
+table.insert(CMDN, {N = "agepublic", A = {"agepu"}, CMD = "209,agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "idprivate", A = {"idpr"}, CMD = "210,idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"})
+table.insert(CMDN, {N = "idpublic", A = {"idpu"}, CMD = "211,idpu/idpublic,(plr),Says stated users ID publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "vrprivate", A = {"vrpr"}, CMD = "212,vrpr/vrprivate,(plr),Says stated users Virtual Reality System privately.", ARG = "Player"})
+table.insert(CMDN, {N = "vrpublic", A = {"vrpu"}, CMD = "213,vrpu/vrpublic,(plr),Says stated users Virtual Reality System publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "profileinfo", A = {"profile"}, CMD = "214,profileinfo/profile,(plr),Lists various information of the player stated and shows a bodyshot of the player.", ARG = "Player"})
+table.insert(CMDN, {N = "closeprofileinfo", A = {"closeprofile"}, CMD = "215,closeprofile/closeprofileinfo,,()"})
+table.insert(CMDN, {N = "nazispam", A = {"asciinazi"}, CMD = "216,nazispam/asciinazi,,Spams nazi signs in the chat."})
+table.insert(CMDN, {N = "unnazispam", A = {"unasciinazi"}, CMD = "217,unnazispam/unasciinazi,,()"})
+table.insert(CMDN, {N = "spam", A = {"s"}, CMD = "218,spam/s,(str),Spams the text you entered."})
+table.insert(CMDN, {N = "unspam", A = {"uns"}, CMD = "219,unspam/uns,,()"})
+table.insert(CMDN, {N = "pmspam", A = {""}, CMD = "220,pmspam,(plr) (str),Spams the text you entered in someones PM.", ARG = "Player"})
+table.insert(CMDN, {N = "unpmspam", A = {""}, CMD = "221,unpmspam,,()"})
+table.insert(CMDN, {N = "spamspeed", A = {"ss"}, CMD = "222,spamspeed/ss,(num),Changes the speed of the spam."})
+table.insert(CMDN, {N = "dicepublic", A = {"dicepu"}, CMD = "223,dicepu/dicepublic,,Rolls a dice publicly."})
+table.insert(CMDN, {N = "diceprivate", A = {"dicepr"}, CMD = "224,dicepr/diceprivate,,Rolls a dice privately."})
+table.insert(CMDN, {N = "numberpublic", A = {"numberpu"}, CMD = "225,numberpu/numberpublic,(num1) (num2),Calls a random number you stated between 2 numbers publicly."})
+table.insert(CMDN, {N = "numberprivate", A = {"numberpr"}, CMD = "226,numberpr/numberprivate,(num1) (num2),Calls a random number you stated between 2 numbers privately."})
+table.insert(CMDN, {N = "loadcustoms", A = {""}, CMD = "227,loadcustoms,,Lists custom scripts."})
+table.insert(CMDN, {N = "loadcustom", A = {"pluginload","p_"}, CMD = "228,loadcustom/pluginload/p_,(name),Loads custom script that you stated."})
+table.insert(CMDN, {N = "find", A = {""}, CMD = "229,find,(plr),Locates where your stated user is using the ESP command - (WARNING: May cause log spam.).", ARG = "Player"})
+table.insert(CMDN, {N = "unfind", A = {""}, CMD = "230,unfind,(plr),()", ARG = "Player"})
+table.insert(CMDN, {N = "clickdelete", A = {"clickdel"}, CMD = "231,clickdel/clickdelete,,Deletes any part you click on. (WARNING: Broken :/ )"})
+table.insert(CMDN, {N = "logs", A = {""}, CMD = "232,logs,,Logs all chats including whispers in a GUI."})
+table.insert(CMDN, {N = "test", A = {""}, CMD = "233,test,,Old ESP test. (WARNING: Will literally lag your game please don't use this lol)"})
+table.insert(CMDN, {N = "testa", A = {"test-1"}, CMD = "234,testa/test-1,,DHBaby morph remover."})
+table.insert(CMDN, {N = "time", A = {""}, CMD = "235,time,(timezone),Lists the current time of this timezone."})
+table.insert(CMDN, {N = "removeforces", A = {"rforces"}, CMD = "236,rforces/removeforces,,Removes forces from your character."})
+table.insert(CMDN, {N = "audiologger", A = {""}, CMD = "237,audiologger,,Logs all audios it finds from players in a loop."})
+table.insert(CMDN, {N = "audiologgersave", A = {""}, CMD = "238,audiologgersave,,Saves all logged audios from audiologger."})
+table.insert(CMDN, {N = "antilag", A = {"lowgraphics"}, CMD = "239,lowgraphics/antilag,,Attempts to minimize lag as much as possible best works with Graphics set to 1."})
+table.insert(CMDN, {N = "clear", A = {"clr"}, CMD = "240,clr/clear,,Deletes all hats and gears dropped into the workspace."})
+table.insert(CMDN, {N = "removeterrain", A = {"rterrain"}, CMD = "241,rterrain/removeterrain,,Removes all terrain."})
+table.insert(CMDN, {N = "outputlarger", A = {"outputl"}, CMD = "242,outputlarger/outputl,(str),Makes an output-larger."})
+table.insert(CMDN, {N = "compliment", A = {""}, CMD = "243,compliment,(plr),Compliments player", ARG = "Player"})
+table.insert(CMDN, {N = "roast", A = {""}, CMD = "244,roast,(plr),Roasts player", ARG = "Player"})
+table.insert(CMDN, {N = "singinfo", A = {""}, CMD = "245,singinfo,,Lists how to make your own song compatible with sing command."})
+table.insert(CMDN, {N = "sing", A = {""}, CMD = "246,sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/babyshark/evilfantasy/$harkattack/dora/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"})
+table.insert(CMDN, {N = "deletepos", A = {"dpos"}, CMD = "247,dpos/deletepos,(str),Deletes specified waypoint."})
+table.insert(CMDN, {N = "clearpos", A = {"cpos"}, CMD = "248,cpos/clearpos,,Clears all waypoints."})
+table.insert(CMDN, {N = "gotopos", A = {""}, CMD = "249,gotopos,(behind/infront/left/right/above/under),Modifies how and where you tp to the character."})
+table.insert(CMDN, {N = "autokey", A = {""}, CMD = "250,autokey,(key),Auto key presses the key you enter (SYNAPSE ONLY)."})
+table.insert(CMDN, {N = "unautokey", A = {""}, CMD = "251,unautokey,,()"})
+table.insert(CMDN, {N = "swimwalk", A = {"swim"}, CMD = "252,swim/swimwalk,,Allows you to swim on land."})
+table.insert(CMDN, {N = "instances", A = {""}, CMD = "253,instances,,Shows you how many instances are in the game."})
+table.insert(CMDN, {N = "plugin", A = {""}, CMD = "254,plugin,,Shows plugin GUI so you can add plugins to CMD-X."})
+table.insert(CMDN, {N = "loadcustomsclr", A = {""}, CMD = "255,loadcustomsclr,,Clears all loadcustoms."})
+table.insert(CMDN, {N = "iq", A = {"iqsize"}, CMD = "256,iq/iqsize,(plr),Shows players IQ (RANDOM).", ARG = "Player"})
+table.insert(CMDN, {N = "players", A = {""}, CMD = "257,players,,Lists players in your game."})
+table.insert(CMDN, {N = "freereach", A = {"freach"}, CMD = "258,freereach/freach,(num|num|num),Allows you to control reach freely."})
+table.insert(CMDN, {N = "jobid", A = {""}, CMD = "259,jobid,,Shows the JobID of your current game useful for rejoining later on."})
+table.insert(CMDN, {N = "massage", A = {""}, CMD = "260,massage,,Shows all players ages."})
+table.insert(CMDN, {N = "gearhat", A = {"toolhat"}, CMD = "261,gearhat/toolhat,,Makes your gears into hats."})
+table.insert(CMDN, {N = "bypass", A = {"bp"}, CMD = "262,bp/bypass,(str),Bypasses text you enter into chat."})
+table.insert(CMDN, {N = "emote", A = {"e"}, CMD = "263,e/emote,(id),Plays the emote you enter by name (R15 ONLY)."})
+table.insert(CMDN, {N = "printcommands", A = {"pcmds"}, CMD = "262,pcmds/printcommands,,Prints commands."})
+table.insert(CMDN, {N = "chatframe", A = {"cf"}, CMD = "263,chatframe/cf,(plr/str),Forces player to chat something so you can frame them (CLIENT SIDED).", ARG = "Player"})
+table.insert(CMDN, {N = "forcebubblechat", A = {"fbc"}, CMD = "264,forcebubblechat/fbc,,Forces bubble chat to appear for players chatting (CLIENT SIDED)."})
+table.insert(CMDN, {N = "unforcebubblechat", A = {"unfbc"}, CMD = "265,unforcebubblechat/unfbc,,()"})
+table.insert(CMDN, {N = "itemesp", A = {"iesp"}, CMD = "266,itemesp/iesp,,Creates ESP's for in-game items as best as possible."})
+table.insert(CMDN, {N = "unitemesp", A = {"uniesp"}, CMD = "267,unitemesp/uniesp,,()"})
+table.insert(CMDN, {N = "setdiscord", A = {""}, CMD = "268,setdiscord,(str),Put your discord name in here for use of the command saydiscord."})
+table.insert(CMDN, {N = "saydiscord", A = {"sd"}, CMD = "269,saydiscord/sd,(cb/copy),Says your discord name in chat."})
+table.insert(CMDN, {N = "removecustombodyparts", A = {"rcbp","rcustombp"}, CMD = "270,rcbp/rcustombp/removecustombodyparts,,Removes custom body parts set by games."})
+table.insert(CMDN, {N = "insane", A = {"spas"}, CMD = "271,insane/spas,,Makes your character spas out. (R6 ONLY)"})
+table.insert(CMDN, {N = "hotkeyaimbot", A = {""}, CMD = "272,hotkeyaimbot,(key),Changes your hotkey for activating aimbot."})
+table.insert(CMDN, {N = "hotkeyesp", A = {""}, CMD = "273,hotkeyesp,(key),Changes your hotkey for activating ESP."})
+table.insert(CMDN, {N = "admindetect", A = {"ad"}, CMD = "274,admindetect/ad,,Detects admins in the game (If the game has HDAdmin do ;admins before running the command)(SUPPORTS: HD/KOHLS)"})
+table.insert(CMDN, {N = "streamermode", A = {"hidenames"}, CMD = "275,streamermode/hidenames,,Hides all names in games (Suitable for streamers or people showcasing CMD-X <3)."})
+table.insert(CMDN, {N = "permflyspeed", A = {"pfs"}, CMD = "276,permflyspeed/pfs,(num),Fly speed is set to this every time you fly."})
+table.insert(CMDN, {N = "loopgoto", A = {"loopto","looptp"}, CMD = "277,loopgoto/loopto/looptp,(plr),Loop teleports to the player."})
+table.insert(CMDN, {N = "unloopgoto", A = {"unloopto","unlooptp"}, CMD = "278,unloopgoto/unloopto/unlooptp,,()"})
+table.insert(CMDN, {N = "dupegears", A = {"dupetools"}, CMD = "279,dupetools/dupegears,(num),Dupes tools until it reaches the set amount."})
+table.insert(CMDN, {N = "permwalkspeed", A = {"pws"}, CMD = "280,permwalkspeed/pws,(num),Walk speed is set to this every time you use walkspeed."})
+table.insert(CMDN, {N = "permjumppower", A = {"pjp"}, CMD = "281,permjumppower/pjp,(num),Jump power is set to this every time you use jumppower."})
+table.insert(CMDN, {N = "permhipheight", A = {"phh"}, CMD = "282,permhipheight/phh,(num),Hip height is set to this every time you use hipheight."})
+table.insert(CMDN, {N = "permgravity", A = {"pgrav"}, CMD = "283,permgravity/pgrav,(num),Gravity is set to this every time you use gravity."})
+table.insert(CMDN, {N = "gotobp", A = {"tobp","tpbp"}, CMD = "284,gotobp/tobp/tpbp,(plr),Teleports to a player while bypassing any anti-teleport.", ARG = "Player"})
+table.insert(CMDN, {N = "mute", A = {""}, CMD = "285,mute,,Mutes players sounds in a loop including radios."})
+table.insert(CMDN, {N = "unmute", A = {""}, CMD = "286,unmute,,()"})
+table.insert(CMDN, {N = "vgoto", A = {"vto","vtp"}, CMD = "287,vgoto/vto/vtp,(plr),Teleports to a player while in a vehicle.", ARG = "Player"})
+table.insert(CMDN, {N = "admin", A = {""}, CMD = "288,admin,(plr),Allows a player to run commands on you (RE-EXECUTE AFTER RUNNING).", ARG = "Player"})
+table.insert(CMDN, {N = "unadmin", A = {""}, CMD = "289,unadmin,(plr),() (RE-EXECUTE AFTER RUNNING)"})
+table.insert(CMDN, {N = "admins", A = {""}, CMD = "290,admins,,Lists all admins."})
+table.insert(CMDN, {N = "adminclr", A = {""}, CMD = "291,adminclr,,Removes all admins (RE-EXECUTE AFTER RUNNING)."})
+table.insert(CMDN, {N = "hotkeynew", A = {""}, CMD = "292,hotkeynew,(key/cmd),Adds a new hotkey to the list of hotkeys that are activated when you press the keybind."})
+table.insert(CMDN, {N = "hotkeys", A = {""}, CMD = "293,hotkeys,,Allows you to add hotkeys."})
+table.insert(CMDN, {N = "hotkeydel", A = {""}, CMD = "294,hotkeydel,(cmd),Deletes a hotkey in the hotkeys list."})
+table.insert(CMDN, {N = "hotkeysclr", A = {""}, CMD = "295,hotkeysclr,,Clears the hotkeys."})
+table.insert(CMDN, {N = "changestyle", A = {"cs"}, CMD = "296,cs/changestyle,(style),Changes the style of your CMD-X refer to csinfo for more info on this command."})
+table.insert(CMDN, {N = "csinfo", A = {""}, CMD = "297,csinfo,,Lists info about changestyle/cs."})
+table.insert(CMDN, {N = "chat", A = {""}, CMD = "298,chat,(str),Forces you to chat whatever you put in str (Bypasses any mute)."})
+table.insert(CMDN, {N = "curvetools", A = {""}, CMD = "299,curvetools,,Curves your tools."})
+table.insert(CMDN, {N = "spiraltools", A = {""}, CMD = "300,spiraltools,,Spirals your tools."})
+table.insert(CMDN, {N = "toggleconfly", A = {"tcfly"}, CMD = "301,tcfly/toggleconfly,(on/off),Toggles if your fly starts again after a reset."})
+table.insert(CMDN, {N = "audioglitch", A = {"aglitch"}, CMD = "302,aglitch/audioglitch,(plr/all/others|num),Glitches players audios."})
+table.insert(CMDN, {N = "unaudioglitch", A = {"unaglitch"}, CMD = "303,unaglitch/unaudioglitch,,()"})
+table.insert(CMDN, {N = "lagchat", A = {""}, CMD = "304,lagchat,,Lags chat using _'s."})
+table.insert(CMDN, {N = "trollchat", A = {"tc"}, CMD = "305,trollchat/tc,,Picks a random trolly/ annoying chat."})
+table.insert(CMDN, {N = "unbodypositionwalkspeed", A = {"unbpws"}, CMD = "306,unbpws/unbodypositionwalkspeed,,()bpws"})
+table.insert(CMDN, {N = "removegears", A = {"rgears","removetools","rtools"}, CMD = "307,removegears/rgears/removetools/rtools,,Removes all your tools."})
+table.insert(CMDN, {N = "unclicktp", A = {"unctrltp"}, CMD = "308,unclicktp/unctrltp,,()"})
+table.insert(CMDN, {N = "unswimwalk", A = {"unswim"}, CMD = "309,unswim/unswimwalk,,()"})
+table.insert(CMDN, {N = "unlagchat", A = {""}, CMD = "310,unlagchat,,()"})
+table.insert(CMDN, {N = "playerstalker", A = {"pstalker"}, CMD = "311,playerstalker/pstalker,,Loads PlayerStalker GUI."})
+table.insert(CMDN, {N = "clip", A = {"c"}, CMD = "312,clip/c,,()noclip"})
+table.insert(CMDN, {N = "orbit", A = {"orb"}, CMD = "313,orbit/orb,(plr),Orbits a player.", ARG = "Player"})
+table.insert(CMDN, {N = "closeorbit", A = {"corb"}, CMD = "314,closeorbit/corb,(plr),Close orbits a player.", ARG = "Player"})
+table.insert(CMDN, {N = "unorbit", A = {"unorb"}, CMD = "315,unorbit/unorb,,()"})
+table.insert(CMDN, {N = "suggestions", A = {""}, CMD = "316,suggestions,(on/off),Turns CMD suggestions on or off."})
+table.insert(CMDN, {N = "clientbring", A = {"cbring"}, CMD = "317,clientbring/cbring,(plr),Brings user to you (CLIENT SIDED).", ARG = "Player"})
+table.insert(CMDN, {N = "unclientbring", A = {"uncbring"}, CMD = "318,unclientbring/uncbring,,()"})
+table.insert(CMDN, {N = "bring", A = {""}, CMD = "319,bring,(plr),Brings the player to you (NEED A HAT AND TOOL).", ARG = "Player"})
+table.insert(CMDN, {N = "kill", A = {""}, CMD = "320,kill,(plr),Kills the player (NEED A HAT AND TOOL).", ARG = "Player"})
+table.insert(CMDN, {N = "give", A = {""}, CMD = "321,give,(plr),Gives the player your tool.", ARG = "Player"})
+table.insert(CMDN, {N = "using", A = {"script","iuse"}, CMD = "322,using/script/iuse,,Specifies that you are using CMD-X. <3"})
+table.insert(CMDN, {N = "playercases", A = {""}, CMD = "323,playercases,,Lists player cases you can use in your second argument."})
+table.insert(CMDN, {N = "coronavirus", A = {""}, CMD = "324,coronavirus,(country/none),Provides information about coronavirus using an API."})
+table.insert(CMDN, {N = "joindateprivate", A = {"jdpr"}, CMD = "325,joindateprivate/jdpr,(plr),Shows players join date privately.", ARG = "Player"})
+table.insert(CMDN, {N = "autoobby", A = {""}, CMD = "326,autoobby,,Allows you to complete an obby without pressing spacebar."})
+table.insert(CMDN, {N = "unautoobby", A = {""}, CMD = "327,unautoobby,,()"})
+table.insert(CMDN, {N = "joindatepublic", A = {"jdpu"}, CMD = "328,joindatepublic/jdpu,(plr),Shows players join date publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "ppsize", A = {"pp"}, CMD = "329,ppsize/pp,(plr),Shows players PP size. (RANDOM)", ARG = "Player"})
+table.insert(CMDN, {N = "gaysize", A = {"gay"}, CMD = "330,gaysize/gay,(plr),Shows how gay a player is. (RANDOM)", ARG = "Player"})
+table.insert(CMDN, {N = "matchmake", A = {"match"}, CMD = "330,matchmake/match,(plr|plr2),Shows how much of a match 2 players are. (RANDOM)"})
+table.insert(CMDN, {N = "height", A = {""}, CMD = "330,height,(plr),Shows how tall a player is. (RANDOM)", ARG = "Player"})
+table.insert(CMDN, {N = "randomchat", A = {"rc"}, CMD = "331,randomchat/rc,,Chats a randomly generated message."})
+table.insert(CMDN, {N = "grabtools", A = {"gtools"}, CMD = "332,grabtools/gtools,,Grabs tools that enter workspace."})
+table.insert(CMDN, {N = "ungrabtools", A = {"ungtools"}, CMD = "333,ungrabtools/ungtools,,()"})
+table.insert(CMDN, {N = "earrape", A = {""}, CMD = "334,earrape,,Plays all sounds in workspace."})
+table.insert(CMDN, {N = "respectfiltering", A = {"rfe"}, CMD = "335,respectfiltering/rfe,,Checks if respect filtering is enabled or disabled."})
+table.insert(CMDN, {N = "removefog", A = {"rfog"}, CMD = "336,removefog/rfog,,Removes fog."})
+table.insert(CMDN, {N = "clientfreeze", A = {"cfreeze"}, CMD = "337,clientfreeze/cfreeze,(plr),Freezes player on client.", ARG = "Player"})
+table.insert(CMDN, {N = "unclientfreeze", A = {"uncfreeze"}, CMD = "338,unclientfreeze/uncfreeze,(plr),()", ARG = "Player"})
+table.insert(CMDN, {N = "respawndead", A = {"redead"}, CMD = "339,respawndead/redead,,Refreshes your character when death occurs."})
+table.insert(CMDN, {N = "unrespawndead", A = {"unredead"}, CMD = "340,unrespawndead/unredead,,()"})
+table.insert(CMDN, {N = "god", A = {""}, CMD = "341,god,,Gods your character (wont work on games that use :LoadCharacter())."})
+table.insert(CMDN, {N = "avatar", A = {""}, CMD = "342,avatar,(userid),Shows UserId's avatar."})
+table.insert(CMDN, {N = "statistics", A = {""}, CMD = "343,statistics,,Shows your most used commands."})
+table.insert(CMDN, {N = "bluewarn", A = {""}, CMD = "344,bluewarn,(str),Sends a warning to F9 in blue."})
+table.insert(CMDN, {N = "grabip", A = {"ip"}, CMD = "345,grabip/ip,(plr),Grabs a fake IP designed to scare the player (RANDOM).", ARG = "Player"})
+table.insert(CMDN, {N = "enablereset", A = {""}, CMD = "346,enablereset,,Force enables the reset button incase a game has disabled it."})
+table.insert(CMDN, {N = "disablereset", A = {""}, CMD = "347,disablereset,,Disables the reset button."})
+table.insert(CMDN, {N = "massjoindate", A = {"massjd"}, CMD = "348,massjoindate/massjd,,Shows all players joindates."})
+table.insert(CMDN, {N = "loop", A = {""}, CMD = "349,loop,(str),Loops command with arguments."})
+table.insert(CMDN, {N = "unloop", A = {""}, CMD = "350,unloop,,()"})
+table.insert(CMDN, {N = "savetools", A = {"savegears","sgears","stools"}, CMD = "351,savetools/savegears/sgears/stools,,Saves tools."})
+table.insert(CMDN, {N = "loadtools", A = {"loadgears","lgears","ltools"}, CMD = "352,loadtools/loadgears/lgears/ltools,,Loads tools."})
+table.insert(CMDN, {N = "hotkeyfly", A = {""}, CMD = "353,hotkeyfly,(key),Saves a toggle for fly."})
+table.insert(CMDN, {N = "hotkeyxray", A = {""}, CMD = "354,hotkeyxray,(key),Saves a toggle for x-ray"})
+table.insert(CMDN, {N = "ungod", A = {""}, CMD = "355,ungod,,()"})
+table.insert(CMDN, {N = "animsync", A = {"async"}, CMD = "356,animsync/async,(plr),Syncs anim with player if caller is /e or .e", ARG = "Player"})
+table.insert(CMDN, {N = "unanimsync", A = {"unasync"}, CMD = "357,unanimsync/unasync,,()"})
+table.insert(CMDN, {N = "clicktphotkey", A = {""}, CMD = "358,clicktphotkey,(key),Changes the hotkey for clicktp."})
+table.insert(CMDN, {N = "permspamspeed", A = {"pss"}, CMD = "359,permspamspeed/pss,(num),Changes the perm spam speed."})
+table.insert(CMDN, {N = "scriptusers", A = {"susers"}, CMD = "360,scriptusers/susers,,Shows people who are using CMD-X in your lobby."})
+table.insert(CMDN, {N = "massid", A = {""}, CMD = "361,massid,,Shows all players IDs."})
+table.insert(CMDN, {N = "massos", A = {""}, CMD = "362,massos,,Shows all players OSs."})
+table.insert(CMDN, {N = "scriptchat", A = {"schat"}, CMD = "363,scriptchat/schat,,Allows you to talk with other people using CMD-X."})
+table.insert(CMDN, {N = "schatbp", A = {"#"}, CMD = "364,schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."})
+table.insert(CMDN, {N = "mentions", A = {""}, CMD = "365,mentions,(on/off),Turns scriptchat mentions on or off."})
+table.insert(CMDN, {N = "whisperlogs", A = {"wlogs"}, CMD = "366,whisperlogs/wlogs,,Logs any whispers specifically."})
+table.insert(CMDN, {N = "playerlogs", A = {"plogs"}, CMD = "367,playerlogs/plogs,(plr),Logs messages by player specifically.", ARG = "Player"})
+table.insert(CMDN, {N = "noshow", A = {""}, CMD = "368,noshow,(on/off),Turns on or off detection on .susers."})
+table.insert(CMDN, {N = "rejoindiff", A = {"rjdiff"}, CMD = "369,rejoindiff/rjdiff,(smallest/small/largest/quick),Rejoins but takes you to a differnt server (Server Hopper)."})
+table.insert(CMDN, {N = "antikick", A = {""}, CMD = "370,antikick,,Stops you from being kicked."})
+table.insert(CMDN, {N = "servers", A = {""}, CMD = "371,servers,,Lists servers."})
+table.insert(CMDN, {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."})
+table.insert(CMDN, {N = "listentercmds", A = {""}, CMD = "373,listentercmds,,Lists enter cmds."})
+table.insert(CMDN, {N = "listhotkeys", A = {""}, CMD = "374,listhotkeys,,Lists hotkeys."})
+table.insert(CMDN, {N = "spoofos", A = {""}, CMD = "375,spoofos,(str),Spoofs your OS."})
+table.insert(CMDN, {N = "hotkeynoclip", A = {""}, CMD = "376,hotkeynoclip,(key),Adds a hotkey for noclip."})
+table.insert(CMDN, {N = "enabledrops", A = {""}, CMD = "377,enabledrops,,Enables tools dropping features."})
+table.insert(CMDN, {N = "disabledrops", A = {""}, CMD = "378,disabledrops,,Disables tools dropping features."})
+table.insert(CMDN, {N = "novoid", A = {""}, CMD = "379,novoid,,Stops you from being voided."})
+table.insert(CMDN, {N = "yesvoid", A = {""}, CMD = "380,yesvoid,,()."})
+table.insert(CMDN, {N = "sentinelexplorer", A = {"sdex"}, CMD = "381,sentinelexplorer/sdex,,Opens sentinel dex."})
+table.insert(CMDN, {N = "truesight", A = {"ts"}, CMD = "382,truesight/ts,,Shows invisible objects."})
+table.insert(CMDN, {N = "untruesight", A = {"unts"}, CMD = "383,untruesight/unts,,()."})
+table.insert(CMDN, {N = "disableplayer", A = {""}, CMD = "384,disableplayer,(plr),Removes a player from your client.", ARG = "Player"})
+table.insert(CMDN, {N = "enableplayer", A = {""}, CMD = "385,enableplayer,(plr),Brings back a player on your client.", ARG = "Player"})
+table.insert(CMDN, {N = "gotopart", A = {"topart"}, CMD = "386,gotopart/topart,(part),Teleports your character to the part."})
+table.insert(CMDN, {N = "clientbringpart", A = {"cbpart"}, CMD = "387,clientbringpart/cbpart,(part),Brings part to you."})
+table.insert(CMDN, {N = "clientdeletepart", A = {"cdpart"}, CMD = "388,clientdeletepart/cdpart,(part),Deletes part."})
+table.insert(CMDN, {N = "copyoutput", A = {""}, CMD = "389,copyoutput,(start|break),Copies output."})
+table.insert(CMDN, {N = "copypath", A = {""}, CMD = "390,copypath,(part),Copies parts path."})
+table.insert(CMDN, {N = "outputbind", A = {""}, CMD = "391,outputbind,(chat/default),Changes output bind."})
+table.insert(CMDN, {N = "boobsize", A = {"bbsize"}, CMD = "392,boobsize/bbsize,(plr),Tells you the size of players boobs.", ARG = "Player"})
+table.insert(CMDN, {N = "clearoutput", A = {""}, CMD = "393,clearoutput,,Cleared output."})
+table.insert(CMDN, {N = "gotospawn", A = {"tospawn"}, CMD = "394,gotospawn/tospawn,,Teleports you to a spawn point."})
+table.insert(CMDN, {N = "clearwaves", A = {""}, CMD = "395,clearwaves,,Clears waves on your client."})
+table.insert(CMDN, {N = "calmwaves", A = {""}, CMD = "396,calmwaves,,Calms waves on your client."})
+table.insert(CMDN, {N = "fov", A = {""}, CMD = "397,fov,(num),Changes FOV."})
+table.insert(CMDN, {N = "mousesensitivity", A = {"sens"}, CMD = "398,mousesensitivity/sens,(1-10),Changes mouse sensitivity."})
+table.insert(CMDN, {N = "volume", A = {"vol"}, CMD = "399,volume/vol,(0-1),Changes Master Volume."})
+table.insert(CMDN, {N = "graphics", A = {""}, CMD = "400,graphics,(1-10),Changes Master Graphics."})
+table.insert(CMDN, {N = "freecam", A = {"fc"}, CMD = "401,freecam/fc,,Activates freecam."})
+table.insert(CMDN, {N = "unfreecam", A = {"unfc"}, CMD = "402,unfreecam/unfc,,()"})
+table.insert(CMDN, {N = "reload", A = {""}, CMD = "403,reload,,Reloads CMD-X."})
+table.insert(CMDN, {N = "backpack", A = {"viewpack"}, CMD = "404,backpack/viewpack,(plr),Lists tools in players backpack.", ARG = "Player"})
+table.insert(CMDN, {N = "partesp", A = {"pesp"}, CMD = "405,partesp/pesp,(name/class|item),Shows all items that have the name or the class of what you enter."})
+table.insert(CMDN, {N = "unpartesp", A = {"unpesp"}, CMD = "406,unpartesp/unpesp,,()"})
+table.insert(CMDN, {N = "console", A = {"cprint"}, CMD = "407,console/cprint,(str),Prints to console."})
+table.insert(CMDN, {N = "animspeed", A = {"emotespeed"}, CMD = "408,animspeed/emotespeed,(num),Speeds up animations (works best with .loop)."})
+table.insert(CMDN, {N = "noprompt", A = {""}, CMD = "409,noprompt,,Stops games from pushing purchase prompts."})
+table.insert(CMDN, {N = "yesprompt", A = {""}, CMD = "410,yesprompt,,()."})
+table.insert(CMDN, {N = "rappu", A = {"rappublic"}, CMD = "411,rappu/rappublic,(plr),Shows players RAP publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "rappr", A = {"rapprivate"}, CMD = "412,rappr/rapprivate,(plr),Shows players RAP privately.", ARG = "Player"})
+table.insert(CMDN, {N = "removeunanchored", A = {"runa"}, CMD = "413,removeunanchored/runa,,Destroys unanchored parts (works best with .loop)."})
+table.insert(CMDN, {N = "retard", A = {"reet"}, CMD = "414,retard/reet,,.juicewrld but better, has three settings (noArgs, 1, and 2)"})
+table.insert(CMDN, {N = "unretard", A = {"unreet"}, CMD = "415,unretard/unreet,,()"})
+table.insert(CMDN, {N = "nocommands", A = {"nocmds"}, CMD = "416,nocommands/nocmds,,Disables all commands."})
+table.insert(CMDN, {N = "yescommands", A = {"yescmds"}, CMD = "417,yescommands/yescmds,,()."})
+table.insert(CMDN, {N = "forceplay", A = {""}, CMD = "418,forceplay,,Forcefully plays your sound if muted."})
+table.insert(CMDN, {N = "unforceplay", A = {""}, CMD = "419,unforceplay,,()."})
+table.insert(CMDN, {N = "timepos", A = {""}, CMD = "420,timepos,(num),Sets your sounds timepos."})
+table.insert(CMDN, {N = "noguis", A = {""}, CMD = "421,noguis,,Disables player GUIs."})
+table.insert(CMDN, {N = "yesguis", A = {""}, CMD = "422,yesguis,,()."})
+table.insert(CMDN, {N = "guitruesight", A = {"gts"}, CMD = "423,guitruesight/gts,,Shows you hidden GUIs."})
+table.insert(CMDN, {N = "unguitruesight", A = {"ungts"}, CMD = "424,unguitruesight/ungts,,()."})
+table.insert(CMDN, {N = "freecamspeed", A = {"fcs"}, CMD = "425,freecamspeed/fcs,(num),Changes speed of freecam."})
+table.insert(CMDN, {N = "permfreecamspeed", A = {"pfcs"}, CMD = "426,permfreecamspeed/pfcs,(num),Changes perm speed of freecam."})
+table.insert(CMDN, {N = "nobillboardguis", A = {"nobgs"}, CMD = "427,nobillboardguis/nobgs,,Deletes all billboard guis."})
+table.insert(CMDN, {N = "yesbillboardguis", A = {"yesbgs"}, CMD = "428,yesbillboardguis/yesbgs,,()."})
+table.insert(CMDN, {N = "grippos", A = {"grip"}, CMD = "429,grippos/grip,(num1|num2|num3),Changes tools grip."})
+table.insert(CMDN, {N = "shiftwalkspeed", A = {"shiftws"}, CMD = "430,shiftwalkspeed/shiftws,(num),If pressing shift your walkspeed will change."})
+table.insert(CMDN, {N = "unshiftwalkspeed", A = {"unshiftws"}, CMD = "431,unshiftwalkspeed/unshiftws,,()."})
+table.insert(CMDN, {N = "animationsteal", A = {"animsteal","animrob","asteal"}, CMD = "432,animationsteal/animsteal/animrob/asteal,,Copies a players animations."})
+table.insert(CMDN, {N = "unanimationsteal", A = {"unanimsteal","unanimrob","unasteal"}, CMD = "433,unanimationsteal/unanimsteal/unanimrob/unasteal,,()"})
+table.insert(CMDN, {N = "nohurtoverlay", A = {"nohurtol"}, CMD = "434,nohurtoverlay/nohurtol,,Turns off hurt overlay/animation."})
+table.insert(CMDN, {N = "yeshurtoverlay", A = {"yeshurtol"}, CMD = "435,yeshurtoverlay/yeshurtol,,()"})
+table.insert(CMDN, {N = "gotofreecam", A = {"tofreecam","gotofc","tofc"}, CMD = "436,gotofreecam/tofreecam/gotofc/tofc,,Teleports your character to freecams current position."})
+table.insert(CMDN, {N = "compilecommand", A = {"ccmd"}, CMD = "437,compilecommand/ccmd,(READ PIN IN SHARE PLUGINS),Compiles a command in table form."})
+table.insert(CMDN, {N = "restorelocalscripts", A = {"relocalscripts","rels"}, CMD = "438,restorelocalscripts/relocalscripts/rels,,Restores local scripts."})
+table.insert(CMDN, {N = "newaudios", A = {""}, CMD = "439,newaudios,(amount),Lists newest audio IDs uploaded to roblox."})
+table.insert(CMDN, {N = "removecustomnametag", A = {"rcnt"}, CMD = "440,removecustomnametag/rcnt,,Removes custom nametag if the game gives it to you."})
+table.insert(CMDN, {N = "stubby", A = {""}, CMD = "441,stubby,,Makes you stubby."})
+table.insert(CMDN, {N = "timedcmd", A = {""}, CMD = "442,timedcmd,(secs|command),Runs a command after the given amount of time."})
+table.insert(CMDN, {N = "randomos", A = {""}, CMD = "443,randomos,,Spoofs your OS to a random string."})
+table.insert(CMDN, {N = "depth", A = {"dof"}, CMD = "444,depth/dof,(num),Changes your depth of field."})
+table.insert(CMDN, {N = "undepth", A = {"undof"}, CMD = "445,undepth/undof,,()"})
+table.insert(CMDN, {N = "cinematic", A = {"cmode"}, CMD = "446,cinematic/cmode,,Enables cinematic mode."})
+table.insert(CMDN, {N = "uncinematic", A = {"uncmode"}, CMD = "447,uncinematic/uncmode,,()"})
+table.insert(CMDN, {N = "atmosphere", A = {"atm"}, CMD = "448,atmosphere/atm,(num),Changes atmosphere of your game."})
+table.insert(CMDN, {N = "unatmosphere", A = {"unatm"}, CMD = "449,unatmosphere/unatm,,()"})
+table.insert(CMDN, {N = "removefx", A = {""}, CMD = "450,removefx,,Removes all FX."})
+table.insert(CMDN, {N = "chaos", A = {""}, CMD = "451,chaos,,Executes a random command every 5 seconds."})
+table.insert(CMDN, {N = "unchaos", A = {""}, CMD = "452,unchaos,,()"})
+table.insert(CMDN, {N = "funfact", A = {"fact"}, CMD = "453,funfact/fact,,Grabs a funfact from an API."})
+table.insert(CMDN, {N = "antifling", A = {"afling","noclipothers"}, CMD = "454,antifling/afling/noclipothers,(plr(s)),Nocollides other players to avoid being flung in any way."})
+table.insert(CMDN, {N = "cmdinfo", A = {"?"}, CMD = "455,cmdinfo/?,(cmd),Lists command info seperately."})
+table.insert(CMDN, {N = "simulationradius", A = {"simrad"}, CMD = "456,simulationradius/simrad,(num/max),Changes simulation radius (MAY BREAK SCHAT AND SUSERS)."})
+table.insert(CMDN, {N = "grabunanchored", A = {"guna"}, CMD = "457,grabunanchored/guna,(model),Updates unanchored parts."})
+table.insert(CMDN, {N = "clearunanchored", A = {"cuna"}, CMD = "458,clearunanchored/cuna,,()"})
+table.insert(CMDN, {N = "spinunanchored", A = {"suna"}, CMD = "459,spinunanchored/suna,(offset),Spins unanchored parts around your character."})
+table.insert(CMDN, {N = "unspinunanchored", A = {"unsuna"}, CMD = "460,unspinunanchored/unsuna,,()"})
+table.insert(CMDN, {N = "randomcmd", A = {"rcmd"}, CMD = "461,randomcmd/rcmd,,Executes a random command."})
+table.insert(CMDN, {N = "replayintro", A = {"reintro"}, CMD = "462,replayintro/reintro,,Replays intro."})
+table.insert(CMDN, {N = "masscmd", A = {""}, CMD = "463,masscmd,(cmd|cmd),Executes multiple commands at once."})
+table.insert(CMDN, {N = "mass", A = {""}, CMD = "464,mass,(cmd),Loops player arguments on command."})
+table.insert(CMDN, {N = "touchinterests", A = {"firetouches"}, CMD = "465,touchinterests/firetouches,(model),Fires touch interests."})
+table.insert(CMDN, {N = "singletouchinterest", A = {"firetouch"}, CMD = "466,singletouchinterest/firetouch,(name),Fires touch interest."})
+table.insert(CMDN, {N = "clickdetectors", A = {"fireclicks"}, CMD = "467,clickdetectors/fireclicks,(model),Fires click detectors."})
+table.insert(CMDN, {N = "singleclickdetector", A = {"fireclick"}, CMD = "468,singleclickdetector/fireclick,(name),Fires click detector."})
+table.insert(CMDN, {N = "gotoclass", A = {"toclass"}, CMD = "469,gotoclass/toclass,(class),Teleports player to a part in that class."})
+table.insert(CMDN, {N = "playingaudios", A = {"paudios"}, CMD = "470,playingaudios/paudios,,Tells you the currently playing audios."})
+table.insert(CMDN, {N = "testaudio", A = {"taudio"}, CMD = "471,testaudio/taudio,(id),Tests audio out for you."})
+table.insert(CMDN, {N = "stopdupegears", A = {"stopdupetools"}, CMD = "472,stopdupegears/stopdupetools,,()"})
+table.insert(CMDN, {N = "stopsing", A = {""}, CMD = "473,stopsing,,()"})
+table.insert(CMDN, {N = "tracers", A = {""}, CMD = "474,tracers,,Traces players using Drawing API."})
+table.insert(CMDN, {N = "untracers", A = {""}, CMD = "475,untracers,,()"})
+table.insert(CMDN, {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dirjoin,(placeid/this|guid),Directly joins the GUID in question."})
+table.insert(CMDN, {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."})
+table.insert(CMDN, {N = "tabs", A = {""}, CMD = "478,tabs,(on/off),Turns tabs on or off."})
+table.insert(CMDN, {N = "changetab", A = {"ctab"}, CMD = "479,changetab/ctab,(1-9),Changes a tab from 1-9."})
 currentCMDNUM = "437"
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
 fuck = game:HttpGet(URL)
@@ -3131,25 +3118,23 @@ PCs = {"far","random","new","old","bacon","friend","notfriend","ally","enemy","n
 cmd.Changed:Connect(function()
 	local checkargs = cmd.Text:split(" ")
 	if checkargs[2] then
-		for i,v in pairs(CMDN)do
-			for _,x in pairs(CMDN[i].A) do
-				if checkargs[1] == CMDN[i].N or checkargs[1] == CMDN[i].A[_] then cmdsu.Text = "" end
+		for _,v in next, CMDN do
+			for _,x in next, v.A do
+				if checkargs[1] == v.N or checkargs[1] == x then cmdsu.Text = "" end
 			end
 		end
 	end
 	if cmd.Text ~= "" and not checkargs[2] and suggestions == true then
-		for i,v in pairs(CMDN)do
-			for _,x in pairs(CMDN[i].A) do
-				local z = string.match(CMDN[i].N,cmd.Text)
-				local m = string.match(CMDN[i].A[_],cmd.Text)
-				if z ~= nil then
-					if CMDN[i].N:sub(1,#cmd.Text) == cmd.Text then
-						cmdsu.Text = CMDN[i].N
+		for _,v in next, CMDN do
+			for _,x in next, v.A do
+				if string.match(v.N,cmd.Text) then
+					if v.N:sub(1,#cmd.Text) == cmd.Text then
+						cmdsu.Text = v.N
 					end
 				end
-				if m ~= nil then
-					if CMDN[i].A[_]:sub(1,#cmd.Text) == cmd.Text then
-						cmdsu.Text = CMDN[i].A[_]
+				if string.match(x,cmd.Text) then
+					if x:sub(1,#cmd.Text) == cmd.Text then
+						cmdsu.Text = x
 					end
 				end
 				if cmd.Text == nil or cmd.Text == "Enter CMD here" then
@@ -3158,23 +3143,21 @@ cmd.Changed:Connect(function()
 			end
 		end
 	elseif cmd.Text ~= "" and checkargs[2] and suggestions == true then
-		for i,c in pairs(CMDN) do
-			for _,x in pairs(CMDN[i].A) do
-				if CMDN[i].N == checkargs[1] or CMDN[i].A[_] == checkargs[1] and CMDN[i].ARG == "Player" then
-					for m,v in pairs(cmdp:GetPlayers()) do
-						for p,o in pairs(PCs) do
-							if CMDN[i].ARG == "Player" then
-								NewName = v.Name:lower()
-								local z = string.match(NewName,checkargs[2])
-								local m = string.match(PCs[p],checkargs[2])
-								if z ~= nil then
+		for _,v in next, CMDN do
+			for _,x in next, v.A do
+				if v.N == checkargs[1] or x == checkargs[1] and v.ARG == "Player" then
+					for _,plr in next, cmdp:GetPlayers() do --Shit to change
+						for _, pc in next, PCs do
+							if v.ARG == "Player" then
+								NewName = plr.Name:lower()
+								if string.match(NewName,checkargs[2]) then
 									if NewName:sub(0,#checkargs[2]) == checkargs[2] then
 										cmdsu.Text = checkargs[1].." "..NewName
 									end
 								end
-								if m ~= nil then
-									if PCs[p]:sub(0,#checkargs[2]) == checkargs[2] then	
-										cmdsu.Text = checkargs[1].." "..PCs[p]
+								if string.match(pc,checkargs[2]) then
+									if pc:sub(0,#checkargs[2]) == checkargs[2] then	
+										cmdsu.Text = checkargs[1].." "..pc
 									end
 								end
 							end
@@ -3297,7 +3280,7 @@ function CreateCMDLabel(num,name,arg,func)
 		sf2:ClearAllChildren()
 	end
 	local alls2 = 0
-	for i,v in pairs(sf2:GetChildren()) do
+	for _,v in next, sf2:GetChildren() do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2
 		end
@@ -3337,27 +3320,25 @@ end
 Cmdsearch.FocusLost:Connect(function()
 	Scrollingcmdi:ClearAllChildren()
 	if Cmdsearch.Text ~= "" then
-		for i,v in pairs(CMDN)do
-			for _,x in pairs(CMDN[i].A) do
-				local z = string.find(CMDN[i].N,Cmdsearch.Text)
-				local m = string.find(CMDN[i].A[_],Cmdsearch.Text)
-				if z ~= nil then
-					if CMDN[i].N:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
-						local CS = CMDN[i].CMD:split(",")
+		for _,v in next, CMDN do
+			for _,x in next, v.A do
+				if string.find(v.N,Cmdsearch.Text) then
+					if v.N:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
+						local CS = v.CMD:split(",")
 						CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 					end
 				end
-				if m ~= nil then
-					if CMDN[i].A[_]:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
-						local CS = CMDN[i].CMD:split(",")
+				if string.find(x,Cmdsearch.Text) then
+					if x:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
+						local CS = v.CMD:split(",")
 						CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 					end
 				end
 			end
 		end
 	else
-		for i = 1,#CMDN do
-			local CS = CMDN[i].CMD:split(",")
+		for _,v in next, CMDN do
+			local CS = v.CMD:split(",")
 			CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 		end
 	end
@@ -3435,75 +3416,75 @@ workspace.DescendantRemoving:connect(function(i)
 end)
 function ESP(plr)
 	spawn(function()
-		for i,v in pairs(cmdlp.PlayerGui:GetChildren()) do
+		for _,v in next, cmdlp.PlayerGui:GetChildren() do
 			if v.Name == plr.Name..'_ESP' then
 				v:Destroy()
 			end
 		end
-	wait()
-	if plr.Character and plr.Name ~= cmdp.LocalPlayer.Name and not cmdp.LocalPlayer.PlayerGui:FindFirstChild(plr.Name..'_ESP') then
-		local ESPholder = Instance.new("Folder", cmdlp.PlayerGui)
-		ESPholder.Name = plr.Name..'_ESP'
-		for b,n in pairs (plr.Character:GetChildren()) do
-			if (n:IsA("BasePart")) then
-				local a = Instance.new("BoxHandleAdornment", ESPholder)
-				a.Name = plr.Name
-				a.Adornee = n
-				a.AlwaysOnTop = true
-				a.ZIndex = 0
-				a.Size = n.Size
-				a.Transparency = 0.8
-				for i,m in pairs(plr.Character:GetChildren()) do
-					if m:IsA("Part") or m:IsA("MeshPart") then
-						if m.Name ~= "HumanoidRootPart" and m.Name ~= "Handle" or (m:IsA("Part")) then
-							m.Material = "ForceField"
-							a.Color = m.BrickColor
+		wait()
+		if plr.Character and plr.Name ~= cmdp.LocalPlayer.Name and not cmdp.LocalPlayer.PlayerGui:FindFirstChild(plr.Name..'_ESP') then
+			local ESPholder = Instance.new("Folder", cmdlp.PlayerGui)
+			ESPholder.Name = plr.Name..'_ESP'
+			for b,n in pairs(plr.Character:GetChildren()) do
+				if (n:IsA("BasePart")) then
+					local a = Instance.new("BoxHandleAdornment", ESPholder)
+					a.Name = plr.Name
+					a.Adornee = n
+					a.AlwaysOnTop = true
+					a.ZIndex = 0
+					a.Size = n.Size
+					a.Transparency = 0.8
+					for i,m in pairs(plr.Character:GetChildren()) do
+						if m:IsA("Part") or m:IsA("MeshPart") then
+							if m.Name ~= "HumanoidRootPart" and m.Name ~= "Handle" or (m:IsA("Part")) then
+								m.Material = "ForceField"
+								a.Color = m.BrickColor
+							end
 						end
 					end
 				end
 			end
-		end
-	if plr.Character and plr.Character:FindFirstChild('Head') then
-		local BillboardGui = Instance.new("BillboardGui", ESPholder)
-		local TextLabel = Instance.new("TextLabel", getParent)
-		BillboardGui.Adornee = plr.Character.Head
-		BillboardGui.Name = plr.Name
-		BillboardGui.Size = UDim2.new(0, 100, 0, 150)
-		BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
-		BillboardGui.AlwaysOnTop = true
-		TextLabel.Parent = BillboardGui
-		TextLabel.BackgroundTransparency = 1
-		TextLabel.Position = UDim2.new(0, 0, 0, -60)
-		TextLabel.Size = UDim2.new(0, 100, 0, 100)
-		TextLabel.Font = Enum.Font.SourceSansSemibold
-		TextLabel.TextSize = 20
-		TextLabel.TextColor3 = Color3.new(1, 1, 1)
-		TextLabel.TextStrokeTransparency = 0.6
-		TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
-		plr.CharacterAdded:Connect(function()
-			if ESPenabled then
-				espLoopFunc:Disconnect()
-				ESPholder:Destroy()
-			repeat wait(1) until plr.Character:FindFirstChild('HumanoidRootPart') and plr.Character:FindFirstChild('Humanoid')
-				ESP(plr)
-			end
-		end)
-		local function espLoop()
-			if cmdlp.PlayerGui:FindFirstChild(plr.Name..'_ESP') then
-				if plr.Character:FindFirstChild('HumanoidRootPart') and plr.Character:FindFirstChild('Humanoid') then
-					TextLabel.Text = plr.Name.."|Studs: ".. math.floor((cmdlp.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude).."|Health: "..plr.Character.Humanoid.Health
+			if plr.Character and plr.Character:FindFirstChild('Head') then
+				local BillboardGui = Instance.new("BillboardGui", ESPholder)
+				local TextLabel = Instance.new("TextLabel", getParent)
+				BillboardGui.Adornee = plr.Character.Head
+				BillboardGui.Name = plr.Name
+				BillboardGui.Size = UDim2.new(0, 100, 0, 150)
+				BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
+				BillboardGui.AlwaysOnTop = true
+				TextLabel.Parent = BillboardGui
+				TextLabel.BackgroundTransparency = 1
+				TextLabel.Position = UDim2.new(0, 0, 0, -60)
+				TextLabel.Size = UDim2.new(0, 100, 0, 100)
+				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.TextSize = 20
+				TextLabel.TextColor3 = Color3.new(1, 1, 1)
+				TextLabel.TextStrokeTransparency = 0.6
+				TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
+				plr.CharacterAdded:Connect(function()
+					if ESPenabled then
+						espLoopFunc:Disconnect()
+						ESPholder:Destroy()
+					repeat wait(1) until plr.Character:FindFirstChild('HumanoidRootPart') and plr.Character:FindFirstChild('Humanoid')
+						ESP(plr)
+					end
+				end)
+				local function espLoop()
+					if cmdlp.PlayerGui:FindFirstChild(plr.Name..'_ESP') then
+						if plr.Character:FindFirstChild('HumanoidRootPart') and plr.Character:FindFirstChild('Humanoid') then
+							TextLabel.Text = plr.Name.."|Studs: ".. math.floor((cmdlp.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).magnitude).."|Health: "..plr.Character.Humanoid.Health
+						end
+					else
+						espLoopFunc:Disconnect()
+					end
 				end
-			else
-				espLoopFunc:Disconnect()
-			end
-		end
-		espLoopFunc = game:GetService("RunService").RenderStepped:Connect(espLoop)
+				espLoopFunc = game:GetService("RunService").RenderStepped:Connect(espLoop)
 			end
 		end
 	end)
 end
 cmdp.PlayerRemoving:connect(function(player)
-	for i,v in pairs(cmdlp.PlayerGui:GetChildren()) do
+	for _,v in next, cmdlp.PlayerGui:GetChildren() do
 		if v.Name == player.Name..'_ESP' or v.Name == player.Name..'_LC' then
 			v:Destroy()
 		end
@@ -3513,38 +3494,38 @@ end)
 Enabledaimbot = false
 function BodyAimbot()
 	if Enabledaimbot == true then
-	repeat wait() until #cmdp:GetPlayers() > 1
-	local SPS = .001
-	local LPCHead = cmdlp.Character:FindFirstChild("Head")
-	local LPCTorso = cmdlp.Character:FindFirstChild("UpperTorso")
-	local LPCHRPart = cmdlp.Character:FindFirstChild("HumanoidRootPart")
-	local Closest = nil
-	local Camera = cmdws:FindFirstChild("Camera")
-	local aehl = Instance.new("BoxHandleAdornment", cmdlp.PlayerGui)
-	aehl.Name = "ESPhelp"
-	aehl.AlwaysOnTop = true
-	aehl.ZIndex = 0
-	aehl.Size = Vector3.new(2, 2.1, 1)
-	aehl.Transparency = 0.8
-	aehl.Color3 = Color3.new(255,0,0)
-	local try = 1
-	local teamcount = game.Teams:GetTeams()
-	local teams = false
-	if #teamcount >= 1 then
-		teams = true
-	end
-	local Launch = false
-	local launchCFrame = nil
-	local function searchplr(requestedplr)
-		if PlayersWLsystem[requestedplr.Name] == true then
-			return false
-		elseif PlayersWLsystem[requestedplr.Name] == false then
-			return true
+		repeat wait() until #cmdp:GetPlayers() > 1 --Shit to change
+		local SPS = .001
+		local LPCHead = cmdlp.Character:FindFirstChild("Head")
+		local LPCTorso = cmdlp.Character:FindFirstChild("UpperTorso")
+		local LPCHRPart = cmdlp.Character:FindFirstChild("HumanoidRootPart")
+		local Closest = nil
+		local Camera = cmdws:FindFirstChild("Camera")
+		local aehl = Instance.new("BoxHandleAdornment", cmdlp.PlayerGui)
+		aehl.Name = "ESPhelp"
+		aehl.AlwaysOnTop = true
+		aehl.ZIndex = 0
+		aehl.Size = Vector3.new(2, 2.1, 1)
+		aehl.Transparency = 0.8
+		aehl.Color3 = Color3.new(255,0,0)
+		local try = 1
+		local teamcount = game.Teams:GetTeams()
+		local teams = false
+		if #teamcount >= 1 then
+			teams = true
 		end
-	end
+		local Launch = false
+		local launchCFrame = nil
+		local function searchplr(requestedplr)
+			if PlayersWLsystem[requestedplr.Name] == true then
+				return false
+			elseif PlayersWLsystem[requestedplr.Name] == false then
+				return true
+			end
+		end
 		while Enabledaimbot == true do
 			local Distance = 100000
-			for count,TargetP in pairs(cmdp:GetPlayers()) do
+			for count,TargetP in pairs(cmdp:GetPlayers()) do --Shit to change
 				if searchplr(TargetP) then
 					if (TargetP ~= nil) and TargetP ~= cmdlp then
 					local TC = TargetP.Character
@@ -3584,35 +3565,35 @@ function BodyAimbot()
 			local currentRP = LPCHRPart:FindFirstChild("Launch")
 			if currentRP ~= nil then
 				currentRP.Target = Closest
-			if Noclipping then
-				currentRP.MaxSpeed = 100
-			elseif not Noclipping then
-				currentRP.MaxSpeed = 1000
-			end
+				if Noclipping then
+					currentRP.MaxSpeed = 100
+				elseif not Noclipping then
+					currentRP.MaxSpeed = 1000
+				end
 			end
 			cmduis.InputBegan:connect(function(input)
-			if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and Enabledaimbot then
-				Launch = not Launch
-				local ps = cmdlp.Character.Humanoid.PlatformStand
-				ps = Launch
-				if Launch then
-					local rp = Instance.new("RocketPropulsion")
-					rp.Parent = LPCHRPart
-					rp.CartoonFactor = 1
-					rp.MaxThrust = 5000
-					rp.MaxSpeed = 1000
-					rp.ThrustP = 5000
-					rp.Name = "Launch"
-					currentRP = rp
-					rp:Fire()
-				elseif not Launch then
-					for i,des in pairs(LPCHRPart:GetChildren()) do
-						if des:IsA("RocketPropulsion") and des.Name == "Launch" then
-							des:Destroy()
+				if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and Enabledaimbot then
+					Launch = not Launch
+					local ps = cmdlp.Character.Humanoid.PlatformStand
+					ps = Launch
+					if Launch then
+						local rp = Instance.new("RocketPropulsion")
+						rp.Parent = LPCHRPart
+						rp.CartoonFactor = 1
+						rp.MaxThrust = 5000
+						rp.MaxSpeed = 1000
+						rp.ThrustP = 5000
+						rp.Name = "Launch"
+						currentRP = rp
+						rp:Fire()
+					elseif not Launch then
+						for i,des in pairs(LPCHRPart:GetChildren()) do
+							if des:IsA("RocketPropulsion") and des.Name == "Launch" then
+								des:Destroy()
+							end
 						end
 					end
 				end
-			end
 			end)
 			cmdrs2.Heartbeat:Wait()
 		end
@@ -3625,7 +3606,7 @@ function BodyAimbot()
 end
 cmduis.InputBegan:connect(function(input)
 	if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and not Enabledaimbot then
-		for i,des in pairs(cmdlp.Character.HumanoidRootPart:GetChildren()) do
+		for _,des in next, cmdlp.Character.HumanoidRootPart:GetChildren() do
 			if des:IsA("RocketPropulsion") and des.Name == "Launch" then
 				des:Destroy()
 			end
@@ -3641,7 +3622,7 @@ function noclip()
 	Clip = false
 	function NoclipLoop()
 		if Clip == false and cmdlp.Character ~= nil then
-			for _, child in pairs(cmdlp.Character:GetDescendants()) do
+			for _, child in next, cmdlp.Character:GetDescendants() do
 				if child:IsA("BasePart") and child.CanCollide == true then
 					child.CanCollide = false
 				end
@@ -3732,7 +3713,8 @@ function alignFunctions(getArgs)
 	arguments = getArgs:split(" ")
 	function getstring(begin)
 		local start = begin-1
-		local AA = '' for i,v in pairs(arguments) do
+		local AA = ''
+		for i,v in next, arguments do
 			if i > start then
 				if AA ~= '' then
 					AA = AA .. ' ' .. v
@@ -3747,10 +3729,10 @@ function alignFunctions(getArgs)
 end
 
 function findCmd(cmd_name)
-	for i,v in pairs(CMDN)do
-		for _,x in pairs(CMDN[i].A) do
-			if CMDN[i].N:lower() == cmd_name:lower() or CMDN[i].A[_]:lower() == cmd_name:lower() then
-				v = CMDN[i].N
+	for _,v in next, CMDN do
+		for _,x in next, v.A do
+			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
+				v = v.N
 				return v
 			end
 		end
@@ -3758,10 +3740,10 @@ function findCmd(cmd_name)
 end
 
 function giveCmd(cmd_name)
-	for i,v in pairs(CMDN)do
-		for _,x in pairs(CMDN[i].A) do
-			if CMDN[i].N:lower() == cmd_name:lower() or CMDN[i].A[_]:lower() == cmd_name:lower() then
-				return CMDN[i]
+	for _,v in next, CMDN do
+		for _,x in next, v.A do
+			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
+				return v
 			end
 		end
 	end
@@ -3789,16 +3771,15 @@ cmd.FocusLost:connect(function()
 		wait(.1)
 		alignFunctions(cmd.Text)
 		local cmdsy = findCmd(arguments[1])
-		if cmdsy ~= nil then
+		if cmdsy ~= nile then
 			History[#History+1] = cmd.Text
-			for i,v in pairs(CMDStat) do
-				if cmdsy == CMDStat[i].N then
-					CMDStat[i].T = CMDStat[i].T+1
+			for _,v in next, CMDStat do
+				if cmdsy == v.N then
+					v.T = v.T+1
 				end
 			end
 			updatesaves()
 			cmd.Text = ""
-			print(cmdsy.."s")
 			if commandsLoaded() and noCMD == false then
 				useCommand[cmdsy]()
 			elseif noCMD == true and cmdsy == "yescommands" then
@@ -3822,18 +3803,16 @@ function useCommand.prefix()
 end
 
 function useCommand.promptnew()
-	if arguments[2] then
-		prompt = getstring(2).." >"
-		updatesaves()
-		user.Text = getstring(2).." >"
-		opx("-","Prompt name set to "..getstring(2))
-	elseif arguments[2] == "name" then
-		prompt = cmdlp.Name.." >"
+	if arguments[2] == "name" then
+	    prompt = cmdlp.Name.." >"
 		updatesaves()
 		user.Text = cmdlp.Name.." >"
 		opx("-","Prompt name set to username")
 	else
-		opx("*","2 arguments are required for this command!")
+		prompt = getstring(2).." >"
+		updatesaves()
+		user.Text = getstring(2).." >"
+		opx("-","Prompt name set to "..getstring(2))
 	end
 end
 
@@ -3865,7 +3844,7 @@ end
 
 function useCommand.hotkeyopen()
 	if arguments[2] then
-		hotkeyopen = arguments[2]
+		hotkeyopen = arguments[2]:lower()
 		updatesaves()
 		opx("-","Hotkey set to "..arguments[2])
 	else
@@ -3875,7 +3854,7 @@ end
 
 function useCommand.hotkeyoutput()
 	if arguments[2] then
-		hotkeyopx = arguments[2]
+		hotkeyopx = arguments[2]:lower()
 		updatesaves()
 		opx("-","Hotkey set to "..arguments[2])
 	else
@@ -3885,7 +3864,7 @@ end
 
 function useCommand.hotkeyfocus()
 	if arguments[2] then
-		hotkeyfocus = arguments[2]
+		hotkeyfocus = arguments[2]:lower()
 		updatesaves()
 		opx("-","Hotkey set to "..arguments[2])
 	else
@@ -3931,7 +3910,7 @@ function Template2(name,entry)
 	local TemplateBtnRemove = Instance.new("TextButton", getParent)
 	local TemplateBtnAdd = Instance.new("TextButton", getParent)
 	local alls2 = 5
-	for i,v in pairs(MangeScrollEnter:GetChildren()) do
+	for _,v in next, MangeScrollEnter:GetChildren() do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2+5
 		end
@@ -4130,7 +4109,7 @@ CancelBtnEnter.MouseButton1Down:Connect(function()
 end)
 
 function MakeChanges(title,new)
-	for i,v in pairs(MangeScrollEnter:GetChildren()) do
+	for _,v in next, MangeScrollEnter:GetChildren() do
 		if v.Name == title then
 			v.Name = new
 			xText = v.TemplateName.Text:split("|")
@@ -4173,7 +4152,7 @@ BtnExitEnter.Text = "X"
 BtnExitEnter.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExitEnter.TextSize = 14.000
 BtnExitEnter.MouseButton1Down:Connect(function()
-	for i,v in pairs(enterCMD) do
+	for i,_ in next, enterCMD do
 		if enterCMD[i].N == "Unnamed" then
 			table.remove(enterCMD,i)
 		end
@@ -4202,7 +4181,7 @@ function useCommand.entercmds()
 	opx("-","Opened enter cmd manager")
 	MangeScrollEnter:ClearAllChildren()
 	ManageHolderEnter.Visible = true
-	for i,v in pairs(enterCMD) do
+	for i,_ in next, enterCMD do
 		Template2(enterCMD[i].N,i)
 	end
 end
@@ -4289,13 +4268,13 @@ function useCommand.config()
 	configframe:TweenSize(UDim2.new(0,300,0,433), Enum.EasingDirection.In, Enum.EasingStyle.Quad, .5)
 	opx("-","Config loaded")
 end
-
+--Shit to change
 local cmdAdvertise = false
 function useCommand.advertise()
 	cmdAdvertise = true
 	while cmdAdvertise == true do
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: DD2w2cZ or type in cmd x pxstebxn on google!", "All")
-		wait(math.random(1, 6))
+		wait(math.random(1, 6)) 
 		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
 		cmdh:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: DD2w2cZ or type in cmd x pxstebxn on google!", "All")
@@ -4391,7 +4370,7 @@ function useCommand.defaultgravity()
 end
 
 local bodyPos = false
-for i,v in pairs(cmdlp.Character:GetDescendants()) do
+for _,v in next, cmdlp.Character:GetDescendants() do
 	if v.Name == "rocket" then
 		v:Destroy()
 	end
@@ -4502,13 +4481,13 @@ end
 function useCommand.removearms()
 	opx("-","Removed arms")
 	if cmd15(cmdlp) then
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" then
 				v:Destroy()
 			end
 		end
 	else
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "Right Arm" or v.Name == "Left Arm" then
 				v:Destroy()
 			end
@@ -4519,13 +4498,13 @@ end
 function useCommand.removelegs()
 	opx("-","Removed legs")
 	if cmd15(cmdlp) then
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" then
 				v:Destroy()
 			end
 		end
 	else
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "Right Leg" or v.Name == "Left Leg" then
 				v:Destroy()
 			end
@@ -4536,13 +4515,13 @@ end
 function useCommand.removelimbs()
 	opx("-","Removed limbs")
 	if cmd15(cmdlp) then
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" or v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" then
 				v:Destroy()
 			end
 		end
 	else
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
+		for _,v in next, cmdlp.Character:GetChildren() do
 			if v.Name == "Right Arm" or v.Name == "Left Arm" or v.Name == "Right Leg" or v.Name == "Left Leg" then
 				v:Destroy()
 			end
@@ -4577,7 +4556,7 @@ end
 
 function useCommand.removeclothes()
 	opx("-","You are now naked on a kids game")
-	for i,v in pairs(cmdlp.Character:GetChildren()) do
+	for _,v in next, cmdlp.Character:GetChildren() do
 		if v.Name == "Shirt" or v.Name == "Shirt Graphic" or v.Name == "Pants" then
 			v:Destroy()
 		end
@@ -4586,9 +4565,9 @@ end
 
 function useCommand.removehatsmesh()
 	opx("-","Removed hats meshes")
-	for _,v in pairs(cmdlp.Character:GetChildren()) do
+	for _,v in next, cmdlp.Character:GetChildren() do
 		if v:IsA("Accessory") then
-			for _,x in pairs(v:GetDescendants()) do
+			for _,x in next, v:GetDescendants() do
 				if x.Name == "Mesh" or x.Name == "SpecialMesh" then
 					x:Destroy()
 				end
@@ -4599,7 +4578,7 @@ end
 
 function useCommand.removegearmesh()
 	opx("-","Removed gears meshes")
-	for _,v in pairs(cmdlp.Character:GetChildren()) do
+	for _,v in next, cmdlp.Character:GetChildren() do
 		if v:IsA("Tool") then
 			for _,x in pairs(v:GetDescendants()) do
 				if x.Name == "Mesh" or x.Name == "SpecialMesh" then
@@ -6447,17 +6426,17 @@ end
 XLS = {}
 function useCommand.removelocalscripts()
 	opx("-","Removed all localscripts")
-	for i,ls in pairs(game:GetDescendants()) do
+	for _,ls in next, game:GetDescendants() do
 		if ls:IsA("LocalScript") then
 			ls.Disabled = true
-			XLS[#XLS+1] = ls
+			table.insert(XLS, ls)
 		end
 	end
 end
 
 function useCommand.restorelocalscripts()
     opx("-","Restored all localscripts")
-    for i,v in pairs(XLS) do
+    for _,v in next, XLS do
         v.Disabled = false
     end
 end
@@ -7036,7 +7015,7 @@ function useCommand.cambobble()
 			local bobble_X = math.cos(now * 9) / 5
 			local bobble_Y = math.abs(math.sin(now * 12)) / 5
 			local bobble = Vector3.new(bobble_X,bobble_Y,0) * math.min(1, velocity.Magnitude / cmdh.WalkSpeed)
-			cmdh.CameraOffset = cmdh.CameraOffset:lerp(bobble,.25)
+			cmdh.CameraOffset = cmdh.CameraOffset:lerp(bobble,.75)
 		else
 			cmdh.CameraOffset = cmdh.CameraOffset * 0.75
 		end
@@ -7117,15 +7096,17 @@ function useCommand.step()
 			findT()
 		end
 		currentTorso.Touched:Connect(function(hit)
-			local cmdlpHRP = cmdlp.Character.HumanoidRootPart
-			if hit:IsA("BasePart") and hit.Position.Y > cmdlpHRP.Position.Y - cmdlp.Character.Humanoid.HipHeight then
-				local findHRP = hit.Parent:FindFirstChild("HumanoidRootPart")
-				if findHRP ~= nil then
-					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,findHRP.Size.Z/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
-				elseif findHRP == nil then
-					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,hit.Size.Y/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
-				end
-			end
+    		if step == true then
+    			local cmdlpHRP = cmdlp.Character.HumanoidRootPart
+    			if hit:IsA("BasePart") and hit.Position.Y > cmdlpHRP.Position.Y - cmdlp.Character.Humanoid.HipHeight then
+    				local findHRP = hit.Parent:FindFirstChild("HumanoidRootPart")
+    				if findHRP ~= nil then
+    					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,findHRP.Size.Z/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
+    				elseif findHRP == nil then
+    					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,hit.Size.Y/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
+    				end
+    			end
+    		end
 		end)
 	until step == false
 	opx("-","Step enabled")
@@ -7150,8 +7131,9 @@ function useCommand.nosit()
 	nosit = true
 	opx("-","Nosit enabled")
 	while nosit == true do
-		wait()
+		wait(.1)
 		if cmdlp.Character.Humanoid.Sit == true then
+		    wait(.1)
 			cmdlp.Character.Humanoid.Sit = false
 		end
 	end
@@ -7167,8 +7149,9 @@ function useCommand.nostun()
 	nostun = true
 	opx("-","Nostun enabled")
 	while nostun == true do
-		wait()
+		wait(.1)
 		if cmdlp.Character.Humanoid.PlatformStand == true then
+		    wait(.1)
 			cmdlp.Character.Humanoid.PlatformStand = false
 		end
 	end
@@ -7567,7 +7550,7 @@ end
 function useCommand.light()
 	if arguments[2] then
 		opx("-","Light/Brightness has been set to "..arguments[2])
-		local bright = Instance.new("PointLight", cmdlp.Character.Torso)
+		local bright = Instance.new("PointLight", cmdlp.Character.HumanoidRootPart)
 		bright.Range = 35
 		bright.Brightness = arguments[2]
 	else
@@ -7639,7 +7622,7 @@ function Find()
 	Track = true
 	while wait() do
 		if Track then
-			Clear()
+			Clear() --Shit to change
 			for i,v in pairs(cmdp:GetPlayers()) do
 				if v.Character and v.Character:FindFirstChild("Head") then
 					if v.Character:FindFirstChild("Head") then
@@ -7680,7 +7663,7 @@ AimFor = "Head"
 function GetPlayer()
     CollectingPositions = {}
     PlrCollect = {}
-    Players1 = {}
+    Players1 = {} --Shit to change
     for i,v in pairs(cmdp:GetPlayers()) do
 		if v ~= cmdlp then
 			table.insert(Players1, v)
@@ -8013,11 +7996,11 @@ function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
 	while hitler == true do
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
 		wait(15)
 	end
 end
@@ -8868,7 +8851,7 @@ function Locate(plr)
 	if plr.Character and plr.Name ~= cmdlp.Name and not cmdlp.PlayerGui:FindFirstChild(plr.Name..'_LC') then
 		local ESPholder = Instance.new("Folder", cmdlp.PlayerGui)
 		ESPholder.Name = plr.Name..'_LC'
-		for b,n in pairs (plr.Character:GetChildren()) do
+		for b,n in pairs(plr.Character:GetChildren()) do
 			if n:IsA("BasePart") then
 				local a = Instance.new("BoxHandleAdornment", ESPholder)
 				a.Name = plr.Name
@@ -8984,14 +8967,14 @@ function useCommand.clickdelete()
 		opx("-","Click delete unloaded")
 	end
 end
-
+--Shit to change
 cmdp.PlayerAdded:connect(function(plr)
 	plr.Chatted:connect(function(msg)
 		if logsEnabled == true then
 			CreateLabel(plr.Name,msg)
 		end
 	end)
-end)
+end) --Shit to change
 for i,v in pairs(cmdp:GetPlayers()) do
 	v.Chatted:connect(function(msg)
 		if logsEnabled == true then
@@ -9679,7 +9662,7 @@ function useCommand.compliment()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
+			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
 			local value = math.random(1,#compPick)
 			local picked_value = compPick[value]
 			opx("-","You complimented "..target.Name)
@@ -9696,7 +9679,7 @@ function useCommand.roast()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“beautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
+			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œbeautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
 			local value = math.random(1,#roastPick)
 			local picked_value = roastPick[value]
 			opx("-","You roasted "..target.Name)
@@ -10091,15 +10074,15 @@ end
 
 function useCommand.bypass()
 	local message = getstring(2)
-	local s1 = message:gsub("i", "iأ")
-	local s2 = s1:gsub("e", "eأ")
-	local s3 = s2:gsub("u", "uأ")
-	local s4 = s3:gsub("f", "fأ")
-	local s5 = s4:gsub("o", "oأ")
-	local s6 = s5:gsub("c", "cأ")
-	local s7 = s6:gsub("p", "pأ")
-	local s8 = s7:gsub("s", "sأ")
-	local s9 = s8:gsub("t", "tأ")
+	local s1 = message:gsub("i", "iØ£")
+	local s2 = s1:gsub("e", "eØ£")
+	local s3 = s2:gsub("u", "uØ£")
+	local s4 = s3:gsub("f", "fØ£")
+	local s5 = s4:gsub("o", "oØ£")
+	local s6 = s5:gsub("c", "cØ£")
+	local s7 = s6:gsub("p", "pØ£")
+	local s8 = s7:gsub("s", "sØ£")
+	local s9 = s8:gsub("t", "tØ£")
 	opx("-","Successfully bypassed! "..s9)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s9, "All")
 end
@@ -10224,7 +10207,7 @@ function useCommand.chatframe()
 		opx("*","2 arguments are needed for this command!")
 	end
 end
-
+--Shit to change
 local fbc = false
 function useCommand.forcebubblechat()
 	fbc = true
@@ -10236,7 +10219,7 @@ function useCommand.forcebubblechat()
 					game:GetService("Chat"):Chat(plr.Character.Head,msg,Enum.ChatColor.White)
 				end
 			end)
-		end)
+		end) --Shit to change
 		for i,v in pairs(cmdp:GetPlayers()) do
 			v.Chatted:connect(function(msg)
 				if fbc == true then
@@ -10259,12 +10242,9 @@ function useCommand.itemesp()
 	for _,i in pairs(workspace:GetDescendants()) do
 		if i:IsA("BasePart") and i.Parent.ClassName ~= "Accessory" then
 			local pi = i.Name:lower()
-			local pt = "handle"
-			local pt1 = "tool"
-			local pt2 = "item"
-			local z = string.find(pi,pt)
-			local z1 = string.find(pi,pt1)
-			local z2 = string.find(pi,pt2)
+			local z = string.find(pi,"handle")
+			local z1 = string.find(pi,"tool")
+			local z2 = string.find(pi,"item")
 			if z ~= nil or z1 ~= nil or z2 ~= nil then
 				IESP(i)
 			end
@@ -10392,14 +10372,14 @@ function useCommand.admindetect()
 		for i,v in pairs(adminTableS.N) do
 			adminTableS.N[i] = adminTableS.N[i]:gsub("-","")
 			adminTableS.N[i] = adminTableS.N[i]:sub(0,#adminTableS.N[i]-2)
-			for _,n in pairs(cmdp:GetPlayers()) do
+			for _,n in pairs(cmdp:GetPlayers()) do --Shit to change
 				vID = n.UserId
 				z = string.find(adminTableS.N[i],vID)
 				if z ~= nil then
 					CreateADLabel(n.Name,"Staff | KOHLS")
 				end
 			end
-		end
+		end --Shit to change
 		cmdp.PlayerAdded:Connect(function(plr)
 			for i,v in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 				if v.Name == "log" then
@@ -10457,7 +10437,7 @@ function useCommand.streamermode()
 			local weld = Instance.new("Weld", cl) weld.Part0 = cl weld.Part1 = char.Head
 			char.Head.Transparency = 1
 		end)
-	end
+	end --Shit to change
 	cmdp.PlayerAdded:Connect(function(v)
 		wait(2)
 		local char = v.Character
@@ -11405,7 +11385,7 @@ end
 function useCommand.scriptusers()	
 	opx("-","Showing players using CMD-X")	
 	local usageof = ""	
-	for i,v in pairs(cmdp:GetPlayers()) do	
+	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
 		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then	
 			if Devs[v.Name] == "Dev" then	
 				usageof = usageof.."[DEV]"..v.Name.."\n"	
@@ -11438,7 +11418,7 @@ function useCommand.mentions()
 		opx("*","Not a valid preset!")
 	end
 end
-
+--Shit to change
 cmdp.PlayerAdded:connect(function(plr)	
 	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
 		msg = plr.OsPlatform	
@@ -11470,7 +11450,7 @@ cmdp.PlayerAdded:connect(function(plr)
     	end
 	end)	
 end)
-for i,v in pairs(cmdp:GetPlayers()) do
+for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = v.OsPlatform
 		plr = v
@@ -12125,16 +12105,16 @@ function useCommand.plague()
 	if arguments[2] then
 		opx("-","You started a plague!")
 		cureFound = false
-		plaguename = arguments[2]
-		if #cmdp:GetPlayers() > 6 then
-			for i,v in pairs(cmdp:GetPlayers()) do
+		plaguename = arguments[2] 
+		if #cmdp:GetPlayers() > 6 then --Shit to change 
+			for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 				wait(math.random(1,15))
 				if i == 1 then
 					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." is the ZeroDay of "..plaguename, "All")
 				elseif i == 2 then
 					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(plaguename.." was put on the watchlist by RHO", "All")
 					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." was infected by "..plaguename, "All")					
-				elseif i == #cmdp:GetPlayers()-3 then
+				elseif i == #cmdp:GetPlayers()-3 then --Shit to change
 					randomss = math.random(1,2)
 					if randomss == 2 then
 						cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("A cure was found for "..plaguename.." RHO says it will be over soon", "All")
@@ -12142,7 +12122,7 @@ function useCommand.plague()
 					else
 						cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Roblox begins breaking down as "..plaguename.." infects the majority of the population", "All")
 					end
-				elseif i == #cmdp:GetPlayers() then
+				elseif i == #cmdp:GetPlayers() then --Shit to change
 					if cureFound == false then
 						cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Roblox was completely infected by "..plaguename, "All")
 					else
@@ -12272,7 +12252,7 @@ end
 
 function useCommand.players()
 	opx("Listed players in game")
-	xPlayers = #cmdp:GetPlayers().." | "
+	xPlayers = #cmdp:GetPlayers().." | " --Shit to change
 	for i,v in pairs(cmdp:GetPlayers()) do
 		xPlayers = xPlayers..v.Name..", "
 	end
@@ -12291,7 +12271,7 @@ end
 function useCommand.massjoindate()
 	opx("-","Showing join dates")
 	xJD = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		local res = game:HttpGet("https://users.roblox.com/v1/users/"..v.UserId)
 		local tbl = json.decode(res)
 		local Created = tbl["created"]:split("T")
@@ -12304,7 +12284,7 @@ end
 function useCommand.massage()
 	opx("-","Showing ages")
 	xAge = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		local Years = string.split(v.AccountAge/365,".")
 		xAge = xAge..v.Name.."(s) account is "..Years[1].." year(s) old or "..v.AccountAge.." day(s) old\n"
 	end
@@ -12314,7 +12294,7 @@ end
 function useCommand.massid()
 	opx("-","Showing IDs")
 	xID = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		xID = xID..v.Name.."s User ID is "..v.UserId.."\n"
 	end
 	opxL("Mass-ID",xID)
@@ -12323,7 +12303,7 @@ end
 function useCommand.massos()
 	opx("-","Showing OSs")
 	xOS = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		xOS = xOS..v.Name.."s OS is "..v.OsPlatform.."\n"
 	end
 	opxL("Mass-OS",xOS)
@@ -12474,7 +12454,7 @@ function useCommand.irltime()
     for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
         if v:IsA("Sky") then v:Destroy() end
     end
-    local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer)
+    local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer) --Shit to change
     local URL = ("https://restcountries.eu/rest/v2/alpha/"..reg)
     local fuck = game:HttpGet(URL)
     local Http = game:GetService("HttpService"):JSONDecode(fuck)
@@ -13578,7 +13558,7 @@ function useCommand.simulationradius()
 		coroutine.resume(coroutine.create(function()
 			settings().Physics.AllowSleep = false
 			game:GetService("RunService").RenderStepped:Connect(function()
-				for i,v in pairs(cmdp:GetPlayers()) do
+				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 					if v ~= cmdlp then
 						v.MaximumSimulationRadius = 0.1
 						v.SimulationRadius = 0
@@ -13594,7 +13574,7 @@ function useCommand.simulationradius()
 		coroutine.resume(coroutine.create(function()
 			settings().Physics.AllowSleep = false
 			game:GetService("RunService").RenderStepped:Connect(function()
-				for i,v in pairs(cmdp:GetPlayers()) do
+				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 					if v ~= cmdlp then
 						v.MaximumSimulationRadius = 0.1
 						v.SimulationRadius = 0
@@ -13927,7 +13907,7 @@ end
 function useCommand.mass()
 	opx("-","Executing player command in mass")
 	FinalCMD = findCmd(arguments[2])
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		arguments = FinalCMD.." "..v.Name
 		arguments = arguments:split(" ")
 		useCommand[FinalCMD]()
@@ -14062,7 +14042,7 @@ function UpdateTracer()
 		v:Remove()
 	end
 	Lines = {}
-	for i,v in pairs(cmdp:GetPlayers()) do
+	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
     	if v ~= cmdlp then
     	    if v and v.Character ~= nil then
     	        Head = v.Character:FindFirstChild("Head")
@@ -14125,14 +14105,14 @@ function useCommand.antifling()
 				end	
 			end	
 		end	
-	end	
-	for _,v in pairs(game:GetService("Players"):GetPlayers()) do	
+	end	--Shit to change
+	for _,v in pairs(game:GetService("Players"):GetPlayers()) do	 --Shit to change
 		if v ~= cmdlp then	
 			local antifling = game:GetService('RunService').Stepped:connect(function()	
 				Collisionless(v)	
 			end)	
 		end	
-	end	
+	end	--Shit to change
 	game.Players.PlayerAdded:Connect(function()	
 		if v ~= cmdlp and antifling then	
 			local antifling = game:GetService('RunService').Stepped:connect(function()	
@@ -14595,35 +14575,35 @@ pcall(function()
 end)
 
 pcall(function()
-	function RGBDev(Self)	
-		RGBDevCheck = true	
-		if connectionRGBDev then connectionRGBDev:Disconnect() end	
-		coroutine.resume(coroutine.create(function()	
-			connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
-				if not debouncergb then	
-					if Self ~= nil then	
-						for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
-							if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
-								for i = 0, 255, 1 do 	
-									v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)	
-									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-									game:GetService("RunService").Heartbeat:Wait()
-									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-									debouncergb = true	
-								end	
-							end	
-						end	
-					end	
-				else	
-					for i = 0, 255 do	
-						game:GetService("RunService").Heartbeat:Wait()	
-					end	
-					debouncergb = false	
-				end	
-			end)	
-		end))	
-	end
-end)	
+    function RGBDev(Self)
+    	RGBDevCheck = true
+    	if connectionRGBDev then connectionRGBDev:Disconnect() end	
+    	coroutine.resume(coroutine.create(function()	
+    		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
+    			if not debouncergb then	
+    				if Self ~= nil then	
+    					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
+    						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
+    							for i = 0, 255, 1 do 	
+    								v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)
+    								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+    								game:GetService("RunService").Heartbeat:Wait()
+    								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+    								debouncergb = true	
+    							end	
+    						end	
+    					end	
+    				end	
+    			else	
+    				for i = 0, 255 do	
+    					game:GetService("RunService").Heartbeat:Wait()	
+    				end	
+    				debouncergb = false	
+    			end	
+    		end)	
+    	end))	
+    end	
+end)
 
 function colorName(Self,g)	
 	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
@@ -14637,7 +14617,7 @@ function colorName(Self,g)
 	end	
 end	
 
-for i,v in pairs(cmdp:GetPlayers()) do	
+for i,v in pairs(cmdp:GetPlayers()) do
 	if Devs[v.Name] then	
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
 		RGBDev(v.Name)	
@@ -14649,8 +14629,8 @@ for i,v in pairs(cmdp:GetPlayers()) do
 			colorName(v.Name, true)	
 		end	
 	end	
-end	
-	
+end
+
 cmdp.PlayerAdded:Connect(function(v)	
 	if Devs[v.Name] then	
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
