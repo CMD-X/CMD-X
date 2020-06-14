@@ -7894,8 +7894,10 @@ function useCommand.osprivate()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			osCheck()
-			opx("-",target.Name.."s OS is "..target.OsPlatform)
+    		if #target.OsPlatform < 100 then
+    			osCheck()
+    			opx("-",target.Name.."s OS is "..target.OsPlatform)
+    		end
 		else
 			opx("*","Player does not exist!")
 		end
@@ -7908,9 +7910,11 @@ function useCommand.ospublic()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			osCheck()
-			opx("-",target.Name.."s OS is "..target.OsPlatform)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
+		    if #target.OsPlatform < 100 then
+    			osCheck()
+    			opx("-",target.Name.."s OS is "..target.OsPlatform)
+    			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
+		    end
 		else
 			opx("*","Player does not exist!")
 		end
