@@ -7890,13 +7890,29 @@ function osCheck()
 	end
 end
 
+local alphabet = {" ","-","_",")","(","*","&","^","%","$","£",'"',"!","`","¬","/","|",">","<",".",",","]","[",";",":","@","'","#","~","}","{","=","+","A";"B";"C";"D";"E";"F";"G";"H";"I";"J";"K";"L";"M";"N";"O";"P";"Q";"R";"S";"T";"U";"V";"W";"X";"Y";"Z";"1","2","3","4","5","6","7","8","9","0"}
+
 function useCommand.osprivate()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
     		if #target.OsPlatform < 100 then
-    			osCheck()
-    			opx("-",target.Name.."s OS is "..target.OsPlatform)
+    		    for i = 1,#target.OsPlatform do
+    		        schar = target.OsPlatform:sub(i,i)
+    		        for _,x in pairs(alphabet) do
+    		            gaySkid = false
+    		            if schar == x then gaySkid = true break end
+    		        end
+    		        if gaySkid == false then break end
+    		    end
+		        if gaySkid then
+        			osCheck()
+        			opx("-",target.Name.."s OS is "..target.OsPlatform)
+        		else
+        		    opx("*","String is not alphabetical")
+        		end
+    		else
+    		    opx("*","String is too long")
     		end
 		else
 			opx("*","Player does not exist!")
@@ -7911,10 +7927,24 @@ function useCommand.ospublic()
 		target = findplr(arguments[2])
 		if target then
 		    if #target.OsPlatform < 100 then
-    			osCheck()
-    			opx("-",target.Name.."s OS is "..target.OsPlatform)
-    			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
-		    end
+    		    for i = 1,#target.OsPlatform do
+    		        schar = target.OsPlatform:sub(i,i)
+    		        for _,x in pairs(alphabet) do
+    		            gaySkid = false
+    		            if schar == x then gaySkid = true break end
+    		        end
+    		        if gaySkid == false then break end
+    		    end
+		        if gaySkid then
+        			osCheck()
+        			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
+        			opx("-",target.Name.."s OS is "..target.OsPlatform)
+        		else
+        		    opx("*","String is not alphabetical")
+        		end
+    		else
+    		    opx("*","String is too long")
+    		end
 		else
 			opx("*","Player does not exist!")
 		end
