@@ -254,6 +254,7 @@ defaultsettings = {
 	ChatBind = false;
 	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
 	TabsOn = true;
+	KeepCMDXOn = true;
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -314,6 +315,7 @@ function saves()
 				if json.ChatBind ~= nil then ChatBind = json.ChatBind else ChatBind = false end
 			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
 		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
+		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = true end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -364,6 +366,7 @@ function saves()
 				ChatBind = false
 				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 			    TabsOn = true
+			    KeepCMDXOn = true
 			end
 		end
 	else
@@ -406,6 +409,7 @@ function saves()
 		ChatBind = false
 		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 	    TabsOn = true
+	    KeepCMDXOn = true
 	end
 end
  
@@ -453,6 +457,7 @@ function updatesaves()
 		ChatBind = ChatBind;
 		CMDTab = CMDTab;
 		TabsOn = TabsOn;
+		KeepCMDXOn = KeepCMDXOn;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -3109,7 +3114,18 @@ table.insert(CMDN, {N = "directjoin", A = {"dirjoin"}, CMD = "476,directjoin/dir
 table.insert(CMDN, {N = "irltime", A = {"synctime"}, CMD = "477,irltime/synctime,,Sets the game time to your irl time."})
 table.insert(CMDN, {N = "tabs", A = {""}, CMD = "478,tabs,(on/off),Turns tabs on or off."})
 table.insert(CMDN, {N = "changetab", A = {"ctab"}, CMD = "479,changetab/ctab,(1-9),Changes a tab from 1-9."})
+table.insert(CMDN, {N = "debugging", A = {"debugmode"}, CMD = "480,debugging/debugmode,(on/off),Allows error showing on commands."})
+table.insert(CMDN, {N = "runafter", A = {""}, CMD = "481,runafter,(on/off),If CMD-X should run after rejoin (SYNAPSE ONLY)."})
+table.insert(CMDN, {N = "removeinchar", A = {"rinchar"}, CMD = "482,removeinchar/rinchar,(part),Removes whatever you state from character."})
+table.insert(CMDN, {N = "unsitwalk", A = {""}, CMD = "483,unsitwalk,,()"})
 currentCMDNUM = "437"
+
+function RunAndCheck()
+    if KeepCMDXOn and syn.queue_on_teleport then
+        syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+    end
+end
+
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
 fuck = game:HttpGet(URL)
 local Http = game:GetService("HttpService"):JSONDecode(fuck)
@@ -3758,6 +3774,7 @@ updatesaves()
 
 local noCMD = false
 
+Debugging = false
 local History = {}
 local useCommand = {}
 cmd.FocusLost:connect(function()
@@ -3781,7 +3798,11 @@ cmd.FocusLost:connect(function()
 			updatesaves()
 			cmd.Text = ""
 			if commandsLoaded() and noCMD == false then
-				useCommand[cmdsy]()
+				if Debugging == false then
+				    useCommand[cmdsy]()
+				else
+			        pcall(function() useCommand[cmdsy]() end)
+			    end
 			elseif noCMD == true and cmdsy == "yescommands" then
 				useCommand[cmdsy]()
 			else
@@ -7247,24 +7268,34 @@ end
 
 function useCommand.sitwalk()
 	opx("-","Sit walk enabled")
-	local anims = cmdlp.Character.Animate
+	anims = cmdlp.Character.Animate
+	xNoSit = {
+	    anims.idle:FindFirstChildOfClass("Animation").AnimationId, 
+	    anims.walk:FindFirstChildOfClass("Animation").AnimationId, 
+	    anims.run:FindFirstChildOfClass("Animation").AnimationId, 
+	    anims.jump:FindFirstChildOfClass("Animation").AnimationId,
+	    cmdlp.Character.Humanoid.HipHeight,
+	}
 	local sit = anims.sit:FindFirstChildOfClass("Animation").AnimationId
 	anims.idle:FindFirstChildOfClass("Animation").AnimationId = sit
 	anims.walk:FindFirstChildOfClass("Animation").AnimationId = sit
 	anims.run:FindFirstChildOfClass("Animation").AnimationId = sit
 	anims.jump:FindFirstChildOfClass("Animation").AnimationId = sit
-	local Anim = Instance.new("Animation")
-	Anim.AnimationId = sit
-	local k = cmdlp.Character.Humanoid:LoadAnimation(Anim)
-	k:Play()
-	k:AdjustSpeed(1)
-	k:Destroy()
-	Anim:Destroy()
+	-- :(
 	if cmd6(cmdlp) then
 		cmdlp.Character.Humanoid.HipHeight = -1.5
 	else
 		cmdlp.Character.Humanoid.HipHeight = 0.5
 	end
+end
+
+function useCommand.unsitwalk()
+    anims.idle:FindFirstChildOfClass("Animation").AnimationId = xNoSit[1]
+    anims.walk:FindFirstChildOfClass("Animation").AnimationId = xNoSit[2]
+    anims.run:FindFirstChildOfClass("Animation").AnimationId = xNoSit[3]
+    anims.jump:FindFirstChildOfClass("Animation").AnimationId = xNoSit[4]
+    cmdlp.Character.Humanoid.HipHeight = xNoSit[5]
+    cmdlp.Character.Humanoid.Jump = true
 end
 
 function useCommand.freeze()
@@ -7473,11 +7504,39 @@ end
 
 function useCommand.rejoin()
 	opx("-","Rejoining game")
-	game:GetService('TeleportService'):Teleport(game.PlaceId)
+	RunAndCheck()
+	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+end
+
+function useCommand.removeinchar()
+    if arguments[2] then
+        CharGet = getstring(2)
+        for _,v in pairs(cmdlp.Character:GetDescendants()) do
+            if v.Name == CharGet then v:Destroy(); break end
+        end
+        opx("-","Removed "..CharGet.." from character")
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+function useCommand.runafter()
+    if arguments[2] == "on" then
+        opx("-","CMD-X will now run after rejoin")
+        KeepCMDXOn = true
+        updatesaves()
+    elseif arguments[2] == "off" then
+        opx("-","CMD-X will no longer run after rejoin")
+        KeepCMDXOn = false
+        updatesaves()
+    else
+        opx("*","2 arguments are required!")
+    end
 end
 
 function useCommand.game()
 	if arguments[2] then
+	    RunAndCheck()
 		game:GetService('TeleportService'):Teleport(arguments[2])
 		opx("-","Teleporting to game "..arguments[2])
 	else
@@ -9662,7 +9721,7 @@ function useCommand.compliment()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
+			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
 			local value = math.random(1,#compPick)
 			local picked_value = compPick[value]
 			opx("-","You complimented "..target.Name)
@@ -9679,7 +9738,7 @@ function useCommand.roast()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œbeautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
+			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œbeautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
 			local value = math.random(1,#roastPick)
 			local picked_value = roastPick[value]
 			opx("-","You roasted "..target.Name)
@@ -12310,6 +12369,7 @@ function useCommand.massos()
 end
 
 function useCommand.rejoindiff()
+    RunAndCheck()
 	if not arguments[2] then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -12467,6 +12527,7 @@ end
 
 function useCommand.directjoin()
     if arguments[3] then
+        RunAndCheck()
         opx("-","Joining server")
         if arguments[2] == "this" then arguments[2] = game.PlaceId end
         game:GetService("TeleportService"):TeleportToPlaceInstance(arguments[2],arguments[3],cmdlp)
@@ -12964,6 +13025,7 @@ function useCommand.friendjoin()
 		for i,v in pairs(friends) do
 			if v.UserName == target then
 				if v.LastLocation then
+				    RunAndCheck()
 					opx("-","Joining friend")
 					game:GetService("TeleportService"):TeleportToPlaceInstance(v.PlaceId,v.GameId,cmdlp)
 				else
@@ -14013,6 +14075,18 @@ function useCommand.testaudio()
 	end
 end
 
+function useCommand.debugging()
+    if arguments[2] == "on" then
+        Debugging = true
+        opx("-","Debugging turned on")
+    elseif arguments[2] == "off" then
+        Debugging = false
+        opx("-","Debugging turned off")
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
 function useCommand.freereach()
     if arguments[4] and cmdnum(arguments[4]) then
 		for i,v in pairs(cmdlp.Character:GetDescendants()) do
@@ -14248,9 +14322,11 @@ cmdm.KeyDown:connect(function(key)
 				arguments = hkBinds[i].C:split(" ")
 				local cmdsy = findCmd(arguments[1])
 				if cmdsy ~= nil then
-					pcall(function()
-						useCommand[cmdsy]()
-					end)
+					if Debugging == false then
+    				    useCommand[cmdsy]()
+    				else
+    			        pcall(function() useCommand[cmdsy]() end)
+    			    end
 				else
 					local invalidString = getstring(1)
 					if #invalidString > 38 then
@@ -14325,9 +14401,11 @@ if #enterCMD > 0 then
 		arguments = enterCMD[i].N:split(" ")
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nil then
-			pcall(function()
+			if Debugging == false then
 				useCommand[cmdsy]()
-			end)
+			else
+			    pcall(function() useCommand[cmdsy]() end)
+			end
 		else
 			invalidString = enterCMD[i].N
 			if #invalidString > 38 then
@@ -14509,9 +14587,11 @@ for i,v in pairs(AdmIG) do
 			adminargs = a:sub(#prefix+1,1000000):split(" ")
 			cmdsy = findCmd(adminargs[1])
 			if cmdsy ~= nil then
-				pcall(function()
-					useCommand[cmdsy]()
-				end)
+				if Debugging == false then
+				    useCommand[cmdsy]()
+				else
+			        pcall(function() useCommand[cmdsy]() end)
+			    end
 			else
 				invalidString = getstring(1)
 				if #invalidString > 38 then
@@ -14527,9 +14607,11 @@ for i,v in pairs(AdmIG) do
 			adminargs = a:sub(2,1000000):split(" ")
 			cmdsy = findCmd(adminargs[1])
 			if cmdsy ~= nil then
-				pcall(function()
-					useCommand[cmdsy]()
-				end)
+				if Debugging == false then
+				    useCommand[cmdsy]()
+				else
+			        pcall(function() useCommand[cmdsy]() end)
+			    end
 			else
 				invalidString = getstring(1)
 				if #invalidString > 38 then
