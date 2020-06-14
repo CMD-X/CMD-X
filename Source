@@ -3132,7 +3132,7 @@ local Http = game:GetService("HttpService"):JSONDecode(fuck)
 output4.Text = Http.text
 PCs = {"far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 cmd.Changed:Connect(function()
-	local checkargs = cmd.Text:split(" ")
+	local checkargs = string.split(cmd.Text," ")
 	if checkargs[2] then
 		for _,v in next, CMDN do
 			for _,x in next, v.A do
@@ -3340,13 +3340,13 @@ Cmdsearch.FocusLost:Connect(function()
 			for _,x in next, v.A do
 				if string.find(v.N,Cmdsearch.Text) then
 					if v.N:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
-						local CS = v.CMD:split(",")
+						local CS = string.split(v.CMD.Text,",")
 						CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 					end
 				end
 				if string.find(x,Cmdsearch.Text) then
 					if x:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
-						local CS = v.CMD:split(",")
+						local CS = string.split(v.CMD,",")
 						CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 					end
 				end
@@ -3726,7 +3726,7 @@ function alignFunctions(getArgs)
 	local cmdteams = game:GetService("Teams")
 	local cmdlp = cmdp.LocalPlayer
 	local cmdm = cmdlp:GetMouse()
-	arguments = getArgs:split(" ")
+	arguments = string.split(getArgs," ")
 	function getstring(begin)
 		local start = begin-1
 		local AA = ''
