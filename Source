@@ -3121,7 +3121,7 @@ table.insert(CMDN, {N = "removeinchar", A = {"rinchar"}, CMD = "482,removeinchar
 table.insert(CMDN, {N = "unsitwalk", A = {""}, CMD = "483,unsitwalk,,()"})
 table.insert(CMDN, {N = "setbackunanchored", A = {"sbuna"}, CMD = "484,setbackunanchored/sbuna,,Sets back all unanchored parts to original positions."})
 table.insert(CMDN, {N = "cutmuteloop", A = {"cmutel"}, CMD = "485,cutmuteloop/cmutel,,Cuts your mute loops."})
-table.insert(CMDN, {N = "supermute", A = {"smute"}, CMD = "486,supermute,,Mutes everyone and the game."})
+table.insert(CMDN, {N = "supermute", A = {"smute"}, CMD = "486,supermute/smute,,Mutes everyone and the game."})
 table.insert(CMDN, {N = "unsupermute", A = {"unsmute"}, CMD = "487,unsupermute/unsmute,,()"})
 currentCMDNUM = "437"
 
