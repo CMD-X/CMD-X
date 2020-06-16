@@ -7947,7 +7947,6 @@ function useCommand.countryprivate()
     		local URL = "https://restcountries.eu/rest/v2/alpha/"..cc
             fuck = game:HttpGet(URL)
             local Http = game:GetService("HttpService"):JSONDecode(fuck)
-    		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
     	    opx("-",target.Name.."s country is "..Http.name)
 		else
 			opx("*","Player does not exist!")
