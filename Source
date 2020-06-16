@@ -10725,9 +10725,11 @@ function useCommand.mute()
 			end
 			repeat wait()
         		for i,v in pairs(workspace:GetDescendants()) do
-                	for _,x in pairs(Muted) do
-                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                			v.Playing = false
+                	if v:IsA("Sound") then
+                	    for _,x in pairs(Muted) do
+                	        if v.Parent.Parent.Parent.Name == x then
+                			    v.Playing = false
+                			end
                 		end
                 	end
         		end
@@ -10742,9 +10744,11 @@ function useCommand.mute()
 			end
 			repeat wait()
         		for i,v in pairs(workspace:GetDescendants()) do
-            		for _,x in pairs(Muted) do
-                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                			v.Playing = false
+                	if v:IsA("Sound") then
+                	    for _,x in pairs(Muted) do
+                	        if v.Parent.Parent.Parent.Name == x then
+                			    v.Playing = false
+                			end
                 		end
                 	end
         		end
@@ -10759,9 +10763,11 @@ function useCommand.mute()
 				table.insert(Muted,target.Name)
 				repeat wait()
             		for i,v in pairs(workspace:GetDescendants()) do
-                		for _,x in pairs(Muted) do
-                    		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                    			v.Playing = false
+                    	if v:IsA("Sound") then
+                    	    for _,x in pairs(Muted) do
+                    	        if v.Parent.Parent.Parent.Name == x then
+                    			    v.Playing = false
+                    			end
                     		end
                     	end
             		end
@@ -10788,12 +10794,14 @@ function useCommand.unmute()
 			    end
 			end
 			repeat wait()
-            	for i,v in pairs(workspace:GetDescendants()) do
-            		for _,x in pairs(Muted) do
-                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                			v.Playing = false
-                		end
-                	end
+                for i,v in pairs(workspace:GetDescendants()) do
+                    if v:IsA("Sound") then
+                        for _,x in pairs(Muted) do
+                    	    if v.Parent.Parent.Parent.Name == x then
+                    		    v.Playing = false
+                    	    end
+                    	end
+                    end
             	end
             until muteall == false
 		elseif arguments[2] == "everyone" or arguments[2] == "all" then
@@ -10806,11 +10814,13 @@ function useCommand.unmute()
 			end
 			repeat wait()
             	for i,v in pairs(workspace:GetDescendants()) do
-            		for _,x in pairs(Muted) do
-                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                			v.Playing = false
-                		end
-                	end
+                    if v:IsA("Sound") then
+                        for _,x in pairs(Muted) do
+                    	    if v.Parent.Parent.Parent.Name == x then
+                    		    v.Playing = false
+                    	    end
+                    	end
+                    end
             	end
             until muteall == false
 		else
@@ -10827,11 +10837,13 @@ function useCommand.unmute()
 				end
 				repeat wait()
                 	for i,v in pairs(workspace:GetDescendants()) do
-                		for _,x in pairs(Muted) do
-                    		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
-                    			v.Playing = false
-                    		end
-                    	end
+                        if v:IsA("Sound") then
+                            for _,x in pairs(Muted) do
+                        	    if v.Parent.Parent.Parent.Name == x then
+                        		    v.Playing = false
+                        	    end
+                        	end
+                        end
                 	end
                 until muteall == false
 			else
