@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|	
-local ver = "1.3.3"
+local ver = "1.3.4"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/DD2w2cZ";
@@ -2919,7 +2919,7 @@ table.insert(CMDN, {N = "permhipheight", A = {"phh"}, CMD = "282,permhipheight/p
 table.insert(CMDN, {N = "permgravity", A = {"pgrav"}, CMD = "283,permgravity/pgrav,(num),Gravity is set to this every time you use gravity."})
 table.insert(CMDN, {N = "gotobp", A = {"tobp","tpbp"}, CMD = "284,gotobp/tobp/tpbp,(plr),Teleports to a player while bypassing any anti-teleport.", ARG = "Player"})
 table.insert(CMDN, {N = "mute", A = {""}, CMD = "285,mute,,Mutes players sounds in a loop including radios."})
-table.insert(CMDN, {N = "unmute", A = {""}, CMD = "286,unmute,,()"})
+table.insert(CMDN, {N = "unmute", A = {""}, CMD = "286,unmute,(plr/all/others),()"})
 table.insert(CMDN, {N = "vgoto", A = {"vto","vtp"}, CMD = "287,vgoto/vto/vtp,(plr),Teleports to a player while in a vehicle.", ARG = "Player"})
 table.insert(CMDN, {N = "admin", A = {""}, CMD = "288,admin,(plr),Allows a player to run commands on you (RE-EXECUTE AFTER RUNNING).", ARG = "Player"})
 table.insert(CMDN, {N = "unadmin", A = {""}, CMD = "289,unadmin,(plr),() (RE-EXECUTE AFTER RUNNING)"})
@@ -3119,6 +3119,10 @@ table.insert(CMDN, {N = "debugging", A = {"debugmode"}, CMD = "480,debugging/deb
 table.insert(CMDN, {N = "runafter", A = {""}, CMD = "481,runafter,(on/off),If CMD-X should run after rejoin (SYNAPSE ONLY)."})
 table.insert(CMDN, {N = "removeinchar", A = {"rinchar"}, CMD = "482,removeinchar/rinchar,(part),Removes whatever you state from character."})
 table.insert(CMDN, {N = "unsitwalk", A = {""}, CMD = "483,unsitwalk,,()"})
+table.insert(CMDN, {N = "setbackunanchored", A = {"sbuna"}, CMD = "484,setbackunanchored/sbuna,,Sets back all unanchored parts to original positions."})
+table.insert(CMDN, {N = "cutmuteloop", A = {"cmutel"}, CMD = "485,cutmuteloop/cmutel,,Cuts your mute loops."})
+table.insert(CMDN, {N = "supermute", A = {"smute"}, CMD = "486,supermute,,Mutes everyone and the game."})
+table.insert(CMDN, {N = "unsupermute", A = {"unsmute"}, CMD = "487,unsupermute/unsmute,,()"})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -10687,41 +10691,81 @@ function useCommand.gotobp()
 	end
 end
 
+Muted = {}
+
+function useCommand.supermute()
+    opx("-","Super muted game")
+    mutealls = true
+    repeat wait()
+		for i,v in pairs(workspace:GetDescendants()) do
+    		if v:IsA("Sound") then
+    			v.Playing = false
+    		end
+		end
+    until mutealls == false
+end
+
+function useCommand.unsupermute()
+    opx("-","UnSuper muted game")
+    mutealls = false
+end
+
 local muteall = false
 function useCommand.mute()
 	if arguments[2] then
 		if arguments[2] == "others" then
 			opx("-","Mute others enabled")
+			muteall = false
+			wait(.2)
 			muteall = true
+			for i,v in pairs(cmdp:GetPlayers()) do
+			    if v ~= cmdlp then
+			        table.insert(Muted,v.Name)
+			    end
+			end
 			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") and v.Parent.Parent.Parent.Name ~= cmdlp.Name then
-						v.Playing = false
-					end
-				end
-			until muteall == false
+        		for i,v in pairs(workspace:GetDescendants()) do
+                	for _,x in pairs(Muted) do
+                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                			v.Playing = false
+                		end
+                	end
+        		end
+            until muteall == false
 		elseif arguments[2] == "everyone" or arguments[2] == "all" then
 			opx("-","Mute all enabled")
+			muteall = false
+			wait(.2)
 			muteall = true
+			for i,v in pairs(cmdp:GetPlayers()) do
+			    table.insert(Muted,v.Name)
+			end
 			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						v.Playing = false
-					end
-				end
-			until muteall == false
+        		for i,v in pairs(workspace:GetDescendants()) do
+            		for _,x in pairs(Muted) do
+                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                			v.Playing = false
+                		end
+                	end
+        		end
+            until muteall == false
 		else
 			target = findplr(arguments[2])
 			if target then
 				opx("-","Mute "..target.Name.." enabled")
-				muteall = true
+				muteall = false
+			    wait(.2)
+			    muteall = true
+				table.insert(Muted,target.Name)
 				repeat wait()
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") and v.Parent.Parent.Parent.Name == target.Name then
-							v.Playing = false
-						end
-					end
-				until muteall == false
+            		for i,v in pairs(workspace:GetDescendants()) do
+                		for _,x in pairs(Muted) do
+                    		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                    			v.Playing = false
+                    		end
+                    	end
+            		end
+                until muteall == false
 			else
 				opx("*","Player does not exist!")
 			end
@@ -10732,8 +10776,76 @@ function useCommand.mute()
 end
 
 function useCommand.unmute()
-	opx("-","Mute disabled")
-	muteall = false
+    if arguments[2] then
+		if arguments[2] == "others" then
+			opx("-","Mute others disabled")
+			muteall = false
+			wait(.2)
+			muteall = true
+			for i,v in pairs(Muted) do
+			    if v ~= cmdlp.Name then
+			        table.remove(Muted,i)
+			    end
+			end
+			repeat wait()
+            	for i,v in pairs(workspace:GetDescendants()) do
+            		for _,x in pairs(Muted) do
+                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                			v.Playing = false
+                		end
+                	end
+            	end
+            until muteall == false
+		elseif arguments[2] == "everyone" or arguments[2] == "all" then
+			opx("-","Mute all disabled")
+			muteall = false
+			wait(.2)
+			muteall = true
+			for i,v in pairs(Muted) do
+			    table.remove(Muted,i)
+			end
+			repeat wait()
+            	for i,v in pairs(workspace:GetDescendants()) do
+            		for _,x in pairs(Muted) do
+                		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                			v.Playing = false
+                		end
+                	end
+            	end
+            until muteall == false
+		else
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Mute "..target.Name.." disabled")
+				muteall = false
+			    wait(.2)
+			    muteall = true
+				for i,v in pairs(Muted) do
+				    if v == target.Name then
+				        table.remove(Muted,i)
+				    end
+				end
+				repeat wait()
+                	for i,v in pairs(workspace:GetDescendants()) do
+                		for _,x in pairs(Muted) do
+                    		if v:IsA("Sound") and v.Parent.Parent.Parent.Name == x then
+                    			v.Playing = false
+                    		end
+                    	end
+                	end
+                until muteall == false
+			else
+				opx("*","Player does not exist!")
+			end
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.cutmuteloop()
+    muteall = false
+    opx("-","Stopped mute loop")
 end
 
 function useCommand.vgoto()
@@ -11559,6 +11671,8 @@ function useCommand.whisperlogs()
 	logsholding.Visible = true
 end
 
+CurrentPLog = {}
+
 function useCommand.playerlogs()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -11566,13 +11680,14 @@ function useCommand.playerlogs()
 			logsEnabled = false
 			wLogs = false
 			opx("-","Player-Logs have been loaded")
+			table.insert(CurrentPLog,target)
 			pLogs = true
 			logsholding.Visible = true
-			target.Chatted:Connect(function(msg)
-				if pLogs == true then
-					CreateLabel(target.Name,msg)
-				end
-			end)
+    		target.Chatted:Connect(function(msg)
+    			if pLogs == true then
+    				CreateLabel(target.Name,msg)
+    			end
+    		end)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -13598,6 +13713,7 @@ function useCommand.unretard()
 end
 
 xAnchored = {}
+xOrig = {}
 
 function grabUnanchored(Model)
     for i,part in pairs(Model:GetDescendants()) do
@@ -13607,11 +13723,13 @@ function grabUnanchored(Model)
 			if part:FindFirstChildOfClass("BodyPosition") == nil then
 				local mover = Instance.new("BodyPosition", part)
 				table.insert(xAnchored, mover)
+				xOrig[#xOrig+1] = {pos = mover.Position, par = mover}
 				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 			else
 			    part.BodyPosition:Destroy()
 			    local mover = Instance.new("BodyPosition", part)
 				table.insert(xAnchored, mover)
+				xOrig[#xOrig+1] = {pos = mover.Position, par = mover}
 				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 			end
 		end
@@ -13675,6 +13793,19 @@ function useCommand.grabunanchored()
 		end
 	else
 		opx("*","You need to do .simulationradius max first!")
+	end
+end
+
+function useCommand.setbackunanchored()
+    if IHaveGrabbed == true then	
+		opx("-","Set back unanchored parts")
+		for i,v in pairs(xOrig) do
+			if xAnchored[i] ~= nil then
+				xOrig[i].par.Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(xOrig[i].pos)
+			end
+		end
+	else
+		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
