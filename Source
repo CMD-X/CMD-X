@@ -3123,6 +3123,9 @@ table.insert(CMDN, {N = "setbackunanchored", A = {"sbuna"}, CMD = "484,setbackun
 table.insert(CMDN, {N = "cutmuteloop", A = {"cmutel"}, CMD = "485,cutmuteloop/cmutel,,Cuts your mute loops."})
 table.insert(CMDN, {N = "supermute", A = {"smute"}, CMD = "486,supermute/smute,,Mutes everyone and the game."})
 table.insert(CMDN, {N = "unsupermute", A = {"unsmute"}, CMD = "487,unsupermute/unsmute,,()"})
+table.insert(CMDN, {N = "countrypublic", A = {"ctrypu"}, CMD = "488,countrypublic/ctrypu,(plr),Lists players country."})
+table.insert(CMDN, {N = "countryprivate", A = {"ctrypr"}, CMD = "489,countryprivate/ctrypr,(plr),Lists players country."})
+table.insert(CMDN, {N = "spoofcountry", A = {"spoofctry"}, CMD = "490,spoofcountry/spoofctry,(str),Spoofs your country."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -7903,6 +7906,47 @@ function useCommand.osprivate()
     			osCheck()
     			opx("-",target.Name.."s OS is "..target.OsPlatform)
     		end
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.spoofcountry()
+    sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
+    opx("-","Spoofed country to "..getstring(2))
+end
+
+function useCommand.countrypublic()
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+    		local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
+    		local URL = "https://restcountries.eu/rest/v2/alpha/"..cc
+            fuck = game:HttpGet(URL)
+            local Http = game:GetService("HttpService"):JSONDecode(fuck)
+    		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
+    	    opx("-",target.Name.."s country is "..Http.name)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.countryprivate()
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
+    		local URL = "https://restcountries.eu/rest/v2/alpha/"..cc
+            fuck = game:HttpGet(URL)
+            local Http = game:GetService("HttpService"):JSONDecode(fuck)
+    		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
+    	    opx("-",target.Name.."s country is "..Http.name)
 		else
 			opx("*","Player does not exist!")
 		end
