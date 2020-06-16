@@ -7919,6 +7919,8 @@ function useCommand.spoofcountry()
     opx("-","Spoofed country to "..getstring(2))
 end
 
+local gethiddenproperty = get_hidden_prop or gethiddenproperty
+
 function useCommand.countrypublic()
 	if arguments[2] then
 		target = findplr(arguments[2])
