@@ -1,4 +1,4 @@
-holder = _G.Unnamed.holder
+holder = Unnamed.holder
 
 for _,ONum in pairs(holder.output:GetChildren()) do
     ONum.TextColor3 = Color3.fromRGB(255, 255, 255)
