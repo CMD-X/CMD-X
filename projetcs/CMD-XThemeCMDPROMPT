@@ -1,0 +1,33 @@
+holder = _G.Unnamed.holder
+
+for _,ONum in pairs(holder.output:GetChildren()) do
+    ONum.TextColor3 = Color3.fromRGB(255, 255, 255)
+end
+
+holder.output.Style = Enum.FrameStyle.Custom
+holder.output.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+
+holder.entry.user.TextColor3 = Color3.fromRGB(255, 255, 255)
+holder.entry.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+
+NewEntry = holder.entry:Clone()
+NewEntry.Parent = holder
+NewEntry.cmdsu:Destroy()
+NewEntry.Position = UDim2.new(0, -8, 0, -11)
+NewEntry.Size = UDim2.new(0, 525, 0, 30)
+NewEntry.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+
+function getAsset(ID)
+	return("http://www.roblox.com/Thumbs/Asset.ashx?format=png&width=420&height=420&assetId="..ID)
+end
+local iBG = Instance.new("ImageLabel", NewEntry)
+iBG.BackgroundColor3 = Color3.fromRGB(163, 182, 165)
+iBG.BackgroundTransparency = 1
+iBG.BorderSizePixel = 0
+iBG.Position = UDim2.new(0, 2, 0, 3)
+iBG.Size = UDim2.new(0, 25, 0, 25)
+iBG.Image = getAsset(5040009528)
+iBG.ScaleType = Enum.ScaleType.Crop
+
+NewEntry.user.Position = UDim2.new(0, 5, 0, -3)
+NewEntry.user.Text = "Command Prompt"
