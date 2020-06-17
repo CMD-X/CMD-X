@@ -8,6 +8,7 @@ holder.output.Style = Enum.FrameStyle.Custom
 holder.output.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 
 holder.entry.user.TextColor3 = Color3.fromRGB(255, 255, 255)
+holder.entry.cmdsu.cmd.TextColor3 = Color3.fromRGB(255, 255, 255)
 holder.entry.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 
 NewEntry = holder.entry:Clone()
