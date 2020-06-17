@@ -488,6 +488,11 @@ local AntiCheat = {
     PrintingOff = false;
     NoGui = false;
 }
+if game.PlaceId == 4238077359 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
 if game.PlaceId == 2377868063 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
