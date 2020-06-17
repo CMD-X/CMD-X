@@ -14947,32 +14947,30 @@ function colorName(Self,g)
 end
 
 for i,v in pairs(cmdp:GetPlayers()) do
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
-		RGBDev(v.Name)
-	elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
-		opx("-",v.Name.." is in your server ("..DonorTypes[Donors[v.Name]][1].." of CMD-X)")
-		if Donors[v.Name] and DonorTypes[Donors[v.Name]] then
-			setcolor(v.Name, DonorTypes[Donors[v.Name]][2])
-		end
-	elseif Custom[v.Name] then
-		opx("-",v.Name.." is in your server ("..Custom[v.Name][1]..")")
-		setcolor(v.Name, Custom[v.Name][2])
-	end
+	if Devs[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
+		RGBDev(v.Name)	
+	elseif Donors[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		if Donors[v.Name] == "Donor" then	
+			colorName(v.Name, false)	
+		else	
+			colorName(v.Name, true)	
+		end	
+	end	
 end
 
-cmdp.PlayerAdded:Connect(function(v)
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
-		RGBDev(v.Name)
-	elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
-		opx("-",v.Name.." is in your server ("..DonorTypes[Donors[v.Name]][1].." of CMD-X)")
-		if Donors[v.Name] and DonorTypes[Donors[v.Name]] then
-			setcolor(v.Name, DonorTypes[Donors[v.Name]][2])
-		end
-	elseif Custom[v.Name] then
-		opx("-",v.Name.." is in your server ("..Custom[v.Name][1]..")")
-		setcolor(v.Name, Custom[v.Name][2])
-	end
+cmdp.PlayerAdded:Connect(function(v)	
+	if Devs[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
+		RGBDev(v.Name)	
+	elseif Donors[v.Name] then	
+		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		if Donors[v.Name] == "Donor" then	
+			colorName(v.Name, false)	
+		else	
+			colorName(v.Name, true)	
+		end	
+	end	
 end)
 -- End --------------------------------|
