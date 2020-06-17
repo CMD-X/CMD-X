@@ -7946,9 +7946,10 @@ function useCommand.countrypublic()
 		target = findplr(arguments[2])
 		if target then
     		local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
-    		local URL = "https://restcountries.eu/rest/v2/alpha/"..cc
+    		local URL = "http://country.io/names.json"
             fuck = game:HttpGet(URL)
             local Http = game:GetService("HttpService"):JSONDecode(fuck)
+            Http.name = Http[cc]
     		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
     	    opx("-",target.Name.."s country is "..Http.name)
 		else
@@ -7964,9 +7965,10 @@ function useCommand.countryprivate()
 		target = findplr(arguments[2])
 		if target then
 			local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
-    		local URL = "https://restcountries.eu/rest/v2/alpha/"..cc
+    		local URL = "http://country.io/names.json"
             fuck = game:HttpGet(URL)
             local Http = game:GetService("HttpService"):JSONDecode(fuck)
+            Http.name = Http[cc]
     	    opx("-",target.Name.."s country is "..Http.name)
 		else
 			opx("*","Player does not exist!")
