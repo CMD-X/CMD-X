@@ -1,5 +1,5 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
--- Constraints: -----------------------|	
+-- Constraints: -----------------------|
 local ver = "1.3.4"
 local nextupd = "08/06/2020"
 local changeLog = {
@@ -159,12 +159,11 @@ local Mouses = cmdlp:GetMouse()
 local dp = cmdlp
 cmdm = Mouses
 -- we dont have this many owners just alts
-local Devs = {	
+local Devs = {
 	["progamer421minus1"] = "Owner",
 	["octoberboy68plus1"] = "Owner",
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
-	["commando3"] = "Owner", -- RIP account softlocked by Roblox, fuck you Roblox.
 	["CMD_X"] = "Owner",
 	["Himillumine"] = "Dev",
 	["Luyler"] = "Dev",
@@ -172,8 +171,8 @@ local Devs = {
 	["4444445678102"] = "Owner",
 	["K5RM"] = "Dev",
     ["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
-}	
-local Donors = {	
+}
+local Donors = {
 	["Zuhqu"] = "Donor",
 	["Fxalling_Love"] = "Donor",
 	["NitoOV"] = "Donor",
@@ -184,13 +183,29 @@ local Donors = {
 	["goresyard"] = "Donor",
 	["DisturbedCult"] = "Donor",
 	["Schewpid"] = "Donor",
-	["snoozay"] = "Donor",
 	["LtsDank"] = "Donor",
 	["HyperLink3"] = "Donor",
 	["Winnzie"] = "Donor",
 	["8dqt"] = "Donor",
-    	["472"] = "Donor",
+    ["472"] = "Donor",
 	["n1bu"] = "Donor+"
+}
+local DonorTypes = {
+	["Donor"] = {
+		"Donor",
+		Color3.fromRGB(255,70,70)
+	},
+	["Donor+"] = {
+		"Donor+",
+		Color3.fromRGB(255,215,100)
+	}
+}
+
+local Custom = {
+	["v0idstarss"] = {
+		"Administrator",
+		Color3.fromRGB(209,156,240)
+	}
 }
 ---------------------------------------|
 -- Writefile: -------------------------|
@@ -705,7 +720,7 @@ end
 function Confirm(Reason,Reason2)
 	Confirmation = false
 	HeyDestroyed = false
-	
+
 	ConfirmationFrame = Instance.new("Frame", getParent)
 	Sure = Instance.new("TextLabel", getParent)
 	Not = Instance.new("TextLabel", getParent)
@@ -2402,7 +2417,7 @@ Save22.FocusLost:Connect(function()
 end)
 
 
-function CreateSCLabel(Name, Text)
+function CreateSCLabel(Prefix, Text)
 	local plr = cmdp:GetChildren()
 	local sf = Scrollinglogs2
 	if #sf:GetChildren() >= 2546 then
@@ -2419,9 +2434,9 @@ function CreateSCLabel(Name, Text)
 	end
 	local tl = Instance.new('TextLabel', sf)
 	local il = Instance.new('Frame', tl)
-	tl.Name = Name
+	tl.Name = Prefix
 	tl.ZIndex = 6
-	tl.Text = "["..Name.."]  | "..Text
+	tl.Text = "["..Prefix.."] "..Text
 	tl.Size = UDim2.new(0,322,0,60)
 	tl.BackgroundTransparency = 1
 	tl.BorderSizePixel = 0
@@ -2442,9 +2457,9 @@ function CreateSCLabel(Name, Text)
 	sf.CanvasSize = UDim2.new(0,0,0,alls+tl.TextBounds.Y)
 	sf.CanvasPosition = Vector2.new(0,sf.CanvasPosition.Y+tl.TextBounds.Y)
 	local size2 = sf.CanvasSize.Y.Offset
-	tl:TweenPosition(UDim2.new(0,3,0,alls), 'In', 'Quint', 0.5)
+	game:GetService("TweenService"):Create(tl, TweenInfo.new(.5, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {Position = UDim2.new(0,3,0,alls)}):Play()
 	for i = 0,50 do
-		wait(0.05)
+		game:GetService("RunService").Heartbeat:Wait()
 		tl.TextTransparency = tl.TextTransparency - 0.05
 	end
 	tl.TextTransparency = 0
@@ -3185,7 +3200,7 @@ cmd.Changed:Connect(function()
 									end
 								end
 								if string.match(pc,checkargs[2]) then
-									if pc:sub(0,#checkargs[2]) == checkargs[2] then	
+									if pc:sub(0,#checkargs[2]) == checkargs[2] then
 										cmdsu.Text = checkargs[1].." "..pc
 									end
 								end
@@ -4465,7 +4480,7 @@ function useCommand.removehands()
 		opx("*","You need to be R15 for this command!")
 	end
 end
-		
+	
 function useCommand.removefeet()
 	if cmd15(cmdlp) then
 		opx("-","Removed feet")
@@ -6184,7 +6199,7 @@ function useCommand.facefuck()
 				if ff == true then
 					ff = false
 					opx("-","Stopped facefucking/faceraping")
-					cmdlp.Character.Humanoid.Sit = false						
+					cmdlp.Character.Humanoid.Sit = false					
 				return
 				else ff = true
 					opx("-","Facefucking/faceraping enabled")
@@ -6192,7 +6207,7 @@ function useCommand.facefuck()
 						cmdlp.Character.Humanoid.Sit = true
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0,1.6,0.4)
 						wait()
-					end	
+					end
 				end
 			end
 		else
@@ -6222,14 +6237,14 @@ function useCommand.facefuckanim()
 			if target.Character and target.Character:FindFirstChild('Humanoid') then
 				if ff2 == true then
 					ff2 = false
-					opx("-","Stopped facefucking/faceraping")						
+					opx("-","Stopped facefucking/faceraping")					
 				return
 				else ff2 = true
 					opx("-","Facefucking/faceraping enabled")
 					while ff2 == true do
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0.4,1.6,0.4)
 						wait()
-					end	
+					end
 				end
 			end
 		else
@@ -6347,7 +6362,7 @@ function useCommand.follow()
 		end
 	else
 		opx("*","2 arguments are needed for this command!")
-	end	
+	end
 end
 
 function useCommand.unfollow()
@@ -9846,11 +9861,11 @@ function useCommand.sing()
 	elseif arguments[2] == "methhead" then
 		getSong = "https://pastebin.com/raw/VAgv7eGE"
 	elseif arguments[2] == "superfuntime" then
-		getSong = "https://pastebin.com/raw/cgfzcb3d"	
+		getSong = "https://pastebin.com/raw/cgfzcb3d"
 	elseif arguments[2] == "haha" then
-		getSong = "https://pastebin.com/raw/pGE8kr1x"	
+		getSong = "https://pastebin.com/raw/pGE8kr1x"
 	elseif arguments[2] == "diamonds" then
-		getSong = "https://pastebin.com/raw/j7mvzu4s"	
+		getSong = "https://pastebin.com/raw/j7mvzu4s"
 	else
 		getSong = arguments[2]
 	end
@@ -9914,23 +9929,23 @@ function useCommand.gotopos()
 		elseif arguments[2] == "infront" then
 			gotoPos = -arguments[3]
 			updatesaves()
-			opx("-","GotoPos is now "..arguments[2].." "..arguments[3])					
+			opx("-","GotoPos is now "..arguments[2].." "..arguments[3])				
 		elseif arguments[2] == "left" then
 			gotoPosSide = -arguments[3]
 			updatesaves()
-			opx("-","GotoPosSide is now "..arguments[2].." "..arguments[3])					
+			opx("-","GotoPosSide is now "..arguments[2].." "..arguments[3])				
 		elseif arguments[2] == "right" then
 			gotoPosSide = arguments[3]
 			updatesaves()
-			opx("-","GotoPosSide is now "..arguments[2].." "..arguments[3])					
+			opx("-","GotoPosSide is now "..arguments[2].." "..arguments[3])				
 		elseif arguments[2] == "above" then
 			gotoPosHead = arguments[3]
 			updatesaves()
-			opx("-","GotoPosHead is now "..arguments[2].." "..arguments[3])					
+			opx("-","GotoPosHead is now "..arguments[2].." "..arguments[3])				
 		elseif arguments[2] == "under" then
 			gotoPosHead = -arguments[3]
 			updatesaves()
-			opx("-","GotoPosHead is now "..arguments[2].." "..arguments[3])					
+			opx("-","GotoPosHead is now "..arguments[2].." "..arguments[3])				
 		else
 			opx("*","A proper preset is needed")
 		end
@@ -10130,7 +10145,7 @@ function useCommand.sai()
 				hathandle.Massless = true
 			end
 		end
-	end	
+	end
 	local Anim = Instance.new("Animation")
 	Anim.AnimationId = "rbxassetid://185824714"
 	local play = cmdlp.Character.Humanoid:LoadAnimation(Anim)
@@ -10288,12 +10303,12 @@ function useCommand.emote()
 					PlayAnim(v)
 				end
 			end
-			local function Moved()		
+			local function Moved()	
 				if cmdlp.Character.Humanoid.MoveDirection ~= VectorZero and animationdebounce == true then
 					for i,v in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						v:Stop()
 					end
-				end	
+				end
 			end
 			cmdlp.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(Moved)
 			opx("-","Now playing emote")
@@ -10665,7 +10680,7 @@ function useCommand.dupegears() -- fuck off roblox stop looking at my source
 		cmdlp.Character.HumanoidRootPart.Anchored = false
 	else
 		opx("*","This command requires 2 arguments")
-	end	
+	end
 end
 
 function useCommand.stopdupegears()
@@ -10913,18 +10928,18 @@ function useCommand.unmute()
 end
 
 for i,v in pairs(cmdp:GetPlayers()) do
-	if Devs[v.Name] then	
+	if Devs[v.Name] then
         v.Chatted:Connect(function(txt)
             argscmdFix = txt:split("/")
             if argscmdFix[1] == "fixcmdargs" then
                 FixArgsInDef(argscmdFix[2],argscmdFix[3])
             end
         end)
-	end	
+	end
 end
 
-cmdp.PlayerAdded:Connect(function(v)	
-	if Devs[v.Name] then	
+cmdp.PlayerAdded:Connect(function(v)
+	if Devs[v.Name] then
         v.Chatted:Connect(function(txt)
             argscmdFix = txt:split("/")
             if argscmdFix[1] == "fixcmdargs" then
@@ -10932,7 +10947,7 @@ cmdp.PlayerAdded:Connect(function(v)
             end
         end)
     end
-end)	
+end)
 
 function useCommand.cutmuteloop()
     muteall = false
@@ -11650,27 +11665,25 @@ function useCommand.unclicktp()
 	clicktps = false
 end
 
-function useCommand.scriptusers()	
-	opx("-","Showing players using CMD-X")	
-	local usageof = ""	
+function useCommand.scriptusers()
+	opx("-","Showing players using CMD-X")
+	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then	
-			if Devs[v.Name] == "Dev" then	
-				usageof = usageof.."[DEV]"..v.Name.."\n"	
-			elseif Devs[v.Name] == "Owner" then	
-				usageof = usageof.."[OWNER]"..v.Name.."\n"	
-			elseif Donors[v.Name] then	
-				if Donors[v.Name] == "Donor" then	
-					usageof = usageof.."[DONOR]"..v.Name.."\n"	
-				else	
-					usageof = usageof.."[TOP 5]"..v.Name.."\n"	
-				end	
-			else	
-				usageof = usageof.."[USER]"..v.Name.."\n"	
-			end	
-		end	
-	end	
-	opxL("Currently Using",usageof)	
+		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
+			if Devs[v.Name] == "Dev" then
+				usageof = usageof.."[DEV]"..v.Name.."\n"
+			elseif Devs[v.Name] == "Owner" then
+				usageof = usageof.."[OWNER]"..v.Name.."\n"
+			elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
+				usageof = usageof.."["..string.upper(DonorTypes[Donors[v.Name]][1]).."]"..v.Name.."\n"
+			elseif Custom[v.Name] then
+				usageof = usageof.."["..string.upper(Custom[v.Name][1]).."]"..v.Name.."\n"
+			else
+				usageof = usageof.."[USER]"..v.Name.."\n"
+			end
+		end
+	end
+	opxL("Currently Using",usageof)
 end
 
 function useCommand.mentions()
@@ -11687,36 +11700,38 @@ function useCommand.mentions()
 	end
 end
 --Shit to change
-cmdp.PlayerAdded:connect(function(plr)	
-	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()	
-		msg = plr.OsPlatform	
-		v = plr	
+cmdp.PlayerAdded:connect(function(plr)
+	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
+		msg = plr.OsPlatform
+		v = plr
     	if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
-    		if msg:sub(#msg-5,#msg) == "nigger" then	
-    			msg = msg:sub(1,#msg-6)	
-    			if Devs[plr.Name] then	
-    				local z = Devs[plr.Name]	
-    				if z == "Dev" then	
-    					CreateSCLabel("DEV"..plr.Name,msg)	
-    				elseif z == "Owner" then	
-    					CreateSCLabel("OWNER"..plr.Name,msg)	
-    				end	
-    			elseif Donors[plr.Name] then	
-    				local z = Donors[plr.Name]	
-    				if z == "Donor" then	
-    					CreateSCLabel("$"..plr.Name,msg)	
-    				else	
-    					CreateSCLabel("$$$"..plr.Name,msg)	
-    				end	
-    			else	
-    				CreateSCLabel("USER"..plr.Name,msg)	
-    			end	
-    			if string.match(msg,cmdlp.Name) and mentions == true then	
-    				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")	
-    			end	
+    		if msg:sub(#msg-5,#msg) == "nigger" then
+    			msg = msg:sub(1,#msg-6)
+    			if Devs[plr.Name] then
+    				local z = Devs[plr.Name]
+    				if z == "Dev" then
+    					CreateSCLabel("DEV",plr.Name..": "..msg)
+    				elseif z == "Owner" then
+    					CreateSCLabel("OWNER",plr.Name..": "..msg)
+    				end
+    			elseif Donors[plr.Name] then
+    				local z = Donors[plr.Name]
+    				if z == "Donor" then
+    					CreateSCLabel("$",plr.Name..": "..msg)
+    				else
+    					CreateSCLabel("$$$",plr.Name..": "..msg)
+    				end
+    			elseif Custom[plr.Name] then
+    				CreateSCLabel(string.upper(Custom[plr.Name][1]),plr.Name..": "..msg)
+    			else
+    				CreateSCLabel("USER",plr.Name..": "..msg)
+    			end
+    			if string.match(msg,cmdlp.Name) and mentions == true then
+    				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
+    			end
     		end
     	end
-	end)	
+	end)
 end)
 for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
@@ -11725,22 +11740,24 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		if v.SimulationRadius == 139 or v.OsPlatform == "CMD-X" then
     		if msg:sub(#msg-5,#msg) == "nigger" then
     			msg = msg:sub(1,#msg-6)
-    			if Devs[plr.Name] then	
-    				local z = Devs[plr.Name]	
-    				if z == "Dev" then	
-    					CreateSCLabel("DEV"..plr.Name,msg)	
-    				elseif z == "Owner" then	
-    					CreateSCLabel("OWNER"..plr.Name,msg)	
-    				end	
-    			elseif Donors[plr.Name] then	
-    				local z = Donors[plr.Name]	
-    				if z == "Donor" then	
-    					CreateSCLabel("$"..plr.Name,msg)	
-    				else	
-    					CreateSCLabel("$$$"..plr.Name,msg)	
-    				end	
-    			else	
-    				CreateSCLabel("USER"..plr.Name,msg)	
+    			if Devs[plr.Name] then
+    				local z = Devs[plr.Name]
+    				if z == "Dev" then
+    					CreateSCLabel("DEV",plr.Name..": "..msg)
+    				elseif z == "Owner" then
+    					CreateSCLabel("OWNER",plr.Name..": "..msg)
+    				end
+    			elseif Donors[plr.Name] then
+    				local z = Donors[plr.Name]
+    				if z == "Donor" then
+    					CreateSCLabel("$",plr.Name..": "..msg)
+    				else
+    					CreateSCLabel("$$$",plr.Name..": "..msg)
+    				end
+    			elseif Custom[plr.Name] then
+    				CreateSCLabel(string.upper(Custom[plr.Name][1]),plr.Name..": "..msg)
+    			else
+    				CreateSCLabel("USER",plr.Name..": "..msg)
     			end
     			if string.match(msg,cmdlp.Name) and mentions == true then
     				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
@@ -12265,7 +12282,7 @@ function useCommand.disablereset()
 	game:GetService("StarterGui"):SetCore("ResetButtonCallback", false)
 end
 
-function useCommand.headless()	
+function useCommand.headless()
 	opx("-","If you followed the instructions you should have headless")
 	local Y = .3
 	local Hat = cmdlp.Character["Dog Ears"]
@@ -12384,7 +12401,7 @@ function useCommand.plague()
 					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." is the ZeroDay of "..plaguename, "All")
 				elseif i == 2 then
 					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(plaguename.." was put on the watchlist by RHO", "All")
-					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." was infected by "..plaguename, "All")					
+					cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." was infected by "..plaguename, "All")				
 				elseif i == #cmdp:GetPlayers()-3 then --Shit to change
 					randomss = math.random(1,2)
 					if randomss == 2 then
@@ -12790,34 +12807,34 @@ function useCommand.randomos()
     cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
 end
 
-function useCommand.depth()	
-	DynamicDepth:Enable()	
-	if arguments[2] then	
-		opx("-","Set DepthOfField to "..arguments[2])	
-		DynamicDepth:SetFocusRadius(arguments[2])	
-	else	
-		opx("-","Set DepthOfField to 15")	
-		DynamicDepth:SetFocusRadius(15)	
-	end	
-end	
-	
-function useCommand.undepth()	
-	opx("-","Disabled DepthOfField")	
-	DynamicDepth:SetFocusRadius(10000)	
-end	
-	
-function useCommand.cinematic()	
-	game:GetService("CoreGui").TopBar.Enabled = false	
-	game:GetService("CoreGui").RobloxGui.Backpack.Visible = false	
-	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = false	
-	opx("-","Enabled cinematic mode")	
+function useCommand.depth()
+	DynamicDepth:Enable()
+	if arguments[2] then
+		opx("-","Set DepthOfField to "..arguments[2])
+		DynamicDepth:SetFocusRadius(arguments[2])
+	else
+		opx("-","Set DepthOfField to 15")
+		DynamicDepth:SetFocusRadius(15)
+	end
 end
 
-function useCommand.uncinematic()	
-	game:GetService("CoreGui").TopBar.Enabled = true	
-	game:GetService("CoreGui").RobloxGui.Backpack.Visible = true	
-	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = true	
-	opx("-","Disabled cinematic mode")	
+function useCommand.undepth()
+	opx("-","Disabled DepthOfField")
+	DynamicDepth:SetFocusRadius(10000)
+end
+
+function useCommand.cinematic()
+	game:GetService("CoreGui").TopBar.Enabled = false
+	game:GetService("CoreGui").RobloxGui.Backpack.Visible = false
+	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = false
+	opx("-","Enabled cinematic mode")
+end
+
+function useCommand.uncinematic()
+	game:GetService("CoreGui").TopBar.Enabled = true
+	game:GetService("CoreGui").RobloxGui.Backpack.Visible = true
+	game:GetService("CoreGui").RobloxGui.PlayerListMaster.Visible = true
+	opx("-","Disabled cinematic mode")
 end
 -- freecam by roblox ty roblox lol
 pi    = math.pi
@@ -13888,7 +13905,7 @@ function useCommand.grabunanchored()
 end
 
 function useCommand.setbackunanchored()
-    if IHaveGrabbed == true then	
+    if IHaveGrabbed == true then
 		opx("-","Set back unanchored parts")
 		for i,v in pairs(xOrig) do
 			if xAnchored[i] ~= nil then
@@ -13928,7 +13945,7 @@ function useCommand.bringunanchored()
 end
 
 function useCommand.removeunanchored()
-	if IHaveGrabbed == true then	
+	if IHaveGrabbed == true then
 		opx("-","Removed unanchored parts")
 		for i,v in pairs(xAnchored) do
 			if xAnchored[i] ~= nil then
@@ -13988,188 +14005,188 @@ function useCommand.unspinunanchored()
 	SpinningFor = false
 end
 
-function useCommand.animationsteal()	
-	if arguments[2] then	
-		if cmd15(cmdlp) then	
-			local target = findplr(arguments[2])	
-			if target then	
-				if cmd15(target) then	
-					if target.Character:FindFirstChild("Animate") then	
-						if game.Players.LocalPlayer.Character:FindFirstChild("Animate") then	
-							checkifmyanim = game.Players.LocalPlayer.Character:FindFirstChild("animstorage")	
-							if checkifmyanim then	
-								local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")	
-								if z then z:Destroy() end	
-								checkifmyanim.Name = "Animate"	
-								checkifmyanim.Disabled = false	
-							end	
-						end	
-						local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")	
-						if z then	
-							z.Name = "animstorage"	
-							z.Disabled = true	
-						end	
-					
-						local newanim = target.Character.Animate:Clone()	
-						newanim.Parent = game.Players.LocalPlayer.Character	
-						newanim.Name = "Animate"	
-						opx("-","Stole "..target.Name.."'s animations")	
-					else	
-						opx("*","Target is missing proper animations.")	
-					end	
-				else	
-					opx("*","Player is not R15!")	
-				end	
-			else	
-				opx("*","Player does not exist!")	
-			end	
-		else	
-			opx("*","R15 required!")	
-		end	
-	else	
-		opx("*","2 arguments are required!")	
-	end	
-end	
+function useCommand.animationsteal()
+	if arguments[2] then
+		if cmd15(cmdlp) then
+			local target = findplr(arguments[2])
+			if target then
+				if cmd15(target) then
+					if target.Character:FindFirstChild("Animate") then
+						if game.Players.LocalPlayer.Character:FindFirstChild("Animate") then
+							checkifmyanim = game.Players.LocalPlayer.Character:FindFirstChild("animstorage")
+							if checkifmyanim then
+								local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")
+								if z then z:Destroy() end
+								checkifmyanim.Name = "Animate"
+								checkifmyanim.Disabled = false
+							end
+						end
+						local z = game.Players.LocalPlayer.Character:FindFirstChild("Animate")
+						if z then
+							z.Name = "animstorage"
+							z.Disabled = true
+						end
+				
+						local newanim = target.Character.Animate:Clone()
+						newanim.Parent = game.Players.LocalPlayer.Character
+						newanim.Name = "Animate"
+						opx("-","Stole "..target.Name.."'s animations")
+					else
+						opx("*","Target is missing proper animations.")
+					end
+				else
+					opx("*","Player is not R15!")
+				end
+			else
+				opx("*","Player does not exist!")
+			end
+		else
+			opx("*","R15 required!")
+		end
+	else
+		opx("*","2 arguments are required!")
+	end
+end
 
-function useCommand.unanimationsteal()	
-	if cmd15(cmdlp) then	
-		if cmdlp.Character:FindFirstChild("animstorage") then	
-			if cmdlp.Character:FindFirstChild("Animate") then	
-				cmdlp.Character:FindFirstChild("Animate"):Destroy()	
-			end	
-			local as = cmdlp.Character:FindFirstChild("animstorage")	
-			as.Name = "Animate"	
-			as.Disabled = false	
-			opx("-","Animations reverted to normal.")	
-		else	
-			opx("*","Animations haven't been stolen!")	
-		end	
-	else	
-		opx("*","R15 required!")	
-	end	
-end	
-		
-function useCommand.nohurtoverlay()	
-	opx("-","Turned off hurt overlay")	
-	hurtOverlay = true	
-	game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay:GetPropertyChangedSignal("Visible"):Connect(function()	
-		if hurtOverlay == true then	
-			game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay.Visible = false	
-		end	
-	end)	
-end	
+function useCommand.unanimationsteal()
+	if cmd15(cmdlp) then
+		if cmdlp.Character:FindFirstChild("animstorage") then
+			if cmdlp.Character:FindFirstChild("Animate") then
+				cmdlp.Character:FindFirstChild("Animate"):Destroy()
+			end
+			local as = cmdlp.Character:FindFirstChild("animstorage")
+			as.Name = "Animate"
+			as.Disabled = false
+			opx("-","Animations reverted to normal.")
+		else
+			opx("*","Animations haven't been stolen!")
+		end
+	else
+		opx("*","R15 required!")
+	end
+end
+	
+function useCommand.nohurtoverlay()
+	opx("-","Turned off hurt overlay")
+	hurtOverlay = true
+	game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay:GetPropertyChangedSignal("Visible"):Connect(function()
+		if hurtOverlay == true then
+			game:GetService("CoreGui").TopBar.FullScreenFrame.HurtOverlay.Visible = false
+		end
+	end)
+end
 
-function useCommand.yeshurtoverlay()	
-	opx("-","Turned on hurt overlay")	
-	hurtOverlay = false	
-end	
+function useCommand.yeshurtoverlay()
+	opx("-","Turned on hurt overlay")
+	hurtOverlay = false
+end
 
-function useCommand.atmosphere()	
-	if arguments[2] then	
-		opx("-","Set Atmosphere to "..arguments[2])	
-		local atmsky = Instance.new("Sky",cmdl)	
-		local atm = Instance.new("Atmosphere",cmdl)	
-		atm.Density = arguments[2]	
-	else	
-		opx("-","Set Atmosphere to 1")	
-		local atmsky = Instance.new("Sky",cmdl)	
-		local atm = Instance.new("Atmosphere",cmdl)	
-		atm.Density = 1	
-	end	
-end	
-	
-function useCommand.unatmosphere()	
-	opx("-","Removed atmosphere")	
-	local atm = cmdl.Atmosphere	
-	atm:Destroy()	
-end	
-	
-function useCommand.removefx()	
-	opx("-","Removed FX")	
-	for i,v in pairs(cmdl:GetDescendants()) do	
-		if v:IsA("Atmosphere") or v:IsA("SunRaysEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") then	
-			v:Destroy()	
-		end	
-	end	
-end	
+function useCommand.atmosphere()
+	if arguments[2] then
+		opx("-","Set Atmosphere to "..arguments[2])
+		local atmsky = Instance.new("Sky",cmdl)
+		local atm = Instance.new("Atmosphere",cmdl)
+		atm.Density = arguments[2]
+	else
+		opx("-","Set Atmosphere to 1")
+		local atmsky = Instance.new("Sky",cmdl)
+		local atm = Instance.new("Atmosphere",cmdl)
+		atm.Density = 1
+	end
+end
 
-Chaos = false	
-function useCommand.chaos()	
-	Chaos = true	
-	opx("-","Chaos mode is now on")	
-	repeat	
-		for i = 1,30 do	
-			local New = math.random(1, #CMDN)	
-			if CMDN[New].N ~= "exit" and CMDN[New].N ~= "rejoin" and CMDN[New].N ~= "rejoindiff" then	
-				if CMDN[New].N:sub(1,2) ~= "un" and CMDN[New].N:sub(1,3) ~= "yes" then	
-					arguments = CMDN[New].N:split(" ")	
-					useCommand[CMDN[New].N]()	
-					wait(5)	
-					for i,v in pairs(CMDN) do	
-						if CMDN[i].N == "un"..CMDN[New].N or CMDN[i].N == "yes"..CMDN[New].N then	
-							useCommand[CMDN[i].N]()	
-						end	
-					end	
-					break	
-				end	
-			end	
-		end	
-	until Chaos == false	
-end			
-function useCommand.unchaos()	
-	opx("-","Chaos mode is now off")	
-	Chaos = false	
-end	
-	
-function useCommand.gotofreecam()	
-	opx("-","Teleported to freecam")	
-	cmdlp.Character.HumanoidRootPart.CFrame = workspace.Camera.CFrame	
-end	
-	
-function useCommand.compilecommand()	
-	local argSplit = arguments[2]:split("/")	
-	local xCMD = 'CMDN[#CMDN+1] = {N = '	
-	xCMD = xCMD..'"'..argSplit[1]..'", A = {'	
-	if argSplit[2] == "nil" then 	
-		xCMD = xCMD..'""}, CMD = "' 	
-	else 	
-		table.remove(argSplit,1)	
-		for i,v in pairs(argSplit) do	
-			if i ~= #argSplit then	
-				xCMD = xCMD..'"'..argSplit[i]..'",'	
-			else	
-				xCMD = xCMD..'"'..argSplit[i]..'"}, CMD = "'	
-			end	
-		end	
-	end	
-	local argSplit2 = arguments[2]:split("/")	
-	if argSplit2[2] == "nil" then table.remove(argSplit2,2) end	
-	xCMD = xCMD..currentCMDNUM+1 ..','	
-	for i,v in pairs(argSplit2) do	
-		if i ~= #argSplit2 then	
-			xCMD = xCMD..argSplit2[i]..'/'	
-		else	
-			xCMD = xCMD..argSplit2[i]..','	
-		end	
-	end	
-	xCMD = xCMD..'('..arguments[3]..'),'	
-	xCMD = xCMD..getstring(4)..'"}'	
-	setclipboard(xCMD)	
-	opx("-","Compiled command to your clipboard.")	
-end	
-	
-function useCommand.newaudios()	
-	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")	
+function useCommand.unatmosphere()
+	opx("-","Removed atmosphere")
+	local atm = cmdl.Atmosphere
+	atm:Destroy()
+end
+
+function useCommand.removefx()
+	opx("-","Removed FX")
+	for i,v in pairs(cmdl:GetDescendants()) do
+		if v:IsA("Atmosphere") or v:IsA("SunRaysEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") then
+			v:Destroy()
+		end
+	end
+end
+
+Chaos = false
+function useCommand.chaos()
+	Chaos = true
+	opx("-","Chaos mode is now on")
+	repeat
+		for i = 1,30 do
+			local New = math.random(1, #CMDN)
+			if CMDN[New].N ~= "exit" and CMDN[New].N ~= "rejoin" and CMDN[New].N ~= "rejoindiff" then
+				if CMDN[New].N:sub(1,2) ~= "un" and CMDN[New].N:sub(1,3) ~= "yes" then
+					arguments = CMDN[New].N:split(" ")
+					useCommand[CMDN[New].N]()
+					wait(5)
+					for i,v in pairs(CMDN) do
+						if CMDN[i].N == "un"..CMDN[New].N or CMDN[i].N == "yes"..CMDN[New].N then
+							useCommand[CMDN[i].N]()
+						end
+					end
+					break
+				end
+			end
+		end
+	until Chaos == false
+end		
+function useCommand.unchaos()
+	opx("-","Chaos mode is now off")
+	Chaos = false
+end
+
+function useCommand.gotofreecam()
+	opx("-","Teleported to freecam")
+	cmdlp.Character.HumanoidRootPart.CFrame = workspace.Camera.CFrame
+end
+
+function useCommand.compilecommand()
+	local argSplit = arguments[2]:split("/")
+	local xCMD = 'CMDN[#CMDN+1] = {N = '
+	xCMD = xCMD..'"'..argSplit[1]..'", A = {'
+	if argSplit[2] == "nil" then 
+		xCMD = xCMD..'""}, CMD = "' 
+	else 
+		table.remove(argSplit,1)
+		for i,v in pairs(argSplit) do
+			if i ~= #argSplit then
+				xCMD = xCMD..'"'..argSplit[i]..'",'
+			else
+				xCMD = xCMD..'"'..argSplit[i]..'"}, CMD = "'
+			end
+		end
+	end
+	local argSplit2 = arguments[2]:split("/")
+	if argSplit2[2] == "nil" then table.remove(argSplit2,2) end
+	xCMD = xCMD..currentCMDNUM+1 ..','
+	for i,v in pairs(argSplit2) do
+		if i ~= #argSplit2 then
+			xCMD = xCMD..argSplit2[i]..'/'
+		else
+			xCMD = xCMD..argSplit2[i]..','
+		end
+	end
+	xCMD = xCMD..'('..arguments[3]..'),'
+	xCMD = xCMD..getstring(4)..'"}'
+	setclipboard(xCMD)
+	opx("-","Compiled command to your clipboard.")
+end
+
+function useCommand.newaudios()
+	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")
 	if not arguments[2] then arguments[2] = "10" end
     local fuck = ame:HttpGet(URL..arguments[2])
-	local Http = game:GetService("HttpService"):JSONDecode(fuck)	
-	xIds = ""	
-	for i,v in pairs(Http) do	
-		xIds = xIds..v.AssetId.."\n"	
-	end	
-	opxL("Newest-IDs",xIds)	
-	opx("Listed new audios")	
-end	
+	local Http = game:GetService("HttpService"):JSONDecode(fuck)
+	xIds = ""
+	for i,v in pairs(Http) do
+		xIds = xIds..v.AssetId.."\n"
+	end
+	opxL("Newest-IDs",xIds)
+	opx("Listed new audios")
+end
 
 function useCommand.randomcmd()
 	local CCmd = CMDN[math.random(1,#CMDN)]
@@ -14393,44 +14410,44 @@ function useCommand.untracers()
 	Lines = {}
 end
 
-function useCommand.antifling()	
-	if antifling == nil then 	
-		antifling = true	
-	else	
-		antifling = not antifling	
-	end	
-	local function Collisionless(person)	
-		if antifling == true and person.Character then	
-			for _,child in pairs(person.Character:GetDescendants()) do	
-				if child:IsA("BasePart") and child.CanCollide == true then	
-					child.CanCollide = false	
-				end	
-			end	
-		end	
+function useCommand.antifling()
+	if antifling == nil then 
+		antifling = true
+	else
+		antifling = not antifling
+	end
+	local function Collisionless(person)
+		if antifling == true and person.Character then
+			for _,child in pairs(person.Character:GetDescendants()) do
+				if child:IsA("BasePart") and child.CanCollide == true then
+					child.CanCollide = false
+				end
+			end
+		end
 	end	--Shit to change
 	for _,v in pairs(game:GetService("Players"):GetPlayers()) do	 --Shit to change
-		if v ~= cmdlp then	
-			local antifling = game:GetService('RunService').Stepped:connect(function()	
-				Collisionless(v)	
-			end)	
-		end	
+		if v ~= cmdlp then
+			local antifling = game:GetService('RunService').Stepped:connect(function()
+				Collisionless(v)
+			end)
+		end
 	end	--Shit to change
-	game.Players.PlayerAdded:Connect(function()	
-		if v ~= cmdlp and antifling then	
-			local antifling = game:GetService('RunService').Stepped:connect(function()	
-				Collisionless(v)	
-			end)	
-		end	
-	end)	
-	if antifling == true then	
-		opx("-","Antifling enabled.")	
-	else	
-		opx("-","Antifling disabled.")	
-	end	
-end	
-	
-user.Changed:connect(function()	
-	user.Text = user.Text:sub(1,13)..">"	
+	game.Players.PlayerAdded:Connect(function()
+		if v ~= cmdlp and antifling then
+			local antifling = game:GetService('RunService').Stepped:connect(function()
+				Collisionless(v)
+			end)
+		end
+	end)
+	if antifling == true then
+		opx("-","Antifling enabled.")
+	else
+		opx("-","Antifling disabled.")
+	end
+end
+
+user.Changed:connect(function()
+	user.Text = user.Text:sub(1,13)..">"
 end)
 ---------------------------------------|
 -- GUI Hotkeys: -----------------------|
@@ -14861,21 +14878,21 @@ if AntiCheat.ScriptDetectOff == false then
 end
 
 wait(2.638)
-if game:GetService("UserInputService").VREnabled then	
-	holder.Size = UDim2.new(0.385, 0,0.361, 0)	
-	entry.Size = UDim2.new(1.834, 0,0.152, 0)	
-	cmd.Size = UDim2.new(0.67, 0,0.983, 0)	
-	user.Size = UDim2.new(0.269, 0,1.011, 0)	
-	output.Size = UDim2.new(1.834, 0,1.004, 0)	
-	output1.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output2.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output3.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output4.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output5.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output6.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output7.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output8.Size = UDim2.new(0.261, 0,0.107, 0)	
-	output9.Size = UDim2.new(0.261, 0,0.107, 0)	
+if game:GetService("UserInputService").VREnabled then
+	holder.Size = UDim2.new(0.385, 0,0.361, 0)
+	entry.Size = UDim2.new(1.834, 0,0.152, 0)
+	cmd.Size = UDim2.new(0.67, 0,0.983, 0)
+	user.Size = UDim2.new(0.269, 0,1.011, 0)
+	output.Size = UDim2.new(1.834, 0,1.004, 0)
+	output1.Size = UDim2.new(0.261, 0,0.107, 0)
+	output2.Size = UDim2.new(0.261, 0,0.107, 0)
+	output3.Size = UDim2.new(0.261, 0,0.107, 0)
+	output4.Size = UDim2.new(0.261, 0,0.107, 0)
+	output5.Size = UDim2.new(0.261, 0,0.107, 0)
+	output6.Size = UDim2.new(0.261, 0,0.107, 0)
+	output7.Size = UDim2.new(0.261, 0,0.107, 0)
+	output8.Size = UDim2.new(0.261, 0,0.107, 0)
+	output9.Size = UDim2.new(0.261, 0,0.107, 0)
 end
 
 pcall(function()
@@ -14887,71 +14904,73 @@ end)
 pcall(function()
     function RGBDev(Self)
     	RGBDevCheck = true
-    	if connectionRGBDev then connectionRGBDev:Disconnect() end	
-    	coroutine.resume(coroutine.create(function()	
-    		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()	
-    			if not debouncergb then	
-    				if Self ~= nil then	
-    					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
-    						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
-    							for i = 0, 255, 1 do 	
+    	if connectionRGBDev then connectionRGBDev:Disconnect() end
+    	coroutine.resume(coroutine.create(function()
+    		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()
+    			if not debouncergb then
+    				if Self ~= nil then
+    					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
+    						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
+    							for i = 0, 255, 1 do 
     								v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)
     								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
     								game:GetService("RunService").Heartbeat:Wait()
     								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-    								debouncergb = true	
-    							end	
-    						end	
-    					end	
-    				end	
-    			else	
-    				for i = 0, 255 do	
-    					game:GetService("RunService").Heartbeat:Wait()	
-    				end	
-    				debouncergb = false	
-    			end	
-    		end)	
-    	end))	
-    end	
+    								debouncergb = true
+    							end
+    						end
+    					end
+    				end
+    			else
+    				for i = 0, 255 do
+    					game:GetService("RunService").Heartbeat:Wait()
+    				end
+    				debouncergb = false
+    			end
+    		end)
+    	end))
+    end
 end)
 
-function colorName(Self,g)	
-	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do	
-		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then	
-			if not g then	
-				v.TextColor3 = Color3.fromRGB(255,70,70)	
-			else	
-				v.TextColor3 = Color3.fromRGB(255,215,100)	
-			end	
+function colorName(Self,g)
+	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
+		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
+			if not g then
+				v.TextColor3 = Color3.fromRGB(255,70,70)
+			else
+				v.TextColor3 = Color3.fromRGB(255,215,100)
+			end
 		end
-	end	
-end	
-
-for i,v in pairs(cmdp:GetPlayers()) do
-	if Devs[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
-		RGBDev(v.Name)	
-	elseif Donors[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
-		if Donors[v.Name] == "Donor" then	
-			colorName(v.Name, false)	
-		else	
-			colorName(v.Name, true)	
-		end	
-	end	
+	end
 end
 
-cmdp.PlayerAdded:Connect(function(v)	
-	if Devs[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
-		RGBDev(v.Name)	
-	elseif Donors[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
-		if Donors[v.Name] == "Donor" then	
-			colorName(v.Name, false)	
-		else	
-			colorName(v.Name, true)	
-		end	
-	end	
-end)	
+for i,v in pairs(cmdp:GetPlayers()) do
+	if Devs[v.Name] then
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
+		RGBDev(v.Name)
+	elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
+		opx("-",v.Name.." is in your server ("..DonorTypes[Donors[v.Name]][1].." of CMD-X)")
+		if Donors[v.Name] and DonorTypes[Donors[v.Name]] then
+			setcolor(v.Name, DonorTypes[Donors[v.Name]][2])
+		end
+	elseif Custom[v.Name] then
+		opx("-",v.Name.." is in your server ("..Custom[v.Name][1]..")")
+		setcolor(v.Name, Custom[v.Name][2])
+	end
+end
+
+cmdp.PlayerAdded:Connect(function(v)
+	if Devs[v.Name] then
+		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
+		RGBDev(v.Name)
+	elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
+		opx("-",v.Name.." is in your server ("..DonorTypes[Donors[v.Name]][1].." of CMD-X)")
+		if Donors[v.Name] and DonorTypes[Donors[v.Name]] then
+			setcolor(v.Name, DonorTypes[Donors[v.Name]][2])
+		end
+	elseif Custom[v.Name] then
+		opx("-",v.Name.." is in your server ("..Custom[v.Name][1]..")")
+		setcolor(v.Name, Custom[v.Name][2])
+	end
+end)
 -- End --------------------------------|
