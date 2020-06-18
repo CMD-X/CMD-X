@@ -3165,9 +3165,10 @@ function RunAndCheck()
     end
 end
 
+--[[
 if AntiCheat.ScriptDetectOff and syn then
     setsimulationradius(139,139)
-end
+end]]
 
 function ifKicked()
     cmdp.PlayerRemoving:Connect(function(p)
