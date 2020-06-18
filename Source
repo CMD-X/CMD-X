@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.3.4"
+local ver = "1.3.5"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -271,6 +271,7 @@ defaultsettings = {
 	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
 	TabsOn = true;
 	KeepCMDXOn = true;
+	ifKickedAuto = true;
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -332,6 +333,7 @@ function saves()
 			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
 		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
 		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = true end
+		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = true end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -383,6 +385,7 @@ function saves()
 				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 			    TabsOn = true
 			    KeepCMDXOn = true
+			    ifKickedAuto = true
 			end
 		end
 	else
@@ -426,6 +429,7 @@ function saves()
 		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 	    TabsOn = true
 	    KeepCMDXOn = true
+	    ifKickedAuto = true
 	end
 end
  
@@ -474,6 +478,7 @@ function updatesaves()
 		CMDTab = CMDTab;
 		TabsOn = TabsOn;
 		KeepCMDXOn = KeepCMDXOn;
+		ifKickedAuto = ifKickedAuto;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -3146,12 +3151,35 @@ table.insert(CMDN, {N = "unsupermute", A = {"unsmute"}, CMD = "487,unsupermute/u
 table.insert(CMDN, {N = "countrypublic", A = {"ctrypu"}, CMD = "488,countrypublic/ctrypu,(plr),Lists players country."})
 table.insert(CMDN, {N = "countryprivate", A = {"ctrypr"}, CMD = "489,countryprivate/ctrypr,(plr),Lists players country."})
 table.insert(CMDN, {N = "spoofcountry", A = {"spoofctry"}, CMD = "490,spoofcountry/spoofctry,(str),Spoofs your country."})
+table.insert(CMDN, {N = "friend", A = {"fr"}, CMD = "491,friend/fr,(plr/all),Sends friend request to player in your lobby."})
+table.insert(CMDN, {N = "autorejoin", A = {"autorj"}, CMD = "492,autorejoin/autorj,(on/off),Turns auto rejoin on or off."})
+table.insert(CMDN, {N = "onjoin", A = {""}, CMD = "493,onjoin,(cmd|plr/arg),Runs a command on player join."})
+table.insert(CMDN, {N = "unonjoin", A = {""}, CMD = "494,unonjoin,,()"})
+table.insert(CMDN, {N = "onleave", A = {""}, CMD = "495,onleave,(cmd|plr/arg),Runs a command on player leave."})
+table.insert(CMDN, {N = "unonleave", A = {""}, CMD = "496,unonleave,,()"})
 currentCMDNUM = "437"
 
 function RunAndCheck()
     if KeepCMDXOn and syn.queue_on_teleport then
         syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
     end
+end
+
+if AntiCheat.ScriptDetectOff and syn then
+    setsimulationradius(139,139)
+end
+
+function ifKicked()
+    cmdp.PlayerRemoving:Connect(function(p)
+        if p == cmdlp then
+            RunAndCheck()
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+        end
+    end)
+end
+
+if ifKickedAuto then
+    ifKicked()
 end
 
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -7627,6 +7655,84 @@ function useCommand.unreach()
 		end
 	end
 	opx("-","Reach value cleared (1,0.8,4)")
+end
+
+function useCommand.onjoin()
+    if arguments[2] then
+        local xNewarg = getstring(2):split(" ")
+        opx("-","OnJoin is now on")
+        onJoin = true
+        local cmd = findcmd(xNewarg[1])
+        cmdp.PlayerAdded:Connect(function(x)
+            if onJoin then
+                arguments = xNewarg
+                if arguments[2] == "plr" then arguments[2] = x.Name end
+                useCommand[cmd]()
+            end
+        end)
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+function useCommand.onleave()
+    if arguments[2] then
+        local xNewarg = getstring(2)
+        opx("-","OnLeave is now on")
+        onLeave = true
+        cmdp.PlayerRemoving:Connect(function(x)
+            if onLeave then
+                arguments = xNewarg:split(" ")
+                if arguments[3] == "plr" then arguments[3] = x.Name end
+                local cmd = findcmd(arguments[1])
+                useCommand[cmd]()
+            end
+        end)
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+function useCommand.unonjoin()
+    opx("-","OnJoin is now off")
+    onJoin = false
+end
+
+function useCommand.unonleave()
+    opx("-","OnLeave is now off")
+    onLeave = false
+end
+
+function useCommand.autorejoin()
+    if arguments[2] == "on" then
+        ifKickedAuto = true
+        opx("-","Auto rejoin has been turned on")
+        updatesaves()
+    elseif arguments[2] == "off" then
+        ifKickedAuto = false
+        opx("-","Auto rejoin has been turned off")
+        updatesaves()
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+
+function useCommand.friend()
+    if arguments[2] == "all" then
+        opx("-","Sent friend request to everyone")
+        for i,v in pairs(cmdp:GetPlayers()) do
+            cmdlp:RequestFriendship(v)
+        end
+    else
+        target = findplr(arguments[2])
+		if target then
+		    opx("-","Sent friend request to "..target.Name)
+		    cmdlp:RequestFriendship(target)
+		else
+			opx("*","Player does not exist!")
+		end
+    end
 end
 
 function useCommand.noclip()
