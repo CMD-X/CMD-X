@@ -10125,95 +10125,28 @@ end
 
 local autoKey = false
 function useCommand.autokey()
-	if arguments[2] then
-		entered0x = arguments[2]
-		autoKey = true
-		opx("-","Now auto keying "..entered0x)
-		while autoKey == true do
-			wait()
-			if not game.UserInputService:GetFocusedTextBox() then
-				if entered0x == "0" then
-					keypress(0x30)
-				elseif entered0x == "1" then
-					keypress(0x31)
-				elseif entered0x == "2" then
-					keypress(0x32)
-				elseif entered0x == "3" then
-					keypress(0x33)
-				elseif entered0x == "4" then
-					keypress(0x34)
-				elseif entered0x == "5" then
-					keypress(0x35)
-				elseif entered0x == "6" then
-					keypress(0x36)
-				elseif entered0x == "7" then
-					keypress(0x37)
-				elseif entered0x == "8" then
-					keypress(0x38)
-				elseif entered0x == "9" then
-					keypress(0x39)
-				elseif entered0x == "a" then
-					keypress(0x41)
-				elseif entered0x == "b" then
-					keypress(0x42)
-				elseif entered0x == "c" then
-					keypress(0x43)
-				elseif entered0x == "d" then
-					keypress(0x44)
-				elseif entered0x == "e" then
-					keypress(0x45)
-				elseif entered0x == "f" then
-					keypress(0x46)
-				elseif entered0x == "g" then
-					keypress(0x47)
-				elseif entered0x == "h" then
-					keypress(0x48)
-				elseif entered0x == "i" then
-					keypress(0x49)
-				elseif entered0x == "j" then
-					keypress(0x4A)
-				elseif entered0x == "k" then
-					keypress(0x4B)
-				elseif entered0x == "l" then
-					keypress(0x4C)
-				elseif entered0x == "m" then
-					keypress(0x4D)
-				elseif entered0x == "n" then
-					keypress(0x4E)
-				elseif entered0x == "o" then
-					keypress(0x4F)
-				elseif entered0x == "p" then
-					keypress(0x50)
-				elseif entered0x == "q" then
-					keypress(0x51)
-				elseif entered0x == "r" then
-					keypress(0x52)
-				elseif entered0x == "s" then
-					keypress(0x53)
-				elseif entered0x == "t" then
-					keypress(0x54)
-				elseif entered0x == "u" then
-					keypress(0x55)
-				elseif entered0x == "v" then
-					keypress(0x56)
-				elseif entered0x == "w" then
-					keypress(0x57)
-				elseif entered0x == "x" then
-					keypress(0x58)
-				elseif entered0x == "y" then
-					keypress(0x59)
-				elseif entered0x == "z" then
-					keypress(0x5A)
-				end
-			end
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
-	end
+    if arguments[2]:match('[a-z0-9]') and arguments[3] then
+        entered0x = arguments[2]:upper()
+        autoKey = true
+        opx("-","Now auto keying "..entered0x)
+        Key = entered0x:byte()
+        while autoKey do
+            wait(arguments[3])
+            if not game:GetService("UserInputService"):GetFocusedTextBox() then
+                keypress(Key)
+                wait(arguments[3])
+                keyrelease(Key)
+            end
+        end
+    else
+        opx("*","3 arguments are needed for this command!")
+    end
 end
 
 function useCommand.unautokey()
 	autoKey = false
+	wait(1.1)
+	keyrelease(Key)
 	opx("-","Stopped autokey")
 end
 
