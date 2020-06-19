@@ -31,6 +31,7 @@ Unnamed = Instance.new("ScreenGui", getParent)
 --// Theme and plugin creators key:
 _G.Unnamed = Unnamed
 --\\
+_G.dontTween = false
 
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -487,7 +488,9 @@ function updatesaves()
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
 end
- 
+
+_G.hotkeyopx = hotkeyopx
+
 AdmIG = {}
 
 for _,x in next, Adm do
@@ -14581,7 +14584,7 @@ cmdm.KeyDown:connect(function(key)
 			output.Visible = false
 			holder.Visible = false
 		end
-	elseif key == hotkeyopx then
+	elseif key == hotkeyopx and _G.dontTween == false then
 		if output.Visible == true then
 			for i = 1,10 do
 				wait(.1)
