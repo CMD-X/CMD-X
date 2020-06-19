@@ -202,7 +202,7 @@ local DonorTypes = {
 }
 
 local Custom = {
-	["v0idstarss"] = {
+	["Anything4egirIs"] = {
 		"Administrator",
 		Color3.fromRGB(209,156,240)
 	}
