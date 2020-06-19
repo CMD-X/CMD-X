@@ -28,6 +28,10 @@ end
 
 Unnamed = Instance.new("ScreenGui", getParent)
 
+--// Theme and plugin creators key:
+_G.Unnamed = Unnamed
+--\\
+
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
@@ -270,8 +274,8 @@ defaultsettings = {
 	ChatBind = false;
 	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
 	TabsOn = true;
-	KeepCMDXOn = true;
-	ifKickedAuto = true;
+	KeepCMDXOn = false;
+	ifKickedAuto = false;
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -332,8 +336,8 @@ function saves()
 				if json.ChatBind ~= nil then ChatBind = json.ChatBind else ChatBind = false end
 			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
 		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
-		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = true end
-		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = true end
+		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
+		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -384,8 +388,8 @@ function saves()
 				ChatBind = false
 				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 			    TabsOn = true
-			    KeepCMDXOn = true
-			    ifKickedAuto = true
+			    KeepCMDXOn = false
+			    ifKickedAuto = false
 			end
 		end
 	else
@@ -428,8 +432,8 @@ function saves()
 		ChatBind = false
 		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
 	    TabsOn = true
-	    KeepCMDXOn = true
-	    ifKickedAuto = true
+	    KeepCMDXOn = false
+	    ifKickedAuto = false
 	end
 end
  
