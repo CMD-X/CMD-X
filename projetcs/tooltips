@@ -167,7 +167,7 @@ local function HeartbeatUpdate()
 	CurrentFPS = CurrentFPS - CurrentFPS % 1
 	local ping = (1/wait())
 	local pingexact = string.sub(ping,0,4)
-	new.entry.user.Text = "   discord.gg/cmd | "..CurrentFPS.."FPS"
+	new.entry.user.Text = "   discord.gg/cmd | "..CurrentFPS.."fps"
 end
 Start = tick()
 Heartbeat:Connect(HeartbeatUpdate)
