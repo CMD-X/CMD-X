@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.3.6"
+local ver = "1.3.7"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -487,6 +487,10 @@ function updatesaves()
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
+end
+
+if game:GetService("UserInputService").VREnabled then
+	SavedPos = {X = 147, Y = 324}
 end
 
 _G.hotkeyopx = hotkeyopx
@@ -3168,6 +3172,14 @@ table.insert(CMDN, {N = "freegotobp", A = {"freetpbp","freetobp"}, CMD = "497,fr
 table.insert(CMDN, {N = "gotobppart", A = {"tpbppart","tobppart"}, CMD = "498,gotobppart/tpbppart/tobppart,,Bypass telports to part."})
 table.insert(CMDN, {N = "gotobpspawn", A = {"tpbpspawn","tobpspawn"}, CMD = "499,gotobpspawn/tpbpspawn/tobpspawn,,Bypass telports to spawn."})
 table.insert(CMDN, {N = "freegoto", A = {"freetp","freeto"}, CMD = "500,freegoto/freetp/freeto,(x|y|z),Freely teleports to the set position."})
+table.insert(CMDN, {N = "billboardmaxdistance", A = {"bbmd"}, CMD = "501,billboardmaxdistance/bbmd,,Sets all billboards distance to the max."})
+table.insert(CMDN, {N = "unbillboardmaxdistance", A = {"unbbmd"}, CMD = "502,unbillboardmaxdistance/unbbmd,,()"})
+table.insert(CMDN, {N = "billboardtruesight", A = {"bbts"}, CMD = "503,billboardtruesight/bbts,,Turns on billboard truesight."})
+table.insert(CMDN, {N = "unbillboardtruesight", A = {"unbbts"}, CMD = "504,unbillboardtruesight/unbbts,,()"})
+table.insert(CMDN, {N = "surfaceguitruesight", A = {"sgts"}, CMD = "505,surfaceguitruesight/sgts,,Turns on surface gui truesight."})
+table.insert(CMDN, {N = "unsurfaceguitruesight", A = {"unsgts"}, CMD = "506,unsurfaceguitruesight/unsgts,,()"})
+table.insert(CMDN, {N = "clickdetectormaxdistance", A = {"cdms"}, CMD = "507,clickdetectormaxdistance/cdms,,Sets clickdetector distance to the max."})
+table.insert(CMDN, {N = "unclickdetectormaxdistance", A = {"uncdms"}, CMD = "508,unclickdetectormaxdistance/uncdms,,()"})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -14353,6 +14365,80 @@ function useCommand.singletouchinterest()
 	opx("-","Fired touch interest")
 	local touch = FindPart(arguments[2])
 	touch.Parent.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+end
+
+bgMd = {}
+function useCommand.billboardmaxdistance()
+    opx("-","All billboards now have max distance")
+    for _,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BillboardGui") then
+            table.insert(bgMd,{p = v, m = v.MaxDistance, a = v.AlwaysOnTop})
+            v.MaxDistance = inf
+            v.AlwaysOnTop = true
+        end
+    end
+end
+
+function useCommand.unbillboardmaxdistance()
+    opx("-","All billboards no longer have max distance")
+    for _,v in pairs(bgMd) do
+        v.p.MaxDistance = m
+        v.p.AlwaysOnTop = a
+    end
+end
+
+bgTs = {}
+function useCommand.billboardtruesight()
+    opx("-","All billboards now showing")
+    for _,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("BillboardGui") then
+            table.insert(bgTs,v)
+            v.Enabled = true
+        end
+    end
+end
+
+function useCommand.unbillboardtruesight()
+    opx("-","All billboards no longer showing")
+    for _,v in pairs(bgTs) do
+        v.Enabled = false
+    end
+end
+
+sgTs = {}
+function useCommand.surfaceguitruesight()
+    opx("-","All surface guis now showing")
+    for _,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("SurfaceGui") then
+            table.insert(sgTs,v)
+            v.Enabled = true
+        end
+    end
+end
+
+function useCommand.unsurfaceguitruesight()
+    opx("-","All surface guis no longer showing")
+    for _,v in pairs(sgTs) do
+        v.Enabled = false
+    end
+end
+
+cdMd = {}
+function useCommand.clickdetectormaxdistance()
+    opx("-","All click detectors now have max distance")
+    for _,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ClickDetector") then
+            table.insert(cdMd,{p = v, m = v.MaxActivationDistance})
+            v.MaxActivationDistance = 10000
+        end
+    end
+end
+
+function useCommand.unclickdetectormaxdistance()
+    opx("-","All click detectors no longer have max distance")
+    for _,v in pairs(cdMd) do
+        v.p.MaxActivationDistance = m 
+    end
 end
 
 function useCommand.clickdetectors()
