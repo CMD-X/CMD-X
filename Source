@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.3.7"
+local ver = "1.3.8"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -3169,7 +3169,7 @@ table.insert(CMDN, {N = "unonjoin", A = {""}, CMD = "494,unonjoin,,()"})
 table.insert(CMDN, {N = "onleave", A = {""}, CMD = "495,onleave,(cmd|plr/arg),Runs a command on player leave."})
 table.insert(CMDN, {N = "unonleave", A = {""}, CMD = "496,unonleave,,()"})
 table.insert(CMDN, {N = "freegotobp", A = {"freetpbp","freetobp"}, CMD = "497,freegotobp/freetpbp/freetobp,(x|y|z),Freely bypass teleports to the set position."})
-table.insert(CMDN, {N = "gotobppart", A = {"tpbppart","tobppart"}, CMD = "498,gotobppart/tpbppart/tobppart,,Bypass telports to part."})
+table.insert(CMDN, {N = "gotobppart", A = {"tpbppart","tobppart"}, CMD = "498,gotobppart/tpbppart/tobppart,(part),Bypass telports to part."})
 table.insert(CMDN, {N = "gotobpspawn", A = {"tpbpspawn","tobpspawn"}, CMD = "499,gotobpspawn/tpbpspawn/tobpspawn,,Bypass telports to spawn."})
 table.insert(CMDN, {N = "freegoto", A = {"freetp","freeto"}, CMD = "500,freegoto/freetp/freeto,(x|y|z),Freely teleports to the set position."})
 table.insert(CMDN, {N = "billboardmaxdistance", A = {"bbmd"}, CMD = "501,billboardmaxdistance/bbmd,,Sets all billboards distance to the max."})
@@ -3180,6 +3180,8 @@ table.insert(CMDN, {N = "surfaceguitruesight", A = {"sgts"}, CMD = "505,surfaceg
 table.insert(CMDN, {N = "unsurfaceguitruesight", A = {"unsgts"}, CMD = "506,unsurfaceguitruesight/unsgts,,()"})
 table.insert(CMDN, {N = "clickdetectormaxdistance", A = {"cdms"}, CMD = "507,clickdetectormaxdistance/cdms,,Sets clickdetector distance to the max."})
 table.insert(CMDN, {N = "unclickdetectormaxdistance", A = {"uncdms"}, CMD = "508,unclickdetectormaxdistance/uncdms,,()"})
+table.insert(CMDN, {N = "gotobpclass", A = {"tobpclass","tpbpclass"}, CMD = "509,gotobpclass/tobpclass/tpbpclass,(class),Bypass teleports to class."})
+table.insert(CMDN, {N = "hatgiverspam", A = {""}, CMD = "510,hatgiverspam,,Spams hat givers and drops hats if there are any."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -4751,7 +4753,7 @@ end
 function useCommand.drophats()
 	opx("-","Dropped your hats")
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
-		if v:IsA("Accessory") then
+		if v:IsA("Hat" or "Accessory") then
 			v.Parent = workspace
 		end
 	end
@@ -14484,6 +14486,58 @@ function useCommand.gotoclass()
 	else
 		opx("*","2 arguments are required!")
 	end
+end
+
+function useCommand.gotobpclass()
+    if arguments[2] then
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v.ClassName == getstring(2) then
+				opx("-","Bypass Teleported to part")
+				cmdlp.Character.Humanoid.Jump = true
+				game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
+				break
+			end
+		end
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.hatgiverspam()
+    local HATS = {}
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("TouchTransmitter") and v.Parent.Name ~= "Handle" then 
+            local Check1, Check2 = v.Parent:FindFirstChildOfClass("SpecialMesh"), v.Parent:FindFirstChildOfClass("Script")
+            if Check1 ~= nil and Check2 ~= nil then
+                HATS[#HATS+1] = v.Parent
+            end
+        end
+    end
+    local UseFire = false
+    if firetouchinterest then UseFire = true end
+    local HRP = cmdlp.Character.HumanoidRootPart
+    local X = true
+    local Number = 0
+    repeat game:GetService("RunService").RenderStepped:Wait()
+        for i,v in pairs(HATS) do
+            if UseFire then
+                firetouchinterest(HRP, HATS[i], 1)
+                HATS[i].CFrame = HRP.CFrame
+                HATS[i].CanCollide = false
+                HATS[i].Transparency = 1
+            else
+                HATS[i].CFrame = HRP.CFrame
+                HATS[i].CanCollide = false
+                HATS[i].Transparency = 1
+            end
+        end
+        for i,v in pairs(cmdlp.Character:GetChildren()) do
+            if v:IsA("Hat" or "Accessory") then 
+                v.Parent = workspace
+                Number = Number+1 
+            end
+        end
+    until X == false
 end
 
 function useCommand.playingaudios()
