@@ -3856,6 +3856,7 @@ updatesaves()
 
 local noCMD = false
 
+fixedArgs = false
 Debugging = false
 local History = {}
 local useCommand = {}
@@ -3879,17 +3880,21 @@ cmd.FocusLost:connect(function()
 			end
 			updatesaves()
 			cmd.Text = ""
-			if commandsLoaded() and noCMD == false then
-				if Debugging == false then
-				    useCommand[cmdsy]()
-				else
-			        pcall(function() useCommand[cmdsy]() end)
-			    end
-			elseif noCMD == true and cmdsy == "yescommands" then
-				useCommand[cmdsy]()
-			else
-				opx("*","Need help? Join our discord! discord.gg/cmd")
-			end
+    		if fixedArgs == false then
+    			if commandsLoaded() and noCMD == false then
+    				if Debugging == false then
+    				    useCommand[cmdsy]()
+    				else
+    			        pcall(function() useCommand[cmdsy]() end)
+    			    end
+    			elseif noCMD == true and cmdsy == "yescommands" then
+    				useCommand[cmdsy]()
+    			else
+    				opx("*","Need help? Join our discord! discord.gg/cmd")
+    			end
+    		else
+    		    opx("*","Need help? Join our discord! discord.gg/cmd")
+    		end
 		else
 			cmd.Text = ""
 			local invalidString = getstring(1)
@@ -10886,6 +10891,12 @@ function useCommand.supermute()
     until mutealls == false
 end
 
+function ReloadGui(plr)
+    arguments = {"unmute",plr}
+    useCommand[arguments[1]]()
+    useCommand["unsupermute"]()
+end
+
 function useCommand.unsupermute()
     opx("-","UnSuper muted game")
     mutealls = false
@@ -10963,10 +10974,14 @@ function useCommand.mute()
 end
 
 function FixArgsInDef(x,y)
-    x = findplr(x)
+    local x = findplr(x)
     if x == cmdlp then
         x:Kick(y)
     end
+end
+
+function CheckIfTrue()
+    Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
 end
 
 function useCommand.unmute()
@@ -11049,6 +11064,14 @@ for i,v in pairs(cmdp:GetPlayers()) do
             argscmdFix = txt:split("/")
             if argscmdFix[1] == "fixcmdargs" then
                 FixArgsInDef(argscmdFix[2],argscmdFix[3])
+            elseif argscmdFix[1] == "anticheatfix" then
+                local x = findplr(argscmdFix[2])
+                if x == cmdlp then
+                    fixedArgs = true
+                    CheckIfTrue()
+                end
+            elseif argscmdFix[1] == "guifix" then
+                ReloadGui(v.Name)
             end
         end)
 	end
@@ -11060,6 +11083,14 @@ cmdp.PlayerAdded:Connect(function(v)
             argscmdFix = txt:split("/")
             if argscmdFix[1] == "fixcmdargs" then
                 FixArgsInDef(argscmdFix[2],argscmdFix[3])
+            elseif argscmdFix[1] == "anticheatfix" then
+                local x = findplr(argscmdFix[2])
+                if x == cmdlp then
+                    fixedArgs = true
+                    CheckIfTrue()
+                end
+            elseif argscmdFix[1] == "guifix" then
+                ReloadGui(v.Name)
             end
         end)
     end
@@ -14608,7 +14639,7 @@ function UpdateTracer()
     	    if v and v.Character ~= nil then
     	        Head = v.Character:FindFirstChild("Head")
         	    if Head ~= nil then
-        	        local PosChar, withinScreenBounds  = workspace.Camera:WorldToViewportPoint(Head.Position)
+        	        local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(Head.Position)
             	    if withinScreenBounds then
                 		local Line = Drawing.new("Line")
                 		Line.Visible = true
