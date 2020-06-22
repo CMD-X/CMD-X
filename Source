@@ -178,22 +178,26 @@ local Devs = {
     ["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }
 local Donors = {
-	["Zuhqu"] = "Donor",
-	["Fxalling_Love"] = "Donor",
-	["NitoOV"] = "Donor",
-	["skrask"] = "Donor",
-	["teejay6x"] = "Donor",
-	["0ccoy"] = "Donor",
-	["OFFTheBatter"] = "Donor",
-	["goresyard"] = "Donor",
-	["DisturbedCult"] = "Donor",
-	["Schewpid"] = "Donor",
-	["LtsDank"] = "Donor",
-	["HyperLink3"] = "Donor",
-	["Winnzie"] = "Donor",
-	["8dqt"] = "Donor",
-    ["472"] = "Donor",
-	["n1bu"] = "Donor+"
+	["Zuhqu"] = {Tier = "1"},
+	["Fxalling_Love"] = {Tier = "2"},
+	["NitoOV"] = {Tier = "1"},
+	["skrask"] = {Tier = "2"},
+	["teejay6x"] = {Tier = "1"},
+	["0ccoy"] = {Tier = "1"},
+	["OFFTheBatter"] = {Tier = "1"},
+	["goresyard"] = {Tier = "1"},
+	["DisturbedCult"] = {Tier = "1"},
+	["Schewpid"] = {Tier = "1"},
+	["LtsDank"] = {Tier = "1"},
+	["HyperLink3"] = {Tier = "1"},
+	["Winnzie"] = {Tier = "1"},
+	["8dqt"] = {Tier = "1"},
+    ["472"] = {Tier = "1"},
+	["n1bu"] = {Tier = "2"},
+	["DAAKIUS"] = {Tier = "2"},
+	["xniped"] = {Tier = "2"},
+	["Anything4egirIs"] = {Tier = "Custom1"},
+	["Irritatory"] = {Tier = "Top"}
 }
 local DonorTypes = {
 	["Donor"] = {
@@ -15205,13 +15209,17 @@ pcall(function()
     end
 end)
 
-function colorName(Self,g)
+function colorName(Self,Tbl)
 	for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
 		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
-			if not g then
+			if Tbl.Tier == "1" then
 				v.TextColor3 = Color3.fromRGB(255,70,70)
-			else
+			elseif Tbl.Tier == "2" then
 				v.TextColor3 = Color3.fromRGB(255,215,100)
+			elseif Tbl.Tier == "Custom1" then
+			    v.TextColor3 = Color3.fromRGB(209,156,240)
+			elseif Tbl.Tier == "Top" then
+			    RGBDev(Self)
 			end
 		end
 	end
@@ -15222,11 +15230,11 @@ for i,v in pairs(cmdp:GetPlayers()) do
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
 		RGBDev(v.Name)	
 	elseif Donors[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		opx("-",v.Name.." is in your server (Donor of CMD-X)")	
 		if Donors[v.Name] == "Donor" then	
-			colorName(v.Name, false)	
+			colorName(v.Name, Donors[v.Name])	
 		else	
-			colorName(v.Name, true)	
+			colorName(v.Name, Donors[v.Name])	
 		end	
 	end	
 end
@@ -15236,11 +15244,11 @@ cmdp.PlayerAdded:Connect(function(v)
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")	
 		RGBDev(v.Name)	
 	elseif Donors[v.Name] then	
-		opx("-",v.Name.." is in your server ("..Donors[v.Name].." of CMD-X)")	
+		opx("-",v.Name.." is in your server (Donor of CMD-X)")		
 		if Donors[v.Name] == "Donor" then	
-			colorName(v.Name, false)	
+			colorName(v.Name, Donors[v.Name])	
 		else	
-			colorName(v.Name, true)	
+			colorName(v.Name, Donors[v.Name])	
 		end	
 	end	
 end)
