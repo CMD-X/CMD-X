@@ -4753,7 +4753,7 @@ end
 function useCommand.drophats()
 	opx("-","Dropped your hats")
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
-		if v:IsA("Hat" or "Accessory") then
+		if v:IsA("Hat") or v:IsA("Accessory") then
 			v.Parent = workspace
 		end
 	end
