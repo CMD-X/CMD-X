@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.3.8"
+local ver = "1.3.9"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -136,7 +136,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {[117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased",[4238827073.2] = true, [303591427.1] = true}
+checkArg = {[117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased", [4238827073.2] = true}
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 if not writefile then
@@ -3186,6 +3186,12 @@ table.insert(CMDN, {N = "clickdetectormaxdistance", A = {"cdms"}, CMD = "507,cli
 table.insert(CMDN, {N = "unclickdetectormaxdistance", A = {"uncdms"}, CMD = "508,unclickdetectormaxdistance/uncdms,,()"})
 table.insert(CMDN, {N = "gotobpclass", A = {"tobpclass","tpbpclass"}, CMD = "509,gotobpclass/tobpclass/tpbpclass,(class),Bypass teleports to class."})
 table.insert(CMDN, {N = "hatgiverspam", A = {""}, CMD = "510,hatgiverspam,,Spams hat givers and drops hats if there are any."})
+table.insert(CMDN, {N = "fakelag", A = {""}, CMD = "511,fakelag,,Simulates fake network lag."})
+table.insert(CMDN, {N = "unfakelag", A = {""}, CMD = "512,unfakelag,,()"})
+table.insert(CMDN, {N = "hitboxes", A = {""}, CMD = "513,hitboxes,,Shows you all hitboxes."})
+table.insert(CMDN, {N = "unhitboxes", A = {""}, CMD = "514,unhitboxes,,()"})
+table.insert(CMDN, {N = "animdata", A = {""}, CMD = "515,animdata,,Shows you information about your current animations."})
+table.insert(CMDN, {N = "unanimdata", A = {""}, CMD = "516,unanimdata,,()"})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -11965,6 +11971,36 @@ function useCommand.unswimwalk()
 	cmdlp.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,true)
 	cmdlp.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
 	opx("-","No longer swimming")
+end
+
+function useCommand.fakelag()
+    opx("-","Now fake lagging, do anything you want")
+    settings():GetService("NetworkSettings").IncommingReplicationLag = 100
+end
+
+function useCommand.unfakelag()
+    opx("-","No longer fake lagging")
+    settings():GetService("NetworkSettings").IncommingReplicationLag = 0
+end
+
+function useCommand.hitboxes()
+    opx("-","Now showing hitboxes")
+    settings():GetService("RenderSettings").ShowBoundingBoxes = true
+end
+
+function useCommand.unhitboxes()
+    opx("-","No longer showing hitboxes")
+    settings():GetService("RenderSettings").ShowBoundingBoxes = false
+end
+
+function useCommand.animdata()
+    opx("-","Now showing animation data")
+    settings():GetService("NetworkSettings").ShowActiveAnimationAsset = true
+end
+
+function useCommand.unanimdata()
+    opx("-","No longer showing animation data")
+    settings():GetService("NetworkSettings").ShowActiveAnimationAsset = false
 end
 
 function useCommand.unlagchat()
