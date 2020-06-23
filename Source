@@ -11832,7 +11832,7 @@ function useCommand.scriptusers()
 			elseif Devs[v.Name] == "Owner" then
 				usageof = usageof.."[OWNER]"..v.Name.."\n"
 			elseif Donors[v.Name] then
-				if Donors[v.Name].Tier = "Custom1" then
+				if Donors[v.Name].Tier == "Custom1" then
 				    usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
 				else
 				    usageof = usageof.."[DONOR]"..v.Name.."\n"
@@ -11874,7 +11874,7 @@ cmdp.PlayerAdded:connect(function(plr)
     					CreateSCLabel("OWNER",plr.Name..": "..msg)
     				end
     			elseif Donors[plr.Name] then
-    				if Donors[v.Name].Tier = "Custom1" then
+    				if Donors[v.Name].Tier == "Custom1" then
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
@@ -11904,7 +11904,7 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
     					CreateSCLabel("OWNER",plr.Name..": "..msg)
     				end
     			elseif Donors[plr.Name] then
-    				if Donors[v.Name].Tier = "Custom1" then
+    				if Donors[v.Name].Tier == "Custom1" then
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
