@@ -196,8 +196,8 @@ local Donors = {
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
-	["Anything4egirIs"] = {Tier = "Custom1"},
-	["Irritatory"] = {Tier = "Top"}
+	["Anything4egirIs"] = {Tier = "Custom1", Tag = "Administrator"},
+	["Irritatory"] = {Tier = "Top"},
 }
 local DonorTypes = {
 	["Donor"] = {
@@ -11831,10 +11831,12 @@ function useCommand.scriptusers()
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
 				usageof = usageof.."[OWNER]"..v.Name.."\n"
-			elseif Donors[v.Name] and DonorTypes[Donors[v.Name]] then
-				usageof = usageof.."[DONOR]"..v.Name.."\n"
-			elseif Custom[v.Name] then
-				usageof = usageof.."[DONOR]"..v.Name.."\n"
+			elseif Donors[v.Name] then
+				if Donors[v.Name].Tier = "Custom1" then
+				    usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
+				else
+				    usageof = usageof.."[DONOR]"..v.Name.."\n"
+				end
 			else
 				usageof = usageof.."[USER]"..v.Name.."\n"
 			end
@@ -11872,7 +11874,11 @@ cmdp.PlayerAdded:connect(function(plr)
     					CreateSCLabel("OWNER",plr.Name..": "..msg)
     				end
     			elseif Donors[plr.Name] then
-    				CreateSCLabel("DONOR",plr.Name..": "..msg)
+    				if Donors[v.Name].Tier = "Custom1" then
+    				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+    				else
+    				    CreateSCLabel("DONOR",plr.Name..": "..msg)
+    				end
     			else
     				CreateSCLabel("USER",plr.Name..": "..msg)
     			end
@@ -11898,7 +11904,11 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
     					CreateSCLabel("OWNER",plr.Name..": "..msg)
     				end
     			elseif Donors[plr.Name] then
-    				CreateSCLabel("DONOR",plr.Name..": "..msg)
+    				if Donors[v.Name].Tier = "Custom1" then
+    				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+    				else
+    				    CreateSCLabel("DONOR",plr.Name..": "..msg)
+    				end
     			else
     				CreateSCLabel("USER",plr.Name..": "..msg)
     			end
