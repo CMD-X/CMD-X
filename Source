@@ -33,8 +33,17 @@ _G.Unnamed = Unnamed
 --\\
 _G.dontTween = false
 
-sethiddenproperty = sethiddenproperty or set_hidden_property
-gethiddenproperty = gethiddenproperty or get_hidden_property
+if gethiddenproperty or get_hidden_prop then
+    sethiddenproperty = sethiddenproperty or set_hidden_prop
+    gethiddenproperty = gethiddenproperty or get_hidden_prop
+else
+    function sethiddenproperty()
+        opx("*","Your exploit does not support sethiddenproperty")
+    end
+    function gethiddenproperty()
+        opx("*","Your exploit does not support gethiddenproperty")
+    end
+end
 
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
