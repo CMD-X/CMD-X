@@ -196,7 +196,7 @@ local Donors = {
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
-	["Anything4egirIs"] = {Tier = "Custom1", Tag = "Administrator"},
+	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
 }
 local DonorTypes = {
@@ -523,6 +523,21 @@ local AntiCheat = {
     PrintingOff = false;
     NoGui = false;
 }
+if game.PlaceId == 1962086868 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
+if game.PlaceId == 2808131030 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
+if game.PlaceId == 2127551566 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
 if game.PlaceId == 4238077359 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
