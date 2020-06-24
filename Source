@@ -33,6 +33,9 @@ _G.Unnamed = Unnamed
 --\\
 _G.dontTween = false
 
+sethiddenproperty = sethiddenproperty or set_hidden_property
+gethiddenproperty = gethiddenproperty or get_hidden_property
+
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
@@ -2008,7 +2011,7 @@ end
 if AntiCheat.ScriptDetectOff == false then
     if sDetect == true then
     	cmdlp.MaximumSimulationRadius = 139
-    	--cmdlp.SimulationRadius = 139
+    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
     	cmdlp.OsPlatform = "CMD-X"
     end
 end
@@ -11841,7 +11844,7 @@ function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if --[[v.SimulationRadius == 139 or]] v.OsPlatform == "CMD-X" then
+		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
@@ -11878,7 +11881,7 @@ cmdp.PlayerAdded:connect(function(plr)
 	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = plr.OsPlatform
 		v = plr
-    	if --[[v.SimulationRadius == 139 or]] v.OsPlatform == "CMD-X" then
+    	if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
     		if msg:sub(#msg-5,#msg) == "nigger" then
     			msg = msg:sub(1,#msg-6)
     			if Devs[plr.Name] then
@@ -11908,7 +11911,7 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = v.OsPlatform
 		plr = v
-		if --[[v.SimulationRadius == 139 or]] v.OsPlatform == "CMD-X" then
+		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
     		if msg:sub(#msg-5,#msg) == "nigger" then
     			msg = msg:sub(1,#msg-6)
     			if Devs[plr.Name] then
@@ -12703,7 +12706,7 @@ function useCommand.freezeunanchored()
 	opx("-","Froze unanchored parts")
 	funa = true
 	cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
-	--cmdlp.SimulationRadius = math.pow(math.huge,math.huge)*math.huge
+	sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,math.huge)*math.huge)
 	local unanchoredparts = {}
 	local movers = {}
 	for index, part in pairs(workspace:GetDescendants()) do
@@ -12728,7 +12731,7 @@ function useCommand.freezeunanchored()
 		wait(.1)
 	until funa == false
 	cmdlp.MaximumSimulationRadius = 139
-	--cmdlp.SimulationRadius = 139
+	sethiddenproperty(cmdlp, "SimulationRadius", 139)
 end
 
 function useCommand.thawunanchored()
@@ -13490,14 +13493,14 @@ function useCommand.noshow()
 	if arguments[2] == "on" then
 		opx("-","No-Show is now on")
 		sDetect = false
-		--cmdlp.SimulationRadius = 0
+		sethiddenproperty(cmdlp, "SimulationRadius", 0)
 		cmdlp.MaximumSimulationRadius = 0
 		cmdlp.OsPlatform = "Win32"
 		updatesaves()
 	elseif arguments[2] == "off" then
 		opx("-","No-Show is now off")
 		sDetect = true
-		--cmdlp.SimulationRadius = 139
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		cmdlp.MaximumSimulationRadius = 139
 		cmdlp.OsPlatform = "CMD-X"
 		updatesaves()
@@ -14053,10 +14056,10 @@ function useCommand.simulationradius()
 				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 					if v ~= cmdlp then
 						v.MaximumSimulationRadius = 0.1
-						--v.SimulationRadius = 0
+						sethiddenproperty(cmdlp, "SimulationRadius", 0)
 					else
 						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-						--v.SimulationRadius = math.pow(math.huge, 2)
+						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,2))
 					end
 				end
 			end)
@@ -14069,10 +14072,10 @@ function useCommand.simulationradius()
 				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 					if v ~= cmdlp then
 						v.MaximumSimulationRadius = 0.1
-						--v.SimulationRadius = 0
+						sethiddenproperty(cmdlp, "SimulationRadius", 0)
 					else
 						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-						--v.SimulationRadius = math.pow(arguments[2], 2)
+						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(arguments[2],2))
 					end
 				end
 			end)
@@ -15196,7 +15199,7 @@ end
 if AntiCheat.ScriptDetectOff == false then
     if sDetect == true then
     	cmdlp.MaximumSimulationRadius = 139
-    	--cmdlp.SimulationRadius = 139
+    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
     	cmdlp.OsPlatform = "CMD-X"
     end
 end
