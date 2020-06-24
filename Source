@@ -185,6 +185,7 @@ local Devs = {
 }
 local Donors = {
 	["Zuhqu"] = {Tier = "1"},
+	["26skate"] = {Tier = "1"},
 	["Fxalling_Love"] = {Tier = "2"},
 	["NitoOV"] = {Tier = "1"},
 	["skrask"] = {Tier = "2"},
