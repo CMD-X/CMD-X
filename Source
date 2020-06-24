@@ -157,9 +157,15 @@ local cmdrs2 = game:GetService("RunService")
 local cmdts = game:GetService("TweenService")
 local cmdvu = game:GetService("VirtualUser")
 local cmduis = game:GetService("UserInputService")
-local cmdc = cmdlp.Character
-local cmdh = cmdc.Humanoid
-local cmdhrp = cmdc.HumanoidRootPart
+if cmdlp:FindFirstChild("Character") then
+    local cmdc = cmdlp.Character
+end
+if cmdlp:FindFirstChild("Humanoid") then
+    local cmdh = cmdc.Humanoid
+end
+if cmdlp:FindFirstChild("HumanoidRootPart") then
+    local cmdhrp = cmdc.HumanoidRootPart
+end
 local Mouses = cmdlp:GetMouse()
 local dp = cmdlp
 cmdm = Mouses
