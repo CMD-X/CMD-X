@@ -33,18 +33,6 @@ _G.Unnamed = Unnamed
 --\\
 _G.dontTween = false
 
-if gethiddenproperty or get_hidden_prop then
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-else
-    function sethiddenproperty()
-        opx("*","Your exploit does not support sethiddenproperty")
-    end
-    function gethiddenproperty()
-        opx("*","Your exploit does not support gethiddenproperty")
-    end
-end
-
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
@@ -2017,14 +2005,6 @@ function opxL(title,text)
 	opxholder.Visible = true
 end
 
-if AntiCheat.ScriptDetectOff == false then
-    if sDetect == true then
-    	cmdlp.MaximumSimulationRadius = 139
-    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
-    	cmdlp.OsPlatform = "CMD-X"
-    end
-end
-
 local statholder = Instance.new("Frame", getParent)
 local statviewertitle = Instance.new("TextLabel", getParent)
 local xoutofstats = Instance.new("TextButton", getParent)
@@ -3831,6 +3811,26 @@ function opx(f,text)
 			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[CMD-X-] "..text,"All")
 		end
 	end
+end
+
+if gethiddenproperty or get_hidden_prop then
+    sethiddenproperty = sethiddenproperty or set_hidden_prop
+    gethiddenproperty = gethiddenproperty or get_hidden_prop
+else
+    function sethiddenproperty()
+        opx("*","Your exploit does not support sethiddenproperty")
+    end
+    function gethiddenproperty()
+        opx("*","Your exploit does not support gethiddenproperty")
+    end
+end
+
+if AntiCheat.ScriptDetectOff == false then
+    if sDetect == true then
+    	cmdlp.MaximumSimulationRadius = 139
+    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
+    	cmdlp.OsPlatform = "CMD-X"
+    end
 end
 
 function alignFunctions(getArgs)
