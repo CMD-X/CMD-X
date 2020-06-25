@@ -151,11 +151,6 @@ if Current.Version ~= ver then
 	repeat wait() until RunDude == true
 end
 
-if readfile("CMD-X.lua") == nil then
-	Stand("Welcome to CMD-X!","Looks like your new.","Let's get started;","Once CMD-X has loaded press the command bar and type in it.","You can use .commands or use our auto-fill feature for help.","Run CMD-X",true)
-	repeat wait() until RunDude == true
-end
-
 if not cmdlp.Character.HumanoidRootPart or not cmdlp.Character.Humanoid or not cmdlp.Character then
 	Stand("Your character isn't loaded!","Commands may not work.","","","","Run Anyway",true)
 	repeat wait() until RunDude == true
@@ -320,7 +315,7 @@ function saves()
 	if writefileExploit() then
 		if pcall(function() readfile("CMD-X.lua") end) then
 			if readfile("CMD-X.lua") ~= nil then
-				pcall(function() json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua")) end)
+				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
 				if json.text2 ~= nil then text2 = json.text2 else text2 = {} end
 				if json.hotkeyopen ~= nil then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
 				if json.hotkeyopx ~= nil then hotkeyopx = json.hotkeyopx else hotkeyopx = 'u' end
