@@ -2064,7 +2064,7 @@ function opxL(title,text)
 	opxholder.Visible = true
 end
 
-if AntiCheat.ScriptDetectOff == false then
+if AntiCheat.ScriptDetectOff == false and sethiddenproperty then
     if sDetect == true then
     	cmdlp.MaximumSimulationRadius = 139
     	sethiddenproperty(cmdlp, "SimulationRadius", 139)
