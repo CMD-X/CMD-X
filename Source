@@ -1,41 +1,39 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.3.9"
+local ver = "1.4.0"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
 }
-getParent = nil
-if game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
-	getParent = game:GetService("CoreGui").RobloxGui
-else
-	getParent = game:GetService("CoreGui")
+---------------------------------------|
+Parents = {[1] = game:GetService("CoreGui").RobloxGui, [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
+getParent = Parents[1]
+if not game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
+	getParent = Parents[2]
 end
-for _,GUI in next, game:GetService("CoreGui"):GetDescendants() do
-	if GUI.Name == "holder" then
-		GUI.Parent:Destroy()
+
+for _, v in pairs(Parents[1]:GetDescendants()) do
+	if v.Name == "holder" then 
+		v.Parent:Destroy() 
 	end
 end
-for _,GUI in next, game:GetService("Players").LocalPlayer.PlayerGui:GetDescendants() do
-	if GUI.Name == "holder" then
-		GUI.Parent:Destroy()
+for _, v in pairs(Parents[2]:GetDescendants()) do
+	if v.Name == "holder" then 
+		v.Parent:Destroy() 
 	end
 end
 
-if game:GetService("UserInputService").VREnabled then
-	getParent = game:GetService("Players").LocalPlayer.PlayerGui
+if game:GetService("UserInputService").VREnabled then 
+	getParent = Parents[2] 
 end
 
-Unnamed = Instance.new("ScreenGui", getParent)
+Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; Unnamed.ResetOnSpawn = false
 
---// Theme and plugin creators key:
 _G.Unnamed = Unnamed
---\\
 _G.dontTween = false
 
-Unnamed.Name = "Unnamed"
-Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Unnamed.ResetOnSpawn = false
+sethiddenproperty = sethiddenproperty or set_hidden_property
+gethiddenproperty = gethiddenproperty or get_hidden_property
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
@@ -135,19 +133,34 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Free.TextSize = 17.000
 end
+
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
 checkArg = {[117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased", [4238827073.2] = true}
+
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
+
 if not writefile then
 	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher (buggy), SirHurt","Free: KRNL (buggy)","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	repeat wait() until RunDude == true
 end
+
+if readfile("CMD-X.lua") == nil then
+	Stand("Welcome to CMD-X!","Looks like your new.","Let's get started;","Once CMD-X has loaded press the command bar and type in it.","You can use .commands or use our auto-fill feature for help.","Run CMD-X",true)
+	repeat wait() until RunDude == true
+end
+
+if not cmdlp.Character.HumanoidRootPart or not cmdlp.Character.Humanoid or not cmdlp.Character then
+	Stand("Your character isn't loaded!","Commands may not work.","","","","Run Anyway",true)
+	repeat wait() until RunDude == true
+end
+
 -- Variables: ------------------------|
 cmdws = workspace
 local player = cmdlp
@@ -157,15 +170,6 @@ local cmdrs2 = game:GetService("RunService")
 local cmdts = game:GetService("TweenService")
 local cmdvu = game:GetService("VirtualUser")
 local cmduis = game:GetService("UserInputService")
-if cmdlp:FindFirstChild("Character") then
-    local cmdc = cmdlp.Character
-end
-if cmdlp:FindFirstChild("Humanoid") then
-    local cmdh = cmdc.Humanoid
-end
-if cmdlp:FindFirstChild("HumanoidRootPart") then
-    local cmdhrp = cmdc.HumanoidRootPart
-end
 local Mouses = cmdlp:GetMouse()
 local dp = cmdlp
 cmdm = Mouses
@@ -176,16 +180,21 @@ local Devs = {
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
-	["Himillumine"] = "Dev",
-	["Luyler"] = "Dev",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 	["K5RM"] = "Dev",
     ["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }
+
+DevCords = {
+	"pigeon#1818";
+	"hz#4777";
+	"Curvn#2646";
+	"K5RM#????";
+}
+
 local Donors = {
 	["Zuhqu"] = {Tier = "1"},
-	["26skate"] = {Tier = "1"},
 	["Fxalling_Love"] = {Tier = "2"},
 	["NitoOV"] = {Tier = "1"},
 	["skrask"] = {Tier = "2"},
@@ -206,23 +215,7 @@ local Donors = {
 	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
 }
-local DonorTypes = {
-	["Donor"] = {
-		"Donor",
-		Color3.fromRGB(255,70,70)
-	},
-	["Donor+"] = {
-		"Donor+",
-		Color3.fromRGB(255,215,100)
-	}
-}
 
-local Custom = {
-	["Anything4egirIs"] = {
-		"Administrator",
-		Color3.fromRGB(209,156,240)
-	}
-}
 ---------------------------------------|
 -- Writefile: -------------------------|
 
@@ -288,6 +281,20 @@ defaultsettings = {
 	TabsOn = true;
 	KeepCMDXOn = false;
 	ifKickedAuto = false;
+	AntiCheat = {
+	    ScriptDetectOff = false;
+	    TurboNameSpam = false;
+	    HideParentInExploit = false;
+	    HideParentInPG = false;
+	    AutoAntiKick = false;
+	    RemoveScripts = false;
+	    IntroAudioOff = false;
+	    DontJumbleNames = false;
+	    OneTimeScramble = false;
+	    PrintingOff = false;
+	    NoGui = false;
+	    Custom1 = false;
+	};
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -304,11 +311,16 @@ function commandsLoaded()
 	return isDoneLoading()
 end
 
+if commandsLoaded == false then
+	Stand("You are blacklisted from CMD-X.","CMD-X will not run.","","For further help or appeal refer to the discord.","","",false)
+	repeat wait() until RunDude == true
+end
+
 function saves()
 	if writefileExploit() then
 		if pcall(function() readfile("CMD-X.lua") end) then
 			if readfile("CMD-X.lua") ~= nil then
-				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+				pcall(function() json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua")) end)
 				if json.text2 ~= nil then text2 = json.text2 else text2 = {} end
 				if json.hotkeyopen ~= nil then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
 				if json.hotkeyopx ~= nil then hotkeyopx = json.hotkeyopx else hotkeyopx = 'u' end
@@ -350,6 +362,24 @@ function saves()
 		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
 		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
 		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
+		    	if json.AntiCheat ~= nil then
+		    		AntiCheat = json.AntiCheat
+		    	else
+		    		AntiCheat = {
+					    ScriptDetectOff = false;
+					    TurboNameSpam = false;
+					    HideParentInExploit = false;
+					    HideParentInPG = false;
+					    AutoAntiKick = false;
+					    RemoveScripts = false;
+					    IntroAudioOff = false;
+					    DontJumbleNames = false;
+					    OneTimeScramble = false;
+					    PrintingOff = false;
+					    NoGui = false;
+					    Custom1 = false;
+					}
+		    	end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -402,6 +432,20 @@ function saves()
 			    TabsOn = true
 			    KeepCMDXOn = false
 			    ifKickedAuto = false
+			    AntiCheat = {
+				    ScriptDetectOff = false;
+				    TurboNameSpam = false;
+				    HideParentInExploit = false;
+				    HideParentInPG = false;
+				    AutoAntiKick = false;
+				    RemoveScripts = false;
+				    IntroAudioOff = false;
+				    DontJumbleNames = false;
+				    OneTimeScramble = false;
+				    PrintingOff = false;
+				    NoGui = false;
+				    Custom1 = false;
+				}
 			end
 		end
 	else
@@ -446,6 +490,20 @@ function saves()
 	    TabsOn = true
 	    KeepCMDXOn = false
 	    ifKickedAuto = false
+	    AntiCheat = {
+		    ScriptDetectOff = false;
+		    TurboNameSpam = false;
+		    HideParentInExploit = false;
+		    HideParentInPG = false;
+		    AutoAntiKick = false;
+		    RemoveScripts = false;
+		    IntroAudioOff = false;
+		    DontJumbleNames = false;
+		    OneTimeScramble = false;
+		    PrintingOff = false;
+		    NoGui = false;
+		    Custom1 = false;
+		}
 	end
 end
  
@@ -495,6 +553,7 @@ function updatesaves()
 		TabsOn = TabsOn;
 		KeepCMDXOn = KeepCMDXOn;
 		ifKickedAuto = ifKickedAuto;
+		AntiCheat = AntiCheat;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -517,19 +576,6 @@ for _,x in next, Adm do
 end
 
 -- Known Anti CMD-X and unpatches:
-local AntiCheat = {
-    ScriptDetectOff = false;
-    TurboNameSpam = false;
-    HideParentInExploit = false;
-    HideParentInPG = false;
-    AutoAntiKick = false;
-    RemoveScripts = false;
-    IntroAudioOff = false;
-    DontJumbleNames = false;
-    OneTimeScramble = false;
-    PrintingOff = false;
-    NoGui = false;
-}
 if game.PlaceId == 1962086868 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
@@ -574,7 +620,14 @@ if game.PlaceId == 176053469 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
     AntiCheat.PrintingOff = true
-    local old
+    AntiCheat.Custom1 = true
+end
+if game.PlaceId == 17541193 then
+    AntiCheat.ScriptDetectOff = true
+end
+
+if AntiCheat.Custom1 then
+	local old
     old = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self,...)
         if self.Name == "TimeEvent" then
             return
@@ -582,14 +635,12 @@ if game.PlaceId == 176053469 then
         return old(self, ...)
     end))
 end
-if game.PlaceId == 17541193 then
-    AntiCheat.ScriptDetectOff = true
-end
 
-if AntiCheat.HideParentInPG == true then
+if AntiCheat.HideParentInPG then
     getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
-if AntiCheat.HideParentInExploit == true then
+
+if AntiCheat.HideParentInExploit then
     if syn.protect_gui then
         getParent = syn.protect_gui
         syn.protect_gui(Unnamed)
@@ -597,11 +648,12 @@ if AntiCheat.HideParentInExploit == true then
         getParet = get_hidden_gui
         Unnamed.Parent = get_hidden_gui()
     else
-        Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","Run Anyway",true)
+        Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","","Run Anyway",true)
         repeat wait() until RunDude == true
     end
 end
-if AntiCheat.AutoAntiKick == true then
+
+if AntiCheat.AutoAntiKick then
     local meta = debug.getmetatable(game)
     local newindex = meta.__newindex
     local namecall = meta.__namecall
@@ -616,16 +668,21 @@ if AntiCheat.AutoAntiKick == true then
     	return namecall(self,...)
     end)
 end
-if AntiCheat.RemoveScripts == true then
+
+if AntiCheat.RemoveScripts then
     for _,v in next, game:GetService("Players"):GetDescendants() do
         if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
             v:Destroy()
         end
     end
+	Stand("CMD-X has to delete local scripts!","Your game may not work.","Explanation;","This game has an anticheat and our way of solving it is removing scripts.","","Run Anyway",true)
+	repeat wait() until RunDude == true
 end
-if AntiCheat.OneTimeScramble == true then
+
+if AntiCheat.OneTimeScramble then
     Unnamed.Name = math.random(1,100000)
 end
+
 if AntiCheat.IntroAudioOff == false then
     local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
     Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
@@ -1176,7 +1233,7 @@ creditsgame.BorderSizePixel = 0
 creditsgame.Position = UDim2.new(0.183333337, 0, 0.889145553, 0)
 creditsgame.Size = UDim2.new(0, 190, 0, 19)
 creditsgame.Font = Enum.Font.GothamBlack
-creditsgame.Text = "Made by pigeon#1818"
+creditsgame.Text = "Made by "..DevCords[1]
 creditsgame.TextColor3 = Color3.new(1, 1, 1)
 creditsgame.TextSize = 14
  
@@ -1406,7 +1463,7 @@ creditsavatar.BorderSizePixel = 0
 creditsavatar.Position = UDim2.new(0.183333337, 0, 0.889145553, 0)
 creditsavatar.Size = UDim2.new(0, 190, 0, 19)
 creditsavatar.Font = Enum.Font.GothamBlack
-creditsavatar.Text = "Made by pigeon#1818"
+creditsavatar.Text = "Made by "..DevCords[1]
 creditsavatar.TextColor3 = Color3.new(1, 1, 1)
 creditsavatar.TextSize = 14
 
@@ -1560,7 +1617,7 @@ output3.BackgroundTransparency = 1
 output3.Position = UDim2.new(0.0157605428, 0, 0.639753819, 0)
 output3.Size = UDim2.new(0, 500, 0, 27)
 output3.Font = Enum.Font.Code
-output3.Text = "Made by pigeon#1818 and hz#4777"
+output3.Text = "Made by "..DevCords[1].." and "..DevCords[2]
 output3.TextColor3 = Color3.new(0.698039, 0.698039, 0.698039)
 output3.TextSize = 16
 output3.TextXAlignment = Enum.TextXAlignment.Left
@@ -2010,6 +2067,14 @@ function opxL(title,text)
 	opxreferer.Text = " "..title
 	opxScrolling.Text = text
 	opxholder.Visible = true
+end
+
+if AntiCheat.ScriptDetectOff == false then
+    if sDetect == true then
+    	cmdlp.MaximumSimulationRadius = 139
+    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
+    	cmdlp.OsPlatform = "CMD-X"
+    end
 end
 
 local statholder = Instance.new("Frame", getParent)
@@ -3206,6 +3271,8 @@ table.insert(CMDN, {N = "hitboxes", A = {""}, CMD = "513,hitboxes,,Shows you all
 table.insert(CMDN, {N = "unhitboxes", A = {""}, CMD = "514,unhitboxes,,()"})
 table.insert(CMDN, {N = "animdata", A = {""}, CMD = "515,animdata,,Shows you information about your current animations."})
 table.insert(CMDN, {N = "unanimdata", A = {""}, CMD = "516,unanimdata,,()"})
+table.insert(CMDN, {N = "anticheat", A = {"ac"}, CMD = "517,anticheat/ac,(var),Sets anticheat variables on or off."})
+table.insert(CMDN, {N = "anticheats", A = {"acs"}, CMD = "518,anticheats/acs,,Lists anticheat variables."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -3820,26 +3887,6 @@ function opx(f,text)
 	end
 end
 
-if gethiddenproperty or get_hidden_prop then
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-else
-    function sethiddenproperty()
-        opx("*","Your exploit does not support sethiddenproperty")
-    end
-    function gethiddenproperty()
-        opx("*","Your exploit does not support gethiddenproperty")
-    end
-end
-
-if AntiCheat.ScriptDetectOff == false then
-    if sDetect == true then
-    	cmdlp.MaximumSimulationRadius = 139
-    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
-    	cmdlp.OsPlatform = "CMD-X"
-    end
-end
-
 function alignFunctions(getArgs)
 	local cmdws = workspace
 	local cmdp = game:GetService("Players")
@@ -4428,7 +4475,7 @@ function useCommand.advertise()
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6)) 
 		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdh:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
+		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6))
 		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
@@ -4443,7 +4490,7 @@ function useCommand.advertise()
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6))
 		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdh:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
+		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
 	end
 	opx("-","Now advertising CMD-X (Thank you!)")
 end
@@ -5559,7 +5606,7 @@ function useCommand.fling()
 			BT.Parent = cmdhrp
 			BT.Force = Vector3.new(PF, 0, PF)
 			BT.Location = cmdhrp.Position
-			for i,player in pairs(cmdc:GetChildren()) do
+			for i,player in pairs(cmdlp.Character:GetChildren()) do
 				if player.ClassName == "Part" then
 					player.CustomPhysicalProperties = PhysicalProperties.new(0, 0.3, 0.5)
 				end
@@ -7162,14 +7209,14 @@ function useCommand.cambobble()
 	local RunService = game:GetService("RunService")
 	local function updateBobbleEffect()
 		local now = tick()
-		if cmdh.MoveDirection.Magnitude > 0 then
-			local velocity = cmdh.RootPart.Velocity
+		if cmdlp.Character.Humanoid.MoveDirection.Magnitude > 0 then
+			local velocity = cmdlp.Character.Humanoid.RootPart.Velocity
 			local bobble_X = math.cos(now * 9) / 5
 			local bobble_Y = math.abs(math.sin(now * 12)) / 5
-			local bobble = Vector3.new(bobble_X,bobble_Y,0) * math.min(1, velocity.Magnitude / cmdh.WalkSpeed)
-			cmdh.CameraOffset = cmdh.CameraOffset:lerp(bobble,.75)
+			local bobble = Vector3.new(bobble_X,bobble_Y,0) * math.min(1, velocity.Magnitude / cmdlp.Character.Humanoid.WalkSpeed)
+			cmdlp.Character.Humanoid.CameraOffset = cmdlp.Character.Humanoid.CameraOffset:lerp(bobble,.75)
 		else
-			cmdh.CameraOffset = cmdh.CameraOffset * 0.75
+			cmdlp.Character.Humanoid.CameraOffset = cmdlp.Character.Humanoid.CameraOffset * 0.75
 		end
 	end 
 	while bobbleEffect == true do
@@ -7875,8 +7922,85 @@ function useCommand.light()
 	end
 end
 
+function useCommand.anticheat()
+	if arguments[2] == "scriptdetectoff" then
+		if AntiCheat.ScriptDetectOff then
+			AntiCheat.ScriptDetectOff = false
+		else
+			AntiCheat.ScriptDetectOff = true
+		end
+	elseif arguments[2] == "turbonamespam" then
+		if AntiCheat.TurboNameSpam then
+			AntiCheat.TurboNameSpam = false
+		else
+			AntiCheat.TurboNameSpam = true
+		end
+	elseif arguments[2] == "hideparentinexploit" then
+		if AntiCheat.HideParentInExploit then
+			AntiCheat.HideParentInExploit = false
+		else
+			AntiCheat.HideParentInExploit = true
+		end
+	elseif arguments[2] == "hideparentinpg" then
+		if AntiCheat.HideParentInPG then
+			AntiCheat.HideParentInPG = false
+		else
+			AntiCheat.HideParentInPG = true
+		end
+	elseif arguments[2] == "autoantikick" then
+		if AntiCheat.AutoAntiKick then
+			AntiCheat.AutoAntiKick = false
+		else
+			AntiCheat.AutoAntiKick = true
+		end
+	elseif arguments[2] == "removescripts" then
+		if AntiCheat.RemoveScripts then
+			AntiCheat.RemoveScripts = false
+		else
+			AntiCheat.RemoveScripts = true
+		end
+	elseif arguments[2] == "introaudiooff" then
+		if AntiCheat.IntroAudioOff then
+			AntiCheat.IntroAudioOff = false
+		else
+			AntiCheat.IntroAudioOff = true
+		end
+	elseif arguments[2] == "dontjumblenames" then
+		if AntiCheat.DontJumbleNames then
+			AntiCheat.DontJumbleNames = false
+		else
+			AntiCheat.DontJumbleNames = true
+		end
+	elseif arguments[2] == "onetimescramble" then
+		if AntiCheat.OneTimeScramble then
+			AntiCheat.OneTimeScramble = false
+		else
+			AntiCheat.OneTimeScramble = true
+		end
+	elseif arguments[2] == "printingoff" then
+		if AntiCheat.PrintingOff then
+			AntiCheat.PrintingOff = false
+		else
+			AntiCheat.PrintingOff = true
+		end
+	elseif arguments[2] == "nogui" then
+		if AntiCheat.NoGui then
+			AntiCheat.NoGui = false
+		else
+			AntiCheat.NoGui = true
+		end
+	end
+	opx("-","Turned on anticheat variable")
+	updatesaves()
+end
+
+function useCommand.anticheats()
+	opx("-","Listing all anticheat variables")
+	opxL("Anticheats","ScriptDetectOff\nTurboNameSpam\nHideParentInExploit\nHideParentInPG\nAutoAntiKick\nRemoveScripts\nIntroAudioOff\nDontJumbleNames\nOneTimeScramble\nPrintingOff\nNoGui\nCustom1")
+end
+
 function useCommand.unlight()
-	for i,v in pairs(cmdlp.Character.Torso:GetChildren()) do
+	for i,v in pairs(cmdlp.Character.HumanoidRootPart:GetChildren()) do
 		if v:IsA('PointLight') then
 			v:Destroy()
 			opx("-","Removed light/brightness from character")
@@ -8168,8 +8292,6 @@ function useCommand.spoofcountry()
     sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
     opx("-","Spoofed country to "..getstring(2))
 end
-
-local gethiddenproperty = get_hidden_prop or gethiddenproperty
 
 function useCommand.countrypublic()
 	if arguments[2] then
@@ -10186,6 +10308,18 @@ function useCommand.gotopos()
 	end
 end
 
+if keypress and keyrelease then
+	keypress = keypress
+	keyrelease = keyrelease
+else
+	function keypress()
+		opx("*","Your exploit does not support keypress.")
+	end
+	function keyrelease()
+		opx("*","Your exploit does not support keypress.")
+	end
+end
+
 local autoKey = false
 function useCommand.autokey()
     if arguments[2]:match('[a-z0-9]') and arguments[3] then
@@ -10585,7 +10719,7 @@ end
 function useCommand.removecustombodyparts()
 	if cmd6(cmdlp) then
 		opx("-","Removed all custom body parts")
-		for i,c in pairs(cmdc:GetChildren()) do
+		for i,c in pairs(cmdlp.Character:GetChildren()) do
 			if c:IsA("CharacterMesh") then
 				c:Destroy()
 			end
@@ -11860,7 +11994,7 @@ function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
+		if v.OsPlatform == "CMD-X" then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
@@ -11897,7 +12031,7 @@ cmdp.PlayerAdded:connect(function(plr)
 	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = plr.OsPlatform
 		v = plr
-    	if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
+    	if v.OsPlatform == "CMD-X" then
     		if msg:sub(#msg-5,#msg) == "nigger" then
     			msg = msg:sub(1,#msg-6)
     			if Devs[plr.Name] then
@@ -11927,7 +12061,7 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 	v:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = v.OsPlatform
 		plr = v
-		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 or v.OsPlatform == "CMD-X" then
+		if v.OsPlatform == "CMD-X" then
     		if msg:sub(#msg-5,#msg) == "nigger" then
     			msg = msg:sub(1,#msg-6)
     			if Devs[plr.Name] then
@@ -12696,11 +12830,10 @@ end
 function useCommand.credits()
 	opx("-","Opened credits")
 	opxL("Credits","Note: Some discords may be out of date due to consistent changing;\
-	Owner - pigeon#1818\
-	Co-Owner - hz#4777\
-	Dev - Curvn#2646\
-	Dev - U0ZT.#0904\
-	Dev - Luy#1821\
+	Owner - "..DevCords[1].."\
+	Co-Owner - "..DevCords[2].."\
+	Dev - "..DevCords[3].."\
+	Dev - "..DevCords[4].."\
 	Intro Audio - liv#2001\
 	Thank you to IY for some functions inside CMD-X\
 	Thank you to Bannable#5005 for animpack\
@@ -14952,7 +15085,7 @@ if AntiCheat.PrintingOff == false then
                \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
                 \\::/    /                \\::/    /                \\__/____/               |::|___|         \
                  \\/____/                  \\/____/                                          ~~              ") 
-    print("made by pigeon#1818 & hz#4777")
+    print("made by "..DevCords[1].." & "..DevCords[2])
     print("\
     Having trouble?\
     Press U for output\
@@ -14961,7 +15094,6 @@ if AntiCheat.PrintingOff == false then
     (Free exploits do not work with CMD-X)\
     Type support into the cmd bar for anymore support (if needed)\
     To use chat commands use the prefix '"..prefix.."'")
-
 
     local StarterGui = game:GetService("StarterGui")
     StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
