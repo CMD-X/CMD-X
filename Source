@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.0"
+local ver = "1.3.9"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -32,8 +32,8 @@ Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unname
 _G.Unnamed = Unnamed
 _G.dontTween = false
 
-sethiddenproperty = sethiddenproperty or set_hidden_property
-gethiddenproperty = gethiddenproperty or get_hidden_property
+sethiddenproperty = sethiddenproperty or set_hidden_prop
+gethiddenproperty = gethiddenproperty or get_hidden_prop
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
