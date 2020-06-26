@@ -32,8 +32,20 @@ Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unname
 _G.Unnamed = Unnamed
 _G.dontTween = false
 
-sethiddenproperty = sethiddenproperty or set_hidden_prop
-gethiddenproperty = gethiddenproperty or get_hidden_prop
+if sethiddenproperty or set_hidden_prop then
+    sethiddenproperty = sethiddenproperty or set_hidden_prop
+else
+    function sethiddenproperty()
+        opx("*","Your exploit does not support sethiddenproperty!")
+    end
+end
+if gethiddenproperty or get_hidden_prop then
+    gethiddenproperty = gethiddenproperty or get_hidden_prop
+else
+    function gethiddenproperty()
+        opx("*","Your exploit does not support gethiddenproperty!")
+    end
+end
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
@@ -277,20 +289,6 @@ defaultsettings = {
 	TabsOn = true;
 	KeepCMDXOn = false;
 	ifKickedAuto = false;
-	AntiCheat = {
-	    ScriptDetectOff = false;
-	    TurboNameSpam = false;
-	    HideParentInExploit = false;
-	    HideParentInPG = false;
-	    AutoAntiKick = false;
-	    RemoveScripts = false;
-	    IntroAudioOff = false;
-	    DontJumbleNames = false;
-	    OneTimeScramble = false;
-	    PrintingOff = false;
-	    NoGui = false;
-	    Custom1 = false;
-	};
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
@@ -358,24 +356,6 @@ function saves()
 		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
 		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
 		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
-		    	if json.AntiCheat ~= nil then
-		    		AntiCheat = json.AntiCheat
-		    	else
-		    		AntiCheat = {
-					    ScriptDetectOff = false;
-					    TurboNameSpam = false;
-					    HideParentInExploit = false;
-					    HideParentInPG = false;
-					    AutoAntiKick = false;
-					    RemoveScripts = false;
-					    IntroAudioOff = false;
-					    DontJumbleNames = false;
-					    OneTimeScramble = false;
-					    PrintingOff = false;
-					    NoGui = false;
-					    Custom1 = false;
-					}
-		    	end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -428,20 +408,6 @@ function saves()
 			    TabsOn = true
 			    KeepCMDXOn = false
 			    ifKickedAuto = false
-			    AntiCheat = {
-				    ScriptDetectOff = false;
-				    TurboNameSpam = false;
-				    HideParentInExploit = false;
-				    HideParentInPG = false;
-				    AutoAntiKick = false;
-				    RemoveScripts = false;
-				    IntroAudioOff = false;
-				    DontJumbleNames = false;
-				    OneTimeScramble = false;
-				    PrintingOff = false;
-				    NoGui = false;
-				    Custom1 = false;
-				}
 			end
 		end
 	else
@@ -486,20 +452,6 @@ function saves()
 	    TabsOn = true
 	    KeepCMDXOn = false
 	    ifKickedAuto = false
-	    AntiCheat = {
-		    ScriptDetectOff = false;
-		    TurboNameSpam = false;
-		    HideParentInExploit = false;
-		    HideParentInPG = false;
-		    AutoAntiKick = false;
-		    RemoveScripts = false;
-		    IntroAudioOff = false;
-		    DontJumbleNames = false;
-		    OneTimeScramble = false;
-		    PrintingOff = false;
-		    NoGui = false;
-		    Custom1 = false;
-		}
 	end
 end
  
@@ -549,7 +501,6 @@ function updatesaves()
 		TabsOn = TabsOn;
 		KeepCMDXOn = KeepCMDXOn;
 		ifKickedAuto = ifKickedAuto;
-		AntiCheat = AntiCheat;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -570,6 +521,21 @@ for _,x in next, Adm do
 		end
 	end
 end
+
+AntiCheat = {
+    ScriptDetectOff = false;
+    TurboNameSpam = false;
+	HideParentInExploit = false;
+	HideParentInPG = false;
+	AutoAntiKick = false;
+	RemoveScripts = false;
+	IntroAudioOff = false;
+	DontJumbleNames = false;
+	OneTimeScramble = false;
+	PrintingOff = false;
+    NoGui = false;
+	Custom1 = false;
+}
 
 -- Known Anti CMD-X and unpatches:
 if game.PlaceId == 1962086868 then
