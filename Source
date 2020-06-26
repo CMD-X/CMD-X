@@ -141,7 +141,7 @@ local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 
 if not writefile then
-	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher (buggy), SirHurt","Free: KRNL (buggy)","Run Anyway",true)
+	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher, SirHurt (buggy)","Free: KRNL (buggy)","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
 
