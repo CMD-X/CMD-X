@@ -163,11 +163,6 @@ if Current.Version ~= ver then
 	repeat wait() until RunDude == true
 end
 
-if not cmdlp.Character.HumanoidRootPart or not cmdlp.Character.Humanoid or not cmdlp.Character then
-	Stand("Your character isn't loaded!","Commands may not work.","","","","Run Anyway",true)
-	repeat wait() until RunDude == true
-end
-
 -- Variables: ------------------------|
 cmdws = workspace
 local player = cmdlp
@@ -305,7 +300,7 @@ function commandsLoaded()
 	return isDoneLoading()
 end
 
-if commandsLoaded == false then
+if commandsLoaded() == false then
 	Stand("You are blacklisted from CMD-X.","CMD-X will not run.","","For further help or appeal refer to the discord.","","",false)
 	repeat wait() until RunDude == true
 end
