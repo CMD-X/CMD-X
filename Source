@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.0"
+local ver = "1.4.1"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -178,7 +178,7 @@ local Devs = {
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 	["K5RM"] = "Dev",
-    ["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
+	["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }
 
 DevCords = {
@@ -209,6 +209,7 @@ local Donors = {
 	["xniped"] = {Tier = "2"},
 	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
+	["tyswrld"] = {Tier = "1"}
 }
 
 ---------------------------------------|
@@ -7144,8 +7145,9 @@ function useCommand.grabip()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local firstIntegers = {"5","149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s IP is uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(1,170).."."..math.random(1,170).."."..math.random(1,9), "All")
+			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
+			math.randomseed(target.UserId)
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s IP is uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99), "All")
 			opx("-",target.Name.."s fake IP was said in chat")
 		else
 			opx("*","Player does not exist!")
