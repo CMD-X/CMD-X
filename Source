@@ -32,20 +32,8 @@ Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unname
 _G.Unnamed = Unnamed
 _G.dontTween = false
 
-if sethiddenproperty or set_hidden_prop then
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-else
-    function sethiddenproperty()
-        opx("*","Your exploit does not support sethiddenproperty!")
-    end
-end
-if gethiddenproperty or get_hidden_prop then
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-else
-    function gethiddenproperty()
-        opx("*","Your exploit does not support gethiddenproperty!")
-    end
-end
+sethiddenproperty = sethiddenproperty or set_hidden_prop
+gethiddenproperty = gethiddenproperty or get_hidden_prop
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
