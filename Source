@@ -10486,7 +10486,7 @@ function useCommand.emote()
 				Robot = 3338025566;
 				Twirl = 3334968680;
 				Jacks = 3338066331;
-				T = 3338010159;
+				TPose = 3338010159;
 				Shy = 3337978742;
 				Monkey = 3333499508;
 				["Borock's Rage"] = 3236842542;
@@ -10523,6 +10523,14 @@ function useCommand.emote()
 				Confused = 4940561610;
 				Cower = 4940563117;
 				Tantrum = 5104341999;
+				Bored = 5230599789;
+				Beckon = 5230598276;
+				Hello = 3344650532;
+				Salute = 3333474484;
+				Stadium = 3338055167;
+				Tilt = 3334538554;
+				Point = 3344585679;
+				Shrug = 3334392772;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -12375,7 +12383,7 @@ function useCommand.animsync()
 						Robot = 3338025566;
 						Twirl = 3334968680;
 						Jacks = 3338066331;
-						T = 3338010159;
+						TPose = 3338010159;
 						Shy = 3337978742;
 						Monkey = 3333499508;
 						["Borock's Rage"] = 3236842542;
@@ -12412,6 +12420,14 @@ function useCommand.animsync()
 						Confused = 4940561610;
 						Cower = 4940563117;
 						Tantrum = 5104341999;
+						Bored = 5230599789;
+						Beckon = 5230598276;
+						Hello = 3344650532;
+						Salute = 3333474484;
+						Stadium = 3338055167;
+						Tilt = 3334538554;
+						Point = 3344585679;
+						Shrug = 3334392772;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
