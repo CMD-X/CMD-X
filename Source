@@ -204,7 +204,8 @@ local Donors = {
 	["xniped"] = {Tier = "2"},
 	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
-	["tyswrld"] = {Tier = "1"}
+	["tyswrld"] = {Tier = "1"},
+	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
 }
 
 ---------------------------------------|
@@ -11948,6 +11949,8 @@ function useCommand.scriptusers()
 			elseif Donors[v.Name] then
 				if Donors[v.Name].Tier == "Custom1" then
 				    usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
+				elseif Donors[v.Name].Tier == "Custom2" then
+				    usageof = usageof.."[INFERNAL]"..v.Name.."\n"
 				else
 				    usageof = usageof.."[DONOR]"..v.Name.."\n"
 				end
@@ -11990,6 +11993,8 @@ cmdp.PlayerAdded:connect(function(plr)
     			elseif Donors[plr.Name] then
     				if Donors[v.Name].Tier == "Custom1" then
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+    				elseif Donors[v.Name].Tier == "Custom2" then
+				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
     				end
@@ -12020,6 +12025,8 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
     			elseif Donors[plr.Name] then
     				if Donors[v.Name].Tier == "Custom1" then
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+    				elseif Donors[v.Name].Tier == "Custom2" then
+				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
     				end
@@ -15362,6 +15369,8 @@ function colorName(Self,Tbl)
 				v.TextColor3 = Color3.fromRGB(255,215,100)
 			elseif Tbl.Tier == "Custom1" then
 			    v.TextColor3 = Color3.fromRGB(209,156,240)
+			elseif Tbl.Tier == "Custom2" then
+			    v.TextColor3 = Color3.fromRGB(170, 1, 20)
 			elseif Tbl.Tier == "Top" then
 			    RGBDev(Self)
 			end
