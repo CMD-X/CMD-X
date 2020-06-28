@@ -499,12 +499,33 @@ _G.hotkeyopx = hotkeyopx
 AdmIG = {}
 
 for _,x in next, Adm do
-	for _,v in next, game:GetService("Players"):GetPlayers() do --Shit to change
+	for _,v in next, cmdp:GetPlayers() do --Shit to change
 		if x == v.Name then
 			table.insert(AdmIG,x)
 		end
 	end
 end
+
+Inputting = false
+ChatBar = nil
+Current = nil
+
+function Check()
+    wait(.1)
+    Inputting = false
+    Disconnection:Disconnect()
+end
+
+function InputBegan()
+    if game:GetService("UserInputService"):GetFocusedTextBox() then
+        ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
+        print(ChatBar.Name)
+        Inputting = true
+        Current = ChatBar.FocusLost
+        Disconnection = Current:Connect(Check)
+    end
+end
+InputConnect = game:GetService("UserInputService").InputBegan:Connect(InputBegan)
 
 AntiCheat = {
     ScriptDetectOff = false;
@@ -15321,15 +15342,17 @@ chatbar.Focused:connect(function()
 end)
 
 cmdlp.Chatted:connect(function(v)
-	if v:lower():sub(1,#prefix) == prefix then
-		cmd:CaptureFocus()
-		cmd.Text = v:sub(#prefix+1,100000)
-		cmd:ReleaseFocus()
-	elseif v:lower():sub(1,1) == '.' then
-		cmd:CaptureFocus()
-		cmd.Text = v:sub(2,100000)
-		cmd:ReleaseFocus()
-	end
+    if Inputting then
+    	if v:lower():sub(1,#prefix) == prefix then
+    		cmd:CaptureFocus()
+    		cmd.Text = v:sub(#prefix+1,100000)
+    		cmd:ReleaseFocus()
+    	elseif v:lower():sub(1,1) == '.' then
+    		cmd:CaptureFocus()
+    		cmd.Text = v:sub(2,100000)
+    		cmd:ReleaseFocus()
+    	end
+    end
 end)
 
 for i,v in pairs(AdmIG) do
