@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.1"
+local ver = "1.4.2"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -3219,6 +3219,9 @@ table.insert(CMDN, {N = "animdata", A = {""}, CMD = "515,animdata,,Shows you inf
 table.insert(CMDN, {N = "unanimdata", A = {""}, CMD = "516,unanimdata,,()"})
 table.insert(CMDN, {N = "anticheat", A = {"ac"}, CMD = "517,anticheat/ac,(var),Sets anticheat variables on or off."})
 table.insert(CMDN, {N = "anticheats", A = {"acs"}, CMD = "518,anticheats/acs,,Lists anticheat variables."})
+table.insert(CMDN, {N = "dox", A = {"dhox"}, CMD = "519,dox/dhox,(plr),Fake doxes player."})
+table.insert(CMDN, {N = "masscountry", A = {"massctry"}, CMD = "520,masscountry/massctry,,Shows countries of all players."})
+table.insert(CMDN, {N = "freecamgoto", A = {"fcgoto","fcto","fctp"}, CMD = "521,freecamgoto/fcgoto/fctp/fcto,(plr),Teleports freecam to a player."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -7105,6 +7108,40 @@ function useCommand.grabip()
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
+end
+
+function useCommand.dox()
+    if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+		    local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
+    		local URL = "http://country.io/names.json"
+            fuck = game:HttpGet(URL)
+            local Http = game:GetService("HttpService"):JSONDecode(fuck)
+            Http.name = Http[cc]
+			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
+			math.randomseed(target.UserId)
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."; IP: uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99)..", Country: "..Http.name, "All")
+			opx("-",target.Name.."s fake DOX was said in chat")
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.masscountry()
+    xCC = ""
+    for i,v in pairs(cmdp:GetPlayers()) do
+        local cc = gethiddenproperty(v, "CountryRegionCodeReplicate")
+    	local URL = "http://country.io/names.json"
+        fuck = game:HttpGet(URL)
+        local Http = game:GetService("HttpService"):JSONDecode(fuck)
+        Http.name = Http[cc]
+    	xCC = xCC..Http.name.."\n"
+    end
+    opxL("Countries",xCC)
 end
 
 function useCommand.forceshiftlock()
@@ -13508,9 +13545,12 @@ local PlayerState = {} do
 	end
 end
 
-function StartFreecam()
+function StartFreecam(p)
 	local cameraCFrame = Camera.CFrame
-	cameraRot = Vector2.new(cameraCFrame.X,cameraCFrame.Y)
+	if p then
+	    cameraCFrame = p
+	end
+	cameraRot = Vector2.new()
 	cameraPos = cameraCFrame.p
 	cameraFov = Camera.FieldOfView
 
@@ -13530,11 +13570,13 @@ function StopFreecam()
 	workspace.Camera.FieldOfView = 70
 end
 
+FreecamOn = false
 function useCommand.freecam()
 	opx("-","Activated freecam")
 	StartFreecam()
 	wait(.1)
 	navSpeed = permfcspeed
+	FreecamOn = true
 	NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
 end
 
@@ -13561,8 +13603,31 @@ end
 function useCommand.unfreecam()
 	opx("-","De-Activated freecam")
 	StopFreecam()
+	FreecamOn = false
 	wait(1)
 	workspace.Camera.FieldOfView = 70
+end
+
+function useCommand.freecamgoto()
+    if FreecamOn then
+        if arguments[2] then
+		    local target = findplr(arguments[2])
+		    if target then
+                StopFreecam()
+                wait(.1)
+                opx("-","Teleported freecam to "..target.Name)
+                StartFreecam(target.Character.HumanoidRootPart.CFrame)
+                navSpeed = permfcspeed
+            	NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+            else
+                opx("*","Player does not exist!")
+            end
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
 end
 
 function useCommand.friendjoin()
