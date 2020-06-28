@@ -32,9 +32,6 @@ Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unname
 _G.Unnamed = Unnamed
 _G.dontTween = false
 
-sethiddenproperty = sethiddenproperty or set_hidden_prop
-gethiddenproperty = gethiddenproperty or get_hidden_prop
-
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
 	LoadingFrame = Instance.new("Frame", getParent); RandomReason = Instance.new("TextLabel", getParent)
@@ -1840,10 +1837,8 @@ function opxL(title,text)
 	opxholder.Visible = true
 end
 
-if AntiCheat.ScriptDetectOff == false and sethiddenproperty then
+if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
-    	cmdlp.MaximumSimulationRadius = 139
-    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
     	cmdlp.OsPlatform = "CMD-X"
     end
 end
@@ -6939,6 +6934,9 @@ function useCommand.grabip()
 end
 
 function useCommand.dox()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+
     if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
@@ -6960,6 +6958,8 @@ function useCommand.dox()
 end
 
 function useCommand.masscountry()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
     xCC = ""
     for i,v in pairs(cmdp:GetPlayers()) do
         local cc = gethiddenproperty(v, "CountryRegionCodeReplicate")
@@ -8101,11 +8101,15 @@ function useCommand.osprivate()
 end
 
 function useCommand.spoofcountry()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
     sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
     opx("-","Spoofed country to "..getstring(2))
 end
 
 function useCommand.countrypublic()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
@@ -8125,6 +8129,8 @@ function useCommand.countrypublic()
 end
 
 function useCommand.countryprivate()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
@@ -12145,6 +12151,8 @@ end
 
 local funa = false
 function useCommand.freezeunanchored()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	opx("-","Froze unanchored parts")
 	funa = true
 	cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
@@ -12968,15 +12976,11 @@ function useCommand.noshow()
 	if arguments[2] == "on" then
 		opx("-","No-Show is now on")
 		sets.sDetect = false
-		sethiddenproperty(cmdlp, "SimulationRadius", 0)
-		cmdlp.MaximumSimulationRadius = 0
 		cmdlp.OsPlatform = "Win32"
 		updatesaves()
 	elseif arguments[2] == "off" then
 		opx("-","No-Show is now off")
 		sets.sDetect = true
-		sethiddenproperty(cmdlp, "SimulationRadius", 139)
-		cmdlp.MaximumSimulationRadius = 139
 		cmdlp.OsPlatform = "CMD-X"
 		updatesaves()
 	else
@@ -13524,6 +13528,8 @@ end
 
 IHaveSimmed = false
 function useCommand.simulationradius()
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	IHaveSimmed = true
 	if arguments[2] == "max" then
 		opx("-","Updated simulation radius")
@@ -14675,7 +14681,6 @@ end
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
     	cmdlp.MaximumSimulationRadius = 139
-    	sethiddenproperty(cmdlp, "SimulationRadius", 139)
     	cmdlp.OsPlatform = "CMD-X"
     end
 end
