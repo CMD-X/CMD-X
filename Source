@@ -540,6 +540,12 @@ AntiCheat = {
 }
 
 -- Known Anti CMD-X and unpatches:
+if game.PlaceId == 4052062489 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+    AntiCheat.AutoAntiKick = true -- nice client sided anticheat, maybe get a better dev??
+end
 if game.PlaceId == 1962086868 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
