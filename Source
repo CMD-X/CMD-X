@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.2"
+local ver = "1.4.3"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -3244,6 +3244,10 @@ table.insert(CMDN, {N = "anticheats", A = {"acs"}, CMD = "518,anticheats/acs,,Li
 table.insert(CMDN, {N = "dox", A = {"dhox"}, CMD = "519,dox/dhox,(plr),Fake doxes player."})
 table.insert(CMDN, {N = "masscountry", A = {"massctry"}, CMD = "520,masscountry/massctry,,Shows countries of all players."})
 table.insert(CMDN, {N = "freecamgoto", A = {"fcgoto","fcto","fctp"}, CMD = "521,freecamgoto/fcgoto/fctp/fcto,(plr),Teleports freecam to a player."})
+table.insert(CMDN, {N = "vnoclip", A = {"vnc"}, CMD = "522,vnoclip/vnc,,Turns on vehicle noclip."})
+table.insert(CMDN, {N = "vclip", A = {"vc"}, CMD = "523,vclip/vc,,()"})
+table.insert(CMDN, {N = "freecamfreegoto", A = {"fcfreegoto","fcfreeto","fcfreetp"}, CMD = "524,freecamfreegoto/fcfreegoto/fcfreetp/fcfreeto,(x|y|z),Teleports freecam to pos."})
+table.insert(CMDN, {N = "freecamgotopart", A = {"fcgotopart","fctopart","fctppart"}, CMD = "525,freecamgotopart/fcgotopart/fctppart/fctopart,(part),Teleports freecam to part."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -7165,7 +7169,7 @@ function useCommand.masscountry()
         fuck = game:HttpGet(URL)
         local Http = game:GetService("HttpService"):JSONDecode(fuck)
         Http.name = Http[cc]
-    	xCC = xCC..Http.name.."\n"
+    	xCC = xCC..v.Name.."|"..Http.name.."\n"
     end
     opxL("Countries",xCC)
 end
@@ -11318,6 +11322,30 @@ function useCommand.vgoto()
 	end
 end
 
+carParts = {}
+function useCommand.vnoclip()
+    opx("-","Now vehicle noclipping")
+    local Car = cmdlp.Character.Humanoid.SeatPart
+	for i,v in pairs(Car.Parent.Parent:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v.CanCollide then
+                v.CanCollide = false
+                table.insert(carParts, v)
+            end
+        end
+    end
+end
+
+function useCommand.vclip()
+    opx("-","No longer vehicle noclipping")
+    local Car = cmdlp.Character.Humanoid.SeatPart
+	for i,v in pairs(carParts) do
+        if v:IsA("BasePart") then
+            v.CanCollide = true
+        end
+    end
+end
+
 function useCommand.admin()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -13656,6 +13684,47 @@ function useCommand.freecamgoto()
             else
                 opx("*","Player does not exist!")
             end
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
+end
+
+function useCommand.freecamfreegoto()
+    if FreecamOn then
+        if arguments[4] then
+            StopFreecam()
+            wait(.1)
+            opx("-","Teleported freecam to pos")
+            StartFreecam(arguments[2],arguments[3],arguments[4])
+            navSpeed = permfcspeed
+            NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
+end
+
+function useCommand.freecamgotopart()
+    if FreecamOn then
+        if arguments[2] then
+            StopFreecam()
+            wait(.1)
+            opx("-","Teleported freecam to part")
+            for i,v in pairs(workspace:GetDescendants()) do
+    			if v.Name == getstring(2) then
+                    StartFreecam(v.CFrame)
+                    navSpeed = permfcspeed
+                    NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+    				break
+    			else
+    				opx("*","Part does not exist")
+    			end
+    		end
         else
             opx("*","2 arguments are required!")
         end
