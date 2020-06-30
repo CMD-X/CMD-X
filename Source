@@ -516,7 +516,6 @@ end
 function InputBegan()
     if game:GetService("UserInputService"):GetFocusedTextBox() then
         ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
-        print(ChatBar.Name)
         Inputting = true
         Current = ChatBar.FocusLost
         Disconnection = Current:Connect(Check)
