@@ -4233,22 +4233,19 @@ end
 
 function useCommand.eightballpu()
 	local eightball = {"Maybe","Possibly","No","Yes","Never","Don't get your hopes up","100%","0%","50%","Likely","Extremely Likely","Almost Certain","Impossible","Possible","Currently... no","Maybe later on in life","Aha... Good luck on that one","This will definently happen buddy","Stop asking me questions","Hmm..."}
-	local value = math.random(1,#eightball)
-	local picked_value = eightball[value]
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("8Ball says: "..tostring(picked_value), "All")
-	opx("8Ball says: "..tostring(picked_value))
+	local picked_value = eightball[ math.random(1,#eightball) ]
+	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("8Ball says: "..picked_value, "All")
+	opx("8Ball says: "..picked_value)
 end
 
 function useCommand.eightballpr()
 	local eightball = {"Maybe","Possibly","No","Yes","Never","Don't get your hopes up","100%","0%","50%","Likely","Extremely Likely","Almost Certain","Impossible","Possible","Currently... no","Maybe later on in life","Aha... Good luck on that one","This will definently happen buddy","Stop asking me questions","Hmm..."}
-	local value = math.random(1,#eightball)
-	local picked_value = eightball[value]
-	opx("8Ball says: "..tostring(picked_value))
+	local picked_value = eightball[ math.random(1,#eightball) ]
+	opx("8Ball says: "..picked_value)
 end
 
-local PI = game:HttpGet('http://www.geom.uiuc.edu/~huberty/math5337/groupe/digits.html', true):match('3.1[0-9]*')
 function useCommand.pi()
-	opx("-",PI:sub(1, arguments[2] or 10))
+	opx("-",game:HttpGet('http://www.geom.uiuc.edu/~huberty/math5337/groupe/digits.html', true):match('3.1[0-9]*'):sub(1, arguments[2] or 10))
 end
 
 local helpCode = "discord.gg/cmd"
@@ -9425,9 +9422,14 @@ end
 
 function useCommand.time()
 	arguments[2] = arguments[2]:upper()
-    local stime = game:HttpGet('https://www.worldtimeserver.com/time-zones/'..arguments[2], true):match('Server Time:   [0-9: A-Z]*'):sub(16)
-	opx("-","The time in "..arguments[2].." is "..stime)
-	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The time in, timezone: "..arguments[2].." is "..stime,"All")
+    local stime = game:HttpGet('https://www.worldtimeserver.com/time-zones/'..arguments[2], true)
+	if stime:find('Server Time') then
+		local stime = stime:match('Server Time:   [0-9: A-Z]*'):sub(16)
+		opx("-","The time in "..arguments[2].." is "..stime)
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The time in, timezone: "..arguments[2].." is "..stime,"All")
+	else
+		opx('*','Incorrect timezone!')
+	end
 end
 
 function useCommand.removeforces()
