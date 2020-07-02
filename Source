@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.2"
+local ver = "1.4.3"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -195,7 +195,7 @@ local Donors = {
 	["HyperLink3"] = {Tier = "1"},
 	["Winnzie"] = {Tier = "1"},
 	["8dqt"] = {Tier = "1"},
-    ["472"] = {Tier = "1"},
+    ["iozz"] = {Tier = "1"},
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
@@ -332,7 +332,7 @@ AdmIG = {}
 for _,x in pairs(sets.Adm) do
 	for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		if x == v.Name then
-			table.insert(AdmIG,x)
+			AdmIG[#AdmIG + 1] = x
 		end
 	end
 end
@@ -348,7 +348,6 @@ end
 function InputBegan()
     if game:GetService("UserInputService"):GetFocusedTextBox() then
         ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
-        print(ChatBar.Name)
         Inputting = true
         Current = ChatBar.FocusLost
         Disconnection = Current:Connect(Check)
@@ -372,7 +371,12 @@ AntiCheat = {
 }
 
 -- Known Anti CMD-X and unpatches:
-if game.PlaceId == 1962086868 then
+if game.PlaceId == 4052062489 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+    AntiCheat.AutoAntiKick = true -- nice client sided anticheat, maybe get a better dev??
+elseif game.PlaceId == 1962086868 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
     AntiCheat.PrintingOff = true
@@ -3060,7 +3064,11 @@ local CMDN = {
 	{N = "dox", A = {"dhox"}, CMD = "dox/dhox,(plr),Fake doxes player."},
 	{N = "masscountry", A = {"massctry"}, CMD = "masscountry/massctry,,Shows countries of all players."},
 	{N = "freecamgoto", A = {"fcgoto","fcto","fctp"}, CMD = "freecamgoto/fcgoto/fctp/fcto,(plr),Teleports freecam to a player."},
-	{N = 'pi', A = {''}, CMD = 'pi,(len),Shows numbers of pi to given length.'},
+	{N = 'pi', A = {''}, CMD = 'pi,(length),Shows numbers of pi to given length.'},
+	{N = "vnoclip", A = {"vnc"}, CMD = "vnoclip/vnc,,Turns on vehicle noclip."},
+	{N = "vclip", A = {"vc"}, CMD = "vclip/vc,,()"},
+	{N = "freecamfreegoto", A = {"fcfreegoto","fcfreeto","fcfreetp"}, CMD = "freecamfreegoto/fcfreegoto/fcfreetp/fcfreeto,(x|y|z),Teleports freecam to pos."},
+	{N = "freecamgotopart", A = {"fcgotopart","fctopart","fctppart"}, CMD = "freecamgotopart/fcgotopart/fctppart/fctopart,(part),Teleports freecam to part."},
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -3708,7 +3716,8 @@ function alignFunctions(getArgs)
 end
 
 function findCmd(cmd_name)
-	for _,v in pairs(CMDN) do
+	for i=1, #CMDN do
+		local v = CMDN[i]
 		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				v = v.N
@@ -3719,7 +3728,8 @@ function findCmd(cmd_name)
 end
 
 function giveCmd(cmd_name)
-	for _,v in pairs(CMDN) do
+	for i=1, #CMDN do
+		local v = CMDN[i]
 		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				return v
@@ -3820,9 +3830,9 @@ function useCommand.boobsize()
 		target = findplr(arguments[2])
 		if target then
 			local BBtable = {"Baby size","Tiny","Medium size","Normal Size","Large","Gigantic","Anime size"}
-			local pickBB = math.random(1,#BBtable)
-			opx("-",target.Name.." has "..BBtable[pickBB].." roboobs")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has "..BBtable[pickBB].." roboobs","All")
+			local pickBB = BBtable[ math.random(1,#BBtable) ]
+			opx("-",target.Name.." has "..pickBB.." roboobs")
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has "..pickBB.." roboobs","All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -6986,7 +6996,7 @@ function useCommand.masscountry()
         fuck = game:HttpGet(URL)
         local Http = game:GetService("HttpService"):JSONDecode(fuck)
         Http.name = Http[cc]
-    	xCC = xCC..Http.name.."\n"
+		xCC = xCC..v.Name.."|"..Http.name.."\n"
     end
     opxL("Countries",xCC)
 end
@@ -10598,6 +10608,31 @@ function useCommand.vgoto()
 	end
 end
 
+carParts = {}
+function useCommand.vnoclip()
+    opx("-","Now vehicle noclipping")
+    local Car = cmdlp.Character.Humanoid.SeatPart
+	for i,v in pairs(Car.Parent.Parent:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v.CanCollide then
+                v.CanCollide = false
+				carParts[#carParts + 1] = v
+            end
+        end
+    end
+end
+
+function useCommand.vclip()
+    opx("-","No longer vehicle noclipping")
+    local Car = cmdlp.Character.Humanoid.SeatPart
+	for i=1, #carParts do
+		local v = carParts[i]
+        if v:IsA("BasePart") then
+            v.CanCollide = true
+        end
+    end
+end
+
 function useCommand.admin()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -10921,7 +10956,7 @@ BtnExitHotkey.Text = "X"
 BtnExitHotkey.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExitHotkey.TextSize = 14.000
 BtnExitHotkey.MouseButton1Down:Connect(function()
-	for i,v in pairs(sets.hkBinds) do
+	for i=1, #sets.hkBinds do
 		if sets.hkBinds.C == "Unnamed" then
 			table.remove(sets.hkBinds,i)
 		end
@@ -10951,7 +10986,7 @@ function useCommand.hotkeys()
 	opx("-","Hotkeys opened")
 	MangeScrollHotkey:ClearAllChildren()
 	ManageHolderHotkey.Visible = true
-	for i,v in pairs(sets.hkBinds) do
+	for i=1, #sets.hkBinds do
 		Template1(sets.hkBinds[i].C,i)
 	end
 end
@@ -11635,7 +11670,7 @@ function useCommand.statistics()
 	opx("-","Loaded CMD Statistics")
 	Scrollingstats:ClearAllChildren()
 	statholder.Visible = true
-	for i,v in pairs(sets.CMDStat) do
+	for i=1, #sets.CMDStat do
 		if sets.CMDStat[i].T ~= 0 then
 			CreateStatLabel(sets.CMDStat[i].N,sets.CMDStat[i].T)
 		end
@@ -11876,7 +11911,7 @@ function useCommand.height()
 		target = findplr(arguments[2])
 		if target then
 			local height1 = math.random(0,7)
-			local height2 = math.random(0,10)
+			local height2 = math.random(0,11)
 			opx("-",target.Name.." is "..height1.."'"..height2)
 			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." is "..height1.."'"..height2,"All")
 		else
@@ -12941,6 +12976,47 @@ function useCommand.freecamgoto()
             else
                 opx("*","Player does not exist!")
             end
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
+end
+
+function useCommand.freecamfreegoto()
+    if FreecamOn then
+        if arguments[4] then
+            StopFreecam()
+            wait(.1)
+            opx("-","Teleported freecam to pos")
+            StartFreecam(arguments[2],arguments[3],arguments[4])
+            navSpeed = sets.permfcspeed
+            NAV_KEYBOARD_SPEED = Vector3.new(sets.permfcspeed, sets.permfcspeed, sets.permfcspeed)
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
+end
+
+function useCommand.freecamgotopart()
+    if FreecamOn then
+        if arguments[2] then
+            StopFreecam()
+            wait(.1)
+            opx("-","Teleported freecam to part")
+            for i,v in pairs(workspace:GetDescendants()) do
+    			if v.Name == getstring(2) then
+                    StartFreecam(v.CFrame)
+                    navSpeed = sets.permfcspeed
+                    NAV_KEYBOARD_SPEED = Vector3.new(sets.permfcspeed, sets.permfcspeed, sets.permfcspeed)
+    				break
+    			else
+    				opx("*","Part does not exist")
+    			end
+    		end
         else
             opx("*","2 arguments are required!")
         end
@@ -14389,7 +14465,7 @@ cmdm.KeyDown:connect(function(key)
         	end
 		end
 	else
-		for i,_ in pairs(sets.hkBinds) do
+		for i=1, #sets.hkBinds do
 			if key == sets.hkBinds[i].K then
 				wait()
 				alignFunctions(sets.hkBinds[i].C)
@@ -14653,7 +14729,7 @@ cmdlp.Chatted:Connect(function(v)
 	end
 end)
 
-for i,v in pairs(AdmIG) do
+for i=1, #AdmIG do
 	cmdp[AdmIG[i]].Chatted:Connect(function(a)
 		if a:lower():sub(1,#sets.prefix) == sets.prefix then
 			matchCommand = ""
