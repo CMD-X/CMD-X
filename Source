@@ -199,10 +199,11 @@ local Donors = {
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
-	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
+	["overreaction"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
+	["8avu"] = {Tier = "1"},
 }
 
 ---------------------------------------|
