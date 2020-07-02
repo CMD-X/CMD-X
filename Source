@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.3"
+local ver = "1.4.4"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -3069,6 +3069,11 @@ local CMDN = {
 	{N = "vclip", A = {"vc"}, CMD = "vclip/vc,,()"},
 	{N = "freecamfreegoto", A = {"fcfreegoto","fcfreeto","fcfreetp"}, CMD = "freecamfreegoto/fcfreegoto/fcfreetp/fcfreeto,(x|y|z),Teleports freecam to pos."},
 	{N = "freecamgotopart", A = {"fcgotopart","fctopart","fctppart"}, CMD = "freecamgotopart/fcgotopart/fctppart/fctopart,(part),Teleports freecam to part."},
+	{N = "audiotp", A = {"atp"}, CMD = "audiotp/atp,(num),Teleports audio pos to num."},
+	{N = "memory", A = {"mem"}, CMD = "memory/mem,,Shows you your current memory usage."},
+	{N = "uncleanfling", A = {"uncfling"}, CMD = "uncleanfling/uncfling,,()"},
+	{N = "loadbpppos", A = {""}, CMD = "loadbppos,(name),Bypass teleports to waypoint."},
+	{N = "notoolanim", A = {""}, CMD = "notoolanim,,Removes tool animations."},
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -5521,15 +5526,51 @@ function useCommand.unfling()
 	cmdlp.Character.Humanoid.Jump = true
 end
 
+RestoreCFling = {}
 function useCommand.cleanfling()
-	opx("-","Now clean flinging")
-	v = cmdlp.Character:FindFirstChildOfClass("Tool")
-	v.Parent = cmdlp.Backpack
-	v.Handle.Massless = true
-	v.GripPos = Vector3.new(100000000000000,100000000000000,100000000000000)
-	cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
-	v.Parent = cmdlp.Character
-	noclip()
+	local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+	if tool then
+		opx("-","Now clean flinging")
+		tool.Parent = cmdlp.Backpack
+		tool.Handle.Massless = true
+		RestoreCFling = {
+			Anim = cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId;
+    	    Grip = tool.GripPos;
+    	}
+    	tool.GripPos = Vector3.new(1e14,1e14,1e14)
+    	cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
+    	tool.Parent = cmdlp.Character
+    	pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = 123 end)
+    	wait(.1)
+    	tool.Parent = cmdlp.Backpack
+    	wait(.1)
+    	tool.Parent = cmdlp.Character
+    	noclip()
+    else
+        opx("*","You have no tool equipped!")
+    end
+end
+
+function useCommand.uncleanfling()
+    opx("-","No longer clean flinging")
+    cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+    cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = RestoreCFling.Anim
+    local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+    if tool then
+        tool.GripPos = RestoreCFling.Grip
+    end
+end
+
+function useCommand.notoolanim()
+    pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = 123 end)
+    opx("-","You now have no tool anim")
+    local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+    if tool then
+        wait(.1)
+    	tool.Parent = cmdlp.Backpack
+    	wait(.1)
+    	tool.Parent = cmdlp.Character
+    end
 end
 
 local Lagging = false
@@ -7401,18 +7442,59 @@ end
 function useCommand.loadpos()
 	if arguments[2] then
 		wpNS = getstring(2)
-		for i,v in pairs(sets.WPs) do
-			local xc = sets.WPs[i].C[1]
-			local yc = sets.WPs[i].C[2]
-			local zc = sets.WPs[i].C[3]
-			if tostring(sets.WPs[i].N) == tostring(wpNS) then
-				cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(xc,yc,zc)
+		for i=1, #sets.WPs do
+			local v = sets.WPs[i]
+			if tostring(v.N) == tostring(wpNS) then
+				cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(v.C[1],v.C[2],v.C[3])
 			end
 		end
 		opx("Teleported to "..tostring(wpNS))
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
+end
+
+function useCommand.loadbppos()
+	if arguments[2] then
+		wpNS = getstring(2)
+		for i=1, #sets.WPs do
+			local v = sets.WPs[i]
+			if tostring(v.N) == tostring(wpNS) then
+			    game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = CFrame.new(v.C[1],v.C[2],v.C[3])}):Play()
+			end
+		end
+		opx("Teleported to "..tostring(wpNS))
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.memory()
+    opx("-",math.floor(stats():GetTotalMemoryUsageMb()).."mb")
+end
+
+function useCommand.audiotp()
+    if arguments[2] then
+        local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+        local sound
+        if tool then
+            for i,v in pairs(tool:GetDescendants()) do
+                if v:IsA("Sound") then
+                    sound = v
+                    break
+                end
+            end
+            if sound then
+                sound.TimePosition = arguments[2]
+            else
+                opx("*","Tool is not a boombox!")
+            end
+        else
+            opx("*","You have no tool equipped!")
+        end
+    else
+        opx("*","2 arguments are needed!")
+    end
 end
 
 local Platform = false
@@ -9552,8 +9634,8 @@ end
 function useCommand.deletepos()
 	if arguments[2] then
 		wpNS = getstring(2)
-		for i,v in pairs(sets.WPs) do
-			if tostring(v.N) == tostring(wpNS) then
+		for i=1, #sets.WPs do
+			if tostring(sets.WPs[i].N) == tostring(wpNS) then
 				table.remove(sets.WPs,i)
 				updatesaves()
 			end
