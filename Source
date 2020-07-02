@@ -496,8 +496,8 @@ _G.hotkeyopx = hotkeyopx
 
 AdmIG = {}
 
-for _,x in next, Adm do
-	for _,v in next, cmdp:GetPlayers() do --Shit to change
+for _,x in pairs(Adm) do
+	for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		if x == v.Name then
 			table.insert(AdmIG,x)
 		end
@@ -645,7 +645,7 @@ if AntiCheat.AutoAntiKick then
 end
 
 if AntiCheat.RemoveScripts then
-    for _,v in next, game:GetService("Players"):GetDescendants() do
+    for _,v in pairs(cmdp:GetDescendants()) do
         if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
             v:Destroy()
         end
@@ -761,7 +761,7 @@ output.Visible = false
 
 local Gui = {}
 if not AntiCheat.HideParentInExploit and getParent ~= game then
-    for _,v in next, getParent:GetDescendants() do
+    for _,v in pairs(getParent:GetDescendants()) do
     	table.insert(Gui,v.Name)
     	table.insert(Gui,math.random(-2e9,2e9))
     end
@@ -774,7 +774,7 @@ if getParent ~= game then
             	if AntiCheat.TurboNameSpam == false then
             	    Unnamed.Name = Gui[math.random(#Gui)]
             	else
-            	    for _,v in next, Unnamed:GetDescendants() do
+            	    for _,v in pairs(Unnamed:GetDescendants()) do
             	        v.Name = Gui[math.random(#Gui)]
             	    end
             	end
@@ -782,7 +782,7 @@ if getParent ~= game then
                 if AntiCheat.TurboNameSpam == false then
             	    Unnamed.Name = math.random(1000000)
             	else
-            	    for _,v in next, Unnamed:GetDescendants() do
+            	    for _,v in pairs(Unnamed:GetDescendants()) do
             	        v.Name = math.random(1000000)
             	    end
             	end
@@ -919,8 +919,8 @@ logstitle.TextColor3 = Color3.new(1, 1, 1)
 logstitle.TextSize = 14
 
 function findCmd(cmd_name)
-	for _,v in next, CMDN do
-		for _,x in next, v.A do
+	for _,v in pairs(CMDN) do
+		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				v = v.N
 				return v
@@ -2140,7 +2140,7 @@ Save.TextColor3 = Color3.new(1, 1, 1)
 Save.TextSize = 14
 Save.MouseButton1Down:Connect(function()
 	writestats = "\n"
-	for _,v in next, CMDStat do
+	for _,v in pairs(CMDStat) do
 		if v.T ~= 0 then
 			writestats = writestats.."\n"..v.N.." "..v.T
 		end
@@ -2154,7 +2154,7 @@ function CreateStatLabel(cmd,times,today)
 		sf2:ClearAllChildren()
 	end
 	local alls2 = 0
-	for _,v in next, sf2:GetChildren() do
+	for _,v in pairs(sf2:GetChildren()) do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2
 		end
@@ -2259,7 +2259,7 @@ function findplr(args)
 		return cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
 	elseif args == "new" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v.AccountAge < 30 then
 				vAges[#vAges+1] = v
 			end
@@ -2267,7 +2267,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "old" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v.AccountAge > 30 then
 				vAges[#vAges+1] = v
 			end
@@ -2275,7 +2275,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "bacon" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") then
 				vAges[#vAges+1] = v
 			end
@@ -2283,7 +2283,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "friend" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
@@ -2291,7 +2291,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "notfriend" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if not v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
@@ -2299,7 +2299,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "ally" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v.Team == cmdlp.Team then
 				vAges[#vAges+1] = v
 			end
@@ -2307,7 +2307,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "enemy" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v.Team ~= cmdlp.Team then
 				vAges[#vAges+1] = v
 			end
@@ -2315,7 +2315,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "near" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v ~= cmdlp then
 				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
 				if math < 30 then
@@ -2326,7 +2326,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	elseif args == "far" then
 		local vAges = {} --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if v ~= cmdlp then
 				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
 				if math > 30 then
@@ -2336,7 +2336,7 @@ function findplr(args)
 		end
 		return vAges[math.random(1,#vAges)]
 	else --Shit to change
-		for _,v in next, cmdp:GetPlayers() do
+		for _,v in pairs(cmdp:GetPlayers()) do
 			if string.find(string.lower(v.Name),string.lower(args)) then
 				return v
 			end
@@ -2496,7 +2496,7 @@ function CreateSCLabel(Prefix, Text)
 		sf:ClearAllChildren()
 	end
 	local alls = 0
-	for _,v in next, sf:GetChildren() do
+	for _,v in pairs(sf:GetChildren()) do
 		if v then
 			alls = v.Size.Y.Offset + alls
 		end
@@ -2627,7 +2627,7 @@ Save2.TextColor3 = Color3.new(1, 1, 1)
 Save2.TextSize = 14
 Save2.MouseButton1Down:Connect(function()
 	writestats2 = "\n"
-	for _,v in next, Scrollinglogs:GetChildren() do
+	for _,v in pairs(Scrollinglogs:GetChildren()) do
 		writestats2 = writestats2.."\n"..v.Text
 	end
 	writefile("CMD-X Logs "..math.random(1000)..".txt",tostring(writestats2))
@@ -2640,7 +2640,7 @@ function CreateLabel(Name, Text)
 		sf:ClearAllChildren()
 	end
 	local alls = 0
-	for _,v in next, sf:GetChildren() do
+	for _,v in pairs(sf:GetChildren()) do
 		if v then
 			alls = v.Size.Y.Offset + alls
 		end
@@ -2686,7 +2686,7 @@ function CreateADLabel(name,rank)
 		sf3:ClearAllChildren()
 	end
 	local alls3 = 0
-	for _,v in next, sf3:GetChildren() do
+	for _,v in pairs(sf3:GetChildren()) do
 		if v then
 			alls3 = v.Size.Y.Offset + alls3
 		end
@@ -3292,15 +3292,15 @@ PCs = {"far","random","new","old","bacon","friend","notfriend","ally","enemy","n
 cmd.Changed:Connect(function()
 	local checkargs = string.split(cmd.Text," ")
 	if checkargs[2] then
-		for _,v in next, CMDN do
-			for _,x in next, v.A do
+		for _,v in pairs(CMDN) do
+			for _,x in pairs(v.A) do
 				if checkargs[1] == v.N or checkargs[1] == x then cmdsu.Text = "" end
 			end
 		end
 	end
 	if cmd.Text ~= "" and not checkargs[2] and suggestions == true then
-		for _,v in next, CMDN do
-			for _,x in next, v.A do
+		for _,v in pairs(CMDN) do
+			for _,x in pairs(v.A) do
 				if string.match(v.N,cmd.Text) then
 					if v.N:sub(1,#cmd.Text) == cmd.Text then
 						cmdsu.Text = v.N
@@ -3317,11 +3317,11 @@ cmd.Changed:Connect(function()
 			end
 		end
 	elseif cmd.Text ~= "" and checkargs[2] and suggestions == true then
-		for _,v in next, CMDN do
-			for _,x in next, v.A do
+		for _,v in pairs(CMDN) do
+			for _,x in pairs(v.A) do
 				if v.N == checkargs[1] or x == checkargs[1] and v.ARG == "Player" then
-					for _,plr in next, cmdp:GetPlayers() do --Shit to change
-						for _, pc in next, PCs do
+					for _,plr in pairs(cmdp:GetPlayers()) do --Shit to change
+						for _, pc in pairs(PCs) do
 							if v.ARG == "Player" then
 								NewName = plr.Name:lower()
 								if string.match(NewName,checkargs[2]) then
@@ -3454,7 +3454,7 @@ function CreateCMDLabel(num,name,arg,func)
 		sf2:ClearAllChildren()
 	end
 	local alls2 = 0
-	for _,v in next, sf2:GetChildren() do
+	for _,v in pairs(sf2:GetChildren()) do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2
 		end
@@ -3494,8 +3494,8 @@ end
 Cmdsearch.FocusLost:Connect(function()
 	Scrollingcmdi:ClearAllChildren()
 	if Cmdsearch.Text ~= "" then
-		for _,v in next, CMDN do
-			for _,x in next, v.A do
+		for _,v in pairs(CMDN) do
+			for _,x in pairs(v.A) do
 				if string.find(v.N,Cmdsearch.Text) then
 					if v.N:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
 						local CS = string.split(v.CMD,",")
@@ -3511,7 +3511,7 @@ Cmdsearch.FocusLost:Connect(function()
 			end
 		end
 	else
-		for _,v in next, CMDN do
+		for _,v in pairs(CMDN) do
 			local CS = v.CMD:split(",")
 			CreateCMDLabel(CS[1],CS[2],CS[3],CS[4])
 		end
@@ -3590,7 +3590,7 @@ workspace.DescendantRemoving:connect(function(i)
 end)
 function ESP(plr)
 	spawn(function()
-		for _,v in next, cmdlp.PlayerGui:GetChildren() do
+		for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
 			if v.Name == plr.Name..'_ESP' then
 				v:Destroy()
 			end
@@ -3658,7 +3658,7 @@ function ESP(plr)
 	end)
 end
 cmdp.PlayerRemoving:connect(function(player)
-	for _,v in next, cmdlp.PlayerGui:GetChildren() do
+	for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
 		if v.Name == player.Name..'_ESP' or v.Name == player.Name..'_LC' then
 			v:Destroy()
 		end
@@ -3780,7 +3780,7 @@ function BodyAimbot()
 end
 cmduis.InputBegan:connect(function(input)
 	if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and not Enabledaimbot then
-		for _,des in next, cmdlp.Character.HumanoidRootPart:GetChildren() do
+		for _,des in pairs(cmdlp.Character.HumanoidRootPart:GetChildren()) do
 			if des:IsA("RocketPropulsion") and des.Name == "Launch" then
 				des:Destroy()
 			end
@@ -3796,7 +3796,7 @@ function noclip()
 	Clip = false
 	function NoclipLoop()
 		if Clip == false and cmdlp.Character ~= nil then
-			for _, child in next, cmdlp.Character:GetDescendants() do
+			for _, child in pairs(cmdlp.Character:GetDescendants()) do
 				if child:IsA("BasePart") and child.CanCollide == true then
 					child.CanCollide = false
 				end
@@ -3888,7 +3888,7 @@ function alignFunctions(getArgs)
 	function getstring(begin)
 		local start = begin-1
 		local AA = ''
-		for i,v in next, arguments do
+		for i,v in pairs(arguments) do
 			if i > start then
 				if AA ~= '' then
 					AA = AA .. ' ' .. v
@@ -3903,8 +3903,8 @@ function alignFunctions(getArgs)
 end
 
 function findCmd(cmd_name)
-	for _,v in next, CMDN do
-		for _,x in next, v.A do
+	for _,v in pairs(CMDN) do
+		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				v = v.N
 				return v
@@ -3914,8 +3914,8 @@ function findCmd(cmd_name)
 end
 
 function giveCmd(cmd_name)
-	for _,v in next, CMDN do
-		for _,x in next, v.A do
+	for _,v in pairs(CMDN) do
+		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				return v
 			end
@@ -3949,7 +3949,7 @@ cmd.FocusLost:connect(function()
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy ~= nile then
 			History[#History+1] = cmd.Text
-			for _,v in next, CMDStat do
+			for _,v in pairs(CMDStat) do
 				if cmdsy == v.N then
 					v.T = v.T+1
 				end
@@ -4094,7 +4094,7 @@ function Template2(name,entry)
 	local TemplateBtnRemove = Instance.new("TextButton", getParent)
 	local TemplateBtnAdd = Instance.new("TextButton", getParent)
 	local alls2 = 5
-	for _,v in next, MangeScrollEnter:GetChildren() do
+	for _,v in pairs(MangeScrollEnter:GetChildren()) do
 		if v then
 			alls2 = v.Size.Y.Offset + alls2+5
 		end
@@ -4293,7 +4293,7 @@ CancelBtnEnter.MouseButton1Down:Connect(function()
 end)
 
 function MakeChanges(title,new)
-	for _,v in next, MangeScrollEnter:GetChildren() do
+	for _,v in pairs(MangeScrollEnter:GetChildren()) do
 		if v.Name == title then
 			v.Name = new
 			xText = v.TemplateName.Text:split("|")
@@ -4336,7 +4336,7 @@ BtnExitEnter.Text = "X"
 BtnExitEnter.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExitEnter.TextSize = 14.000
 BtnExitEnter.MouseButton1Down:Connect(function()
-	for i,_ in next, enterCMD do
+	for i,_ in pairs(enterCMD) do
 		if enterCMD[i].N == "Unnamed" then
 			table.remove(enterCMD,i)
 		end
@@ -4365,7 +4365,7 @@ function useCommand.entercmds()
 	opx("-","Opened enter cmd manager")
 	MangeScrollEnter:ClearAllChildren()
 	ManageHolderEnter.Visible = true
-	for i,_ in next, enterCMD do
+	for i,_ in pairs(enterCMD) do
 		Template2(enterCMD[i].N,i)
 	end
 end
@@ -4554,7 +4554,7 @@ function useCommand.defaultgravity()
 end
 
 local bodyPos = false
-for _,v in next, cmdlp.Character:GetDescendants() do
+for _,v in pairs(cmdlp.Character:GetDescendants()) do
 	if v.Name == "rocket" then
 		v:Destroy()
 	end
@@ -4665,13 +4665,13 @@ end
 function useCommand.removearms()
 	opx("-","Removed arms")
 	if cmd15(cmdlp) then
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" then
 				v:Destroy()
 			end
 		end
 	else
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "Right Arm" or v.Name == "Left Arm" then
 				v:Destroy()
 			end
@@ -4682,13 +4682,13 @@ end
 function useCommand.removelegs()
 	opx("-","Removed legs")
 	if cmd15(cmdlp) then
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" then
 				v:Destroy()
 			end
 		end
 	else
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "Right Leg" or v.Name == "Left Leg" then
 				v:Destroy()
 			end
@@ -4699,13 +4699,13 @@ end
 function useCommand.removelimbs()
 	opx("-","Removed limbs")
 	if cmd15(cmdlp) then
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" or v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" then
 				v:Destroy()
 			end
 		end
 	else
-		for _,v in next, cmdlp.Character:GetChildren() do
+		for _,v in pairs(cmdlp.Character:GetChildren()) do
 			if v.Name == "Right Arm" or v.Name == "Left Arm" or v.Name == "Right Leg" or v.Name == "Left Leg" then
 				v:Destroy()
 			end
@@ -4740,7 +4740,7 @@ end
 
 function useCommand.removeclothes()
 	opx("-","You are now naked on a kids game")
-	for _,v in next, cmdlp.Character:GetChildren() do
+	for _,v in pairs(cmdlp.Character:GetChildren()) do
 		if v.Name == "Shirt" or v.Name == "Shirt Graphic" or v.Name == "Pants" then
 			v:Destroy()
 		end
@@ -4749,9 +4749,9 @@ end
 
 function useCommand.removehatsmesh()
 	opx("-","Removed hats meshes")
-	for _,v in next, cmdlp.Character:GetChildren() do
+	for _,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Accessory") then
-			for _,x in next, v:GetDescendants() do
+			for _,x in pairs(v:GetDescendants()) do
 				if x.Name == "Mesh" or x.Name == "SpecialMesh" then
 					x:Destroy()
 				end
@@ -4762,7 +4762,7 @@ end
 
 function useCommand.removegearmesh()
 	opx("-","Removed gears meshes")
-	for _,v in next, cmdlp.Character:GetChildren() do
+	for _,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Tool") then
 			for _,x in pairs(v:GetDescendants()) do
 				if x.Name == "Mesh" or x.Name == "SpecialMesh" then
@@ -6646,7 +6646,7 @@ end
 XLS = {}
 function useCommand.removelocalscripts()
 	opx("-","Removed all localscripts")
-	for _,ls in next, game:GetDescendants() do
+	for _,ls in pairs(game:GetDescendants()) do
 		if ls:IsA("LocalScript") then
 			ls.Disabled = true
 			table.insert(XLS, ls)
@@ -6656,7 +6656,7 @@ end
 
 function useCommand.restorelocalscripts()
     opx("-","Restored all localscripts")
-    for _,v in next, XLS do
+    for _,v in pairs(XLS) do
         v.Disabled = false
     end
 end
