@@ -539,6 +539,11 @@ AntiCheat = {
 }
 
 -- Known Anti CMD-X and unpatches:
+if game.PlaceId == 5188367351 then
+    AntiCheat.IntroAudioOff = true
+    AntiCheat.ScriptDetectOff = true
+    AntiCheat.PrintingOff = true
+end
 if game.PlaceId == 4052062489 then
     AntiCheat.IntroAudioOff = true
     AntiCheat.ScriptDetectOff = true
