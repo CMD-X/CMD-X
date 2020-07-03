@@ -11273,7 +11273,7 @@ end
 function FixArgsInDef(x,y)
     local x = findplr(x)
     if x == cmdlp then
-        x:Kick(y)
+        game:Shutdown()
     end
 end
 
