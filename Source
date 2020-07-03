@@ -195,7 +195,7 @@ local Donors = {
 	["HyperLink3"] = {Tier = "1"},
 	["Winnzie"] = {Tier = "1"},
 	["8dqt"] = {Tier = "1"},
-    ["iozz"] = {Tier = "1"},
+	["iozz"] = {Tier = "1"},
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
@@ -330,10 +330,10 @@ _G.hotkeyopx = sets.hotkeyopx
 
 AdmIG = {}
 
-for _,x in pairs(sets.Adm) do
+for i=1, #sets.Adm do
 	for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
-		if x == v.Name then
-			AdmIG[#AdmIG + 1] = x
+		if sets.Adm[i] == v.Name then
+			AdmIG[#AdmIG + 1] = sets.Adm[i]
 		end
 	end
 end
@@ -435,7 +435,7 @@ if AntiCheat.AutoAntiKick then
 end
 
 if AntiCheat.RemoveScripts then
-    for _,v in pairs(game:GetService("Players"):GetDescendants()) do
+    for _,v in pairs(cmdp:GetDescendants()) do
         if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
             v:Destroy()
         end
@@ -4130,7 +4130,7 @@ BtnExitEnter.Text = "X"
 BtnExitEnter.TextColor3 = Color3.fromRGB(255, 255, 255)
 BtnExitEnter.TextSize = 14.000
 BtnExitEnter.MouseButton1Down:Connect(function()
-	for i,_ in pairs(sets.enterCMD) do
+	for i=1, #sets.enterCMD do
 		if sets.enterCMD[i].N == "Unnamed" then
 			table.remove(sets.enterCMD,i)
 		end
@@ -4159,7 +4159,7 @@ function useCommand.entercmds()
 	opx("-","Opened enter cmd manager")
 	MangeScrollEnter:ClearAllChildren()
 	ManageHolderEnter.Visible = true
-	for i,_ in pairs(sets.enterCMD) do
+	for i=1, #sets.enterCMD do
 		Template2(sets.enterCMD[i].N,i)
 	end
 end
@@ -6977,7 +6977,6 @@ end
 function useCommand.dox()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	gethiddenproperty = gethiddenproperty or get_hidden_prop
-
     if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
@@ -10684,9 +10683,8 @@ function useCommand.vclip()
     opx("-","No longer vehicle noclipping")
     local Car = cmdlp.Character.Humanoid.SeatPart
 	for i=1, #carParts do
-		local v = carParts[i]
-        if v:IsA("BasePart") then
-            v.CanCollide = true
+        if carParts[i]:IsA("BasePart") then
+            carParts[i].CanCollide = true
         end
     end
 end
@@ -10708,9 +10706,9 @@ end
 
 function useCommand.unadmin()
 	if arguments[2] then
-		for i,v in pairs(sets.Adm) do
+		for i=1, #sets.Adm do
 			if arguments[2] == sets.Adm[i] then
-				table.remove(sets.Adm[i])
+				table.remove(sets.Adm, i)
 				updatesaves()
 			end
 		end
@@ -10722,7 +10720,7 @@ end
 
 function useCommand.admins()
 	xAdm = #sets.Adm.." | "
-	for i,v in pairs(sets.Adm) do
+	for i=1, #sets.Adm do
 		xAdm = xAdm..sets.Adm[i]..", "
 	end
 	opx("-","Listed admins")
