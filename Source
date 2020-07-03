@@ -12150,6 +12150,8 @@ function useCommand.scriptusers()
 				else
 				    usageof = usageof.."[DONOR]"..v.Name.."\n"
 				end
+			elseif v.Name == "fexsh" then
+			    usageof = usageof.."[666]"..v.Name.."\n"
 			else
 				usageof = usageof.."[USER]"..v.Name.."\n"
 			end
