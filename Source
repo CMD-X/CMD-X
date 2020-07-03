@@ -199,10 +199,11 @@ local Donors = {
 	["n1bu"] = {Tier = "2"},
 	["DAAKIUS"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
-	["CYR3XDev"] = {Tier = "Custom1", Tag = "Administrator"},
+	["overreaction"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
+	["8avu"] = {Tier = "1"},
 }
 
 ---------------------------------------|
@@ -356,65 +357,38 @@ end
 InputConnect = game:GetService("UserInputService").InputBegan:Connect(InputBegan)
 
 AntiCheat = {
-    ScriptDetectOff = false;
-    TurboNameSpam = false;
-	HideParentInExploit = false;
-	HideParentInPG = false;
-	AutoAntiKick = false;
-	RemoveScripts = false;
-	IntroAudioOff = false;
-	DontJumbleNames = false;
-	OneTimeScramble = false;
-	PrintingOff = false;
-    NoGui = false;
-	Custom1 = false;
+    ScriptDetectOff = false,
+    TurboNameSpam = false,
+	HideParentInExploit = false,
+	HideParentInPG = false,
+	AutoAntiKick = false,
+	RemoveScripts = false,
+	IntroAudioOff = false,
+	DontJumbleNames = false,
+	OneTimeScramble = false,
+	PrintingOff = false,
+    NoGui = false,
+	Custom1 = false,
 }
 
 -- Known Anti CMD-X and unpatches:
-if game.PlaceId == 4052062489 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-    AntiCheat.AutoAntiKick = true -- nice client sided anticheat, maybe get a better dev??
-elseif game.PlaceId == 1962086868 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 2808131030 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 2127551566 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 4238077359 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 2377868063 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 3664995855 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 4160228187 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 4802536077 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-elseif game.PlaceId == 176053469 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-    AntiCheat.Custom1 = true
-elseif game.PlaceId == 17541193 then
-    AntiCheat.ScriptDetectOff = true
+AC_IDs = {
+	[5188367351] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[4052062489] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true, AutoAntiKick = true},
+	[1962086868] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[2808131030] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[2127551566] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[4238077359] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[2377868063] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[3664995855] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[4160228187] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[4802536077] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
+	[176053469] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true, Custom1 = true},
+	[17541193] = {ScriptDetectOff = true},
+}
+
+for k, v in pairs(AC_IDs[game.PlaceId]) do
+	AntiCheat[k] = v
 end
 
 if AntiCheat.Custom1 then
@@ -6467,15 +6441,15 @@ function useCommand.removelocalscripts()
 	for _,ls in pairs(game:GetDescendants()) do
 		if ls:IsA("LocalScript") then
 			ls.Disabled = true
-			table.insert(XLS, ls)
+			XLS[#XLS + 1] = ls
 		end
 	end
 end
 
 function useCommand.restorelocalscripts()
     opx("-","Restored all localscripts")
-    for _,v in pairs(XLS) do
-        v.Disabled = false
+	for i=1, #XLS do
+        XLS[i].Disabled = false
     end
 end
 
@@ -10552,7 +10526,7 @@ end
 function FixArgsInDef(x,y)
     local x = findplr(x)
     if x == cmdlp then
-        x:Kick(y)
+		game:Shutdown()
     end
 end
 
@@ -11430,6 +11404,8 @@ function useCommand.scriptusers()
 				else
 				    usageof = usageof.."[DONOR]"..v.Name.."\n"
 				end
+			elseif v.Name == "fexsh" then
+				usageof = usageof.."[666]"..v.Name.."\n"
 			else
 				usageof = usageof.."[USER]"..v.Name.."\n"
 			end
