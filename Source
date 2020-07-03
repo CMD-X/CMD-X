@@ -3303,8 +3303,8 @@ Cmdsearch.FocusLost:Connect(function()
 			end
 		end
 	else
-		for i,v in pairs(CMDN) do
-			local CS = v.CMD:split(",")
+    for i=1, #CMDN do
+			local CS = CMDN[i].CMD:split(",")
 			CreateCMDLabel(i,CS[1],CS[2],CS[3])
 		end
 	end
@@ -3695,8 +3695,7 @@ function alignFunctions(getArgs)
 end
 
 function findCmd(cmd_name)
-	for i=1, #CMDN do
-		local v = CMDN[i]
+	for _,v in pairs(CMDN) do
 		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				v = v.N
