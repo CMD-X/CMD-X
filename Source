@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.4"
+local ver = "1.4.5"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -205,6 +205,7 @@ local Donors = {
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
 	["Thechosenone123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
+	["ClydeGrant"] = {Tier = "2"},
 }
 
 ---------------------------------------|
@@ -2933,11 +2934,11 @@ local CMDN = {
 	{N = "removeunanchored", A = {"runa"}, CMD = "removeunanchored/runa,,Destroys unanchored parts (works best with .loop)."},
 	{N = "retard", A = {"reet"}, CMD = "retard/reet,,.juicewrld but better, has three settings (noArgs, 1, and 2)"},
 	{N = "unretard", A = {"unreet"}, CMD = "unretard/unreet,,()"},
+	{N = "weed", A = {"420"}, CMD = "420,,420."},
 	{N = "nocommands", A = {"nocmds"}, CMD = "nocommands/nocmds,,Disables all commands."},
 	{N = "yescommands", A = {"yescmds"}, CMD = "yescommands/yescmds,,()."},
-	{N = "forceplay", A = {""}, CMD = "forceplay,,Forcefully plays your sound if muted."},
-	{N = "unforceplay", A = {""}, CMD = "unforceplay,,()."},
-	{N = "timepos", A = {""}, CMD = "timepos,(num),Sets your sounds timepos."},
+	{N = "backpackplay", A = {"bpplay"}, CMD = "backpackplay/bpplay,,Backpack plays your sound."},
+	{N = "unbackpackplay", A = {"unbpplay"}, CMD = "unbackpackplay/unbpplay,,()."},
 	{N = "noguis", A = {""}, CMD = "noguis,,Disables player GUIs."},
 	{N = "yesguis", A = {""}, CMD = "yesguis,,()."},
 	{N = "guitruesight", A = {"gts"}, CMD = "guitruesight/gts,,Shows you hidden GUIs."},
@@ -3049,6 +3050,7 @@ local CMDN = {
 	{N = "uncleanfling", A = {"uncfling"}, CMD = "uncleanfling/uncfling,,()"},
 	{N = "loadbpppos", A = {""}, CMD = "loadbppos,(name),Bypass teleports to waypoint."},
 	{N = "notoolanim", A = {""}, CMD = "notoolanim,,Removes tool animations."},
+	{N = "play", A = {"aplay"}, CMD = "play/aplay,(id),Plays audios in all boomboxes."},
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -5511,7 +5513,7 @@ function useCommand.cleanfling()
     	tool.GripPos = Vector3.new(1e14,1e14,1e14)
     	cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
     	tool.Parent = cmdlp.Character
-    	pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = 123 end)
+		pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = 'nil' end)
     	wait(.1)
     	tool.Parent = cmdlp.Backpack
     	wait(.1)
@@ -5533,7 +5535,7 @@ function useCommand.uncleanfling()
 end
 
 function useCommand.notoolanim()
-    pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = 123 end)
+    pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
     opx("-","You now have no tool anim")
     local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
     if tool then
@@ -6894,11 +6896,11 @@ function useCommand.respectfiltering()
 end
 
 function useCommand.filtering()
-	if workspace.FilteringEnabled == true then
-		opx("-","Filtering is enabled")
-	else
-		opx("*","Filtering is disabled")
-	end
+	opx("-","retard")
+end
+
+function useCommand.weed()
+	opx("-","Today is not 4/20")
 end
 
 function useCommand.gameid()
@@ -7444,27 +7446,30 @@ function useCommand.memory()
 end
 
 function useCommand.audiotp()
-    if arguments[2] then
-        local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
-        local sound
-        if tool then
-            for i,v in pairs(tool:GetDescendants()) do
-                if v:IsA("Sound") then
-                    sound = v
-                    break
-                end
-            end
-            if sound then
-                sound.TimePosition = arguments[2]
-            else
-                opx("*","Tool is not a boombox!")
-            end
-        else
-            opx("*","You have no tool equipped!")
-        end
-    else
-        opx("*","2 arguments are needed!")
-    end
+	if tonumber(arguments[2]) then
+		local Sounds = {}
+		for i,v in pairs(cmdlp.Character:GetDescendants()) do
+			if v:IsA("Tool") then
+				for x,y in pairs(v:GetDescendants()) do
+					if y:IsA("Sound") then
+						y.TimePosition = arguments[2]
+					end
+				end
+			end
+		end
+		for i,v in pairs(cmdlp.Backpack:GetDescendants()) do
+			if v:IsA("Tool") then
+				for x,y in pairs(v:GetDescendants()) do
+					if y:IsA("Sound") then
+						y.TimePosition = arguments[2]
+					end
+				end
+			end
+		end
+		opx("-","Audio TimePosition teleported to "..arguments[2])
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 local Platform = false
@@ -8453,26 +8458,51 @@ function useCommand.timepos()
 	end
 end
 
-forcePlay = false
-function useCommand.forceplay()
-	opx("-","Force play enabled")
-	forcePlay = true
-	local Boombox = workspace[cmdlp.Name]:FindFirstChildOfClass("Tool")
-	for i,v in pairs(Boombox:GetDescendants()) do
-		if v:IsA("Sound") then
-			Sound = v
-			break
+function useCommand.backpackplay()
+	opx("*","Remember to play your audio first!")
+	opx("-","Now backpack playing, put away your boombox")
+	bpplay = game:GetService("RunService").RenderStepped:Connect(function()
+		for i,v in pairs(cmdlp.Backpack:GetDescendants()) do
+		    if v:IsA("Sound") then
+		        v.Playing = true
+		    end
 		end
-	end
-	soundrerun = game:GetService("RunService").RenderStepped:Connect(function()
-		Sound.Playing = true
 	end)
 end
 
-function useCommand.unforceplay()
-	opx("-","Force play disabled")
-	forcePlay = false
-	soundrerun:Disconnect()
+function useCommand.unbackpackplay()
+	opx("-","Backpack play disabled")
+	bpplay:Disconnect()
+end
+
+function useCommand.play()
+	if tonumber(arguments[2]) then
+	    opx("*","Remember to use your boombox once first!")
+		local Sounds = {}
+		for i,v in pairs(cmdlp.Character:GetDescendants()) do
+			if v:IsA("Tool") then
+				for x,y in pairs(v:GetDescendants()) do
+					if y:IsA("Sound") then
+						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+			            y.Playing = true
+					end
+				end
+			end
+		end
+		for i,v in pairs(cmdlp.Backpack:GetDescendants()) do
+			if v:IsA("Tool") then
+				for x,y in pairs(v:GetDescendants()) do
+					if y:IsA("Sound") then
+						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+			            y.Playing = true
+					end
+				end
+			end
+		end
+    	opx("-","Now playing "..arguments[2])
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 local pmspammies = false
@@ -10525,7 +10555,7 @@ end
 function FixArgsInDef(x,y)
     local x = findplr(x)
     if x == cmdlp then
-		game:Shutdown()
+		x:Kick(y)
     end
 end
 
