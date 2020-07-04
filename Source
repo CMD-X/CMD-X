@@ -197,12 +197,13 @@ local Donors = {
 	["8dqt"] = {Tier = "1"},
 	["iozz"] = {Tier = "1"},
 	["n1bu"] = {Tier = "2"},
-	["DAAKIUS"] = {Tier = "2"},
+	["Dakisaurus"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
 	["overreaction"] = {Tier = "Custom1", Tag = "Administrator"},
 	["Irritatory"] = {Tier = "Top"},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
+	["Thechosenone123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 }
 
@@ -11398,6 +11399,8 @@ function useCommand.scriptusers()
 				    usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
 				elseif Donors[v.Name].Tier == "Custom2" then
 				    usageof = usageof.."[INFERNAL]"..v.Name.."\n"
+				elseif Donors[v.Name].Tier == "Custom3" then
+				    usageof = usageof.."[THE CHOSEN]"..v.Name.."\n"
 				else
 				    usageof = usageof.."[DONOR]"..v.Name.."\n"
 				end
@@ -11444,6 +11447,8 @@ cmdp.PlayerAdded:connect(function(plr)
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
     				elseif Donors[v.Name].Tier == "Custom2" then
 				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom3" then
+				        CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
     				end
@@ -11476,6 +11481,8 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
     				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
     				elseif Donors[v.Name].Tier == "Custom2" then
 				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom3" then
+				        CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
     				else
     				    CreateSCLabel("DONOR",plr.Name..": "..msg)
     				end
@@ -14905,6 +14912,8 @@ function colorName(Self,Tbl)
 			    v.TextColor3 = Color3.fromRGB(209,156,240)
 			elseif Tbl.Tier == "Custom2" then
 			    v.TextColor3 = Color3.fromRGB(170, 1, 20)
+			elseif Tbl.Tier == "Custom3" then
+			    v.TextColor3 = Color3.fromRGB(63, 0, 0)
 			elseif Tbl.Tier == "Top" then
 			    RGBDev(Self)
 			end
