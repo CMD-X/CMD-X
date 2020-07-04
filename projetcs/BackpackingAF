@@ -45,14 +45,19 @@ function TeleportToChest(Part)
         wait(.1)
         game:GetService("ReplicatedStorage").Events.Vehicles.WheelReplication:FireServer("sit", Player.Character.Humanoid, GrabCampervan().Seats.DriverSeat)
         wait(.1)
-        if Player.Character.Humanoid.Sit then
-            local xCount = 0
-            repeat wait(.1)
-                xCount = xCount + 1
-                Player.Character.Humanoid.Jump = true
-                game:GetService("TweenService"):Create(Player.Character.HumanoidRootPart, TweenInfo.new(2, Enum.EasingStyle.Linear), {CFrame = Part.CFrame}):Play()
-                wait(1)
-            until Part.Parent.Open.Value or xCount == 7
+        Player.Character.Humanoid.Jump = true
+        local xCount = 0
+        local Tweens = {}
+        repeat wait(.1)
+            xCount = xCount + 1
+            Player.Character.Humanoid.Jump = true
+            local Tween = game:GetService("TweenService"):Create(Player.Character.HumanoidRootPart, TweenInfo.new(2, Enum.EasingStyle.Linear), {CFrame = Part.CFrame})
+            Tween:Play()
+            table.insert(Tweens, Tween)
+            wait(1)
+        until Part.Parent.Open.Value or xCount == 2
+        for i,v in pairs(Tweens) do
+            v:Cancel()
         end
     end
 end
