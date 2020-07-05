@@ -389,8 +389,10 @@ AC_IDs = {
 	[17541193] = {ScriptDetectOff = true},
 }
 
-for k, v in pairs(AC_IDs[game.PlaceId]) do
-	AntiCheat[k] = v
+if AC_IDs[game.PlaceId] then
+	for k, v in pairs(AC_IDs[game.PlaceId]) do
+		AntiCheat[k] = v
+	end
 end
 
 if AntiCheat.Custom1 then
