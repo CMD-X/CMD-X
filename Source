@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.5"
+local ver = "1.4.6"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -270,7 +270,7 @@ defaultsettings = {
 	hotkeynoclip = "";
 	ChatBind = false;
 	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
-	TabsOn = true;
+	TabsOff = true;
 	KeepCMDXOn = false;
 	ifKickedAuto = false;
 }
@@ -337,7 +337,7 @@ function saves()
 				if json.hotkeynoclip ~= nil then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
 				if json.ChatBind ~= nil then ChatBind = json.ChatBind else ChatBind = false end
 			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
-		        if json.TabsOn ~= nil then TabsOn = json.TabsOn else TabsOn = true end
+		        if json.TabsOff ~= nil then TabsOff = json.TabsOff else TabsOff = true end
 		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
 		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
 		    else
@@ -389,7 +389,7 @@ function saves()
 				hotkeynoclip = ""
 				ChatBind = false
 				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-			    TabsOn = true
+			    TabsOff = true
 			    KeepCMDXOn = false
 			    ifKickedAuto = false
 			end
@@ -433,7 +433,7 @@ function saves()
 		hotkeynoclip = ""
 		ChatBind = false
 		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-	    TabsOn = true
+	    TabsOff = true
 	    KeepCMDXOn = false
 	    ifKickedAuto = false
 	end
@@ -482,7 +482,7 @@ function updatesaves()
 		hotkeynoclip = hotkeynoclip;
 		ChatBind = ChatBind;
 		CMDTab = CMDTab;
-		TabsOn = TabsOn;
+		TabsOff = TabsOff;
 		KeepCMDXOn = KeepCMDXOn;
 		ifKickedAuto = ifKickedAuto;
 		}
@@ -1488,7 +1488,7 @@ HoldTab.BorderSizePixel = 0
 HoldTab.Position = UDim2.new(0.745833397, 0, 0.518735349, 0)
 HoldTab.Size = UDim2.new(0, 148, 0, 306)
 
-if TabsOn == false then HoldTab.Visible = false end
+if TabsOff then HoldTab.Visible = false end
 
 TnOT.Name = "TnOT"
 TnOT.Parent = HoldTab
@@ -3261,6 +3261,11 @@ table.insert(CMDN, {N = "uncleanfling", A = {"uncfling"}, CMD = "528,uncleanflin
 table.insert(CMDN, {N = "loadbpppos", A = {""}, CMD = "529,loadbppos,(name),Bypass teleports to waypoint."})
 table.insert(CMDN, {N = "notoolanim", A = {""}, CMD = "530,notoolanim,,Removes tool animations."})
 table.insert(CMDN, {N = "play", A = {"aplay"}, CMD = "531,play/aplay,(id),Plays audios in all boomboxes."})
+table.insert(CMDN, {N = "attachmenttruesight", A = {"attts"}, CMD = "532,attachmenttruesight/attts,,Shows all attachments."})
+table.insert(CMDN, {N = "unattachmenttruesight", A = {"unattts"}, CMD = "533,unattachmenttruesight/unattts,,()."})
+table.insert(CMDN, {N = "autoplatform", A = {"autopf"}, CMD = "534,autoplatform/autopf,,Automatically creates a platform when you walk off a part."})
+table.insert(CMDN, {N = "unautoplatform", A = {"unautopf"}, CMD = "535,unautoplatform/unautopf,,()."})
+table.insert(CMDN, {N = "quickexit", A = {"`"}, CMD = "536,quickexit/`,,Quickly leaves the game."})
 currentCMDNUM = "437"
 
 function RunAndCheck()
@@ -3274,9 +3279,10 @@ if AntiCheat.ScriptDetectOff and syn then
     setsimulationradius(139,139)
 end]]
 
+rejoining = false
 function ifKicked()
     cmdp.PlayerRemoving:Connect(function(p)
-        if p == cmdlp then
+        if rejoining == false and p == cmdlp then
             RunAndCheck()
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
         end
@@ -6679,12 +6685,12 @@ end
 function useCommand.tabs()
     if arguments[2] == "off" then
         opx("-","Turned off tabs")
-        TabsOn = false
+        TabsOff = true
         HoldTab.Visible = false
         updatesaves()
     elseif arguments[2] == "on" then
         opx("-","Turned on tabs")
-        TabsOn = true
+        TabsOff = false
         HoldTab.Visible = true
         updatesaves()
     else
@@ -7792,9 +7798,15 @@ function useCommand.flyspeed()
 end
 
 function useCommand.rejoin()
+    rejoining = true
+    if syn.queue_on_teleport then
+        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+    end
 	opx("-","Rejoining game")
 	RunAndCheck()
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+	wait(3)
+	rejoining = false
 end
 
 function useCommand.removeinchar()
@@ -7825,9 +7837,15 @@ end
 
 function useCommand.game()
 	if arguments[2] then
+	    rejoining = true
 	    RunAndCheck()
+	    if syn.queue_on_teleport then
+            syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+        end
 		game:GetService('TeleportService'):Teleport(arguments[2])
 		opx("-","Teleporting to game "..arguments[2])
+		wait(3)
+		rejoining = false
 	else
 		opx("*","A server ID is needed")
 	end
@@ -7955,6 +7973,10 @@ function useCommand.onjoin()
     end
 end
 
+function useCommand.quickexit()
+    game:Shutdown()
+end
+
 function useCommand.onleave()
     if arguments[2] then
         local xNewarg = getstring(2):split(" ")
@@ -7988,6 +8010,7 @@ end
 function useCommand.autorejoin()
     if arguments[2] == "on" then
         ifKickedAuto = true
+        ifKicked()
         opx("-","Auto rejoin has been turned on")
         updatesaves()
     elseif arguments[2] == "off" then
@@ -9553,6 +9576,41 @@ end
 function useCommand.unautoobby()
 	opx("-","No longer Auto obbying")
 	autoObby = false
+end
+
+autoPf = false
+function useCommand.autoplatform()
+	opx("-","Now Auto platforming")
+	autoPf = true
+	cmdlp.Character.Humanoid.Running:Connect(function(speed)
+		if speed > 0 and autoPf == true and cmdlp.Character.Humanoid.FloorMaterial == Enum.Material.Air then
+			local pc = cmdlp.Character
+        	if pc then
+        	    if pc:FindFirstChild("pf") then
+        	        pc:FindFirstChild("pf").CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+            	else
+            		local pf = Instance.new('Part', pc)
+            		pf.Name = 'pf'
+            		pf.Transparency = 1
+            		pf.Size = Vector3.new(6,1,6)
+            		pf.Anchored = true
+            		pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+            	end
+        	end
+		else
+		    if cmdlp.Character:FindFirstChild("pf") then
+                cmdlp.Character:FindFirstChild("pf"):Destroy()
+            end
+		end
+	end)
+end
+
+function useCommand.unautoplatform()
+	opx("-","No longer Auto platforming")
+	autoPf = false
+	if cmdlp.Character:FindFirstChild("pf") then
+        cmdlp.Character:FindFirstChild("pf"):Destroy()
+    end
 end
 
 function useCommand.find()
@@ -11429,6 +11487,25 @@ function useCommand.cutmuteloop()
     opx("-","Stopped mute loop")
 end
 
+xAtt = {}
+function useCommand.attachmenttruesight()
+    opx("-","Attachment truesight is now active")
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Attachment") then
+            v.Visible = true
+            table.insert(xAtt, v)
+        end
+    end
+end
+
+function useCommand.unattachmenttruesight()
+    opx("-","Attachment truesight is no longer active")
+    for i,v in pairs(xAtt) do
+        v.Visible = true
+    end
+    xAtt = {}
+end
+
 function useCommand.vgoto()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -13146,7 +13223,11 @@ function useCommand.massos()
 end
 
 function useCommand.rejoindiff()
+    rejoining = true
     RunAndCheck()
+    if syn.queue_on_teleport then
+        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+    end
 	if not arguments[2] then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -13250,9 +13331,16 @@ function useCommand.rejoindiff()
 	else
 		opx("*","Not a valid preset!")
 	end
+	wait(3)
+	rejoining = false
 end
 
 function useCommand.streamsnipe()
+    RunAndCheck()
+    if syn.queue_on_teleport then
+        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+    end
+    rejoining = true
 	if arguments[3] then
 	    arguments[2] = cmdp:GetUserIdFromNameAsync(arguments[2])
 		opx("-","Scanning games, this may take a while...")
@@ -13284,6 +13372,8 @@ function useCommand.streamsnipe()
 	else
 		opx("*","3 arguments are needed!")
 	end
+	wait(3)
+	rejoining = false
 end
 
 function useCommand.irltime()
@@ -13305,9 +13395,15 @@ end
 function useCommand.directjoin()
     if arguments[3] then
         RunAndCheck()
+        rejoining = true
+        if syn.queue_on_teleport then
+            syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+        end
         opx("-","Joining server")
         if arguments[2] == "this" then arguments[2] = game.PlaceId end
         game:GetService("TeleportService"):TeleportToPlaceInstance(arguments[2],arguments[3],cmdlp)
+        wait(3)
+        rejoining = false
     else
         opx("*","3 arguments are required!")
     end
@@ -13864,6 +13960,7 @@ function useCommand.freecamgotopart()
 end
 
 function useCommand.friendjoin()
+    rejoining = true
 	if arguments[2] then
 		opx("-","Scanning friends, this may take some time")
 		local target = arguments[2]
@@ -13872,6 +13969,9 @@ function useCommand.friendjoin()
 			if v.UserName == target then
 				if v.LastLocation then
 				    RunAndCheck()
+				    if syn.queue_on_teleport then
+                        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+                    end
 					opx("-","Joining friend")
 					game:GetService("TeleportService"):TeleportToPlaceInstance(v.PlaceId,v.GameId,cmdlp)
 				else
@@ -13884,6 +13984,8 @@ function useCommand.friendjoin()
 	else
 		opx("*","2 arguments are required!")
 	end
+	wait(3)
+	rejoining = false
 end
 
 function useCommand.hotkeynoclip()
