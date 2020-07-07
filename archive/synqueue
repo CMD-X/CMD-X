@@ -1,3 +1,20 @@
 game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
 wait(7)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()
+Parents = {[1] = game:GetService("CoreGui").RobloxGui, [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
+getParent = Parents[1]
+if not game:GetService("CoreGui"):FindFirstChild("RobloxGui") then
+  getParent = Parents[2]
+end
+for _, v in pairs(Parents[1]:GetDescendants()) do
+  if v.Name == "holder" then 
+    noDont = true
+  end
+end
+for _, v in pairs(Parents[2]:GetDescendants()) do
+  if v.Name == "holder" then 
+    noDont = true 
+  end
+end
+if noDont == false then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()
+end
