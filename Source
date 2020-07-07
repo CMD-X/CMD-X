@@ -3267,10 +3267,8 @@ table.insert(CMDN, {N = "unautoplatform", A = {"unautopf"}, CMD = "535,unautopla
 table.insert(CMDN, {N = "quickexit", A = {"`"}, CMD = "536,quickexit/`,,Quickly leaves the game."})
 currentCMDNUM = "437"
 
-function RunAndCheck()
-    if KeepCMDXOn and syn.queue_on_teleport then
-        syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
-    end
+if KeepCMDXOn and syn.queue_on_teleport then
+    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
 end
 
 --[[
@@ -3282,7 +3280,6 @@ rejoining = false
 function ifKicked()
     cmdp.PlayerRemoving:Connect(function(p)
         if rejoining == false and p == cmdlp then
-            RunAndCheck()
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
         end
     end)
@@ -7802,7 +7799,6 @@ function useCommand.rejoin()
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
 	opx("-","Rejoining game")
-	RunAndCheck()
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
 	rejoining = false
@@ -7824,6 +7820,9 @@ function useCommand.runafter()
     if arguments[2] == "on" then
         opx("-","CMD-X will now run after rejoin")
         KeepCMDXOn = true
+        if KeepCMDXOn and syn.queue_on_teleport then
+            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+        end
         updatesaves()
     elseif arguments[2] == "off" then
         opx("-","CMD-X will no longer run after rejoin")
@@ -7837,7 +7836,6 @@ end
 function useCommand.game()
 	if arguments[2] then
 	    rejoining = true
-	    RunAndCheck()
 	    if syn.queue_on_teleport then
             syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
         end
@@ -13223,7 +13221,6 @@ end
 
 function useCommand.rejoindiff()
     rejoining = true
-    RunAndCheck()
     if syn.queue_on_teleport then
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
@@ -13335,7 +13332,6 @@ function useCommand.rejoindiff()
 end
 
 function useCommand.streamsnipe()
-    RunAndCheck()
     if syn.queue_on_teleport then
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
@@ -13393,7 +13389,6 @@ end
 
 function useCommand.directjoin()
     if arguments[3] then
-        RunAndCheck()
         rejoining = true
         if syn.queue_on_teleport then
             syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
@@ -13967,7 +13962,6 @@ function useCommand.friendjoin()
 		for i,v in pairs(friends) do
 			if v.UserName == target then
 				if v.LastLocation then
-				    RunAndCheck()
 				    if syn.queue_on_teleport then
                         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
                     end
