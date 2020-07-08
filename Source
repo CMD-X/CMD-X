@@ -3060,11 +3060,9 @@ local CMDN = {
 }
 local CS = {}
 currentCMDNUM = "437"
-
-function RunAndCheck()
-    if sets.KeepCMDXOn and syn.queue_on_teleport then
-        syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
-    end
+if not syn then syn = {} end
+if sets.KeepCMDXOn and syn.queue_on_teleport then
+	syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
 end
 
 --[[
@@ -3076,7 +3074,6 @@ rejoining = false
 function ifKicked()
     cmdp.PlayerRemoving:Connect(function(p)
         if rejoining == false and p == cmdlp then
-            RunAndCheck()
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
         end
     end)
@@ -7591,7 +7588,6 @@ function useCommand.rejoin()
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
 	opx("-","Rejoining game")
-	RunAndCheck()
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
 	rejoining = false
@@ -7612,11 +7608,14 @@ end
 function useCommand.runafter()
     if arguments[2] == "on" then
         opx("-","CMD-X will now run after rejoin")
-        KeepCMDXOn = true
+        sets.KeepCMDXOn = true
+		if sets.KeepCMDXOn and syn.queue_on_teleport then
+            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+		end
         updatesaves()
     elseif arguments[2] == "off" then
         opx("-","CMD-X will no longer run after rejoin")
-        KeepCMDXOn = false
+        sets.KeepCMDXOn = false
         updatesaves()
     else
         opx("*","2 arguments are required!")
@@ -7626,7 +7625,6 @@ end
 function useCommand.game()
 	if arguments[2] then
 		rejoining = true
-	    RunAndCheck()
 	    if syn.queue_on_teleport then
             syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
         end
@@ -9680,6 +9678,7 @@ function useCommand.sing()
 	opx("-","Now singing "..songTitle)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Now singing "..songTitle, "All")
 	table.remove(lyricsTable,1)
+	stopSingMid = false
 	for i,v in pairs(lyricsTable) do
 		if stopSingMid == true then break end
 		wait(5)
@@ -12476,7 +12475,6 @@ end
 
 function useCommand.rejoindiff()
 	rejoining = true
-    RunAndCheck()
     if syn.queue_on_teleport then
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
@@ -12503,6 +12501,7 @@ function useCommand.rejoindiff()
 		opx("-","All places finalized, randomizing...")
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[math.random(1,#PPlaces)].GUID,cmdlp)
 	elseif arguments[2] == "quick" then
+		local xPlace = 0
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
 		local fuck = game:HttpGet(URL.."0")
 		local Http = game:GetService("HttpService"):JSONDecode(fuck)
@@ -12510,15 +12509,17 @@ function useCommand.rejoindiff()
 		for i = 0,30 do
 		    local fuck = game:HttpGet(URL..math.random(1,30))
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
-			for i,v in pairs(Http.Collection) do
+			for _,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
 				if SplitCapacityForNum[1] ~= v.Capacity then
-					opx("-","All places finalized, randomizing...")
-					game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,v.Guid,cmdlp)
+					xPlace = v.Guid
 					break
 				end
 			end
 		end
+		wait(1)
+		opx("-","All places finalized, randomizing...")
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,xPlace,cmdlp)
 	elseif arguments[2] == "smallest" then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -12588,7 +12589,6 @@ function useCommand.rejoindiff()
 end
 
 function useCommand.streamsnipe()
-    RunAndCheck()
     if syn.queue_on_teleport then
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
     end
@@ -12646,7 +12646,6 @@ end
 
 function useCommand.directjoin()
     if arguments[3] then
-        RunAndCheck()
         rejoining = true
         if syn.queue_on_teleport then
             syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
@@ -13225,7 +13224,6 @@ function useCommand.friendjoin()
 		for i,v in pairs(friends) do
 			if v.UserName == target then
 				if v.LastLocation then
-				    RunAndCheck()
 				    if syn.queue_on_teleport then
                         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
                     end
