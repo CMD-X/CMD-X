@@ -3367,11 +3367,17 @@ function PluginFile(name, full, status, num)
     tempround = Instance.new("ImageLabel", getParent)
     tempframelab = Instance.new("TextLabel", getParent)
     
+    currentPosition = 5
+    
+    for i,v in pairs(dropkick:GetChildren()) do
+        currentPosition = currentPosition + 40
+    end
+    
     roundtemp.Name = "roundtemp"
     roundtemp.Parent = dropkick
     roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     roundtemp.BackgroundTransparency = 1.000
-    roundtemp.Position = UDim2.new(0.019672133, 0, 0.00603850512, 0)
+    roundtemp.Position = UDim2.new(0, 5, 0, currentPosition)
     roundtemp.Size = UDim2.new(0, 277, 0, 35)
     roundtemp.Image = "rbxassetid://3570695787"
     roundtemp.ImageColor3 = Color3.fromRGB(59, 59, 59)
