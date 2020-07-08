@@ -303,7 +303,6 @@ end
 		if pcall(function() readfile("CMD-X.lua") end) then
 			if readfile("CMD-X.lua") ~= nil then
 				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
-
 				for k, v in pairs(json) do
 					sets[k] = v
 				end
@@ -3163,11 +3162,9 @@ function PluginFile(name, full, status, num)
     tempframelab = Instance.new("TextLabel", getParent)
 
 	currentPosition = 5
-
 	for _ in pairs(dropkick:GetChildren()) do
         currentPosition = currentPosition + 40
 	end
-
     roundtemp.Name = "roundtemp"
     roundtemp.Parent = dropkick
     roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
