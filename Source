@@ -3380,11 +3380,11 @@ dropkick.Size = UDim2.new(0, 305, 0, 327)
 
 function PluginFile(name, full, status, num)
     if status then status = "on" else status = "off" end
-    roundtemp = Instance.new("ImageLabel", getParent)
-    nameof = Instance.new("TextLabel", getParent)
-    roundtempbut = Instance.new("TextButton", getParent)
-    tempround = Instance.new("ImageLabel", getParent)
-    tempframelab = Instance.new("TextLabel", getParent)
+    local roundtemp = Instance.new("ImageLabel", getParent)
+    local nameof = Instance.new("TextLabel", getParent)
+    local roundtempbut = Instance.new("TextButton", getParent)
+    local tempround = Instance.new("ImageLabel", getParent)
+    local tempframelab = Instance.new("TextLabel", getParent)
     
     currentPosition = 5
     
