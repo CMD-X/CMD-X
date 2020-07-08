@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.7"
+local ver = "1.4.8"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -210,6 +210,11 @@ local Donors = {
 ---------------------------------------|
 -- Writefile: -------------------------|
 
+if isfolder and makefolder and isfile and writefile then
+    if not isfolder("CMD-X Plugins") then makefolder("CMD-X Plugins") end
+    if not isfile("CMD-X Plugins/template.lua") then writefile("CMD-X Plugins/template.lua","print('test')") end
+end
+
 function writefileExploit()
 	if writefile then
 		return true
@@ -246,7 +251,7 @@ defaultsettings = {
 	gotoPosSide = 0,
 	gotoPosHead = 0,
 	WPs = {},
-	loadCustoms = {},
+	Plugins = {},
 	discordTag = '',
 	permfcspeed = 1,
 	permflyspeed = 1,
@@ -1499,24 +1504,7 @@ cmdslool.BackgroundTransparency = 1
 cmdslool.Position = UDim2.new(0.0420560762, 0, 0.0418250933, 0)
 cmdslool.Size = UDim2.new(0, 177, 0, 675)
 cmdslool.Font = Enum.Font.Gotham
-cmdslool.Text =
-"-Jp or jumppower - changes\
-jumppower\
--Ws or walkspeed - changes\
-walkspeed\
--Infjump or ij or infinite jump -\
-fly method that abuses sitting\
--loadcustoms - lists custom\
-dev scripts\
--loadcustom (script) - loads\
-custom dev script\
--djp or defaultjumppower\
--dws or defaultwalkspeed\
--goto or to - tps to player\
--btools - building tools\
--sit - s i t\
--ragdoll - ragdolls player\
--gearmesh - turns gear into mesh"
+cmdslool.Text = ""
 cmdslool.TextColor3 = Color3.new(1, 1, 1)
 cmdslool.TextSize = 13
 cmdslool.TextXAlignment = Enum.TextXAlignment.Left
@@ -2751,7 +2739,7 @@ local CMDN = {
 	{N = "numberpublic", A = {"numberpu"}, CMD = "numberpu/numberpublic,(num1) (num2),Calls a random number you stated between 2 numbers publicly."},
 	{N = "numberprivate", A = {"numberpr"}, CMD = "numberpr/numberprivate,(num1) (num2),Calls a random number you stated between 2 numbers privately."},
 	{N = "loadcustoms", A = {""}, CMD = "loadcustoms,,Lists custom scripts."},
-	{N = "loadcustom", A = {"pluginload","p_"}, CMD = "loadcustom/pluginload/p_,(name),Loads custom script that you stated."},
+	{N = "plugin", A = {"pluginload","p_"}, CMD = "plugin/pluginload/p_,(name),Loads plugin that you stated."},
 	{N = "find", A = {""}, CMD = "find,(plr),Locates where your stated user is using the ESP command - (WARNING: May cause log spam.).", ARG = "Player"},
 	{N = "unfind", A = {""}, CMD = "unfind,(plr),()", ARG = "Player"},
 	{N = "clickdelete", A = {"clickdel"}, CMD = "clickdel/clickdelete,,Deletes any part you click on. (WARNING: Broken :/ )"},
@@ -2777,7 +2765,7 @@ local CMDN = {
 	{N = "unautokey", A = {""}, CMD = "unautokey,,()"},
 	{N = "swimwalk", A = {"swim"}, CMD = "swim/swimwalk,,Allows you to swim on land."},
 	{N = "instances", A = {""}, CMD = "instances,,Shows you how many instances are in the game."},
-	{N = "plugin", A = {""}, CMD = "plugin,,Shows plugin GUI so you can add plugins to CMD-X."},
+	{N = "plugins", A = {""}, CMD = "plugins,,Shows plugin GUI so you can add plugins to CMD-X."},
 	{N = "loadcustomsclr", A = {""}, CMD = "loadcustomsclr,,Clears all loadcustoms."},
 	{N = "iq", A = {"iqsize"}, CMD = "iq/iqsize,(plr),Shows players IQ (RANDOM).", ARG = "Player"},
 	{N = "players", A = {""}, CMD = "players,,Lists players in your game."},
@@ -3096,6 +3084,164 @@ end
 
 if sets.ifKickedAuto then
     ifKicked()
+end
+
+RoundHold = Instance.new("ImageLabel", getParent)
+exitplease = Instance.new("TextButton", getParent)
+fileworkspace = Instance.new("TextLabel", getParent)
+fileext = Instance.new("TextLabel", getParent)
+dropkick = Instance.new("ScrollingFrame", getParent)
+
+RoundHold.Name = "RoundHold"
+RoundHold.Parent = Unnamed
+RoundHold.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+RoundHold.BackgroundTransparency = 1.000
+RoundHold.Position = UDim2.new(0.679210365, 0, 0.245700255, 0)
+RoundHold.Size = UDim2.new(0, 329, 0, 411)
+RoundHold.Image = "rbxassetid://3570695787"
+RoundHold.ImageColor3 = Color3.fromRGB(29, 29, 29)
+RoundHold.ScaleType = Enum.ScaleType.Slice
+RoundHold.SliceCenter = Rect.new(100, 100, 100, 100)
+RoundHold.SliceScale = 0.120
+RoundHold.Active = true
+RoundHold.Draggable = true
+RoundHold.Visible = false
+
+exitplease.Name = "exitplease"
+exitplease.Parent = RoundHold
+exitplease.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+exitplease.BackgroundTransparency = 1.000
+exitplease.BorderSizePixel = 0
+exitplease.Position = UDim2.new(0.896656513, 0, -0.00243308954, 0)
+exitplease.Size = UDim2.new(0, 35, 0, 39)
+exitplease.Font = Enum.Font.GothamBold
+exitplease.Text = "X"
+exitplease.TextColor3 = Color3.fromRGB(255, 255, 255)
+exitplease.TextSize = 20.000
+exitplease.MouseButton1Down:Connect(function()
+    RoundHold.Visible = false    
+end)
+
+fileworkspace.Name = "fileworkspace"
+fileworkspace.Parent = RoundHold
+fileworkspace.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+fileworkspace.BackgroundTransparency = 1.000
+fileworkspace.Position = UDim2.new(0.0351015925, 0, -0.00124643743, 0)
+fileworkspace.Size = UDim2.new(0, 305, 0, 40)
+fileworkspace.Font = Enum.Font.GothamBold
+fileworkspace.Text = "Choose a file:"
+fileworkspace.TextColor3 = Color3.fromRGB(255, 255, 255)
+fileworkspace.TextSize = 20.000
+
+fileext.Name = "fileext"
+fileext.Parent = RoundHold
+fileext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+fileext.BackgroundTransparency = 1.000
+fileext.Position = UDim2.new(0.0351015218, 0, 0.925760746, 0)
+fileext.Size = UDim2.new(0, 305, 0, 20)
+fileext.Font = Enum.Font.GothamBold
+fileext.Text = "plugins go inside CMD-X Plugins folder located in workspace"
+fileext.TextColor3 = Color3.fromRGB(255, 255, 255)
+fileext.TextScaled = true
+fileext.TextSize = 15.000
+fileext.TextWrapped = true
+
+dropkick.Name = "dropkick"
+dropkick.Parent = RoundHold
+dropkick.Active = true
+dropkick.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+dropkick.BorderSizePixel = 0
+dropkick.Position = UDim2.new(0.0351015925, 0, 0.0941223204, 0)
+dropkick.Size = UDim2.new(0, 305, 0, 327)
+
+function PluginFile(name, full, status, num)
+    if status then status = "on" else status = "off" end
+    roundtemp = Instance.new("ImageLabel", getParent)
+    nameof = Instance.new("TextLabel", getParent)
+    roundtempbut = Instance.new("TextButton", getParent)
+    tempround = Instance.new("ImageLabel", getParent)
+    tempframelab = Instance.new("TextLabel", getParent)
+
+	currentPosition = 5
+
+	for _ in pairs(dropkick:GetChildren()) do
+        currentPosition = currentPosition + 40
+	end
+
+    roundtemp.Name = "roundtemp"
+    roundtemp.Parent = dropkick
+    roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    roundtemp.BackgroundTransparency = 1.000
+    roundtemp.Position = UDim2.new(0, 5, 0, currentPosition)
+    roundtemp.Size = UDim2.new(0, 277, 0, 35)
+    roundtemp.Image = "rbxassetid://3570695787"
+    roundtemp.ImageColor3 = Color3.fromRGB(59, 59, 59)
+    roundtemp.ScaleType = Enum.ScaleType.Slice
+    roundtemp.SliceCenter = Rect.new(100, 100, 100, 100)
+    roundtemp.SliceScale = 0.120
+
+    nameof.Name = "nameof"
+    nameof.Parent = roundtemp
+    nameof.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    nameof.BackgroundTransparency = 1.000
+    nameof.Position = UDim2.new(0.0590518415, 0, 0.00727887824, 0)
+    nameof.Size = UDim2.new(0, 191, 0, 35)
+    nameof.Font = Enum.Font.GothamBold
+    nameof.Text = name.." | "..full.." | "..status
+    nameof.TextColor3 = Color3.fromRGB(255, 255, 255)
+    nameof.TextSize = 14.000
+    nameof.TextXAlignment = Enum.TextXAlignment.Left
+    nameof.TextWrapped = true
+
+    roundtempbut.Name = "roundtempbut"
+    roundtempbut.Parent = roundtemp
+    roundtempbut.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+    roundtempbut.BackgroundTransparency = 1.000
+    roundtempbut.BorderSizePixel = 0
+    roundtempbut.Position = UDim2.new(0.750902534, 0, 0.142857149, 0)
+    roundtempbut.Size = UDim2.new(0, 62, 0, 25)
+    roundtempbut.Font = Enum.Font.GothamBold
+    roundtempbut.Text = "Add"
+    roundtempbut.TextColor3 = Color3.fromRGB(255, 255, 255)
+    roundtempbut.TextSize = 14.000
+    roundtempbut.MouseButton1Down:Connect(function()
+        if tempframelab.Text == "turn on" then
+            sets.Plugins[num].Status = true
+            tempframelab.Text = "turn off"
+        else
+            sets.Plugins[num].Status = false
+            tempframelab.Text = "turn on" 
+        end
+        updatesaves()
+    end)
+
+    tempround.Name = "tempround"
+    tempround.Parent = roundtempbut
+    tempround.Active = true
+    tempround.AnchorPoint = Vector2.new(0.5, 0.5)
+    tempround.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    tempround.BackgroundTransparency = 1.000
+    tempround.Position = UDim2.new(0.5, 0, 0.5, 0)
+    tempround.Selectable = true
+    tempround.Size = UDim2.new(1, 0, 1, 0)
+    tempround.Image = "rbxassetid://3570695787"
+    tempround.ImageColor3 = Color3.fromRGB(83, 83, 83)
+    tempround.ScaleType = Enum.ScaleType.Slice
+    tempround.SliceCenter = Rect.new(100, 100, 100, 100)
+    tempround.SliceScale = 0.120
+
+    tempframelab.Name = "tempframelab"
+    tempframelab.Parent = tempround
+    tempframelab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    tempframelab.BackgroundTransparency = 1.000
+    tempframelab.Position = UDim2.new(-1.11290324, 0, -0.479999989, 0)
+    tempframelab.Size = UDim2.new(0, 200, 0, 50)
+    tempframelab.Font = Enum.Font.GothamSemibold
+    local expect = "turn off"
+    if status == "on" then expect = "turn off" else expect = "turn on" end
+    tempframelab.Text = expect
+    tempframelab.TextColor3 = Color3.fromRGB(255, 255, 255)
+    tempframelab.TextSize = 14.000
 end
 
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -9282,12 +9428,12 @@ PExit.MouseButton1Down:Connect(function()
 	HolderOfP.Visible = false
 end)
 
-function useCommand.loadcustom()
+function useCommand.plugin()
 	if arguments[2] then
-		lcNS = arguments[2]
-		for i,v in pairs(sets.loadCustoms) do
-			if sets.loadCustoms[i].N == lcNS then
-				loadstring(game:HttpGet((sets.loadCustoms[i].File),true))()
+		lcNS = getstring(2)
+		for _,v in pairs(sets.Plugins) do
+			if v.Name == lcNS and v.Status then
+				loadstring(readfile("CMD-X Plugins/"..v.File))()
 			end
 		end
 	else
@@ -9838,9 +9984,28 @@ function useCommand.instances()
 	opx("-","There are "..#game:GetDescendants().." instances in this game")
 end
 
-function useCommand.plugin()
-	opx("-","Loaded Plugins GUI")
-	HolderOfP.Visible = true
+function useCommand.plugins()
+	if listfiles then
+        opx("-","Plugins loaded")
+        RoundHold.Visible = true
+        for num,file in pairs(listfiles("CMD-X Plugins")) do
+            local PluginExists = false
+            local PluginNum = 0
+            for i,v in pairs(sets.Plugins) do
+                if v.Name == file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]) then
+                    PluginNum = i
+                    PluginExists = true
+                end        
+            end
+            if PluginExists == false then
+                table.insert(sets.Plugins, {Name = file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]), File = file:split("CMD-X Plugins")[2]:sub(2,#file:split("CMD-X Plugins")[2]), Status = false})    
+                PluginNum = #sets.Plugins
+            end
+            PluginFile(sets.Plugins[PluginNum].Name,sets.Plugins[PluginNum].File,sets.Plugins[PluginNum].Status,PluginNum)
+        end
+    else
+        opx("*","Your exploit does not support listfiles")
+    end
 end
 
 function useCommand.loadcustomsclr()
