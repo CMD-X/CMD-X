@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.6"
+local ver = "1.4.7"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -2050,10 +2050,18 @@ function findplr(args)
 		return cmdlp
 	elseif args == "random" then --Shit to change
 		return cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
+	elseif args == "using" then
+		local vAges = {} --Shit to change
+		for _,v in pairs(cmdp:GetPlayers()) do
+			if v.OperatingSystem == "CMD-X" and v ~= cmdlp then
+				vAges[#vAges+1] = v
+			end
+		end
+		return vAges[math.random(1,#vAges)]
 	elseif args == "new" then
 		local vAges = {} --Shit to change
 		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.AccountAge < 30 then
+			if v.AccountAge < 30 and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
@@ -2061,7 +2069,7 @@ function findplr(args)
 	elseif args == "old" then
 		local vAges = {} --Shit to change
 		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.AccountAge > 30 then
+			if v.AccountAge > 30 and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
@@ -2069,7 +2077,7 @@ function findplr(args)
 	elseif args == "bacon" then
 		local vAges = {} --Shit to change
 		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") then
+			if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
@@ -2093,7 +2101,7 @@ function findplr(args)
 	elseif args == "ally" then
 		local vAges = {} --Shit to change
 		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Team == cmdlp.Team then
+			if v.Team == cmdlp.Team and v ~= cmdlp then
 				vAges[#vAges+1] = v
 			end
 		end
@@ -2888,7 +2896,7 @@ local CMDN = {
 	{N = "whisperlogs", A = {"wlogs"}, CMD = "whisperlogs/wlogs,,Logs any whispers specifically."},
 	{N = "playerlogs", A = {"plogs"}, CMD = "playerlogs/plogs,(plr),Logs messages by player specifically.", ARG = "Player"},
 	{N = "noshow", A = {""}, CMD = "noshow,(on/off),Turns on or off detection on .susers."},
-	{N = "rejoindiff", A = {"rjdiff"}, CMD = "rejoindiff/rjdiff,(smallest/small/largest/quick),Rejoins but takes you to a differnt server (Server Hopper)."},
+	{N = "rejoindiff", A = {"rjdiff","rjd"}, CMD = "rejoindiff/rjdiff/rjd,(smallest/small/largest/quick/q),Rejoins but takes you to a differnt server (Server Hopper)."},
 	{N = "antikick", A = {""}, CMD = "antikick,,Stops you from being kicked."},
 	{N = "servers", A = {""}, CMD = "servers,,Lists servers."},
 	{N = "streamsnipe", A = {"ssnipe"}, CMD = "streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."},
@@ -3056,7 +3064,14 @@ local CMDN = {
 	{N = "unattachmenttruesight", A = {"unattts"}, CMD = "unattachmenttruesight/unattts,,()."},
 	{N = "autoplatform", A = {"autopf"}, CMD = "autoplatform/autopf,,Automatically creates a platform when you walk off a part."},
 	{N = "unautoplatform", A = {"unautopf"}, CMD = "unautoplatform/unautopf,,()."},
-	{N = "quickexit", A = {"`"}, CMD = "quickexit/`,,Quickly leaves the game."},
+	{N = "quickexit", A = {"`","quit"}, CMD = "quickexit/`/quit,,Quickly leaves the game."},
+	{N = "vfreegoto", A = {"vfreeto","vfreetp"}, CMD = "vfreegoto/vfreeto/vfreetp,(x|y|z),Teleports vehicle freely."},
+	{N = "vgotopart", A = {"vtopart","vtppart"}, CMD = "vgotopart/vtopart/vtppart,(name),Teleports vehicle to part."},
+	{N = "vgotoclass", A = {"vtoclass","vtpclass"}, CMD = "vgotoclass/vtoclass/vtpclass,(name),Teleports vehicle to class."},
+	{N = "vloadpos", A = {""}, CMD = "vloadpos,(name),Teleports vehicle to waypoint."},
+	{N = "robloxversion", A = {"rver"}, CMD = "robloxversion/rver,,Shows you the version of Roblox you are on."},
+	{N = "freecamloadpos", A = {"fcloadpos"}, CMD = "freecamloadpos/fcloadpos,(name),Teleports freecam to waypoint."},
+	
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -3087,7 +3102,7 @@ local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
 fuck = game:HttpGet(URL)
 local Http = game:GetService("HttpService"):JSONDecode(fuck)
 output4.Text = Http.text
-PCs = {"far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
+PCs = {"using","far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 cmd.Changed:Connect(function()
 	local checkargs = string.split(cmd.Text," ")
 	if checkargs[2] then
@@ -10772,6 +10787,66 @@ function useCommand.vgoto()
 	end
 end
 
+function useCommand.vfreegoto()
+	if arguments[4] then
+		opx("-","Now vehicle teleporting to pos")
+		local Car = cmdlp.Character.Humanoid.SeatPart
+		Car.Parent.Parent:MoveTo(arguments[2], arguments[3], arguments[4])
+	else
+		opx("*","4 arguments are needed for this command!")
+	end
+end
+
+function useCommand.vloadpos()
+    if arguments[2] then
+		wpNS = getstring(2)
+		for i=1, #sets.WPs do
+			local v = sets.WPs[i]
+			if tostring(v.N) == tostring(wpNS) then
+			    local Car = cmdlp.Character.Humanoid.SeatPart
+		        Car.Parent.Parent:MoveTo(v.C[1],v.C[2],v.C[3])
+			end
+		end
+		opx("Teleported to "..tostring(wpNS))
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.vgotopart()
+	if arguments[2] then
+		opx("-","Now vehicle teleporting to part")
+        for i,v in pairs(workspace:GetDescendants()) do
+    		if v.Name == getstring(2) then
+                local Car = cmdlp.Character.Humanoid.SeatPart
+		        Car.Parent.Parent:MoveTo(v.Position)
+    			break
+    		else
+    			opx("*","Part does not exist")
+    		end
+    	end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.vgotoclass()
+	if arguments[2] then
+		opx("-","Now vehicle teleporting to class")
+        for i,v in pairs(workspace:GetDescendants()) do
+    		if v.ClassName == getstring(2) then
+                local Car = cmdlp.Character.Humanoid.SeatPart
+		        Car.Parent.Parent:MoveTo(v.Position)
+    			break
+    		else
+    			opx("*","Part does not exist")
+    		end
+    	end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
 carParts = {}
 function useCommand.vnoclip()
     opx("-","Now vehicle noclipping")
@@ -10809,6 +10884,10 @@ function useCommand.admin()
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
+end
+
+function useCommand.robloxversion()
+    opx("-","Roblox is on version: "..version().." - ".._VERSION)
 end
 
 function useCommand.unadmin()
@@ -12027,7 +12106,8 @@ function useCommand.playercases()
 	ally - Chooses a player that is on the same team as you\
 	enemy - Chooses a player that is not on the same team as you\
 	near - Chooses a player that is close to you\
-	far - Chooses a player that is not close to you")
+	far - Chooses a player that is not close to you\
+	using - Chooses a player that is using CMD-X")
 end
 
 function useCommand.ppsize()
@@ -12500,7 +12580,7 @@ function useCommand.rejoindiff()
 		end
 		opx("-","All places finalized, randomizing...")
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[math.random(1,#PPlaces)].GUID,cmdlp)
-	elseif arguments[2] == "quick" then
+	elseif arguments[2] == "quick" or arguments[2] == "q" then
 		local xPlace = 0
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
 		local fuck = game:HttpGet(URL.."0")
@@ -13191,6 +13271,29 @@ function useCommand.freecamfreegoto()
     end
 end
 
+function useCommand.freecamloadpos()
+    if FreecamOn then
+        if arguments[2] then
+            StopFreecam()
+            wait(.1)
+    		wpNS = getstring(2)
+			for i=1, #sets.WPs do
+    			local v = sets.WPs[i]
+    			if tostring(v.N) == tostring(wpNS) then
+    			    StartFreecam(v.C[1],v.C[2],v.C[3])
+                    navSpeed = sets.permfcspeed
+                    NAV_KEYBOARD_SPEED = Vector3.new(sets.permfcspeed, sets.permfcspeed, sets.permfcspeed)
+    			end
+    		end
+    		opx("Teleported to "..tostring(wpNS))
+    	else
+    		opx("*","2 arguments are needed for this command!")
+        end
+	else
+        opx("*","Freecam isnt running!")
+    end
+end
+
 function useCommand.freecamgotopart()
     if FreecamOn then
         if arguments[2] then
@@ -13199,6 +13302,30 @@ function useCommand.freecamgotopart()
             opx("-","Teleported freecam to part")
             for i,v in pairs(workspace:GetDescendants()) do
     			if v.Name == getstring(2) then
+                    StartFreecam(v.CFrame)
+                    navSpeed = sets.permfcspeed
+                    NAV_KEYBOARD_SPEED = Vector3.new(sets.permfcspeed, sets.permfcspeed, sets.permfcspeed)
+    				break
+    			else
+    				opx("*","Part does not exist")
+    			end
+    		end
+        else
+            opx("*","2 arguments are required!")
+        end
+    else
+        opx("*","Freecam isnt running!")
+    end
+end
+
+function useCommand.freecamgotoclass()
+    if FreecamOn then
+        if arguments[2] then
+            StopFreecam()
+            wait(.1)
+            opx("-","Teleported freecam to class")
+            for i,v in pairs(workspace:GetDescendants()) do
+    			if v.ClassName == getstring(2) then
                     StartFreecam(v.CFrame)
                     navSpeed = sets.permfcspeed
                     NAV_KEYBOARD_SPEED = Vector3.new(sets.permfcspeed, sets.permfcspeed, sets.permfcspeed)
