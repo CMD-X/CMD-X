@@ -132,7 +132,6 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 end
 
 LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-checkArg = {[172667278.9] = "bots kicked on join L", [117849776.6] = "skid", [838753790.5] = "RDite3", [983858851.7] = "nolBased", [4238827073.2] = true}
 
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
@@ -234,7 +233,7 @@ function writefileCooldown(name,data)
 		cooldown = false
 	end)
 end
-local requirements = dp.UserId
+
 defaultsettings = {
 	text2 = false;
 	hotkeyopen = 'q';
@@ -277,26 +276,10 @@ defaultsettings = {
 	TabsOff = true;
 	KeepCMDXOn = false;
 	ifKickedAuto = false;
+	whyIs = 0;
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
-
-function isDoneLoading()
-	if checkArg[requirements * 290 / 100] then
-		return false
-	else
-		return true
-	end
-end
-
-function commandsLoaded()
-	return isDoneLoading()
-end
-
-if commandsLoaded() == false then
-	Stand("You are blacklisted from CMD-X.","CMD-X will not run.","","For further help or appeal refer to the discord.","","",false)
-	repeat wait() until RunDude == true
-end
 
 function saves()
 	if writefileExploit() then
@@ -344,6 +327,7 @@ function saves()
 		        if json.TabsOff ~= nil then TabsOff = json.TabsOff else TabsOff = true end
 		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
 		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
+		        if json.whyIs ~= nil then whyIs = json.whyIs else whyIs = 0 end
 		    else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
@@ -396,6 +380,7 @@ function saves()
 			    TabsOff = true
 			    KeepCMDXOn = false
 			    ifKickedAuto = false
+			    whyIs = 0
 			end
 		end
 	else
@@ -440,6 +425,7 @@ function saves()
 	    TabsOff = true
 	    KeepCMDXOn = false
 	    ifKickedAuto = false
+	    whyIs = 0
 	end
 end
  
@@ -489,9 +475,37 @@ function updatesaves()
 		TabsOff = TabsOff;
 		KeepCMDXOn = KeepCMDXOn;
 		ifKickedAuto = ifKickedAuto;
+		whyIs = whyIs;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
+end
+
+checkArg = {
+    [172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46", 
+    [117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46", 
+    [838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46", 
+    [983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46", 
+    [4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46"
+}
+local requirements = dp.UserId
+
+function isDoneLoading(arg)
+	if checkArg[requirements * 290 / 100] then
+		whyIs = requirements
+		updatesaves()
+		return false
+	elseif checkArg[whyIs * 290 / 100] then
+	    return false
+	else
+	    whyIs = 0
+        updatesaves()
+		return true
+	end
+end
+
+function commandsLoaded()
+	return isDoneLoading()
 end
 
 if game:GetService("UserInputService").VREnabled then
@@ -513,6 +527,11 @@ end
 Inputting = false
 ChatBar = nil
 Current = nil
+
+if commandsLoaded() == false then
+	Stand("\89\111\117\32\97\114\101\32\110\111\116\32\119\101\108\99\111\109\101\32\97\116\32\67\77\68\45\88\46","\67\77\68\45\88\32\119\105\108\108\32\110\111\116\32\114\117\110\46","","\82\101\97\115\111\110\58\32"..checkArg[whyIs * 290 / 100],"","",false)
+	repeat wait() until RunDude == true
+end
 
 function Check()
     wait(.1)
