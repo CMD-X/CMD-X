@@ -10732,6 +10732,7 @@ end
 
 function useCommand.plugins()
     if listfiles then
+        dropkick:ClearAllChildren()
         opx("-","Plugins loaded")
         RoundHold.Visible = true
         for num,file in pairs(listfiles("CMD-X Plugins")) do
