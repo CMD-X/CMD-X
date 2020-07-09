@@ -204,6 +204,7 @@ local Donors = {
 	["Thechosenone123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 	["ClydeGrant"] = {Tier = "2"},
+	["Yarhibol"] = {Tier = "1"},
 }
 
 ---------------------------------------|
@@ -286,6 +287,7 @@ defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
 		if pcall(function() readfile("CMD-X.lua") end) then
 			if readfile("CMD-X.lua") ~= nil then
 				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+
 				for k, v in pairs(json) do
 					sets[k] = v
 				end
@@ -3079,7 +3081,7 @@ local CS = {}
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if sets.KeepCMDXOn and syn.queue_on_teleport then
-	syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+	syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
 end
 
 --[[
@@ -3180,6 +3182,7 @@ function PluginFile(name, full, status, num)
 	for _ in pairs(dropkick:GetChildren()) do
         currentPosition = currentPosition + 40
 	end
+
     roundtemp.Name = "roundtemp"
     roundtemp.Parent = dropkick
     roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -7783,7 +7786,7 @@ function useCommand.runafter()
         opx("-","CMD-X will now run after rejoin")
         sets.KeepCMDXOn = true
 		if sets.KeepCMDXOn and syn.queue_on_teleport then
-            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
 		end
         updatesaves()
     elseif arguments[2] == "off" then
