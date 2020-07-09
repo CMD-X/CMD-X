@@ -3290,7 +3290,7 @@ table.insert(CMDN, {N = "freecamloadpos", A = {"fcloadpos"}, CMD = "542,freecaml
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
-    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
 end
 
 --[[
@@ -8001,7 +8001,7 @@ function useCommand.runafter()
         opx("-","CMD-X will now run after rejoin")
         KeepCMDXOn = true
         if KeepCMDXOn and syn.queue_on_teleport then
-            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/archive/synqueue"))()')
+            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
         end
         updatesaves()
     elseif arguments[2] == "off" then
