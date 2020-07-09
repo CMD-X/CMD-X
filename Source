@@ -204,6 +204,7 @@ local Donors = {
 	["Thechosenone123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 	["ClydeGrant"] = {Tier = "2"},
+	["Yarhibol"] = {Tier = "1"},
 }
 
 ---------------------------------------|
