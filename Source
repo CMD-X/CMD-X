@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.8"
+local ver = "1.4.9"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -282,29 +282,28 @@ defaultsettings = {
 local sets = defaultsettings
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
 
-(function()
-	if writefileExploit() then
-		if pcall(function() readfile("CMD-X.lua") end) then
-			if readfile("CMD-X.lua") ~= nil then
-				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+function saves()
+	if not writefileExploit() then
+		return
+	end
 
-				for k, v in pairs(json) do
-					sets[k] = v
-				end
-		    else
-				writefileCooldown("CMD-X.lua", defaults)
-				wait()
-				saves()
+	if pcall(function() readfile("CMD-X.lua") end) then
+		if readfile("CMD-X.lua") ~= nil then
+			local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+
+			for k, v in pairs(json) do
+				sets[k] = v
 			end
 		else
 			writefileCooldown("CMD-X.lua", defaults)
-			wait()
-			if pcall(function() readfile("CMD-X.lua") end) then
-				saves()
-			end
 		end
+	else
+		writefileCooldown("CMD-X.lua", defaults)
 	end
-end)()
+
+	wait()
+end
+saves()
 
 function updatesaves()
 	if writefileExploit() then
@@ -1843,7 +1842,8 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
-    	cmdlp.OsPlatform = "CMD-X"
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
     end
 end
 
@@ -2733,8 +2733,6 @@ local CMDN = {
 	{N = "showwhitelist", A = {"swl"}, CMD = "swl/showwhitelist,,Shows whitelist for aimbot."},
 	{N = "spectate", A = {"view"}, CMD = "view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"},
 	{N = "unspectate", A = {"unview"}, CMD = "unview/unspectate,,()"},
-	{N = "osprivate", A = {"ospr"}, CMD = "ospr/osprivate,(plr),Says stated users Operating System privately.", ARG = "Player"},
-	{N = "ospublic", A = {"ospu"}, CMD = "ospu/ospublic,(plr),Says stated users Operating System publicly.", ARG = "Player"},
 	{N = "ageprivate", A = {"agepr"}, CMD = "agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"},
 	{N = "agepublic", A = {"agepu"}, CMD = "agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"},
 	{N = "idprivate", A = {"idpr"}, CMD = "idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"},
@@ -2893,7 +2891,6 @@ local CMDN = {
 	{N = "permspamspeed", A = {"pss"}, CMD = "permspamspeed/pss,(num),Changes the perm spam speed."},
 	{N = "scriptusers", A = {"susers"}, CMD = "scriptusers/susers,,Shows people who are using CMD-X in your lobby."},
 	{N = "massid", A = {""}, CMD = "massid,,Shows all players IDs."},
-	{N = "massos", A = {""}, CMD = "massos,,Shows all players OSs."},
 	{N = "scriptchat", A = {"schat"}, CMD = "scriptchat/schat,,Allows you to talk with other people using CMD-X."},
 	{N = "schatbp", A = {"#"}, CMD = "schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."},
 	{N = "mentions", A = {""}, CMD = "mentions,(on/off),Turns scriptchat mentions on or off."},
@@ -2906,7 +2903,6 @@ local CMDN = {
 	{N = "streamsnipe", A = {"ssnipe"}, CMD = "streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."},
 	{N = "listentercmds", A = {""}, CMD = "listentercmds,,Lists enter cmds."},
 	{N = "listhotkeys", A = {""}, CMD = "listhotkeys,,Lists hotkeys."},
-	{N = "spoofos", A = {""}, CMD = "spoofos,(str),Spoofs your OS."},
 	{N = "hotkeynoclip", A = {""}, CMD = "hotkeynoclip,(key),Adds a hotkey for noclip."},
 	{N = "enabledrops", A = {""}, CMD = "enabledrops,,Enables tools dropping features."},
 	{N = "disabledrops", A = {""}, CMD = "disabledrops,,Disables tools dropping features."},
@@ -3075,6 +3071,7 @@ local CMDN = {
 	{N = "vloadpos", A = {""}, CMD = "vloadpos,(name),Teleports vehicle to waypoint."},
 	{N = "robloxversion", A = {"rver"}, CMD = "robloxversion/rver,,Shows you the version of Roblox you are on."},
 	{N = "freecamloadpos", A = {"fcloadpos"}, CMD = "freecamloadpos/fcloadpos,(name),Teleports freecam to waypoint."},
+	{N = "rejoinrefresh", A = {"rjre"}, CMD = "rejoinrefresh/rjre,,Rejoins and places you back at the spot you were at."},
 	
 }
 local CS = {}
@@ -11755,8 +11752,9 @@ end
 function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if v.OsPlatform == "CMD-X" then
+		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
@@ -13579,7 +13577,8 @@ function useCommand.noshow()
 	elseif arguments[2] == "off" then
 		opx("-","No-Show is now off")
 		sets.sDetect = true
-		cmdlp.OsPlatform = "CMD-X"
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		updatesaves()
 	else
 		opx("*","A valid preset is needed!")
@@ -14791,6 +14790,25 @@ function UpdateTracer()
 	end
 end
 
+function useCommand.rejoinrefresh()
+    rejoining = true
+    if syn.queue_on_teleport then
+		local c = cmdlp.Character.HumanoidRootPart.CFrame
+        syn.queue_on_teleport(string.format([[
+            game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
+            repeat wait(.1) until game:GetService("Players").LocalPlayer
+            game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+                wait(.25)
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+            end)
+        ]], c.X, c.Y, c.Z))
+    end
+	opx("-","Rejoining game")
+	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+	wait(3)
+	rejoining = false
+end
+
 TracerEnabled = false
 function useCommand.tracers()
 	if Drawing then
@@ -15280,8 +15298,8 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
-    	cmdlp.MaximumSimulationRadius = 139
-    	cmdlp.OsPlatform = "CMD-X"
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
     end
 end
 
