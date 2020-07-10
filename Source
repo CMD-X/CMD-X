@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.8"
+local ver = "1.4.9"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -2055,7 +2055,8 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sDetect == true then
-    	cmdlp.OsPlatform = "CMD-X"
+    	sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
     end
 end
 
@@ -2946,8 +2947,8 @@ table.insert(CMDN, {N = "unwhitelist", A = {"unwl"}, CMD = "202,unwl/unwhitelist
 table.insert(CMDN, {N = "showwhitelist", A = {"swl"}, CMD = "203,swl/showwhitelist,,Shows whitelist for aimbot."})
 table.insert(CMDN, {N = "spectate", A = {"view"}, CMD = "204,view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"})
 table.insert(CMDN, {N = "unspectate", A = {"unview"}, CMD = "205,unview/unspectate,,()"})
-table.insert(CMDN, {N = "osprivate", A = {"ospr"}, CMD = "206,ospr/osprivate,(plr),Says stated users Operating System privately.", ARG = "Player"})
-table.insert(CMDN, {N = "ospublic", A = {"ospu"}, CMD = "207,ospu/ospublic,(plr),Says stated users Operating System publicly.", ARG = "Player"})
+table.insert(CMDN, {N = "-", A = {""}, CMD = "206,,,", ARG = "Player"})
+table.insert(CMDN, {N = "--", A = {""}, CMD = "207,,,", ARG = "Player"})
 table.insert(CMDN, {N = "ageprivate", A = {"agepr"}, CMD = "208,agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"})
 table.insert(CMDN, {N = "agepublic", A = {"agepu"}, CMD = "209,agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"})
 table.insert(CMDN, {N = "idprivate", A = {"idpr"}, CMD = "210,idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"})
@@ -3106,7 +3107,7 @@ table.insert(CMDN, {N = "clicktphotkey", A = {""}, CMD = "358,clicktphotkey,(key
 table.insert(CMDN, {N = "permspamspeed", A = {"pss"}, CMD = "359,permspamspeed/pss,(num),Changes the perm spam speed."})
 table.insert(CMDN, {N = "scriptusers", A = {"susers"}, CMD = "360,scriptusers/susers,,Shows people who are using CMD-X in your lobby."})
 table.insert(CMDN, {N = "massid", A = {""}, CMD = "361,massid,,Shows all players IDs."})
-table.insert(CMDN, {N = "massos", A = {""}, CMD = "362,massos,,Shows all players OSs."})
+table.insert(CMDN, {N = "---", A = {""}, CMD = "362,,,"})
 table.insert(CMDN, {N = "scriptchat", A = {"schat"}, CMD = "363,scriptchat/schat,,Allows you to talk with other people using CMD-X."})
 table.insert(CMDN, {N = "schatbp", A = {"#"}, CMD = "364,schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."})
 table.insert(CMDN, {N = "mentions", A = {""}, CMD = "365,mentions,(on/off),Turns scriptchat mentions on or off."})
@@ -3119,7 +3120,7 @@ table.insert(CMDN, {N = "servers", A = {""}, CMD = "371,servers,,Lists servers."
 table.insert(CMDN, {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."})
 table.insert(CMDN, {N = "listentercmds", A = {""}, CMD = "373,listentercmds,,Lists enter cmds."})
 table.insert(CMDN, {N = "listhotkeys", A = {""}, CMD = "374,listhotkeys,,Lists hotkeys."})
-table.insert(CMDN, {N = "spoofos", A = {""}, CMD = "375,spoofos,(str),Spoofs your OS."})
+table.insert(CMDN, {N = "----", A = {""}, CMD = "375,,,"})
 table.insert(CMDN, {N = "hotkeynoclip", A = {""}, CMD = "376,hotkeynoclip,(key),Adds a hotkey for noclip."})
 table.insert(CMDN, {N = "enabledrops", A = {""}, CMD = "377,enabledrops,,Enables tools dropping features."})
 table.insert(CMDN, {N = "disabledrops", A = {""}, CMD = "378,disabledrops,,Disables tools dropping features."})
@@ -3287,6 +3288,7 @@ table.insert(CMDN, {N = "vgotoclass", A = {"vtoclass","vtpclass"}, CMD = "539,vg
 table.insert(CMDN, {N = "vloadpos", A = {""}, CMD = "540,vloadpos,(name),Teleports vehicle to waypoint."})
 table.insert(CMDN, {N = "robloxversion", A = {"rver"}, CMD = "541,robloxversion/rver,,Shows you the version of Roblox you are on."})
 table.insert(CMDN, {N = "freecamloadpos", A = {"fcloadpos"}, CMD = "542,freecamloadpos/fcloadpos,(name),Teleports freecam to waypoint."})
+table.insert(CMDN, {N = "rejoinrefresh", A = {"rjre"}, CMD = "543,rejoinrefresh/rjre,,Rejoins and places you back at the spot you were at."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -12509,7 +12511,8 @@ function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if v.OsPlatform == "CMD-X" then
+		gethiddenproperty = gethiddenproperty or get_hidden_prop
+		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
@@ -14329,7 +14332,8 @@ function useCommand.noshow()
 	elseif arguments[2] == "off" then
 		opx("-","No-Show is now off")
 		sDetect = true
-		cmdlp.OsPlatform = "CMD-X"
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		updatesaves()
 	else
 		opx("*","A valid preset is needed!")
@@ -15539,6 +15543,30 @@ function UpdateTracer()
 	end
 end
 
+function useCommand.rejoinrefresh()
+    rejoining = true
+    if syn.queue_on_teleport then
+        writefile("CMD-XRJSave.lua", game:GetService("HttpService"):JSONEncode({ -- dont blame me for this being retarded syn.queue_on_teleport doesnt support global
+            CF1 = cmdlp.Character.HumanoidRootPart.CFrame.X;
+            CF2 = cmdlp.Character.HumanoidRootPart.CFrame.Y;
+            CF3 = cmdlp.Character.HumanoidRootPart.CFrame.Z;
+        }))
+        syn.queue_on_teleport([[
+            game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
+            repeat wait(.1) until game:GetService("Players").LocalPlayer
+            game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+                wait(.25)
+                local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-XRJSave.lua")); delfile("CMD-XRJSave.lua")
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(json.CF1, json.CF2, json.CF3)
+            end)
+        ]])
+    end
+	opx("-","Rejoining game")
+	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+	wait(3)
+	rejoining = false
+end
+
 TracerEnabled = false
 function useCommand.tracers()
 	if Drawing then
@@ -16028,7 +16056,8 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sDetect == true then
-    	cmdlp.OsPlatform = "CMD-X"
+    	sethiddenproperty = sethiddenproperty or set_hidden_prop
+		sethiddenproperty(cmdlp, "SimulationRadius", 139)
     end
 end
 
