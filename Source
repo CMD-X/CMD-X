@@ -12538,7 +12538,7 @@ function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 then
+		if gethiddenproperty(v, "SimulationRadius") == 139 then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
