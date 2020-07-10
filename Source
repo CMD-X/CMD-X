@@ -2055,6 +2055,7 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
+		cmdlp.MaximumSimulationRadius = 139
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		if sethiddenproperty then
 			sethiddenproperty(cmdlp, "SimulationRadius", 139)
@@ -14363,6 +14364,7 @@ function useCommand.noshow()
 		opx("-","No-Show is now off")
 		sDetect = true
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		cmdlp.MaximumSimulationRadius = 139
 		sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		updatesaves()
 	else
@@ -16090,8 +16092,11 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
+	    cmdlp.MaximumSimulationRadius = 139
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
-		sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		if sethiddenproperty then
+			sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		end
 	end
 end
 
