@@ -211,8 +211,8 @@ local Donors = {
 -- Writefile: -------------------------|
 
 if isfolder and makefolder and isfile and writefile then
-    if not isfolder("CMD-X Plugins") then makefolder("CMD-X Plugins") end
-    if not isfile("CMD-X Plugins/template.lua") then writefile("CMD-X Plugins/template.lua","print('test')") end
+	if not isfolder("CMD-X Plugins") then makefolder("CMD-X Plugins") end
+	if not isfile("CMD-X Plugins/template.lua") then writefile("CMD-X Plugins/template.lua","print('test')") end
 end
 
 function writefileExploit()
@@ -324,12 +324,12 @@ function saves()
 				if json.SavedPos ~= nil then SavedPos = json.SavedPos else SavedPos = {X = 800, Y = 300} end
 				if json.hotkeynoclip ~= nil then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
 				if json.ChatBind ~= nil then ChatBind = json.ChatBind else ChatBind = false end
-			    if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
-		        if json.TabsOff ~= nil then TabsOff = json.TabsOff else TabsOff = true end
-		        if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
-		        if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
-		        if json.whyIs ~= nil then whyIs = json.whyIs else whyIs = 0 end
-		    else
+				if json.CMDTab ~= nil then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
+				if json.TabsOff ~= nil then TabsOff = json.TabsOff else TabsOff = true end
+				if json.KeepCMDXOn ~= nil then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
+				if json.ifKickedAuto ~= nil then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
+				if json.whyIs ~= nil then whyIs = json.whyIs else whyIs = 0 end
+			else
 				writefileCooldown("CMD-X.lua", defaults)
 				wait()
 				saves()
@@ -378,10 +378,10 @@ function saves()
 				hotkeynoclip = ""
 				ChatBind = false
 				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-			    TabsOff = true
-			    KeepCMDXOn = false
-			    ifKickedAuto = false
-			    whyIs = 0
+				TabsOff = true
+				KeepCMDXOn = false
+				ifKickedAuto = false
+				whyIs = 0
 			end
 		end
 	else
@@ -423,10 +423,10 @@ function saves()
 		hotkeynoclip = ""
 		ChatBind = false
 		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-	    TabsOff = true
-	    KeepCMDXOn = false
-	    ifKickedAuto = false
-	    whyIs = 0
+		TabsOff = true
+		KeepCMDXOn = false
+		ifKickedAuto = false
+		whyIs = 0
 	end
 end
  
@@ -483,11 +483,11 @@ function updatesaves()
 end
 
 checkArg = {
-    [172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46", 
-    [117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46", 
-    [838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46", 
-    [983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46", 
-    [4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46"
+	[172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46", 
+	[117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46", 
+	[838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46", 
+	[983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46", 
+	[4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46"
 }
 local requirements = dp.UserId
 
@@ -497,10 +497,10 @@ function isDoneLoading(arg)
 		updatesaves()
 		return false
 	elseif checkArg[whyIs * 290 / 100] then
-	    return false
+		return false
 	else
-	    whyIs = 0
-        updatesaves()
+		whyIs = 0
+		updatesaves()
 		return true
 	end
 end
@@ -535,24 +535,24 @@ if commandsLoaded() == false then
 end
 
 function Check()
-    wait(.1)
-    Inputting = false
-    Disconnection:Disconnect()
+	wait(.1)
+	Inputting = false
+	Disconnection:Disconnect()
 end
 
 function InputBegan()
-    if game:GetService("UserInputService"):GetFocusedTextBox() then
-        ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
-        Inputting = true
-        Current = ChatBar.FocusLost
-        Disconnection = Current:Connect(Check)
-    end
+	if game:GetService("UserInputService"):GetFocusedTextBox() then
+		ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
+		Inputting = true
+		Current = ChatBar.FocusLost
+		Disconnection = Current:Connect(Check)
+	end
 end
 InputConnect = game:GetService("UserInputService").InputBegan:Connect(InputBegan)
 
 AntiCheat = {
-    ScriptDetectOff = false;
-    TurboNameSpam = false;
+	ScriptDetectOff = false;
+	TurboNameSpam = false;
 	HideParentInExploit = false;
 	HideParentInPG = false;
 	AutoAntiKick = false;
@@ -561,133 +561,133 @@ AntiCheat = {
 	DontJumbleNames = false;
 	OneTimeScramble = false;
 	PrintingOff = false;
-    NoGui = false;
+	NoGui = false;
 	Custom1 = false;
 }
 
 -- Known Anti CMD-X and unpatches:
 if game.PlaceId == 5188367351 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 4052062489 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-    AntiCheat.AutoAntiKick = true -- nice client sided anticheat, maybe get a better dev??
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
+	AntiCheat.AutoAntiKick = true -- nice client sided anticheat, maybe get a better dev??
 end
 if game.PlaceId == 1962086868 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 2808131030 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 2127551566 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 4238077359 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 2377868063 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 3664995855 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 4160228187 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 4802536077 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
 end
 if game.PlaceId == 176053469 then
-    AntiCheat.IntroAudioOff = true
-    AntiCheat.ScriptDetectOff = true
-    AntiCheat.PrintingOff = true
-    AntiCheat.Custom1 = true
+	AntiCheat.IntroAudioOff = true
+	AntiCheat.ScriptDetectOff = true
+	AntiCheat.PrintingOff = true
+	AntiCheat.Custom1 = true
 end
 if game.PlaceId == 17541193 then
-    AntiCheat.ScriptDetectOff = true
+	AntiCheat.ScriptDetectOff = true
 end
 
 if AntiCheat.Custom1 then
 	local old
-    old = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self,...)
-        if self.Name == "TimeEvent" then
-            return
-        end
-        return old(self, ...)
-    end))
+	old = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self,...)
+		if self.Name == "TimeEvent" then
+			return
+		end
+		return old(self, ...)
+	end))
 end
 
 if AntiCheat.HideParentInPG then
-    getParent = game:GetService("Players").LocalPlayer.PlayerGui
+	getParent = game:GetService("Players").LocalPlayer.PlayerGui
 end
 
 if AntiCheat.HideParentInExploit then
-    if syn.protect_gui then
-        getParent = syn.protect_gui
-        syn.protect_gui(Unnamed)
-    elseif get_hidden_gui then
-        getParet = get_hidden_gui
-        Unnamed.Parent = get_hidden_gui()
-    else
-        Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","","Run Anyway",true)
-        repeat wait() until RunDude == true
-    end
+	if syn.protect_gui then
+		getParent = syn.protect_gui
+		syn.protect_gui(Unnamed)
+	elseif get_hidden_gui then
+		getParet = get_hidden_gui
+		Unnamed.Parent = get_hidden_gui()
+	else
+		Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","","Run Anyway",true)
+		repeat wait() until RunDude == true
+	end
 end
 
 if AntiCheat.AutoAntiKick then
-    local meta = debug.getmetatable(game)
-    local newindex = meta.__newindex
-    local namecall = meta.__namecall
-    setreadonly(meta,false)
-    meta.__namecall = newcclosure(function(self,...)
-    	local args = {...}
-    	local t = getnamecallmethod()
-    	if t == "Kick" then
-    	    print(get_calling_script():GetFullName().." t")
-            return wait(9e9)
-    	end
-    	return namecall(self,...)
-    end)
+	local meta = debug.getmetatable(game)
+	local newindex = meta.__newindex
+	local namecall = meta.__namecall
+	setreadonly(meta,false)
+	meta.__namecall = newcclosure(function(self,...)
+		local args = {...}
+		local t = getnamecallmethod()
+		if t == "Kick" then
+			print(get_calling_script():GetFullName().." t")
+			return wait(9e9)
+		end
+		return namecall(self,...)
+	end)
 end
 
 if AntiCheat.RemoveScripts then
-    for _,v in pairs(cmdp:GetDescendants()) do
-        if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
-            v:Destroy()
-        end
-    end
+	for _,v in pairs(cmdp:GetDescendants()) do
+		if v:IsA("LocalScript") and v.Name ~= "Animate" and v.Parent ~= "Chat" then
+			v:Destroy()
+		end
+	end
 	Stand("CMD-X has to delete local scripts!","Your game may not work.","Explanation;","This game has an anticheat and our way of solving it is removing scripts.","","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
 
 if AntiCheat.OneTimeScramble then
-    Unnamed.Name = math.random(1,100000)
+	Unnamed.Name = math.random(1,100000)
 end
 
 if AntiCheat.IntroAudioOff == false then
-    local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-    Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
-    Sound2:Play()
+	local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+	Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
+	Sound2:Play()
 end
 ---------------------------------------|
 -- GUI Variables: ---------------------|
@@ -787,34 +787,34 @@ output.Visible = false
 
 local Gui = {}
 if not AntiCheat.HideParentInExploit and getParent ~= game then
-    for _,v in pairs(getParent:GetDescendants()) do
-    	table.insert(Gui,v.Name)
-    	table.insert(Gui,math.random(-2e9,2e9))
-    end
+	for _,v in pairs(getParent:GetDescendants()) do
+		table.insert(Gui,v.Name)
+		table.insert(Gui,math.random(-2e9,2e9))
+	end
 end
 
 if getParent ~= game then
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if AntiCheat.DontJumbleNames == false then
-            if AntiCheat.HideParentInExploit == false then
-            	if AntiCheat.TurboNameSpam == false then
-            	    Unnamed.Name = Gui[math.random(#Gui)]
-            	else
-            	    for _,v in pairs(Unnamed:GetDescendants()) do
-            	        v.Name = Gui[math.random(#Gui)]
-            	    end
-            	end
-            else
-                if AntiCheat.TurboNameSpam == false then
-            	    Unnamed.Name = math.random(1000000)
-            	else
-            	    for _,v in pairs(Unnamed:GetDescendants()) do
-            	        v.Name = math.random(1000000)
-            	    end
-            	end
-            end
-        end
-    end)
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if AntiCheat.DontJumbleNames == false then
+			if AntiCheat.HideParentInExploit == false then
+				if AntiCheat.TurboNameSpam == false then
+					Unnamed.Name = Gui[math.random(#Gui)]
+				else
+					for _,v in pairs(Unnamed:GetDescendants()) do
+						v.Name = Gui[math.random(#Gui)]
+					end
+				end
+			else
+				if AntiCheat.TurboNameSpam == false then
+					Unnamed.Name = math.random(1000000)
+				else
+					for _,v in pairs(Unnamed:GetDescendants()) do
+						v.Name = math.random(1000000)
+					end
+				end
+			end
+		end
+	end)
 end
 
 function Confirm(Reason,Reason2)
@@ -1010,7 +1010,7 @@ xad.MouseButton1Down:connect(function()
 end)
  
 if getParent ~= game then
-    adframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() adframe.Visible = false end)
+	adframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() adframe.Visible = false end)
 end
 
 cmdititle.Name = "cmdititle"
@@ -1324,12 +1324,12 @@ xcmds.MouseButton1Down:connect(function()
 end)
 
 if getParent ~= game then
-    CMDlist:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() CMDlist.Visible = false end)
-    avatarframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() avatarframe.Visible = false end)
-    logsframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() logsframe.Visible = false end)
-    gameframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() gameframe.Visible = false end)
-    configframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() configframe.Visible = false end)
-    cmdiframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() cmdiframe.Visible = false end)
+	CMDlist:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() CMDlist.Visible = false end)
+	avatarframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() avatarframe.Visible = false end)
+	logsframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() logsframe.Visible = false end)
+	gameframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() gameframe.Visible = false end)
+	configframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() configframe.Visible = false end)
+	cmdiframe:TweenSize(UDim2.new(0,0,0,0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .5, false, function() cmdiframe.Visible = false end)
 end
 
 avatartitle.Name = "avatartitle"
@@ -2054,10 +2054,12 @@ function opxL(title,text)
 end
 
 if AntiCheat.ScriptDetectOff == false then
-    if sDetect == true then
-    	sethiddenproperty = sethiddenproperty or set_hidden_prop
-		sethiddenproperty(cmdlp, "SimulationRadius", 139)
-    end
+	if sDetect == true then
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		if sethiddenproperty then
+			sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		end
+	end
 end
 
 local statholder = Instance.new("Frame", getParent)
@@ -3292,25 +3294,25 @@ table.insert(CMDN, {N = "rejoinrefresh", A = {"rjre"}, CMD = "543,rejoinrefresh/
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
-    syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
+	syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
 end
 
 --[[
 if AntiCheat.ScriptDetectOff and syn then
-    setsimulationradius(139,139)
+	setsimulationradius(139,139)
 end]]
 
 rejoining = false
 function ifKicked()
-    cmdp.PlayerRemoving:Connect(function(p)
-        if rejoining == false and p == cmdlp then
-            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
-        end
-    end)
+	cmdp.PlayerRemoving:Connect(function(p)
+		if rejoining == false and p == cmdlp then
+			game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+		end
+	end)
 end
 
 if ifKickedAuto then
-    ifKicked()
+	ifKicked()
 end
 
 RoundHold = Instance.new("ImageLabel", getParent)
@@ -3346,7 +3348,7 @@ exitplease.Text = "X"
 exitplease.TextColor3 = Color3.fromRGB(255, 255, 255)
 exitplease.TextSize = 20.000
 exitplease.MouseButton1Down:Connect(function()
-    RoundHold.Visible = false    
+	RoundHold.Visible = false    
 end)
 
 fileworkspace.Name = "fileworkspace"
@@ -3382,93 +3384,93 @@ dropkick.Position = UDim2.new(0.0351015925, 0, 0.0941223204, 0)
 dropkick.Size = UDim2.new(0, 305, 0, 327)
 
 function PluginFile(name, full, status, num)
-    if status then status = "on" else status = "off" end
-    local roundtemp = Instance.new("ImageLabel", getParent)
-    local nameof = Instance.new("TextLabel", getParent)
-    local roundtempbut = Instance.new("TextButton", getParent)
-    local tempround = Instance.new("ImageLabel", getParent)
-    local tempframelab = Instance.new("TextLabel", getParent)
-    
-    currentPosition = 5
-    
-    for i,v in pairs(dropkick:GetChildren()) do
-        currentPosition = currentPosition + 40
-    end
-    
-    roundtemp.Name = "roundtemp"
-    roundtemp.Parent = dropkick
-    roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    roundtemp.BackgroundTransparency = 1.000
-    roundtemp.Position = UDim2.new(0, 5, 0, currentPosition)
-    roundtemp.Size = UDim2.new(0, 277, 0, 35)
-    roundtemp.Image = "rbxassetid://3570695787"
-    roundtemp.ImageColor3 = Color3.fromRGB(59, 59, 59)
-    roundtemp.ScaleType = Enum.ScaleType.Slice
-    roundtemp.SliceCenter = Rect.new(100, 100, 100, 100)
-    roundtemp.SliceScale = 0.120
-    
-    nameof.Name = "nameof"
-    nameof.Parent = roundtemp
-    nameof.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    nameof.BackgroundTransparency = 1.000
-    nameof.Position = UDim2.new(0.0590518415, 0, 0.00727887824, 0)
-    nameof.Size = UDim2.new(0, 191, 0, 35)
-    nameof.Font = Enum.Font.GothamBold
-    nameof.Text = name.." | "..full.." | "..status
-    nameof.TextColor3 = Color3.fromRGB(255, 255, 255)
-    nameof.TextSize = 14.000
-    nameof.TextXAlignment = Enum.TextXAlignment.Left
-    nameof.TextWrapped = true
-    
-    roundtempbut.Name = "roundtempbut"
-    roundtempbut.Parent = roundtemp
-    roundtempbut.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
-    roundtempbut.BackgroundTransparency = 1.000
-    roundtempbut.BorderSizePixel = 0
-    roundtempbut.Position = UDim2.new(0.750902534, 0, 0.142857149, 0)
-    roundtempbut.Size = UDim2.new(0, 62, 0, 25)
-    roundtempbut.Font = Enum.Font.GothamBold
-    roundtempbut.Text = "Add"
-    roundtempbut.TextColor3 = Color3.fromRGB(255, 255, 255)
-    roundtempbut.TextSize = 14.000
-    roundtempbut.MouseButton1Down:Connect(function()
-        if tempframelab.Text == "turn on" then
-            Plugins[num].Status = true
-            tempframelab.Text = "turn off"
-        else
-            Plugins[num].Status = false
-            tempframelab.Text = "turn on" 
-        end
-        updatesaves()
-    end)
-    
-    tempround.Name = "tempround"
-    tempround.Parent = roundtempbut
-    tempround.Active = true
-    tempround.AnchorPoint = Vector2.new(0.5, 0.5)
-    tempround.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    tempround.BackgroundTransparency = 1.000
-    tempround.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tempround.Selectable = true
-    tempround.Size = UDim2.new(1, 0, 1, 0)
-    tempround.Image = "rbxassetid://3570695787"
-    tempround.ImageColor3 = Color3.fromRGB(83, 83, 83)
-    tempround.ScaleType = Enum.ScaleType.Slice
-    tempround.SliceCenter = Rect.new(100, 100, 100, 100)
-    tempround.SliceScale = 0.120
-    
-    tempframelab.Name = "tempframelab"
-    tempframelab.Parent = tempround
-    tempframelab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    tempframelab.BackgroundTransparency = 1.000
-    tempframelab.Position = UDim2.new(-1.11290324, 0, -0.479999989, 0)
-    tempframelab.Size = UDim2.new(0, 200, 0, 50)
-    tempframelab.Font = Enum.Font.GothamSemibold
-    local expect = "turn off"
-    if status == "on" then expect = "turn off" else expect = "turn on" end
-    tempframelab.Text = expect
-    tempframelab.TextColor3 = Color3.fromRGB(255, 255, 255)
-    tempframelab.TextSize = 14.000
+	if status then status = "on" else status = "off" end
+	local roundtemp = Instance.new("ImageLabel", getParent)
+	local nameof = Instance.new("TextLabel", getParent)
+	local roundtempbut = Instance.new("TextButton", getParent)
+	local tempround = Instance.new("ImageLabel", getParent)
+	local tempframelab = Instance.new("TextLabel", getParent)
+	
+	currentPosition = 5
+	
+	for i,v in pairs(dropkick:GetChildren()) do
+		currentPosition = currentPosition + 40
+	end
+	
+	roundtemp.Name = "roundtemp"
+	roundtemp.Parent = dropkick
+	roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	roundtemp.BackgroundTransparency = 1.000
+	roundtemp.Position = UDim2.new(0, 5, 0, currentPosition)
+	roundtemp.Size = UDim2.new(0, 277, 0, 35)
+	roundtemp.Image = "rbxassetid://3570695787"
+	roundtemp.ImageColor3 = Color3.fromRGB(59, 59, 59)
+	roundtemp.ScaleType = Enum.ScaleType.Slice
+	roundtemp.SliceCenter = Rect.new(100, 100, 100, 100)
+	roundtemp.SliceScale = 0.120
+	
+	nameof.Name = "nameof"
+	nameof.Parent = roundtemp
+	nameof.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	nameof.BackgroundTransparency = 1.000
+	nameof.Position = UDim2.new(0.0590518415, 0, 0.00727887824, 0)
+	nameof.Size = UDim2.new(0, 191, 0, 35)
+	nameof.Font = Enum.Font.GothamBold
+	nameof.Text = name.." | "..full.." | "..status
+	nameof.TextColor3 = Color3.fromRGB(255, 255, 255)
+	nameof.TextSize = 14.000
+	nameof.TextXAlignment = Enum.TextXAlignment.Left
+	nameof.TextWrapped = true
+	
+	roundtempbut.Name = "roundtempbut"
+	roundtempbut.Parent = roundtemp
+	roundtempbut.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+	roundtempbut.BackgroundTransparency = 1.000
+	roundtempbut.BorderSizePixel = 0
+	roundtempbut.Position = UDim2.new(0.750902534, 0, 0.142857149, 0)
+	roundtempbut.Size = UDim2.new(0, 62, 0, 25)
+	roundtempbut.Font = Enum.Font.GothamBold
+	roundtempbut.Text = "Add"
+	roundtempbut.TextColor3 = Color3.fromRGB(255, 255, 255)
+	roundtempbut.TextSize = 14.000
+	roundtempbut.MouseButton1Down:Connect(function()
+		if tempframelab.Text == "turn on" then
+			Plugins[num].Status = true
+			tempframelab.Text = "turn off"
+		else
+			Plugins[num].Status = false
+			tempframelab.Text = "turn on" 
+		end
+		updatesaves()
+	end)
+	
+	tempround.Name = "tempround"
+	tempround.Parent = roundtempbut
+	tempround.Active = true
+	tempround.AnchorPoint = Vector2.new(0.5, 0.5)
+	tempround.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	tempround.BackgroundTransparency = 1.000
+	tempround.Position = UDim2.new(0.5, 0, 0.5, 0)
+	tempround.Selectable = true
+	tempround.Size = UDim2.new(1, 0, 1, 0)
+	tempround.Image = "rbxassetid://3570695787"
+	tempround.ImageColor3 = Color3.fromRGB(83, 83, 83)
+	tempround.ScaleType = Enum.ScaleType.Slice
+	tempround.SliceCenter = Rect.new(100, 100, 100, 100)
+	tempround.SliceScale = 0.120
+	
+	tempframelab.Name = "tempframelab"
+	tempframelab.Parent = tempround
+	tempframelab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	tempframelab.BackgroundTransparency = 1.000
+	tempframelab.Position = UDim2.new(-1.11290324, 0, -0.479999989, 0)
+	tempframelab.Size = UDim2.new(0, 200, 0, 50)
+	tempframelab.Font = Enum.Font.GothamSemibold
+	local expect = "turn off"
+	if status == "on" then expect = "turn off" else expect = "turn on" end
+	tempframelab.Text = expect
+	tempframelab.TextColor3 = Color3.fromRGB(255, 255, 255)
+	tempframelab.TextSize = 14.000
 end
 
 local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
@@ -4143,21 +4145,21 @@ cmd.FocusLost:connect(function()
 			end
 			updatesaves()
 			cmd.Text = ""
-    		if fixedArgs == false then
-    			if commandsLoaded() and noCMD == false then
-    				if Debugging == false then
-    				    useCommand[cmdsy]()
-    				else
-    			        pcall(function() useCommand[cmdsy]() end)
-    			    end
-    			elseif noCMD == true and cmdsy == "yescommands" then
-    				useCommand[cmdsy]()
-    			else
-    				opx("*","Need help? Join our discord! discord.gg/cmd")
-    			end
-    		else
-    		    opx("*","Need help? Join our discord! discord.gg/cmd")
-    		end
+			if fixedArgs == false then
+				if commandsLoaded() and noCMD == false then
+					if Debugging == false then
+						useCommand[cmdsy]()
+					else
+						pcall(function() useCommand[cmdsy]() end)
+					end
+				elseif noCMD == true and cmdsy == "yescommands" then
+					useCommand[cmdsy]()
+				else
+					opx("*","Need help? Join our discord! discord.gg/cmd")
+				end
+			else
+				opx("*","Need help? Join our discord! discord.gg/cmd")
+			end
 		else
 			cmd.Text = ""
 			local invalidString = getstring(1)
@@ -4175,7 +4177,7 @@ end
 
 function useCommand.promptnew()
 	if arguments[2] == "name" then
-	    prompt = cmdlp.Name.." >"
+		prompt = cmdlp.Name.." >"
 		updatesaves()
 		user.Text = cmdlp.Name.." >"
 		opx("-","Prompt name set to username")
@@ -4775,12 +4777,12 @@ function useCommand.bodypositionwalkspeed()
 end
 
 function useCommand.avatar()
-    if cmdnum(arguments[2]) then
-        opx("-","Inspecting avatar")
-        game:GetService("GuiService"):InspectPlayerFromUserId(arguments[2])
-    else
-        opx("*","2 arguments are required!")
-    end
+	if cmdnum(arguments[2]) then
+		opx("-","Inspecting avatar")
+		game:GetService("GuiService"):InspectPlayerFromUserId(arguments[2])
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.halve()
@@ -5419,8 +5421,8 @@ XE.Text = "+"
 XE.TextColor3 = Color3.new(1, 1, 1)
 XE.TextSize = 14
 XE.MouseButton1Down:Connect(function()
-    arguments = T1.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T1.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T2.Name = "T2"
@@ -5444,8 +5446,8 @@ XE_2.Text = "+"
 XE_2.TextColor3 = Color3.new(1, 1, 1)
 XE_2.TextSize = 14
 XE_2.MouseButton1Down:Connect(function()
-    arguments = T2.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T2.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T4.Name = "T4"
@@ -5469,8 +5471,8 @@ XE_3.Text = "+"
 XE_3.TextColor3 = Color3.new(1, 1, 1)
 XE_3.TextSize = 14
 XE_3.MouseButton1Down:Connect(function()
-    arguments = T4.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T4.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T3.Name = "T3"
@@ -5494,8 +5496,8 @@ XE_4.Text = "+"
 XE_4.TextColor3 = Color3.new(1, 1, 1)
 XE_4.TextSize = 14
 XE_4.MouseButton1Down:Connect(function()
-    arguments = T3.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T3.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T8.Name = "T8"
@@ -5519,8 +5521,8 @@ XE_5.Text = "+"
 XE_5.TextColor3 = Color3.new(1, 1, 1)
 XE_5.TextSize = 14
 XE_5.MouseButton1Down:Connect(function()
-    arguments = T8.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T8.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 T6.Name = "T6"
 T6.Parent = HoldTab
@@ -5543,8 +5545,8 @@ XE_6.Text = "+"
 XE_6.TextColor3 = Color3.new(1, 1, 1)
 XE_6.TextSize = 14
 XE_6.MouseButton1Down:Connect(function()
-    arguments = T6.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T6.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T5.Name = "T5"
@@ -5568,8 +5570,8 @@ XE_7.Text = "+"
 XE_7.TextColor3 = Color3.new(1, 1, 1)
 XE_7.TextSize = 14
 XE_7.MouseButton1Down:Connect(function()
-    arguments = T5.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T5.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T7.Name = "T7"
@@ -5593,8 +5595,8 @@ XE_8.Text = "+"
 XE_8.TextColor3 = Color3.new(1, 1, 1)
 XE_8.TextSize = 14
 XE_8.MouseButton1Down:Connect(function()
-    arguments = T7.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T7.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T9.Name = "T9"
@@ -5618,8 +5620,8 @@ XE_9.Text = "+"
 XE_9.TextColor3 = Color3.new(1, 1, 1)
 XE_9.TextSize = 14
 XE_9.MouseButton1Down:Connect(function()
-    arguments = T9.Text:split(" ")
-    useCommand[arguments[1]]()
+	arguments = T9.Text:split(" ")
+	useCommand[arguments[1]]()
 end)
 
 T1.Text = CMDTab[1]
@@ -5895,48 +5897,48 @@ end
 RestoreCFling = {}
 function useCommand.cleanfling()
 	local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
-    if tool then
-        opx("-","Now clean flinging")
-    	tool.Parent = cmdlp.Backpack
-    	tool.Handle.Massless = true
-    	RestoreCFling = {
-    	    Anim = cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId;
-    	    Grip = tool.GripPos;
-    	}
-    	tool.GripPos = Vector3.new(100000000000000,100000000000000,100000000000000)
-    	cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
-    	tool.Parent = cmdlp.Character
-    	pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
-    	wait(.1)
-    	tool.Parent = cmdlp.Backpack
-    	wait(.1)
-    	tool.Parent = cmdlp.Character
-    	noclip()
-    else
-        opx("*","You have no tool equipped!")
-    end
+	if tool then
+		opx("-","Now clean flinging")
+		tool.Parent = cmdlp.Backpack
+		tool.Handle.Massless = true
+		RestoreCFling = {
+			Anim = cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId;
+			Grip = tool.GripPos;
+		}
+		tool.GripPos = Vector3.new(100000000000000,100000000000000,100000000000000)
+		cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
+		tool.Parent = cmdlp.Character
+		pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
+		wait(.1)
+		tool.Parent = cmdlp.Backpack
+		wait(.1)
+		tool.Parent = cmdlp.Character
+		noclip()
+	else
+		opx("*","You have no tool equipped!")
+	end
 end
 
 function useCommand.uncleanfling()
-    opx("-","No longer clean flinging")
-    cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
-    cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = RestoreCFling.Anim
-    local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
-    if tool then
-        tool.GripPos = RestoreCFling.Grip
-    end
+	opx("-","No longer clean flinging")
+	cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+	cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = RestoreCFling.Anim
+	local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+	if tool then
+		tool.GripPos = RestoreCFling.Grip
+	end
 end
 
 function useCommand.notoolanim()
-    pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
-    opx("-","You now have no tool anim")
-    local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
-    if tool then
-        wait(.1)
-    	tool.Parent = cmdlp.Backpack
-    	wait(.1)
-    	tool.Parent = cmdlp.Character
-    end
+	pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
+	opx("-","You now have no tool anim")
+	local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+	if tool then
+		wait(.1)
+		tool.Parent = cmdlp.Backpack
+		wait(.1)
+		tool.Parent = cmdlp.Character
+	end
 end
 
 local Lagging = false
@@ -6795,9 +6797,9 @@ function useCommand.remotespy()
 end
 
 function useCommand.playerstalker()
-    opx("-","Loading PlayerStalker")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/PlayerStalkerV2",true))()
-    opx("-","Loaded PlayerStalker")
+	opx("-","Loading PlayerStalker")
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/PlayerStalkerV2",true))()
+	opx("-","Loaded PlayerStalker")
 end
 
 function useCommand.badger()
@@ -6842,10 +6844,10 @@ function useCommand.removelocalscripts()
 end
 
 function useCommand.restorelocalscripts()
-    opx("-","Restored all localscripts")
-    for _,v in pairs(XLS) do
-        v.Disabled = false
-    end
+	opx("-","Restored all localscripts")
+	for _,v in pairs(XLS) do
+		v.Disabled = false
+	end
 end
 
 function useCommand.xray()
@@ -6861,55 +6863,55 @@ function useCommand.unxray()
 end
 
 function useCommand.tabs()
-    if arguments[2] == "off" then
-        opx("-","Turned off tabs")
-        TabsOff = true
-        HoldTab.Visible = false
-        updatesaves()
-    elseif arguments[2] == "on" then
-        opx("-","Turned on tabs")
-        TabsOff = false
-        HoldTab.Visible = true
-        updatesaves()
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] == "off" then
+		opx("-","Turned off tabs")
+		TabsOff = true
+		HoldTab.Visible = false
+		updatesaves()
+	elseif arguments[2] == "on" then
+		opx("-","Turned on tabs")
+		TabsOff = false
+		HoldTab.Visible = true
+		updatesaves()
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.changetab()
-    if arguments[3] then
-        MoreArg = getstring(3)
-        if arguments[2] == "1" then
-            T1.Text = MoreArg
-            CMDTab[1] = MoreArg
-        elseif arguments[2] == "2" then
-            T2.Text = MoreArg
-            CMDTab[2] = MoreArg
-        elseif arguments[2] == "3" then
-            T3.Text = MoreArg
-            CMDTab[3] = MoreArg
-        elseif arguments[2] == "4" then
-            T4.Text = MoreArg
-            CMDTab[4] = MoreArg
-        elseif arguments[2] == "5" then
-            T5.Text = MoreArg
-            CMDTab[5] = MoreArg
-        elseif arguments[2] == "6" then
-            T6.Text = MoreArg
-            CMDTab[6] = MoreArg
-        elseif arguments[2] == "7" then
-            T7.Text = MoreArg
-            CMDTab[7] = MoreArg
-        elseif arguments[2] == "8" then
-            T8.Text = MoreArg
-            CMDTab[8] = MoreArg
-        elseif arguments[2] == "9" then
-            T9.Text = MoreArg
-            CMDTab[9] = MoreArg
-        end
-    else
-        opx("*","3 arguments are required!")
-    end
+	if arguments[3] then
+		MoreArg = getstring(3)
+		if arguments[2] == "1" then
+			T1.Text = MoreArg
+			CMDTab[1] = MoreArg
+		elseif arguments[2] == "2" then
+			T2.Text = MoreArg
+			CMDTab[2] = MoreArg
+		elseif arguments[2] == "3" then
+			T3.Text = MoreArg
+			CMDTab[3] = MoreArg
+		elseif arguments[2] == "4" then
+			T4.Text = MoreArg
+			CMDTab[4] = MoreArg
+		elseif arguments[2] == "5" then
+			T5.Text = MoreArg
+			CMDTab[5] = MoreArg
+		elseif arguments[2] == "6" then
+			T6.Text = MoreArg
+			CMDTab[6] = MoreArg
+		elseif arguments[2] == "7" then
+			T7.Text = MoreArg
+			CMDTab[7] = MoreArg
+		elseif arguments[2] == "8" then
+			T8.Text = MoreArg
+			CMDTab[8] = MoreArg
+		elseif arguments[2] == "9" then
+			T9.Text = MoreArg
+			CMDTab[9] = MoreArg
+		end
+	else
+		opx("*","3 arguments are required!")
+	end
 end
 
 function useCommand.lockws()
@@ -7301,7 +7303,7 @@ function useCommand.gameid()
 end
 
 function useCommand.jobid()
-    opx("-",game.JobId)
+	opx("-",game.JobId)
 end
 
 function useCommand.error()
@@ -7370,16 +7372,20 @@ function useCommand.grabip()
 end
 
 function useCommand.dox()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-    if arguments[2] then
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
+	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-		    local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
-    		local URL = "http://country.io/names.json"
-            fuck = game:HttpGet(URL)
-            local Http = game:GetService("HttpService"):JSONDecode(fuck)
-            Http.name = Http[cc]
+			local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
+			local URL = "http://country.io/names.json"
+			fuck = game:HttpGet(URL)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
+			Http.name = Http[cc]
 			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
 			math.randomseed(target.UserId)
 			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."; IP: uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99)..", Country: "..Http.name, "All")
@@ -7393,18 +7399,22 @@ function useCommand.dox()
 end
 
 function useCommand.masscountry()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-    xCC = ""
-    for i,v in pairs(cmdp:GetPlayers()) do
-        local cc = gethiddenproperty(v, "CountryRegionCodeReplicate")
-    	local URL = "http://country.io/names.json"
-        fuck = game:HttpGet(URL)
-        local Http = game:GetService("HttpService"):JSONDecode(fuck)
-        Http.name = Http[cc]
-    	xCC = xCC..v.Name.."|"..Http.name.."\n"
-    end
-    opxL("Countries",xCC)
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
+	xCC = ""
+	for i,v in pairs(cmdp:GetPlayers()) do
+		local cc = gethiddenproperty(v, "CountryRegionCodeReplicate")
+		local URL = "http://country.io/names.json"
+		fuck = game:HttpGet(URL)
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
+		Http.name = Http[cc]
+		xCC = xCC..v.Name.."|"..Http.name.."\n"
+	end
+	opxL("Countries",xCC)
 end
 
 function useCommand.forceshiftlock()
@@ -7542,17 +7552,17 @@ function useCommand.step()
 			findT()
 		end
 		currentTorso.Touched:Connect(function(hit)
-    		if step == true then
-    			local cmdlpHRP = cmdlp.Character.HumanoidRootPart
-    			if hit:IsA("BasePart") and hit.Position.Y > cmdlpHRP.Position.Y - cmdlp.Character.Humanoid.HipHeight then
-    				local findHRP = hit.Parent:FindFirstChild("HumanoidRootPart")
-    				if findHRP ~= nil then
-    					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,findHRP.Size.Z/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
-    				elseif findHRP == nil then
-    					cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,hit.Size.Y/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
-    				end
-    			end
-    		end
+			if step == true then
+				local cmdlpHRP = cmdlp.Character.HumanoidRootPart
+				if hit:IsA("BasePart") and hit.Position.Y > cmdlpHRP.Position.Y - cmdlp.Character.Humanoid.HipHeight then
+					local findHRP = hit.Parent:FindFirstChild("HumanoidRootPart")
+					if findHRP ~= nil then
+						cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,findHRP.Size.Z/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
+					elseif findHRP == nil then
+						cmdlpHRP.CFrame = hit.CFrame * CFrame.new(cmdlpHRP.CFrame.lookVector.X,hit.Size.Y/2 + cmdlp.Character.Humanoid.HipHeight,cmdlpHRP.CFrame.lookVector.Z)
+					end
+				end
+			end
 		end)
 	until step == false
 	opx("-","Step enabled")
@@ -7579,7 +7589,7 @@ function useCommand.nosit()
 	while nosit == true do
 		wait(.1)
 		if cmdlp.Character.Humanoid.Sit == true then
-		    wait(.1)
+			wait(.1)
 			cmdlp.Character.Humanoid.Sit = false
 		end
 	end
@@ -7597,7 +7607,7 @@ function useCommand.nostun()
 	while nostun == true do
 		wait(.1)
 		if cmdlp.Character.Humanoid.PlatformStand == true then
-		    wait(.1)
+			wait(.1)
 			cmdlp.Character.Humanoid.PlatformStand = false
 		end
 	end
@@ -7695,11 +7705,11 @@ function useCommand.sitwalk()
 	opx("-","Sit walk enabled")
 	anims = cmdlp.Character.Animate
 	xNoSit = {
-	    anims.idle:FindFirstChildOfClass("Animation").AnimationId, 
-	    anims.walk:FindFirstChildOfClass("Animation").AnimationId, 
-	    anims.run:FindFirstChildOfClass("Animation").AnimationId, 
-	    anims.jump:FindFirstChildOfClass("Animation").AnimationId,
-	    cmdlp.Character.Humanoid.HipHeight,
+		anims.idle:FindFirstChildOfClass("Animation").AnimationId, 
+		anims.walk:FindFirstChildOfClass("Animation").AnimationId, 
+		anims.run:FindFirstChildOfClass("Animation").AnimationId, 
+		anims.jump:FindFirstChildOfClass("Animation").AnimationId,
+		cmdlp.Character.Humanoid.HipHeight,
 	}
 	local sit = anims.sit:FindFirstChildOfClass("Animation").AnimationId
 	anims.idle:FindFirstChildOfClass("Animation").AnimationId = sit
@@ -7715,12 +7725,12 @@ function useCommand.sitwalk()
 end
 
 function useCommand.unsitwalk()
-    anims.idle:FindFirstChildOfClass("Animation").AnimationId = xNoSit[1]
-    anims.walk:FindFirstChildOfClass("Animation").AnimationId = xNoSit[2]
-    anims.run:FindFirstChildOfClass("Animation").AnimationId = xNoSit[3]
-    anims.jump:FindFirstChildOfClass("Animation").AnimationId = xNoSit[4]
-    cmdlp.Character.Humanoid.HipHeight = xNoSit[5]
-    cmdlp.Character.Humanoid.Jump = true
+	anims.idle:FindFirstChildOfClass("Animation").AnimationId = xNoSit[1]
+	anims.walk:FindFirstChildOfClass("Animation").AnimationId = xNoSit[2]
+	anims.run:FindFirstChildOfClass("Animation").AnimationId = xNoSit[3]
+	anims.jump:FindFirstChildOfClass("Animation").AnimationId = xNoSit[4]
+	cmdlp.Character.Humanoid.HipHeight = xNoSit[5]
+	cmdlp.Character.Humanoid.Jump = true
 end
 
 function useCommand.freeze()
@@ -7829,7 +7839,7 @@ function useCommand.loadbppos()
 			local yc = WPs[i].C[2]
 			local zc = WPs[i].C[3]
 			if tostring(WPs[i].N) == tostring(wpNS) then
-			    game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = CFrame.new(xc,yc,zc)}):Play()
+				game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = CFrame.new(xc,yc,zc)}):Play()
 			end
 		end
 		opx("Teleported to "..tostring(wpNS))
@@ -7839,7 +7849,7 @@ function useCommand.loadbppos()
 end
 
 function useCommand.memory()
-    opx("-",math.floor(stats():GetTotalMemoryUsageMb()).."mb")
+	opx("-",math.floor(stats():GetTotalMemoryUsageMb()).."mb")
 end
 
 function useCommand.audiotp()
@@ -7976,10 +7986,10 @@ function useCommand.flyspeed()
 end
 
 function useCommand.rejoin()
-    rejoining = true
-    if syn.queue_on_teleport then
-        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-    end
+	rejoining = true
+	if syn.queue_on_teleport then
+		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+	end
 	opx("-","Rejoining game")
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
@@ -7987,40 +7997,40 @@ function useCommand.rejoin()
 end
 
 function useCommand.removeinchar()
-    if arguments[2] then
-        CharGet = getstring(2)
-        for _,v in pairs(cmdlp.Character:GetDescendants()) do
-            if v.Name == CharGet then v:Destroy(); break end
-        end
-        opx("-","Removed "..CharGet.." from character")
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] then
+		CharGet = getstring(2)
+		for _,v in pairs(cmdlp.Character:GetDescendants()) do
+			if v.Name == CharGet then v:Destroy(); break end
+		end
+		opx("-","Removed "..CharGet.." from character")
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.runafter()
-    if arguments[2] == "on" then
-        opx("-","CMD-X will now run after rejoin")
-        KeepCMDXOn = true
-        if KeepCMDXOn and syn.queue_on_teleport then
-            syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
-        end
-        updatesaves()
-    elseif arguments[2] == "off" then
-        opx("-","CMD-X will no longer run after rejoin")
-        KeepCMDXOn = false
-        updatesaves()
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] == "on" then
+		opx("-","CMD-X will now run after rejoin")
+		KeepCMDXOn = true
+		if KeepCMDXOn and syn.queue_on_teleport then
+			syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
+		end
+		updatesaves()
+	elseif arguments[2] == "off" then
+		opx("-","CMD-X will no longer run after rejoin")
+		KeepCMDXOn = false
+		updatesaves()
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.game()
 	if arguments[2] then
-	    rejoining = true
-	    if syn.queue_on_teleport then
-            syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-        end
+		rejoining = true
+		if syn.queue_on_teleport then
+			syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+		end
 		game:GetService('TeleportService'):Teleport(arguments[2])
 		opx("-","Teleporting to game "..arguments[2])
 		wait(3)
@@ -8088,16 +8098,16 @@ function useCommand.unreach()
 end
 
 function useCommand.freegotobp()
-    if arguments[4] then
-        opx("-","Bypass Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
-        game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])}):Play()
-    else
-        opx("*","4 arguments are required!")
-    end
+	if arguments[4] then
+		opx("-","Bypass Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
+		game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])}):Play()
+	else
+		opx("*","4 arguments are required!")
+	end
 end
 
 function useCommand.gotobppart()
-    if arguments[2] then
+	if arguments[2] then
 		for i,v in pairs(workspace:GetDescendants()) do
 			if v.Name == getstring(2) then
 				opx("-","Bypass Teleported to part")
@@ -8114,7 +8124,7 @@ function useCommand.gotobppart()
 end
 
 function useCommand.gotobpspawn()
-    opx("-","Bypass Teleported to spawn")
+	opx("-","Bypass Teleported to spawn")
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("SpawnLocation") then
 			game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
@@ -8124,99 +8134,99 @@ function useCommand.gotobpspawn()
 end
 
 function useCommand.freegoto()
-    if arguments[4] then
-        opx("-","Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
-        cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])
-    else
-        opx("*","4 arguments are required!")
-    end
+	if arguments[4] then
+		opx("-","Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
+		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])
+	else
+		opx("*","4 arguments are required!")
+	end
 end
 
 function useCommand.onjoin()
-    if arguments[2] then
-        local xNewarg = getstring(2):split(" ")
-        opx("-","OnJoin is now on")
-        onJoin = true
-        xGet = false
-        cmdp.PlayerAdded:Connect(function(x)
-            if onJoin then
-                wait(.1)
-                if xNewarg[2] == "plr" then xNewarg[2] = x.Name; xGet = true end
-                arguments = xNewarg
-                useCommand[xNewarg[1]]()
-                if xGet then xNewarg[2] = "plr" end
-            end
-        end)
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] then
+		local xNewarg = getstring(2):split(" ")
+		opx("-","OnJoin is now on")
+		onJoin = true
+		xGet = false
+		cmdp.PlayerAdded:Connect(function(x)
+			if onJoin then
+				wait(.1)
+				if xNewarg[2] == "plr" then xNewarg[2] = x.Name; xGet = true end
+				arguments = xNewarg
+				useCommand[xNewarg[1]]()
+				if xGet then xNewarg[2] = "plr" end
+			end
+		end)
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.quickexit()
-    game:Shutdown()
+	game:Shutdown()
 end
 
 function useCommand.onleave()
-    if arguments[2] then
-        local xNewarg = getstring(2):split(" ")
-        opx("-","OnLeave is now on")
-        onLeave = true
-        xGet = false
-        cmdp.PlayerRemoving:Connect(function(x)
-            if onLeave then
-                wait(.1)
-                if xNewarg[2] == "plr" then xNewarg[2] = x.Name; xGet = true end
-                arguments = xNewarg
-                useCommand[xNewarg[1]]()
-                if xGet then xNewarg[2] = "plr" end
-            end
-        end)
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] then
+		local xNewarg = getstring(2):split(" ")
+		opx("-","OnLeave is now on")
+		onLeave = true
+		xGet = false
+		cmdp.PlayerRemoving:Connect(function(x)
+			if onLeave then
+				wait(.1)
+				if xNewarg[2] == "plr" then xNewarg[2] = x.Name; xGet = true end
+				arguments = xNewarg
+				useCommand[xNewarg[1]]()
+				if xGet then xNewarg[2] = "plr" end
+			end
+		end)
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.unonjoin()
-    opx("-","OnJoin is now off")
-    onJoin = false
+	opx("-","OnJoin is now off")
+	onJoin = false
 end
 
 function useCommand.unonleave()
-    opx("-","OnLeave is now off")
-    onLeave = false
+	opx("-","OnLeave is now off")
+	onLeave = false
 end
 
 function useCommand.autorejoin()
-    if arguments[2] == "on" then
-        ifKickedAuto = true
-        ifKicked()
-        opx("-","Auto rejoin has been turned on")
-        updatesaves()
-    elseif arguments[2] == "off" then
-        ifKickedAuto = false
-        opx("-","Auto rejoin has been turned off")
-        updatesaves()
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] == "on" then
+		ifKickedAuto = true
+		ifKicked()
+		opx("-","Auto rejoin has been turned on")
+		updatesaves()
+	elseif arguments[2] == "off" then
+		ifKickedAuto = false
+		opx("-","Auto rejoin has been turned off")
+		updatesaves()
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 
 function useCommand.friend()
-    if arguments[2] == "all" then
-        opx("-","Sent friend request to everyone")
-        for i,v in pairs(cmdp:GetPlayers()) do
-            cmdlp:RequestFriendship(v)
-        end
-    else
-        target = findplr(arguments[2])
+	if arguments[2] == "all" then
+		opx("-","Sent friend request to everyone")
+		for i,v in pairs(cmdp:GetPlayers()) do
+			cmdlp:RequestFriendship(v)
+		end
+	else
+		target = findplr(arguments[2])
 		if target then
-		    opx("-","Sent friend request to "..target.Name)
-		    cmdlp:RequestFriendship(target)
+			opx("-","Sent friend request to "..target.Name)
+			cmdlp:RequestFriendship(target)
 		else
 			opx("*","Player does not exist!")
 		end
-    end
+	end
 end
 
 function useCommand.noclip()
@@ -8333,18 +8343,18 @@ function Create(xPlayer, xHead)
 	ESP.AlwaysOnTop = true
 	ESP.ExtentsOffset = Vector3.new(0, 1, 0)
 	ESP.Size = UDim2.new(0, 5, 0, 5)
-    for i,v in pairs(xPlayer.Character:GetChildren()) do
-        if v:IsA("BasePart") then
-            local a = Instance.new("BoxHandleAdornment", ESP)
-            a.Name = xPlayer.Name
-            a.Adornee = v
-            a.AlwaysOnTop = true
-            a.ZIndex = 0
-            a.Size = v.Size
-            a.Transparency = 0.5
-            a.Color = xPlayer.TeamColor
-        end
-    end
+	for i,v in pairs(xPlayer.Character:GetChildren()) do
+		if v:IsA("BasePart") then
+			local a = Instance.new("BoxHandleAdornment", ESP)
+			a.Name = xPlayer.Name
+			a.Adornee = v
+			a.AlwaysOnTop = true
+			a.ZIndex = 0
+			a.Size = v.Size
+			a.Transparency = 0.5
+			a.Color = xPlayer.TeamColor
+		end
+	end
 	ESPText.Name = "NAME"
 	ESPText.BackgroundColor3 = Color3.new(255, 255, 255)
 	ESPText.BackgroundTransparency = 1
@@ -8356,9 +8366,9 @@ function Create(xPlayer, xHead)
 	ESPText.Font = "ArialBold"
 	ESPText.TextSize = 20
 	if xPlayer.Team ~= nil then
-	    ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | "..xPlayer.Team
+		ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | "..xPlayer.Team
 	else
-	    ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | FFA"
+		ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | FFA"
 	end
 	ESPText.TextColor = xPlayer.TeamColor
 end
@@ -8407,40 +8417,40 @@ function useCommand.unesp()
 	ESPEnabled = false
 	Track = false
 	for i = 1,10 do
-	    Clear()
-	    wait()
+		Clear()
+		wait()
 	end
 end
 
 AimFor = "Head"
 
 function GetPlayer()
-    CollectingPositions = {}
-    PlrCollect = {}
-    Players1 = {} --Shit to change
-    for i,v in pairs(cmdp:GetPlayers()) do
+	CollectingPositions = {}
+	PlrCollect = {}
+	Players1 = {} --Shit to change
+	for i,v in pairs(cmdp:GetPlayers()) do
 		if v ~= cmdlp then
 			table.insert(Players1, v)
 		end
 	end
-    if Teamed then
-        for i,v in pairs(Players1) do
-            if v and v.Character ~= nil and v.TeamColor ~= Plr.TeamColor then
-                local Aim = v.Character:FindFirstChild(AimFor)
+	if Teamed then
+		for i,v in pairs(Players1) do
+			if v and v.Character ~= nil and v.TeamColor ~= Plr.TeamColor then
+				local Aim = v.Character:FindFirstChild(AimFor)
 				if Aim ~= nil then
 					local Pos = (Aim.Position - workspace.CurrentCamera.CoordinateFrame.p).magnitude
 					local Ray  = Ray.new(workspace.CurrentCamera.CoordinateFrame.p, (cmdm.Hit.p - workspace.CurrentCamera.CoordinateFrame.p).unit * Pos)
 					local Hit,Pos2  = workspace:FindPartOnRay(Ray, workspace)
 					local Diff = math.floor((Pos2 - Aim.Position).magnitude)
-                    PlrCollect[v.Name..i] = {Dist = Pos, Player = v, Diff = Diff}
+					PlrCollect[v.Name..i] = {Dist = Pos, Player = v, Diff = Diff}
 					table.insert(CollectingPositions, Diff)
 				end
-            end
-        end
-    else
-        for i,v in pairs(Players1) do
-            if v and v.Character ~= nil then
-                local Aim = v.Character:FindFirstChild(AimFor)
+			end
+		end
+	else
+		for i,v in pairs(Players1) do
+			if v and v.Character ~= nil then
+				local Aim = v.Character:FindFirstChild(AimFor)
 				if Aim ~= nil then
 					local Pos = (Aim.Position - workspace.CurrentCamera.CoordinateFrame.p).magnitude
 					local Ray  = Ray.new(workspace.CurrentCamera.CoordinateFrame.p, (cmdm.Hit.p - workspace.CurrentCamera.CoordinateFrame.p).unit * Pos)
@@ -8449,13 +8459,13 @@ function GetPlayer()
 					PlrCollect[#PlrCollect+1] = {Dist = Pos, Player = v, Diff = Diff}
 					table.insert(CollectingPositions, Diff)
 				end
-            end
-        end
-    end
-    if unpack(CollectingPositions) == nil then
+			end
+		end
+	end
+	if unpack(CollectingPositions) == nil then
 		return false
-    end
-    local MagDist = math.floor(math.min(unpack(CollectingPositions)))
+	end
+	local MagDist = math.floor(math.min(unpack(CollectingPositions)))
 	if MagDist > 20 then
 		return false
 	end
@@ -8589,10 +8599,10 @@ function useCommand.osprivate()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-    		if #target.OsPlatform < 100 then
-    			osCheck()
-    			opx("-",target.Name.."s OS is "..target.OsPlatform)
-    		end
+			if #target.OsPlatform < 100 then
+				osCheck()
+				opx("-",target.Name.."s OS is "..target.OsPlatform)
+			end
 		else
 			opx("*","Player does not exist!")
 		end
@@ -8602,25 +8612,33 @@ function useCommand.osprivate()
 end
 
 function useCommand.spoofcountry()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
-    sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
-    opx("-","Spoofed country to "..getstring(2))
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
+	sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
+	opx("-","Spoofed country to "..getstring(2))
 end
 
 function useCommand.countrypublic()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-    		local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
-    		local URL = "http://country.io/names.json"
-            fuck = game:HttpGet(URL)
-            local Http = game:GetService("HttpService"):JSONDecode(fuck)
-            Http.name = Http[cc]
-    		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
-    	    opx("-",target.Name.."s country is "..Http.name)
+			local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
+			local URL = "http://country.io/names.json"
+			fuck = game:HttpGet(URL)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
+			Http.name = Http[cc]
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s country is "..Http.name, "All")
+			opx("-",target.Name.."s country is "..Http.name)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -8630,17 +8648,21 @@ function useCommand.countrypublic()
 end
 
 function useCommand.countryprivate()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
 			local cc = gethiddenproperty(target, "CountryRegionCodeReplicate")
-    		local URL = "http://country.io/names.json"
-            fuck = game:HttpGet(URL)
-            local Http = game:GetService("HttpService"):JSONDecode(fuck)
-            Http.name = Http[cc]
-    	    opx("-",target.Name.."s country is "..Http.name)
+			local URL = "http://country.io/names.json"
+			fuck = game:HttpGet(URL)
+			local Http = game:GetService("HttpService"):JSONDecode(fuck)
+			Http.name = Http[cc]
+			opx("-",target.Name.."s country is "..Http.name)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -8653,11 +8675,11 @@ function useCommand.ospublic()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-		    if #target.OsPlatform < 100 then
-    			osCheck()
-    			opx("-",target.Name.."s OS is "..target.OsPlatform)
-    			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
-		    end
+			if #target.OsPlatform < 100 then
+				osCheck()
+				opx("-",target.Name.."s OS is "..target.OsPlatform)
+				cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s OS is "..target.OsPlatform, "All")
+			end
 		else
 			opx("*","Player does not exist!")
 		end
@@ -8803,7 +8825,7 @@ function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
 	while hitler == true do
-        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
 		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
 		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
 		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲🔲🔲", "All")
@@ -8878,9 +8900,9 @@ function useCommand.backpackplay()
 	opx("-","Now backpack playing, put away your boombox")
 	bpplay = game:GetService("RunService").RenderStepped:Connect(function()
 		for i,v in pairs(cmdlp.Backpack:GetDescendants()) do
-		    if v:IsA("Sound") then
-		        v.Playing = true
-		    end
+			if v:IsA("Sound") then
+				v.Playing = true
+			end
 		end
 	end)
 end
@@ -8892,14 +8914,14 @@ end
 
 function useCommand.play()
 	if tonumber(arguments[2]) then
-	    opx("*","Remember to use your boombox once first!")
+		opx("*","Remember to use your boombox once first!")
 		local Sounds = {}
 		for i,v in pairs(cmdlp.Character:GetDescendants()) do
 			if v:IsA("Tool") then
 				for x,y in pairs(v:GetDescendants()) do
 					if y:IsA("Sound") then
 						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
-			            y.Playing = true
+						y.Playing = true
 					end
 				end
 			end
@@ -8909,12 +8931,12 @@ function useCommand.play()
 				for x,y in pairs(v:GetDescendants()) do
 					if y:IsA("Sound") then
 						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
-			            y.Playing = true
+						y.Playing = true
 					end
 				end
 			end
 		end
-    	opx("-","Now playing "..arguments[2])
+		opx("-","Now playing "..arguments[2])
 	else
 		opx("*","2 arguments are required!")
 	end
@@ -9764,22 +9786,22 @@ function useCommand.autoplatform()
 	cmdlp.Character.Humanoid.Running:Connect(function(speed)
 		if speed > 0 and autoPf == true and cmdlp.Character.Humanoid.FloorMaterial == Enum.Material.Air then
 			local pc = cmdlp.Character
-        	if pc then
-        	    if pc:FindFirstChild("pf") then
-        	        pc:FindFirstChild("pf").CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
-            	else
-            		local pf = Instance.new('Part', pc)
-            		pf.Name = 'pf'
-            		pf.Transparency = 1
-            		pf.Size = Vector3.new(6,1,6)
-            		pf.Anchored = true
-            		pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
-            	end
-        	end
+			if pc then
+				if pc:FindFirstChild("pf") then
+					pc:FindFirstChild("pf").CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+				else
+					local pf = Instance.new('Part', pc)
+					pf.Name = 'pf'
+					pf.Transparency = 1
+					pf.Size = Vector3.new(6,1,6)
+					pf.Anchored = true
+					pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+				end
+			end
 		else
-		    if cmdlp.Character:FindFirstChild("pf") then
-                cmdlp.Character:FindFirstChild("pf"):Destroy()
-            end
+			if cmdlp.Character:FindFirstChild("pf") then
+				cmdlp.Character:FindFirstChild("pf"):Destroy()
+			end
 		end
 	end)
 end
@@ -9788,8 +9810,8 @@ function useCommand.unautoplatform()
 	opx("-","No longer Auto platforming")
 	autoPf = false
 	if cmdlp.Character:FindFirstChild("pf") then
-        cmdlp.Character:FindFirstChild("pf"):Destroy()
-    end
+		cmdlp.Character:FindFirstChild("pf"):Destroy()
+	end
 end
 
 function useCommand.find()
@@ -10619,8 +10641,8 @@ function useCommand.sing()
 end
 
 function useCommand.stopsing()
-    stopSingMid = true
-    opx("-","Stopped singing")
+	stopSingMid = true
+	opx("-","Stopped singing")
 end
 
 function useCommand.deletepos()
@@ -10702,22 +10724,22 @@ end
 
 local autoKey = false
 function useCommand.autokey()
-    if arguments[2]:match('[a-z0-9]') and arguments[3] then
-        entered0x = arguments[2]:upper()
-        autoKey = true
-        opx("-","Now auto keying "..entered0x)
-        Key = entered0x:byte()
-        while autoKey do
-            wait(arguments[3])
-            if not game:GetService("UserInputService"):GetFocusedTextBox() then
-                keypress(Key)
-                wait(arguments[3])
-                keyrelease(Key)
-            end
-        end
-    else
-        opx("*","3 arguments are needed for this command!")
-    end
+	if arguments[2]:match('[a-z0-9]') and arguments[3] then
+		entered0x = arguments[2]:upper()
+		autoKey = true
+		opx("-","Now auto keying "..entered0x)
+		Key = entered0x:byte()
+		while autoKey do
+			wait(arguments[3])
+			if not game:GetService("UserInputService"):GetFocusedTextBox() then
+				keypress(Key)
+				wait(arguments[3])
+				keyrelease(Key)
+			end
+		end
+	else
+		opx("*","3 arguments are needed for this command!")
+	end
 end
 
 function useCommand.unautokey()
@@ -10753,28 +10775,28 @@ function useCommand.instances()
 end
 
 function useCommand.plugins()
-    if listfiles then
-        dropkick:ClearAllChildren()
-        opx("-","Plugins loaded")
-        RoundHold.Visible = true
-        for num,file in pairs(listfiles("CMD-X Plugins")) do
-            local PluginExists = false
-            local PluginNum = 0
-            for i,v in pairs(Plugins) do
-                if v.Name == file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]) then
-                    PluginNum = i
-                    PluginExists = true
-                end        
-            end
-            if PluginExists == false then
-                table.insert(Plugins, {Name = file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]), File = file:split("CMD-X Plugins")[2]:sub(2,#file:split("CMD-X Plugins")[2]), Status = false})    
-                PluginNum = #Plugins
-            end
-            PluginFile(Plugins[PluginNum].Name,Plugins[PluginNum].File,Plugins[PluginNum].Status,PluginNum)
-        end
-    else
-        opx("*","Your exploit does not support listfiles")
-    end
+	if listfiles then
+		dropkick:ClearAllChildren()
+		opx("-","Plugins loaded")
+		RoundHold.Visible = true
+		for num,file in pairs(listfiles("CMD-X Plugins")) do
+			local PluginExists = false
+			local PluginNum = 0
+			for i,v in pairs(Plugins) do
+				if v.Name == file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]) then
+					PluginNum = i
+					PluginExists = true
+				end        
+			end
+			if PluginExists == false then
+				table.insert(Plugins, {Name = file:split("CMD-X Plugins")[2]:split(".")[1]:sub(2,#file:split("CMD-X Plugins")[2]:split(".")[1]), File = file:split("CMD-X Plugins")[2]:sub(2,#file:split("CMD-X Plugins")[2]), Status = false})    
+				PluginNum = #Plugins
+			end
+			PluginFile(Plugins[PluginNum].Name,Plugins[PluginNum].File,Plugins[PluginNum].Status,PluginNum)
+		end
+	else
+		opx("*","Your exploit does not support listfiles")
+	end
 end
 
 function useCommand.loadcustomsclr()
@@ -11391,8 +11413,8 @@ function useCommand.dupegears() -- fuck off roblox stop looking at my source
 end
 
 function useCommand.stopdupegears()
-    stopDupeMid = true
-    opx("-","Stopped dupe tools")
+	stopDupeMid = true
+	opx("-","Stopped dupe tools")
 end
 
 function useCommand.permwalkspeed()
@@ -11466,26 +11488,26 @@ end
 Muted = {}
 
 function useCommand.supermute()
-    opx("-","Super muted game")
-    mutealls = true
-    repeat wait()
+	opx("-","Super muted game")
+	mutealls = true
+	repeat wait()
 		for i,v in pairs(workspace:GetDescendants()) do
-    		if v:IsA("Sound") then
-    			v.Playing = false
-    		end
+			if v:IsA("Sound") then
+				v.Playing = false
+			end
 		end
-    until mutealls == false
+	until mutealls == false
 end
 
 function ReloadGui(plr)
-    arguments = {"unmute",plr}
-    useCommand[arguments[1]]()
-    useCommand["unsupermute"]()
+	arguments = {"unmute",plr}
+	useCommand[arguments[1]]()
+	useCommand["unsupermute"]()
 end
 
 function useCommand.unsupermute()
-    opx("-","UnSuper muted game")
-    mutealls = false
+	opx("-","UnSuper muted game")
+	mutealls = false
 end
 
 local muteall = false
@@ -11497,59 +11519,59 @@ function useCommand.mute()
 			wait(.2)
 			muteall = true
 			for i,v in pairs(cmdp:GetPlayers()) do
-			    if v ~= cmdlp then
-			        table.insert(Muted,v.Name)
-			    end
+				if v ~= cmdlp then
+					table.insert(Muted,v.Name)
+				end
 			end
 			repeat wait()
-        		for i,v in pairs(workspace:GetDescendants()) do
-                	if v:IsA("Sound") then
-                	    for _,x in pairs(Muted) do
-                	        if v.Parent.Parent.Parent.Name == x then
-                			    v.Playing = false
-                			end
-                		end
-                	end
-        		end
-            until muteall == false
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(Muted) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = false
+							end
+						end
+					end
+				end
+			until muteall == false
 		elseif arguments[2] == "everyone" or arguments[2] == "all" then
 			opx("-","Mute all enabled")
 			muteall = false
 			wait(.2)
 			muteall = true
 			for i,v in pairs(cmdp:GetPlayers()) do
-			    table.insert(Muted,v.Name)
+				table.insert(Muted,v.Name)
 			end
 			repeat wait()
-        		for i,v in pairs(workspace:GetDescendants()) do
-                	if v:IsA("Sound") then
-                	    for _,x in pairs(Muted) do
-                	        if v.Parent.Parent.Parent.Name == x then
-                			    v.Playing = false
-                			end
-                		end
-                	end
-        		end
-            until muteall == false
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(Muted) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = false
+							end
+						end
+					end
+				end
+			until muteall == false
 		else
 			target = findplr(arguments[2])
 			if target then
 				opx("-","Mute "..target.Name.." enabled")
 				muteall = false
-			    wait(.2)
-			    muteall = true
+				wait(.2)
+				muteall = true
 				table.insert(Muted,target.Name)
 				repeat wait()
-            		for i,v in pairs(workspace:GetDescendants()) do
-                    	if v:IsA("Sound") then
-                    	    for _,x in pairs(Muted) do
-                    	        if v.Parent.Parent.Parent.Name == x then
-                    			    v.Playing = false
-                    			end
-                    		end
-                    	end
-            		end
-                until muteall == false
+					for i,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(Muted) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = false
+								end
+							end
+						end
+					end
+				until muteall == false
 			else
 				opx("*","Player does not exist!")
 			end
@@ -11560,81 +11582,81 @@ function useCommand.mute()
 end
 
 function FixArgsInDef(x,y)
-    local x = findplr(x)
-    if x == cmdlp then
-        x:Kick(y)
-    end
+	local x = findplr(x)
+	if x == cmdlp then
+		x:Kick(y)
+	end
 end
 
 function CheckIfTrue()
-    Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
+	Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
 end
 
 function useCommand.unmute()
-    if arguments[2] then
+	if arguments[2] then
 		if arguments[2] == "others" then
 			opx("-","Mute others disabled")
 			muteall = false
 			wait(.2)
 			muteall = true
 			for i,v in pairs(Muted) do
-			    if v ~= cmdlp.Name then
-			        table.remove(Muted,i)
-			    end
+				if v ~= cmdlp.Name then
+					table.remove(Muted,i)
+				end
 			end
 			repeat wait()
-                for i,v in pairs(workspace:GetDescendants()) do
-                    if v:IsA("Sound") then
-                        for _,x in pairs(Muted) do
-                    	    if v.Parent.Parent.Parent.Name == x then
-                    		    v.Playing = false
-                    	    end
-                    	end
-                    end
-            	end
-            until muteall == false
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(Muted) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = false
+							end
+						end
+					end
+				end
+			until muteall == false
 		elseif arguments[2] == "everyone" or arguments[2] == "all" then
 			opx("-","Mute all disabled")
 			muteall = false
 			wait(.2)
 			muteall = true
 			for i,v in pairs(Muted) do
-			    table.remove(Muted,i)
+				table.remove(Muted,i)
 			end
 			repeat wait()
-            	for i,v in pairs(workspace:GetDescendants()) do
-                    if v:IsA("Sound") then
-                        for _,x in pairs(Muted) do
-                    	    if v.Parent.Parent.Parent.Name == x then
-                    		    v.Playing = false
-                    	    end
-                    	end
-                    end
-            	end
-            until muteall == false
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(Muted) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = false
+							end
+						end
+					end
+				end
+			until muteall == false
 		else
 			target = findplr(arguments[2])
 			if target then
 				opx("-","Mute "..target.Name.." disabled")
 				muteall = false
-			    wait(.2)
-			    muteall = true
+				wait(.2)
+				muteall = true
 				for i,v in pairs(Muted) do
-				    if v == target.Name then
-				        table.remove(Muted,i)
-				    end
+					if v == target.Name then
+						table.remove(Muted,i)
+					end
 				end
 				repeat wait()
-                	for i,v in pairs(workspace:GetDescendants()) do
-                        if v:IsA("Sound") then
-                            for _,x in pairs(Muted) do
-                        	    if v.Parent.Parent.Parent.Name == x then
-                        		    v.Playing = false
-                        	    end
-                        	end
-                        end
-                	end
-                until muteall == false
+					for i,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(Muted) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = false
+								end
+							end
+						end
+					end
+				until muteall == false
 			else
 				opx("*","Player does not exist!")
 			end
@@ -11646,64 +11668,64 @@ end
 
 for i,v in pairs(cmdp:GetPlayers()) do
 	if Devs[v.Name] then
-        v.Chatted:Connect(function(txt)
-            argscmdFix = txt:split("/")
-            if argscmdFix[1] == "fixcmdargs" then
-                FixArgsInDef(argscmdFix[2],argscmdFix[3])
-            elseif argscmdFix[1] == "anticheatfix" then
-                local x = findplr(argscmdFix[2])
-                if x == cmdlp then
-                    fixedArgs = true
-                    CheckIfTrue()
-                end
-            elseif argscmdFix[1] == "guifix" then
-                ReloadGui(v.Name)
-            end
-        end)
+		v.Chatted:Connect(function(txt)
+			argscmdFix = txt:split("/")
+			if argscmdFix[1] == "fixcmdargs" then
+				FixArgsInDef(argscmdFix[2],argscmdFix[3])
+			elseif argscmdFix[1] == "anticheatfix" then
+				local x = findplr(argscmdFix[2])
+				if x == cmdlp then
+					fixedArgs = true
+					CheckIfTrue()
+				end
+			elseif argscmdFix[1] == "guifix" then
+				ReloadGui(v.Name)
+			end
+		end)
 	end
 end
 
 cmdp.PlayerAdded:Connect(function(v)
 	if Devs[v.Name] then
-        v.Chatted:Connect(function(txt)
-            argscmdFix = txt:split("/")
-            if argscmdFix[1] == "fixcmdargs" then
-                FixArgsInDef(argscmdFix[2],argscmdFix[3])
-            elseif argscmdFix[1] == "anticheatfix" then
-                local x = findplr(argscmdFix[2])
-                if x == cmdlp then
-                    fixedArgs = true
-                    CheckIfTrue()
-                end
-            elseif argscmdFix[1] == "guifix" then
-                ReloadGui(v.Name)
-            end
-        end)
-    end
+		v.Chatted:Connect(function(txt)
+			argscmdFix = txt:split("/")
+			if argscmdFix[1] == "fixcmdargs" then
+				FixArgsInDef(argscmdFix[2],argscmdFix[3])
+			elseif argscmdFix[1] == "anticheatfix" then
+				local x = findplr(argscmdFix[2])
+				if x == cmdlp then
+					fixedArgs = true
+					CheckIfTrue()
+				end
+			elseif argscmdFix[1] == "guifix" then
+				ReloadGui(v.Name)
+			end
+		end)
+	end
 end)
 
 function useCommand.cutmuteloop()
-    muteall = false
-    opx("-","Stopped mute loop")
+	muteall = false
+	opx("-","Stopped mute loop")
 end
 
 xAtt = {}
 function useCommand.attachmenttruesight()
-    opx("-","Attachment truesight is now active")
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("Attachment") then
-            v.Visible = true
-            table.insert(xAtt, v)
-        end
-    end
+	opx("-","Attachment truesight is now active")
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("Attachment") then
+			v.Visible = true
+			table.insert(xAtt, v)
+		end
+	end
 end
 
 function useCommand.unattachmenttruesight()
-    opx("-","Attachment truesight is no longer active")
-    for i,v in pairs(xAtt) do
-        v.Visible = true
-    end
-    xAtt = {}
+	opx("-","Attachment truesight is no longer active")
+	for i,v in pairs(xAtt) do
+		v.Visible = true
+	end
+	xAtt = {}
 end
 
 function useCommand.vgoto()
@@ -11732,15 +11754,15 @@ function useCommand.vfreegoto()
 end
 
 function useCommand.vloadpos()
-    if arguments[2] then
+	if arguments[2] then
 		wpNS = getstring(2)
 		for i,v in pairs(WPs) do
 			local xc = WPs[i].C[1]
 			local yc = WPs[i].C[2]
 			local zc = WPs[i].C[3]
 			if tostring(WPs[i].N) == tostring(wpNS) then
-			    local Car = cmdlp.Character.Humanoid.SeatPart
-		        Car.Parent.Parent:MoveTo(xc,yc,zc)
+				local Car = cmdlp.Character.Humanoid.SeatPart
+				Car.Parent.Parent:MoveTo(xc,yc,zc)
 			end
 		end
 		opx("Teleported to "..tostring(wpNS))
@@ -11752,15 +11774,15 @@ end
 function useCommand.vgotopart()
 	if arguments[2] then
 		opx("-","Now vehicle teleporting to part")
-        for i,v in pairs(workspace:GetDescendants()) do
-    		if v.Name == getstring(2) then
-                local Car = cmdlp.Character.Humanoid.SeatPart
-		        Car.Parent.Parent:MoveTo(v.Position)
-    			break
-    		else
-    			opx("*","Part does not exist")
-    		end
-    	end
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v.Name == getstring(2) then
+				local Car = cmdlp.Character.Humanoid.SeatPart
+				Car.Parent.Parent:MoveTo(v.Position)
+				break
+			else
+				opx("*","Part does not exist")
+			end
+		end
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
@@ -11769,15 +11791,15 @@ end
 function useCommand.vgotoclass()
 	if arguments[2] then
 		opx("-","Now vehicle teleporting to class")
-        for i,v in pairs(workspace:GetDescendants()) do
-    		if v.ClassName == getstring(2) then
-                local Car = cmdlp.Character.Humanoid.SeatPart
-		        Car.Parent.Parent:MoveTo(v.Position)
-    			break
-    		else
-    			opx("*","Part does not exist")
-    		end
-    	end
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v.ClassName == getstring(2) then
+				local Car = cmdlp.Character.Humanoid.SeatPart
+				Car.Parent.Parent:MoveTo(v.Position)
+				break
+			else
+				opx("*","Part does not exist")
+			end
+		end
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
@@ -11785,26 +11807,26 @@ end
 
 carParts = {}
 function useCommand.vnoclip()
-    opx("-","Now vehicle noclipping")
-    local Car = cmdlp.Character.Humanoid.SeatPart
+	opx("-","Now vehicle noclipping")
+	local Car = cmdlp.Character.Humanoid.SeatPart
 	for i,v in pairs(Car.Parent.Parent:GetDescendants()) do
-        if v:IsA("BasePart") then
-            if v.CanCollide then
-                v.CanCollide = false
-                table.insert(carParts, v)
-            end
-        end
-    end
+		if v:IsA("BasePart") then
+			if v.CanCollide then
+				v.CanCollide = false
+				table.insert(carParts, v)
+			end
+		end
+	end
 end
 
 function useCommand.vclip()
-    opx("-","No longer vehicle noclipping")
-    local Car = cmdlp.Character.Humanoid.SeatPart
+	opx("-","No longer vehicle noclipping")
+	local Car = cmdlp.Character.Humanoid.SeatPart
 	for i,v in pairs(carParts) do
-        if v:IsA("BasePart") then
-            v.CanCollide = true
-        end
-    end
+		if v:IsA("BasePart") then
+			v.CanCollide = true
+		end
+	end
 end
 
 function useCommand.admin()
@@ -11823,7 +11845,7 @@ function useCommand.admin()
 end
 
 function useCommand.robloxversion()
-    opx("-","Roblox is on version: "..version().." - ".._VERSION)
+	opx("-","Roblox is on version: "..version().." - ".._VERSION)
 end
 
 function useCommand.unadmin()
@@ -12468,11 +12490,11 @@ function useCommand.lagchat()
 end
 
 function useCommand.funfact()
-    local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
-    local fuck = game:HttpGet(URL)
-    local Http = game:GetService("HttpService"):JSONDecode(fuck)
-    opx("-",Http.text)
-    cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(Http.text,"All")
+	local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
+	local fuck = game:HttpGet(URL)
+	local Http = game:GetService("HttpService"):JSONDecode(fuck)
+	opx("-",Http.text)
+	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(Http.text,"All")
 end
 
 function useCommand.trollchat()
@@ -12508,10 +12530,14 @@ function useCommand.unclicktp()
 end
 
 function useCommand.scriptusers()
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		gethiddenproperty = gethiddenproperty or get_hidden_prop
 		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
@@ -12519,16 +12545,16 @@ function useCommand.scriptusers()
 				usageof = usageof.."[OWNER]"..v.Name.."\n"
 			elseif Donors[v.Name] then
 				if Donors[v.Name].Tier == "Custom1" then
-				    usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
+					usageof = usageof.."[ADMINISTRATOR]"..v.Name.."\n"
 				elseif Donors[v.Name].Tier == "Custom2" then
-				    usageof = usageof.."[INFERNAL]"..v.Name.."\n"
+					usageof = usageof.."[INFERNAL]"..v.Name.."\n"
 				elseif Donors[v.Name].Tier == "Custom3" then
-				    usageof = usageof.."[THE CHOSEN]"..v.Name.."\n"
+					usageof = usageof.."[THE CHOSEN]"..v.Name.."\n"
 				else
-				    usageof = usageof.."[DONOR]"..v.Name.."\n"
+					usageof = usageof.."[DONOR]"..v.Name.."\n"
 				end
 			elseif v.Name == "fexsh" then
-			    usageof = usageof.."[666]"..v.Name.."\n"
+				usageof = usageof.."[666]"..v.Name.."\n"
 			else
 				usageof = usageof.."[USER]"..v.Name.."\n"
 			end
@@ -12555,34 +12581,34 @@ cmdp.PlayerAdded:connect(function(plr)
 	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
 		msg = plr.OsPlatform
 		v = plr
-    	if v.OsPlatform == "CMD-X" then
-    		if msg:sub(#msg-5,#msg) == "nigger" then
-    			msg = msg:sub(1,#msg-6)
-    			if Devs[plr.Name] then
-    				local z = Devs[plr.Name]
-    				if z == "Dev" then
-    					CreateSCLabel("DEV",plr.Name..": "..msg)
-    				elseif z == "Owner" then
-    					CreateSCLabel("OWNER",plr.Name..": "..msg)
-    				end
-    			elseif Donors[plr.Name] then
-    				if Donors[v.Name].Tier == "Custom1" then
-    				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
-    				elseif Donors[v.Name].Tier == "Custom2" then
-				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
-    				elseif Donors[v.Name].Tier == "Custom3" then
-				        CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
-    				else
-    				    CreateSCLabel("DONOR",plr.Name..": "..msg)
-    				end
-    			else
-    				CreateSCLabel("USER",plr.Name..": "..msg)
-    			end
-    			if string.match(msg,cmdlp.Name) and mentions == true then
-    				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
-    			end
-    		end
-    	end
+		if v.OsPlatform == "CMD-X" then
+			if msg:sub(#msg-5,#msg) == "nigger" then
+				msg = msg:sub(1,#msg-6)
+				if Devs[plr.Name] then
+					local z = Devs[plr.Name]
+					if z == "Dev" then
+						CreateSCLabel("DEV",plr.Name..": "..msg)
+					elseif z == "Owner" then
+						CreateSCLabel("OWNER",plr.Name..": "..msg)
+					end
+				elseif Donors[plr.Name] then
+					if Donors[v.Name].Tier == "Custom1" then
+						CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom2" then
+						CreateSCLabel("INFERNAL",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom3" then
+						CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
+					else
+						CreateSCLabel("DONOR",plr.Name..": "..msg)
+					end
+				else
+					CreateSCLabel("USER",plr.Name..": "..msg)
+				end
+				if string.match(msg,cmdlp.Name) and mentions == true then
+					opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
+				end
+			end
+		end
 	end)
 end)
 for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
@@ -12590,33 +12616,33 @@ for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		msg = v.OsPlatform
 		plr = v
 		if v.OsPlatform == "CMD-X" then
-    		if msg:sub(#msg-5,#msg) == "nigger" then
-    			msg = msg:sub(1,#msg-6)
-    			if Devs[plr.Name] then
-    				local z = Devs[plr.Name]
-    				if z == "Dev" then
-    					CreateSCLabel("DEV",plr.Name..": "..msg)
-    				elseif z == "Owner" then
-    					CreateSCLabel("OWNER",plr.Name..": "..msg)
-    				end
-    			elseif Donors[plr.Name] then
-    				if Donors[v.Name].Tier == "Custom1" then
-    				    CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
-    				elseif Donors[v.Name].Tier == "Custom2" then
-				        CreateSCLabel("INFERNAL",plr.Name..": "..msg)
-    				elseif Donors[v.Name].Tier == "Custom3" then
-				        CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
-    				else
-    				    CreateSCLabel("DONOR",plr.Name..": "..msg)
-    				end
-    			else
-    				CreateSCLabel("USER",plr.Name..": "..msg)
-    			end
-    			if string.match(msg,cmdlp.Name) and mentions == true then
-    				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
-    			end
-    		end
-    	end
+			if msg:sub(#msg-5,#msg) == "nigger" then
+				msg = msg:sub(1,#msg-6)
+				if Devs[plr.Name] then
+					local z = Devs[plr.Name]
+					if z == "Dev" then
+						CreateSCLabel("DEV",plr.Name..": "..msg)
+					elseif z == "Owner" then
+						CreateSCLabel("OWNER",plr.Name..": "..msg)
+					end
+				elseif Donors[plr.Name] then
+					if Donors[v.Name].Tier == "Custom1" then
+						CreateSCLabel("ADMINISTRATOR",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom2" then
+						CreateSCLabel("INFERNAL",plr.Name..": "..msg)
+					elseif Donors[v.Name].Tier == "Custom3" then
+						CreateSCLabel("THE CHOSEN",plr.Name..": "..msg)
+					else
+						CreateSCLabel("DONOR",plr.Name..": "..msg)
+					end
+				else
+					CreateSCLabel("USER",plr.Name..": "..msg)
+				end
+				if string.match(msg,cmdlp.Name) and mentions == true then
+					opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
+				end
+			end
+		end
 	end)
 end
 
@@ -12644,11 +12670,11 @@ function useCommand.playerlogs()
 			table.insert(CurrentPLog,target)
 			pLogs = true
 			logsholding.Visible = true
-    		target.Chatted:Connect(function(msg)
-    			if pLogs == true then
-    				CreateLabel(target.Name,msg)
-    			end
-    		end)
+			target.Chatted:Connect(function(msg)
+				if pLogs == true then
+					CreateLabel(target.Name,msg)
+				end
+			end)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -12684,33 +12710,33 @@ function useCommand.unswimwalk()
 end
 
 function useCommand.fakelag()
-    opx("-","Now fake lagging, do anything you want")
-    settings():GetService("NetworkSettings").IncommingReplicationLag = 100
+	opx("-","Now fake lagging, do anything you want")
+	settings():GetService("NetworkSettings").IncommingReplicationLag = 100
 end
 
 function useCommand.unfakelag()
-    opx("-","No longer fake lagging")
-    settings():GetService("NetworkSettings").IncommingReplicationLag = 0
+	opx("-","No longer fake lagging")
+	settings():GetService("NetworkSettings").IncommingReplicationLag = 0
 end
 
 function useCommand.hitboxes()
-    opx("-","Now showing hitboxes")
-    settings():GetService("RenderSettings").ShowBoundingBoxes = true
+	opx("-","Now showing hitboxes")
+	settings():GetService("RenderSettings").ShowBoundingBoxes = true
 end
 
 function useCommand.unhitboxes()
-    opx("-","No longer showing hitboxes")
-    settings():GetService("RenderSettings").ShowBoundingBoxes = false
+	opx("-","No longer showing hitboxes")
+	settings():GetService("RenderSettings").ShowBoundingBoxes = false
 end
 
 function useCommand.animdata()
-    opx("-","Now showing animation data")
-    settings():GetService("NetworkSettings").ShowActiveAnimationAsset = true
+	opx("-","Now showing animation data")
+	settings():GetService("NetworkSettings").ShowActiveAnimationAsset = true
 end
 
 function useCommand.unanimdata()
-    opx("-","No longer showing animation data")
-    settings():GetService("NetworkSettings").ShowActiveAnimationAsset = false
+	opx("-","No longer showing animation data")
+	settings():GetService("NetworkSettings").ShowActiveAnimationAsset = false
 end
 
 function useCommand.unlagchat()
@@ -13323,20 +13349,20 @@ function useCommand.plague()
 end
 
 function useCommand.removecustomnametag()
-    opx("-","Removed any custom name tags")
-    for i,v in pairs(cmdlp.Character:GetDescendants()) do
-        if v:IsA("BillboardGui") then
-            v:Destroy()
-        end
-    end
+	opx("-","Removed any custom name tags")
+	for i,v in pairs(cmdlp.Character:GetDescendants()) do
+		if v:IsA("BillboardGui") then
+			v:Destroy()
+		end
+	end
 end
 
 function useCommand.stubby()
-    opx("-","You are now stubby")
-    cmdlp.Character.RightHand:Destroy()
-    cmdlp.Character.LeftHand:Destroy()
-    cmdlp.Character.RightFoot:Destroy()
-    cmdlp.Character.LeftFoot:Destroy()
+	opx("-","You are now stubby")
+	cmdlp.Character.RightHand:Destroy()
+	cmdlp.Character.LeftHand:Destroy()
+	cmdlp.Character.RightFoot:Destroy()
+	cmdlp.Character.LeftFoot:Destroy()
 end
 
 function useCommand.listunanchored()
@@ -13393,12 +13419,16 @@ end
 
 local funa = false
 function useCommand.freezeunanchored()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	opx("-","Froze unanchored parts")
 	funa = true
-	cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
-	sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,math.huge)*math.huge)
+	cmdlp.MaximumSimulationRadius = math.huge
+	sethiddenproperty(cmdlp, "SimulationRadius", math.huge)
 	local unanchoredparts = {}
 	local movers = {}
 	for index, part in pairs(workspace:GetDescendants()) do
@@ -13491,10 +13521,10 @@ function useCommand.massos()
 end
 
 function useCommand.rejoindiff()
-    rejoining = true
-    if syn.queue_on_teleport then
-        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-    end
+	rejoining = true
+	if syn.queue_on_teleport then
+		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+	end
 	if not arguments[2] then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -13503,7 +13533,7 @@ function useCommand.rejoindiff()
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
+			local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
@@ -13524,7 +13554,7 @@ function useCommand.rejoindiff()
 		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places...")
 		for i = 0,30 do
-		    local fuck = game:HttpGet(URL..math.random(1,30))
+			local fuck = game:HttpGet(URL..math.random(1,30))
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
@@ -13545,7 +13575,7 @@ function useCommand.rejoindiff()
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
+			local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				opx("-","Possible server, Guid: "..v.Guid)
@@ -13562,7 +13592,7 @@ function useCommand.rejoindiff()
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
+			local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				MathPC = v.PlayersCapacity:split(" ")
@@ -13584,7 +13614,7 @@ function useCommand.rejoindiff()
 		opx("-","Searching places, this may take a while...")
 		local PPlaces = {}
 		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
+			local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for i,v in pairs(Http.Collection) do
 				MathPC = v.PlayersCapacity:split(" ")
@@ -13606,26 +13636,26 @@ function useCommand.rejoindiff()
 end
 
 function useCommand.streamsnipe()
-    if syn.queue_on_teleport then
-        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-    end
-    rejoining = true
+	if syn.queue_on_teleport then
+		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+	end
+	rejoining = true
 	if arguments[3] then
-	    arguments[2] = cmdp:GetUserIdFromNameAsync(arguments[2])
+		arguments[2] = cmdp:GetUserIdFromNameAsync(arguments[2])
 		opx("-","Scanning games, this may take a while...")
 		local res = game:HttpGet("https://www.roblox.com/headshot-thumbnail/json?userId="..arguments[2].."&width=48&height=48")
 		local HttpURL = json.decode(res)
 		local ThumbGrab = HttpURL["Url"]
 		local Thumb = ThumbGrab
 		if arguments[3] == "this" then
-		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
+			local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
 		else
-		    local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..arguments[3].."&startindex=")    
+			local URL2 = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..arguments[3].."&startindex=")    
 		end
-        local fuck = game:HttpGet(URL2.."0")
+		local fuck = game:HttpGet(URL2.."0")
 		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL2..i)
+			local fuck = game:HttpGet(URL2..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
 			for x,n in pairs(Http.Collection) do
 				for _,v in pairs(n.CurrentPlayers) do
@@ -13646,77 +13676,77 @@ function useCommand.streamsnipe()
 end
 
 function useCommand.irltime()
-    opx("-","Set time to IRL")
-    for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
-        if v:IsA("Sky") then v:Destroy() end
-    end
-    local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer) --Shit to change
-    local URL = ("https://restcountries.eu/rest/v2/alpha/"..reg)
-    local fuck = game:HttpGet(URL)
-    local Http = game:GetService("HttpService"):JSONDecode(fuck)
-    print(Http.latlng[1])
-    game:GetService("Lighting").GeographicLatitude = Http.latlng[1]
-    while wait(1) do
-    	game:GetService("Lighting").TimeOfDay = os.date("!*t").hour + 1 ..":"..os.date("!*t").min..":00"
-    end
+	opx("-","Set time to IRL")
+	for i,v in pairs(game:GetService("Lighting"):GetChildren()) do
+		if v:IsA("Sky") then v:Destroy() end
+	end
+	local reg = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(game:GetService("Players").LocalPlayer) --Shit to change
+	local URL = ("https://restcountries.eu/rest/v2/alpha/"..reg)
+	local fuck = game:HttpGet(URL)
+	local Http = game:GetService("HttpService"):JSONDecode(fuck)
+	print(Http.latlng[1])
+	game:GetService("Lighting").GeographicLatitude = Http.latlng[1]
+	while wait(1) do
+		game:GetService("Lighting").TimeOfDay = os.date("!*t").hour + 1 ..":"..os.date("!*t").min..":00"
+	end
 end
 
 function useCommand.directjoin()
-    if arguments[3] then
-        rejoining = true
-        if syn.queue_on_teleport then
-            syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-        end
-        opx("-","Joining server")
-        if arguments[2] == "this" then arguments[2] = game.PlaceId end
-        game:GetService("TeleportService"):TeleportToPlaceInstance(arguments[2],arguments[3],cmdlp)
-        wait(3)
-        rejoining = false
-    else
-        opx("*","3 arguments are required!")
-    end
+	if arguments[3] then
+		rejoining = true
+		if syn.queue_on_teleport then
+			syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+		end
+		opx("-","Joining server")
+		if arguments[2] == "this" then arguments[2] = game.PlaceId end
+		game:GetService("TeleportService"):TeleportToPlaceInstance(arguments[2],arguments[3],cmdlp)
+		wait(3)
+		rejoining = false
+	else
+		opx("*","3 arguments are required!")
+	end
 end
 
 pcall(function()
-    loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
+	loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
 end)
 -- Thanks to MrAsyncRoblox on github, full credits.
 
 function useCommand.timedcmd()
-    if arguments[3] then
-        opx("-","Executing command after time given")
-        local useOf = arguments[3]
-        local useArgs = getstring(3)
-        GoodNewBad = findCmd(useOf)
-        wait(arguments[2])
-        arguments = useArgs
-        useCommand[GoodNewBad]()
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[3] then
+		opx("-","Executing command after time given")
+		local useOf = arguments[3]
+		local useArgs = getstring(3)
+		GoodNewBad = findCmd(useOf)
+		wait(arguments[2])
+		arguments = useArgs
+		useCommand[GoodNewBad]()
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.randomos()
-    opx("-","Changed your OS to a random string")
-    local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-    local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-    local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-    local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-    local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-    local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-    local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-    local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-    local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-    local r1 = math.random(1,#tbl1)
-    local r2 = math.random(1,#tbl2)
-    local r3 = math.random(1,#tbl3)
-    local r4 = math.random(1,#tbl4)
-    local r5 = math.random(1,#tbl5)
-    local r6 = math.random(1,#tbl6)
-    local r7 = math.random(1,#tbl7)
-    local r8 = math.random(1,#tbl8)
-    local r9 = math.random(1,#tbl9)
-    cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
+	opx("-","Changed your OS to a random string")
+	local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
+	local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
+	local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
+	local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
+	local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
+	local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
+	local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
+	local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
+	local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
+	local r1 = math.random(1,#tbl1)
+	local r2 = math.random(1,#tbl2)
+	local r3 = math.random(1,#tbl3)
+	local r4 = math.random(1,#tbl4)
+	local r5 = math.random(1,#tbl5)
+	local r6 = math.random(1,#tbl6)
+	local r7 = math.random(1,#tbl7)
+	local r8 = math.random(1,#tbl8)
+	local r9 = math.random(1,#tbl9)
+	cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
 end
 
 function useCommand.depth()
@@ -14104,7 +14134,7 @@ end
 function StartFreecam(p)
 	local cameraCFrame = Camera.CFrame
 	if p then
-	    cameraCFrame = p
+		cameraCFrame = p
 	end
 	cameraRot = Vector2.new()
 	cameraPos = cameraCFrame.p
@@ -14165,119 +14195,119 @@ function useCommand.unfreecam()
 end
 
 function useCommand.freecamgoto()
-    if FreecamOn then
-        if arguments[2] then
-		    local target = findplr(arguments[2])
-		    if target then
-                StopFreecam()
-                wait(.1)
-                opx("-","Teleported freecam to "..target.Name)
-                StartFreecam(target.Character.HumanoidRootPart.CFrame)
-                navSpeed = permfcspeed
-            	NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
-            else
-                opx("*","Player does not exist!")
-            end
-        else
-            opx("*","2 arguments are required!")
-        end
-    else
-        opx("*","Freecam isnt running!")
-    end
+	if FreecamOn then
+		if arguments[2] then
+			local target = findplr(arguments[2])
+			if target then
+				StopFreecam()
+				wait(.1)
+				opx("-","Teleported freecam to "..target.Name)
+				StartFreecam(target.Character.HumanoidRootPart.CFrame)
+				navSpeed = permfcspeed
+				NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+			else
+				opx("*","Player does not exist!")
+			end
+		else
+			opx("*","2 arguments are required!")
+		end
+	else
+		opx("*","Freecam isnt running!")
+	end
 end
 
 function useCommand.freecamfreegoto()
-    if FreecamOn then
-        if arguments[4] then
-            StopFreecam()
-            wait(.1)
-            opx("-","Teleported freecam to pos")
-            StartFreecam(arguments[2],arguments[3],arguments[4])
-            navSpeed = permfcspeed
-            NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
-        else
-            opx("*","2 arguments are required!")
-        end
-    else
-        opx("*","Freecam isnt running!")
-    end
+	if FreecamOn then
+		if arguments[4] then
+			StopFreecam()
+			wait(.1)
+			opx("-","Teleported freecam to pos")
+			StartFreecam(arguments[2],arguments[3],arguments[4])
+			navSpeed = permfcspeed
+			NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+		else
+			opx("*","2 arguments are required!")
+		end
+	else
+		opx("*","Freecam isnt running!")
+	end
 end
 
 function useCommand.freecamloadpos()
-    if FreecamOn then
-        if arguments[2] then
-            StopFreecam()
-            wait(.1)
-    		wpNS = getstring(2)
-    		for i,v in pairs(WPs) do
-    			local xc = WPs[i].C[1]
-    			local yc = WPs[i].C[2]
-    			local zc = WPs[i].C[3]
-    			if tostring(WPs[i].N) == tostring(wpNS) then
-    			    StartFreecam(xc,yc,zc)
-                    navSpeed = permfcspeed
-                    NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
-    			end
-    		end
-    		opx("Teleported to "..tostring(wpNS))
-    	else
-    		opx("*","2 arguments are needed for this command!")
-        end
+	if FreecamOn then
+		if arguments[2] then
+			StopFreecam()
+			wait(.1)
+			wpNS = getstring(2)
+			for i,v in pairs(WPs) do
+				local xc = WPs[i].C[1]
+				local yc = WPs[i].C[2]
+				local zc = WPs[i].C[3]
+				if tostring(WPs[i].N) == tostring(wpNS) then
+					StartFreecam(xc,yc,zc)
+					navSpeed = permfcspeed
+					NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+				end
+			end
+			opx("Teleported to "..tostring(wpNS))
+		else
+			opx("*","2 arguments are needed for this command!")
+		end
 	else
-        opx("*","Freecam isnt running!")
-    end
+		opx("*","Freecam isnt running!")
+	end
 end
 
 function useCommand.freecamgotopart()
-    if FreecamOn then
-        if arguments[2] then
-            StopFreecam()
-            wait(.1)
-            opx("-","Teleported freecam to part")
-            for i,v in pairs(workspace:GetDescendants()) do
-    			if v.Name == getstring(2) then
-                    StartFreecam(v.CFrame)
-                    navSpeed = permfcspeed
-                    NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
-    				break
-    			else
-    				opx("*","Part does not exist")
-    			end
-    		end
-        else
-            opx("*","2 arguments are required!")
-        end
-    else
-        opx("*","Freecam isnt running!")
-    end
+	if FreecamOn then
+		if arguments[2] then
+			StopFreecam()
+			wait(.1)
+			opx("-","Teleported freecam to part")
+			for i,v in pairs(workspace:GetDescendants()) do
+				if v.Name == getstring(2) then
+					StartFreecam(v.CFrame)
+					navSpeed = permfcspeed
+					NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+					break
+				else
+					opx("*","Part does not exist")
+				end
+			end
+		else
+			opx("*","2 arguments are required!")
+		end
+	else
+		opx("*","Freecam isnt running!")
+	end
 end
 
 function useCommand.freecamgotoclass()
-    if FreecamOn then
-        if arguments[2] then
-            StopFreecam()
-            wait(.1)
-            opx("-","Teleported freecam to class")
-            for i,v in pairs(workspace:GetDescendants()) do
-    			if v.ClassName == getstring(2) then
-                    StartFreecam(v.CFrame)
-                    navSpeed = permfcspeed
-                    NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
-    				break
-    			else
-    				opx("*","Part does not exist")
-    			end
-    		end
-        else
-            opx("*","2 arguments are required!")
-        end
-    else
-        opx("*","Freecam isnt running!")
-    end
+	if FreecamOn then
+		if arguments[2] then
+			StopFreecam()
+			wait(.1)
+			opx("-","Teleported freecam to class")
+			for i,v in pairs(workspace:GetDescendants()) do
+				if v.ClassName == getstring(2) then
+					StartFreecam(v.CFrame)
+					navSpeed = permfcspeed
+					NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
+					break
+				else
+					opx("*","Part does not exist")
+				end
+			end
+		else
+			opx("*","2 arguments are required!")
+		end
+	else
+		opx("*","Freecam isnt running!")
+	end
 end
 
 function useCommand.friendjoin()
-    rejoining = true
+	rejoining = true
 	if arguments[2] then
 		opx("-","Scanning friends, this may take some time")
 		local target = arguments[2]
@@ -14285,9 +14315,9 @@ function useCommand.friendjoin()
 		for i,v in pairs(friends) do
 			if v.UserName == target then
 				if v.LastLocation then
-				    if syn.queue_on_teleport then
-                        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-                    end
+					if syn.queue_on_teleport then
+						syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+					end
 					opx("-","Joining friend")
 					game:GetService("TeleportService"):TeleportToPlaceInstance(v.PlaceId,v.GameId,cmdlp)
 				else
@@ -14347,7 +14377,7 @@ function useCommand.servers()
 	opx("-","Searching places, this may take a while...")
 	local xServers = Http.TotalCollectionSize.." | "
 	for i = 0,Http.TotalCollectionSize do
-	    local fuck = game:HttpGet(URL..i)
+		local fuck = game:HttpGet(URL..i)
 		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		for i,v in pairs(Http.Collection) do
 			MathPC = v.PlayersCapacity:split(" ")
@@ -14645,7 +14675,7 @@ function useCommand.rappu()
 			Pages = 1
 			for i = 1,500 do
 				if Http.nextPageCursor ~= null then
-				    local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
+					local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
 					Http = game:GetService("HttpService"):JSONDecode(fuck)
 					ListItems(Http)
 					Pages = Pages+1
@@ -14682,7 +14712,7 @@ function useCommand.rappr()
 			Pages = 1
 			for i = 1,500 do
 				if Http.nextPageCursor ~= null then
-				    local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
+					local fuck = game:HttpGet(URL.."&cursor="..Http.nextPageCursor)
 					Http = game:GetService("HttpService"):JSONDecode(fuck)
 					ListItems(Http)
 					Pages = Pages+1
@@ -14856,8 +14886,8 @@ xAnchored = {}
 xOrig = {}
 
 function grabUnanchored(Model)
-    for i,part in pairs(Model:GetDescendants()) do
-    	if part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and part:IsDescendantOf(cmdlp.Character) == false then
+	for i,part in pairs(Model:GetDescendants()) do
+		if part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and part:IsDescendantOf(cmdlp.Character) == false then
 			part.Massless = true
 			part.CanCollide = false
 			if part:FindFirstChildOfClass("BodyPosition") == nil then
@@ -14866,20 +14896,24 @@ function grabUnanchored(Model)
 				xOrig[#xOrig+1] = {pos = mover.Position, par = mover}
 				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 			else
-			    part.BodyPosition:Destroy()
-			    local mover = Instance.new("BodyPosition", part)
+				part.BodyPosition:Destroy()
+				local mover = Instance.new("BodyPosition", part)
 				table.insert(xAnchored, mover)
 				xOrig[#xOrig+1] = {pos = mover.Position, par = mover}
 				mover.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 			end
 		end
-    end
+	end
 end
 
 IHaveSimmed = false
 function useCommand.simulationradius()
-    sethiddenproperty = sethiddenproperty or set_hidden_prop
-    gethiddenproperty = gethiddenproperty or get_hidden_prop
+	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty or not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	IHaveSimmed = true
 	if arguments[2] == "max" then
 		opx("-","Updated simulation radius")
@@ -14939,7 +14973,7 @@ function useCommand.grabunanchored()
 end
 
 function useCommand.setbackunanchored()
-    if IHaveGrabbed == true then
+	if IHaveGrabbed == true then
 		opx("-","Set back unanchored parts")
 		for i,v in pairs(xOrig) do
 			if xAnchored[i] ~= nil then
@@ -14962,11 +14996,11 @@ function useCommand.bringunanchored()
 			target = findplr(arguments[2])
 			if target then
 				opx("-","Brung unanchored parts")
-		    	for i,v in pairs(xAnchored) do
-		    		if xAnchored[i] ~= nil then
-		    			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
-		    		end
-		    	end
+				for i,v in pairs(xAnchored) do
+					if xAnchored[i] ~= nil then
+						xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
+					end
+				end
 			else
 				opx("*","Player does not exist!")
 			end
@@ -15010,20 +15044,20 @@ function useCommand.spinunanchored()
 			iffy = arguments[2]
 			normspin = 0
 			function RotatePointAtDist(Point, Angle, Dist)
-		        local Rotation = CFrame.Angles(0, math.rad(Angle),0)
-		        return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
-		    end
+				local Rotation = CFrame.Angles(0, math.rad(Angle),0)
+				return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
+			end
 			for i,v in pairs(xAnchored) do
-		        normspin = normspin + 30
-		        xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
-		        ActUp[#ActUp+1] = normspin
-		    end
+				normspin = normspin + 30
+				xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
+				ActUp[#ActUp+1] = normspin
+			end
 			game:GetService("RunService").RenderStepped:Connect(function()
 				if SpinningFor == true then
-		            for i,v in pairs(xAnchored) do
-		                xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
-		                ActUp[i] = ActUp[i]-.1
-		            end
+					for i,v in pairs(xAnchored) do
+						xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
+						ActUp[i] = ActUp[i]-.1
+					end
 				end
 			end)
 		else
@@ -15212,7 +15246,7 @@ end
 function useCommand.newaudios()
 	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")
 	if not arguments[2] then arguments[2] = "10" end
-    local fuck = ame:HttpGet(URL..arguments[2])
+	local fuck = ame:HttpGet(URL..arguments[2])
 	local Http = game:GetService("HttpService"):JSONDecode(fuck)
 	xIds = ""
 	for i,v in pairs(Http) do
@@ -15289,76 +15323,76 @@ end
 
 bgMd = {}
 function useCommand.billboardmaxdistance()
-    opx("-","All billboards now have max distance")
-    for _,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("BillboardGui") then
-            table.insert(bgMd,{p = v, m = v.MaxDistance, a = v.AlwaysOnTop})
-            v.MaxDistance = inf
-            v.AlwaysOnTop = true
-        end
-    end
+	opx("-","All billboards now have max distance")
+	for _,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("BillboardGui") then
+			table.insert(bgMd,{p = v, m = v.MaxDistance, a = v.AlwaysOnTop})
+			v.MaxDistance = inf
+			v.AlwaysOnTop = true
+		end
+	end
 end
 
 function useCommand.unbillboardmaxdistance()
-    opx("-","All billboards no longer have max distance")
-    for _,v in pairs(bgMd) do
-        v.p.MaxDistance = m
-        v.p.AlwaysOnTop = a
-    end
+	opx("-","All billboards no longer have max distance")
+	for _,v in pairs(bgMd) do
+		v.p.MaxDistance = m
+		v.p.AlwaysOnTop = a
+	end
 end
 
 bgTs = {}
 function useCommand.billboardtruesight()
-    opx("-","All billboards now showing")
-    for _,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("BillboardGui") then
-            table.insert(bgTs,v)
-            v.Enabled = true
-        end
-    end
+	opx("-","All billboards now showing")
+	for _,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("BillboardGui") then
+			table.insert(bgTs,v)
+			v.Enabled = true
+		end
+	end
 end
 
 function useCommand.unbillboardtruesight()
-    opx("-","All billboards no longer showing")
-    for _,v in pairs(bgTs) do
-        v.Enabled = false
-    end
+	opx("-","All billboards no longer showing")
+	for _,v in pairs(bgTs) do
+		v.Enabled = false
+	end
 end
 
 sgTs = {}
 function useCommand.surfaceguitruesight()
-    opx("-","All surface guis now showing")
-    for _,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("SurfaceGui") then
-            table.insert(sgTs,v)
-            v.Enabled = true
-        end
-    end
+	opx("-","All surface guis now showing")
+	for _,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("SurfaceGui") then
+			table.insert(sgTs,v)
+			v.Enabled = true
+		end
+	end
 end
 
 function useCommand.unsurfaceguitruesight()
-    opx("-","All surface guis no longer showing")
-    for _,v in pairs(sgTs) do
-        v.Enabled = false
-    end
+	opx("-","All surface guis no longer showing")
+	for _,v in pairs(sgTs) do
+		v.Enabled = false
+	end
 end
 
 cdMd = {}
 function useCommand.clickdetectormaxdistance()
-    opx("-","All click detectors now have max distance")
-    for _,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("ClickDetector") then
-            table.insert(cdMd,{p = v, m = v.MaxActivationDistance})
-            v.MaxActivationDistance = 10000
-        end
-    end
+	opx("-","All click detectors now have max distance")
+	for _,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("ClickDetector") then
+			table.insert(cdMd,{p = v, m = v.MaxActivationDistance})
+			v.MaxActivationDistance = 10000
+		end
+	end
 end
 
 function useCommand.unclickdetectormaxdistance()
-    opx("-","All click detectors no longer have max distance")
-    for _,v in pairs(cdMd) do
-        v.p.MaxActivationDistance = m 
-    end
+	opx("-","All click detectors no longer have max distance")
+	for _,v in pairs(cdMd) do
+		v.p.MaxActivationDistance = m 
+	end
 end
 
 function useCommand.clickdetectors()
@@ -15398,7 +15432,7 @@ function useCommand.gotoclass()
 		opx("-","Teleported to class part")
 		local Part
 		for i,v in pairs(workspace:GetDescendants()) do
-		    if v:IsA(arguments[2]) then Part = v; break end
+			if v:IsA(arguments[2]) then Part = v; break end
 		end
 		cmdlp.Character.HumanoidRootPart.CFrame = Part.CFrame
 	else
@@ -15407,7 +15441,7 @@ function useCommand.gotoclass()
 end
 
 function useCommand.gotobpclass()
-    if arguments[2] then
+	if arguments[2] then
 		for i,v in pairs(workspace:GetDescendants()) do
 			if v.ClassName == getstring(2) then
 				opx("-","Bypass Teleported to part")
@@ -15422,40 +15456,40 @@ function useCommand.gotobpclass()
 end
 
 function useCommand.hatgiverspam()
-    local HATS = {}
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("TouchTransmitter") and v.Parent.Name ~= "Handle" then 
-            local Check1, Check2 = v.Parent:FindFirstChildOfClass("SpecialMesh"), v.Parent:FindFirstChildOfClass("Script")
-            if Check1 ~= nil and Check2 ~= nil then
-                HATS[#HATS+1] = v.Parent
-            end
-        end
-    end
-    local UseFire = false
-    if firetouchinterest then UseFire = true end
-    local HRP = cmdlp.Character.HumanoidRootPart
-    local X = true
-    local Number = 0
-    repeat game:GetService("RunService").RenderStepped:Wait()
-        for i,v in pairs(HATS) do
-            if UseFire then
-                firetouchinterest(HRP, HATS[i], 1)
-                HATS[i].CFrame = HRP.CFrame
-                HATS[i].CanCollide = false
-                HATS[i].Transparency = 1
-            else
-                HATS[i].CFrame = HRP.CFrame
-                HATS[i].CanCollide = false
-                HATS[i].Transparency = 1
-            end
-        end
-        for i,v in pairs(cmdlp.Character:GetChildren()) do
-            if v:IsA("Hat" or "Accessory") then 
-                v.Parent = workspace
-                Number = Number+1 
-            end
-        end
-    until X == false
+	local HATS = {}
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v:IsA("TouchTransmitter") and v.Parent.Name ~= "Handle" then 
+			local Check1, Check2 = v.Parent:FindFirstChildOfClass("SpecialMesh"), v.Parent:FindFirstChildOfClass("Script")
+			if Check1 ~= nil and Check2 ~= nil then
+				HATS[#HATS+1] = v.Parent
+			end
+		end
+	end
+	local UseFire = false
+	if firetouchinterest then UseFire = true end
+	local HRP = cmdlp.Character.HumanoidRootPart
+	local X = true
+	local Number = 0
+	repeat game:GetService("RunService").RenderStepped:Wait()
+		for i,v in pairs(HATS) do
+			if UseFire then
+				firetouchinterest(HRP, HATS[i], 1)
+				HATS[i].CFrame = HRP.CFrame
+				HATS[i].CanCollide = false
+				HATS[i].Transparency = 1
+			else
+				HATS[i].CFrame = HRP.CFrame
+				HATS[i].CanCollide = false
+				HATS[i].Transparency = 1
+			end
+		end
+		for i,v in pairs(cmdlp.Character:GetChildren()) do
+			if v:IsA("Hat" or "Accessory") then 
+				v.Parent = workspace
+				Number = Number+1 
+			end
+		end
+	until X == false
 end
 
 function useCommand.playingaudios()
@@ -15481,19 +15515,19 @@ function useCommand.testaudio()
 end
 
 function useCommand.debugging()
-    if arguments[2] == "on" then
-        Debugging = true
-        opx("-","Debugging turned on")
-    elseif arguments[2] == "off" then
-        Debugging = false
-        opx("-","Debugging turned off")
-    else
-        opx("*","2 arguments are required!")
-    end
+	if arguments[2] == "on" then
+		Debugging = true
+		opx("-","Debugging turned on")
+	elseif arguments[2] == "off" then
+		Debugging = false
+		opx("-","Debugging turned off")
+	else
+		opx("*","2 arguments are required!")
+	end
 end
 
 function useCommand.freereach()
-    if arguments[4] and cmdnum(arguments[4]) then
+	if arguments[4] and cmdnum(arguments[4]) then
 		for i,v in pairs(cmdlp.Character:GetDescendants()) do
 			if v:IsA("Tool") then
 				currentToolSize = v.Handle.Size
@@ -15522,45 +15556,45 @@ function UpdateTracer()
 	end
 	Lines = {}
 	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
-    	if v ~= cmdlp then
-    	    if v and v.Character ~= nil then
-    	        Head = v.Character:FindFirstChild("Head")
-        	    if Head ~= nil then
-        	        local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(Head.Position)
-            	    if withinScreenBounds then
-                		local Line = Drawing.new("Line")
-                		Line.Visible = true
-                		Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
-                		Line.To = Vector2.new(PosChar.X, PosChar.Y)
-                		Line.Color = Color3.new(255,255,255)
-                		Line.Thickness = 2
-                		Line.Transparency = 1
-                		Lines[#Lines+1] = Line
-                	end
-            	end
-        	end
-        end
+		if v ~= cmdlp then
+			if v and v.Character ~= nil then
+				Head = v.Character:FindFirstChild("Head")
+				if Head ~= nil then
+					local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(Head.Position)
+					if withinScreenBounds then
+						local Line = Drawing.new("Line")
+						Line.Visible = true
+						Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
+						Line.To = Vector2.new(PosChar.X, PosChar.Y)
+						Line.Color = Color3.new(255,255,255)
+						Line.Thickness = 2
+						Line.Transparency = 1
+						Lines[#Lines+1] = Line
+					end
+				end
+			end
+		end
 	end
 end
 
 function useCommand.rejoinrefresh()
-    rejoining = true
-    if syn.queue_on_teleport then
-        writefile("CMD-XRJSave.lua", game:GetService("HttpService"):JSONEncode({ -- dont blame me for this being retarded syn.queue_on_teleport doesnt support global
-            CF1 = cmdlp.Character.HumanoidRootPart.CFrame.X;
-            CF2 = cmdlp.Character.HumanoidRootPart.CFrame.Y;
-            CF3 = cmdlp.Character.HumanoidRootPart.CFrame.Z;
-        }))
-        syn.queue_on_teleport([[
-            game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
-            repeat wait(.1) until game:GetService("Players").LocalPlayer
-            game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
-                wait(.25)
-                local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-XRJSave.lua")); delfile("CMD-XRJSave.lua")
-                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(json.CF1, json.CF2, json.CF3)
-            end)
-        ]])
-    end
+	rejoining = true
+	if syn.queue_on_teleport then
+		writefile("CMD-XRJSave.lua", game:GetService("HttpService"):JSONEncode({ -- dont blame me for this being retarded syn.queue_on_teleport doesnt support global
+			CF1 = cmdlp.Character.HumanoidRootPart.CFrame.X;
+			CF2 = cmdlp.Character.HumanoidRootPart.CFrame.Y;
+			CF3 = cmdlp.Character.HumanoidRootPart.CFrame.Z;
+		}))
+		syn.queue_on_teleport([[
+			game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
+			repeat wait(.1) until game:GetService("Players").LocalPlayer
+			game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+				wait(.25)
+				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-XRJSave.lua")); delfile("CMD-XRJSave.lua")
+				game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(json.CF1, json.CF2, json.CF3)
+			end)
+		]])
+	end
 	opx("-","Rejoining game")
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
@@ -15728,20 +15762,20 @@ cmdm.KeyDown:connect(function(key)
 	elseif key == hotkeyesp then
 		if ESPenabled == false then
 			Find()
-        	ESPEnabled = true
-        	repeat
-        		wait()
-        		if ESPEnabled == true then
-        			Find()
-        		end
-        	until ESPEnabled == false
+			ESPEnabled = true
+			repeat
+				wait()
+				if ESPEnabled == true then
+					Find()
+				end
+			until ESPEnabled == false
 		else
 			ESPEnabled = false
-        	Track = false
-        	for i = 1,10 do
-        	    Clear()
-        	    wait()
-        	end
+			Track = false
+			for i = 1,10 do
+				Clear()
+				wait()
+			end
 		end
 	else
 		for i,_ in pairs(hkBinds) do
@@ -15752,10 +15786,10 @@ cmdm.KeyDown:connect(function(key)
 				local cmdsy = findCmd(arguments[1])
 				if cmdsy ~= nil then
 					if Debugging == false then
-    				    useCommand[cmdsy]()
-    				else
-    			        pcall(function() useCommand[cmdsy]() end)
-    			    end
+						useCommand[cmdsy]()
+					else
+						pcall(function() useCommand[cmdsy]() end)
+					end
 				else
 					local invalidString = getstring(1)
 					if #invalidString > 38 then
@@ -15770,43 +15804,43 @@ end)
 ---------------------------------------|
 -- Print Function: --------------------|
 if AntiCheat.PrintingOff == false then
-    print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..prefix)
-    print("\
-                  _____                    _____                    _____                                  \
-                 /\\    \\                  /\\    \\                  /\\    \\                 ______          \
-                /::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
-               /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
-              /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
-             /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
-            /:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
-           /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
-          /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
-         /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
-        /:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
-        \\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
-         \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
-          \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
-           \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
-            \\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
-             \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
-              \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
-               \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
-                \\::/    /                \\::/    /                \\__/____/               |::|___|         \
-                 \\/____/                  \\/____/                                          ~~              ") 
-    print("made by "..DevCords[1].." & "..DevCords[2])
-    print("\
-    Having trouble?\
-    Press U for output\
-    Press Q to close and open\
-    Press ; to auto focus\
-    (Free exploits do not work with CMD-X)\
-    Type support into the cmd bar for anymore support (if needed)\
-    To use chat commands use the prefix '"..prefix.."'")
+	print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..prefix)
+	print("\
+				  _____                    _____                    _____                                  \
+				 /\\    \\                  /\\    \\                  /\\    \\                 ______          \
+				/::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
+			   /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
+			  /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
+			 /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
+			/:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
+		   /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
+		  /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
+		 /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
+		/:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
+		\\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
+		 \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
+		  \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
+		   \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
+			\\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
+			 \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
+			  \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
+			   \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
+				\\::/    /                \\::/    /                \\__/____/               |::|___|         \
+				 \\/____/                  \\/____/                                          ~~              ") 
+	print("made by "..DevCords[1].." & "..DevCords[2])
+	print("\
+	Having trouble?\
+	Press U for output\
+	Press Q to close and open\
+	Press ; to auto focus\
+	(Free exploits do not work with CMD-X)\
+	Type support into the cmd bar for anymore support (if needed)\
+	To use chat commands use the prefix '"..prefix.."'")
 
-    local StarterGui = game:GetService("StarterGui")
-    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
-    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Press U for output and F9 for more info!";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
-    StarterGui:SetCore("ChatMakeSystemMessage", {Text = "To use chat commands use the prefix '"..prefix.."'";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
+	local StarterGui = game:GetService("StarterGui")
+	StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
+	StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Press U for output and F9 for more info!";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
+	StarterGui:SetCore("ChatMakeSystemMessage", {Text = "To use chat commands use the prefix '"..prefix.."'";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
 end
 
 if AntiCheat.ScriptDetectOff then opx("*","Script detection is off due to anticheat") end
@@ -15832,7 +15866,7 @@ if #enterCMD > 0 then
 			if Debugging == false then
 				useCommand[cmdsy]()
 			else
-			    pcall(function() useCommand[cmdsy]() end)
+				pcall(function() useCommand[cmdsy]() end)
 			end
 		else
 			invalidString = enterCMD[i].N
@@ -15885,7 +15919,7 @@ tabs.MouseEnter:Connect(function()
 	end) 
 	mmoved = tabs.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement then
-    			mou = input
+				mou = input
 		end
 	end) 
 	tabs.InputEnded:Connect(function(input)
@@ -15995,17 +16029,17 @@ chatbar.Focused:connect(function()
 end)
 
 cmdlp.Chatted:connect(function(v)
-    if Inputting then
-    	if v:lower():sub(1,#prefix) == prefix then
-    		cmd:CaptureFocus()
-    		cmd.Text = v:sub(#prefix+1,100000)
-    		cmd:ReleaseFocus()
-    	elseif v:lower():sub(1,1) == '.' then
-    		cmd:CaptureFocus()
-    		cmd.Text = v:sub(2,100000)
-    		cmd:ReleaseFocus()
-    	end
-    end
+	if Inputting then
+		if v:lower():sub(1,#prefix) == prefix then
+			cmd:CaptureFocus()
+			cmd.Text = v:sub(#prefix+1,100000)
+			cmd:ReleaseFocus()
+		elseif v:lower():sub(1,1) == '.' then
+			cmd:CaptureFocus()
+			cmd.Text = v:sub(2,100000)
+			cmd:ReleaseFocus()
+		end
+	end
 end)
 
 for i,v in pairs(AdmIG) do
@@ -16018,10 +16052,10 @@ for i,v in pairs(AdmIG) do
 			cmdsy = findCmd(adminargs[1])
 			if cmdsy ~= nil then
 				if Debugging == false then
-				    useCommand[cmdsy]()
+					useCommand[cmdsy]()
 				else
-			        pcall(function() useCommand[cmdsy]() end)
-			    end
+					pcall(function() useCommand[cmdsy]() end)
+				end
 			else
 				invalidString = getstring(1)
 				if #invalidString > 38 then
@@ -16038,10 +16072,10 @@ for i,v in pairs(AdmIG) do
 			cmdsy = findCmd(adminargs[1])
 			if cmdsy ~= nil then
 				if Debugging == false then
-				    useCommand[cmdsy]()
+					useCommand[cmdsy]()
 				else
-			        pcall(function() useCommand[cmdsy]() end)
-			    end
+					pcall(function() useCommand[cmdsy]() end)
+				end
 			else
 				invalidString = getstring(1)
 				if #invalidString > 38 then
@@ -16055,10 +16089,10 @@ for i,v in pairs(AdmIG) do
 end
 
 if AntiCheat.ScriptDetectOff == false then
-    if sDetect == true then
-    	sethiddenproperty = sethiddenproperty or set_hidden_prop
+	if sDetect == true then
+		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		sethiddenproperty(cmdlp, "SimulationRadius", 139)
-    end
+	end
 end
 
 wait(2.638)
@@ -16080,40 +16114,40 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 pcall(function()
-    if AntiCheat.IntroAudioOff == false then
-        Sound2:Destroy()
-    end
+	if AntiCheat.IntroAudioOff == false then
+		Sound2:Destroy()
+	end
 end)
 
 pcall(function()
-    function RGBDev(Self)
-    	RGBDevCheck = true
-    	if connectionRGBDev then connectionRGBDev:Disconnect() end
-    	coroutine.resume(coroutine.create(function()
-    		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()
-    			if not debouncergb then
-    				if Self ~= nil then
-    					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
-    						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
-    							for i = 0, 255, 1 do 
-    								v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)
-    								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-    								game:GetService("RunService").Heartbeat:Wait()
-    								v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
-    								debouncergb = true
-    							end
-    						end
-    					end
-    				end
-    			else
-    				for i = 0, 255 do
-    					game:GetService("RunService").Heartbeat:Wait()
-    				end
-    				debouncergb = false
-    			end
-    		end)
-    	end))
-    end
+	function RGBDev(Self)
+		RGBDevCheck = true
+		if connectionRGBDev then connectionRGBDev:Disconnect() end
+		coroutine.resume(coroutine.create(function()
+			connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()
+				if not debouncergb then
+					if Self ~= nil then
+						for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
+							if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
+								for i = 0, 255, 1 do 
+									v.TextColor3 = Color3.fromHSV(i / 256, 0.5, 0.8)
+									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+									game:GetService("RunService").Heartbeat:Wait()
+									v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png" --rbxasset://textures/ui/PlayerList/TileShadowMissingTop.png
+									debouncergb = true
+								end
+							end
+						end
+					end
+				else
+					for i = 0, 255 do
+						game:GetService("RunService").Heartbeat:Wait()
+					end
+					debouncergb = false
+				end
+			end)
+		end))
+	end
 end)
 
 function colorName(Self,Tbl)
@@ -16124,13 +16158,13 @@ function colorName(Self,Tbl)
 			elseif Tbl.Tier == "2" then
 				v.TextColor3 = Color3.fromRGB(255,215,100)
 			elseif Tbl.Tier == "Custom1" then
-			    v.TextColor3 = Color3.fromRGB(209,156,240)
+				v.TextColor3 = Color3.fromRGB(209,156,240)
 			elseif Tbl.Tier == "Custom2" then
-			    v.TextColor3 = Color3.fromRGB(170, 1, 20)
+				v.TextColor3 = Color3.fromRGB(170, 1, 20)
 			elseif Tbl.Tier == "Custom3" then
-			    v.TextColor3 = Color3.fromRGB(63, 0, 0)
+				v.TextColor3 = Color3.fromRGB(63, 0, 0)
 			elseif Tbl.Tier == "Top" then
-			    RGBDev(Self)
+				RGBDev(Self)
 			end
 		end
 	end
