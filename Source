@@ -201,7 +201,7 @@ local Donors = {
 	["Irritatory"] = {Tier = "Top"},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
-	["Thechosenone123"] = {Tier = "Custom3", Tag = "The Chosen"},
+	["TheChosenOne123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 	["ClydeGrant"] = {Tier = "2"},
 	["Yarhibol"] = {Tier = "1"},
