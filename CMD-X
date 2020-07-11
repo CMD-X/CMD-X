@@ -13,7 +13,7 @@
 |        hz#4777 | RShift                          Fill suggestion |
 |     Curvn#2646 | ;                               Focus on CMDBar |
 | -------------- | Q                                Open and close |
-|      K5RM#0208 | LShift+Bksp                        Clear CMDbar |
+|                | LShift+Bksp                        Clear CMDbar |
 |                |                                                 |
 |                | .cmds                             List commands |
 ----------------------------------------------------------------]]--
