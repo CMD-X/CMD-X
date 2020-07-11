@@ -29,7 +29,7 @@ PleaseHurryUp.BackgroundTransparency = 1.000
 PleaseHurryUp.Position = UDim2.new(0, 0, 0.12396694, 0)
 PleaseHurryUp.Size = UDim2.new(1, 0, 0.0625418797, 0)
 PleaseHurryUp.Font = Enum.Font.GothamBold
-PleaseHurryUp.Text = "Need extra help? discord.gg/cmd - Find your issue:"
+PleaseHurryUp.Text = "Find your issue:"
 PleaseHurryUp.TextColor3 = Color3.fromRGB(255, 255, 255)
 PleaseHurryUp.TextSize = 30.000
 
@@ -58,6 +58,12 @@ end
 
 function SK8R()
     setclipboard(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source").."end)")
+end
+
+function Forbid()
+    if newproxy then
+        setclipboard('newproxy(loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))())')
+    end    
 end
 
 function CreateTemplate(Table)
@@ -99,6 +105,7 @@ function CreateTemplate(Table)
 		if Table.Key == "Par" then Par() end
 		if Table.Key == "KRNL" then KRNL() end
 		if Table.Key == "SK8R" then SK8R() end
+		if Table.Key == "Forbidden" then Forbid() end
 		RetardFrame.Visible = false
 		TheCalm.Visible = true
 		BigBox.Text = Table.String
@@ -238,8 +245,8 @@ local ToDiagnose = {
 	};
 	Forbidden = {
 	    Key = "403";
-	    Text = "403 Forbidden";
-	    String = "Chances are your country does not support github, consider changing your VPN to USA or UK.";
+	    Text = "403 Forbidden / VPN";
+	    String = "Chances are your country does not support github, consider changing your VPN to USA or UK.\n\nIf your executor supports 'newproxy()' then a method to bypass this has been set to your clipboard.";
 	};
 	KRNL = {
 	    Key = "KRNL";
@@ -252,9 +259,7 @@ local ToDiagnose = {
 	    String = "Source has been copied to your clipboard copy and paste it into SK8R.";
 	};
 	Blacklist = {
-	    Key = "Blacklist";
-	    Text = "Blacklisted from CMD-X";
-	    String = "Chances are you did something against our TOS of use in game or on the discord, you can appeal at discord.gg/cmd.";
+	    Key = ""  
 	};
 }
 
