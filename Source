@@ -471,9 +471,10 @@ if AntiCheat.OneTimeScramble then
     Unnamed.Name = math.random(1,100000)
 end
 
+asset_id_url = "http://www.roblox.com/asset/?id="
 if AntiCheat.IntroAudioOff == false then
     local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-    Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
+    Sound2.SoundId = asset_id_url..5032588119
     Sound2:Play()
 end
 ---------------------------------------|
@@ -1843,7 +1844,9 @@ end
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
-		sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		if sethiddenproperty then
+			sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		end
     end
 end
 
@@ -5924,21 +5927,21 @@ function useCommand.penis()
 	opx("-","You boutta ro-cum bro?")
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Accessory") then
-			if v.Handle.SpecialMesh.TextureId == "http://www.roblox.com/asset/?id=4390955131" then
+			if v.Handle.SpecialMesh.TextureId == asset_id_url.."390955131" then
 				v.Name = cmdlp.Name.."'s huge shaft"
 			end
 		end
 	end
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Accessory") then
-			if v.Handle.SpecialMesh.TextureId == "http://www.roblox.com/asset/?id=4566834838" then
+			if v.Handle.SpecialMesh.TextureId == asset_id_url.."566834838" then
 				v.Name = cmdlp.Name.."'s right ball"
 			end
 		end
 	end
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Accessory") then
-			if v.Handle.SpecialMesh.TextureId == "http://www.roblox.com/asset/?id=4524758175" then
+			if v.Handle.SpecialMesh.TextureId == asset_id_url.."524758175" then
 				v.Name = cmdlp.Name.."'s left ball"
 			end
 		end
@@ -6036,235 +6039,236 @@ function useCommand.unragdoll()
 end
 
 function useCommand.animpack()
+	arguments[2] = arguments[2]:lower()
 	if arguments[2] == "sneaky" then
 		local Char = game.Players.LocalPlayer.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1132500520"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1132506407"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."132461372"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."132469004"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."132473842"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."132477671"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."132489853"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."132494274"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."132500520"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."132506407"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."132510133"
 	elseif arguments[2] == "old" then
 		local Char = game.Players.LocalPlayer.Character
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=387947158"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."87947158"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=387947464"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."87947464"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=387947975"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616092998"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616094091"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=382460631"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."87947975"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16092998"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."82460631"
 	elseif arguments[2] == "toy" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."82843869"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."82846423"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."82841498"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."82845736"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=782847020"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=782842708"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=782844582"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=782845186"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=782843345"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."82847020"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."82842708"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."82844582"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."82845186"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."82843345"
 	elseif arguments[2] == "pirate" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=750779899"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=750780242"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=750781874"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."50779899"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."50780242"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."50781874"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=750782770"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."50782770"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=750782230"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=750783738"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=750784579"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=750785176"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=750785693"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."50782230"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."50783738"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."50784579"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."50785176"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."50785693"
 	elseif arguments[2] == "knight" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=657595757"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."58360781"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."57600338"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."57595757"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=657568135"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."57568135"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=658409194"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=657564596"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=657560551"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=657557095"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=657552124"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."58409194"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."57564596"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."57560551"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."57557095"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."57552124"
 	elseif arguments[2] == "astronaut" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=891621366"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."91609353"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."91617961"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."91621366"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."91633237"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=891627522"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=891639666"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=891663592"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."91627522"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."91636393"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."91639666"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."91663592"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."91636393"
 	elseif arguments[2] == "vampire" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083445855"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."083439238"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."083443587"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."083445855"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083450166"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."083450166"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083455352"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083462077"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1083464683"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1083467779"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."083455352"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."083462077"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."083464683"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."083467779"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."083473930"
 	elseif arguments[2] == "robot" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616086039"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616087089"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616088211"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16086039"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16087089"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16088211"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616089559"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16089559"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616090535"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616091570"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616092998"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616094091"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616095330"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16090535"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16091570"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16092998"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16095330"
 	elseif arguments[2] == "levitation" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16003713"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16005863"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16006778"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16008087"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616011509"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616012453"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16008936"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16010382"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16011509"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16012453"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16013216"
 	elseif arguments[2] == "bubbly" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=909997997"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=910001910"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=910004836"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."09997997"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."10001910"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."10004836"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=910009958"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."10009958"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=910016857"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=910025107"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=910028158"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=910030921"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=910034870"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."10016857"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."10025107"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."10028158"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."10030921"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."10034870"
 	elseif arguments[2] == "werewolf" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083195517"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."083182000"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."083189019"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."083195517"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083214717"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."083214717"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1083222527"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1083225406"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083178339"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."083218792"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."083216690"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."083222527"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."083225406"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."083178339"
 	elseif arguments[2] == "stylish" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616133594"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616134815"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616136790"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16133594"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16134815"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16136790"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616138447"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16138447"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616139451"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616140816"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616143378"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616144772"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616146177"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16139451"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16140816"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16143378"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16144772"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16146177"
 	elseif arguments[2] == "mage" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=707742142"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."07826056"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."07829716"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."07742142"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=707855907"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."07855907"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=707853694"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=707861613"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=707876443"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=707894699"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."07853694"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."07861613"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."07876443"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."07894699"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."07897309"
 	elseif arguments[2] == "cartoony" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=742637544"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."42636889"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."42637151"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."42637544"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."42638445"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=742637942"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=742638842"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=742639220"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=742639812"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=742640026"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."42637942"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."42638842"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."42639220"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."42639812"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."42640026"
 	elseif arguments[2] == "zombie" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616158929"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16156119"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16157476"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16158929"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616160636"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16160636"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616165109"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616166655"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16161997"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16163682"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16165109"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16166655"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16168032"
 	elseif arguments[2] == "superhero" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616111295"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16104706"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16108001"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16111295"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616113536"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16113536"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616117076"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616119360"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616120861"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616122287"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16115533"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16117076"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16119360"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16120861"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16122287"
 	elseif arguments[2] == "ninja" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=656117400"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."56114359"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."56115606"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."56117400"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=656118341"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."56118341"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=656117878"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=656118852"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=656119721"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=656121397"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=656121766"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."56117878"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."56118852"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."56119721"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."56121397"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."56121766"
 	elseif arguments[2] == "elder" then
 		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
-		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
-		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=845397899"
+		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."45392038"
+		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."45396048"
+		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."45397899"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=845400520"
+		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."45400520"
 		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=845398858"
-		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=845386501"
-		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=845401742"
-		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=845403127"
-		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=845403856"
+		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."45398858"
+		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."45386501"
+		Char.Animate.swim.Swim.AnimationId = asset_id_url.."45401742"
+		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."45403127"
+		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."45403856"
 	else
 		opx("*","2 arguments are required for this command!")
 	end
@@ -6341,9 +6345,9 @@ function useCommand.facefuck()
 				if ff == true then
 					ff = false
 					opx("-","Stopped facefucking/faceraping")
-					cmdlp.Character.Humanoid.Sit = false					
-				return
-				else ff = true
+					cmdlp.Character.Humanoid.Sit = false
+				else
+					ff = true
 					opx("-","Facefucking/faceraping enabled")
 					while ff == true do
 						cmdlp.Character.Humanoid.Sit = true
@@ -7154,7 +7158,6 @@ function useCommand.grabip()
 end
 
 function useCommand.dox()
-	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	gethiddenproperty = gethiddenproperty or get_hidden_prop
     if arguments[2] then
 		target = findplr(arguments[2])
@@ -7177,7 +7180,6 @@ function useCommand.dox()
 end
 
 function useCommand.masscountry()
-	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	gethiddenproperty = gethiddenproperty or get_hidden_prop
     xCC = ""
     for i,v in pairs(cmdp:GetPlayers()) do
@@ -8383,14 +8385,20 @@ end
 
 function useCommand.spoofcountry()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
     sethiddenproperty(cmdlp, "CountryRegionCodeReplicate", getstring(2))
     opx("-","Spoofed country to "..getstring(2))
 end
 
 function useCommand.countrypublic()
-	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
@@ -8410,7 +8418,6 @@ function useCommand.countrypublic()
 end
 
 function useCommand.countryprivate()
-	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -8678,7 +8685,7 @@ function useCommand.play()
 			if v:IsA("Tool") then
 				for x,y in pairs(v:GetDescendants()) do
 					if y:IsA("Sound") then
-						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+						y.SoundId = asset_id_url..arguments[2]
 			            y.Playing = true
 					end
 				end
@@ -8688,7 +8695,7 @@ function useCommand.play()
 			if v:IsA("Tool") then
 				for x,y in pairs(v:GetDescendants()) do
 					if y:IsA("Sound") then
-						y.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+						y.SoundId = asset_id_url..arguments[2]
 			            y.Playing = true
 					end
 				end
@@ -9402,7 +9409,7 @@ PImage3.BackgroundTransparency = 1
 PImage3.BorderSizePixel = 0
 PImage3.Position = UDim2.new(0.869747937, 0, 0, 0)
 PImage3.Size = UDim2.new(0, 43, 0, 42)
-PImage3.Image = "http://www.roblox.com/asset/?id=4673169548"
+PImage3.Image = asset_id_url.."673169548"
 
 PImage1.Name = "PImage1"
 PImage1.Parent = PRemove
@@ -9411,7 +9418,7 @@ PImage1.BackgroundTransparency = 1
 PImage1.BorderSizePixel = 0
 PImage1.Position = UDim2.new(0.929972053, 0, 0, 0)
 PImage1.Size = UDim2.new(0, 43, 0, 42)
-PImage1.Image = "http://www.roblox.com/asset/?id=23151442"
+PImage1.Image = asset_id_url.."3151442"
 PImage1.ScaleType = Enum.ScaleType.Fit
 
 PImage2.Name = "PImage2"
@@ -9421,7 +9428,7 @@ PImage2.BackgroundTransparency = 1
 PImage2.BorderSizePixel = 0
 PImage2.Position = UDim2.new(0.809523821, 0, 0.166666672, 0)
 PImage2.Size = UDim2.new(0, 43, 0, 35)
-PImage2.Image = "http://www.roblox.com/asset/?id=2249727556"
+PImage2.Image = asset_id_url.."249727556"
 PImage2.ScaleType = Enum.ScaleType.Fit
 
 PExit.Name = "PExit"
@@ -11750,11 +11757,16 @@ function useCommand.unclicktp()
 end
 
 function useCommand.scriptusers()
+	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not gethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
+
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
 	for i,v in pairs(cmdp:GetPlayers()) do	--Shit to change
-		if gethiddenproperty(cmdlp, "SimulationRadius") == 139 then
+		if gethiddenproperty(v, "SimulationRadius") == 139 then
 			if Devs[v.Name] == "Dev" then
 				usageof = usageof.."[DEV]"..v.Name.."\n"
 			elseif Devs[v.Name] == "Owner" then
@@ -12636,11 +12648,14 @@ end
 local funa = false
 function useCommand.freezeunanchored()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	opx("-","Froze unanchored parts")
 	funa = true
-	cmdlp.MaximumSimulationRadius = math.pow(math.huge,math.huge)*math.huge
-	sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,math.huge)*math.huge)
+	cmdlp.MaximumSimulationRadius = math.huge
+	sethiddenproperty(cmdlp, "SimulationRadius", math.huge)
 	local unanchoredparts = {}
 	local movers = {}
 	for index, part in pairs(workspace:GetDescendants()) do
@@ -13578,6 +13593,7 @@ function useCommand.noshow()
 		opx("-","No-Show is now off")
 		sets.sDetect = true
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
+		cmdlp.MaximumSimulationRadius = 139
 		sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		updatesaves()
 	else
@@ -14126,7 +14142,10 @@ end
 IHaveSimmed = false
 function useCommand.simulationradius()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
+	if not sethiddenproperty then
+		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		return
+	end
 	IHaveSimmed = true
 	if arguments[2] == "max" then
 		opx("-","Updated simulation radius")
@@ -14138,8 +14157,8 @@ function useCommand.simulationradius()
 						v.MaximumSimulationRadius = 0.1
 						sethiddenproperty(cmdlp, "SimulationRadius", 0)
 					else
-						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,2))
+						v.MaximumSimulationRadius = math.huge
+						sethiddenproperty(cmdlp, "SimulationRadius", math.huge)
 					end
 				end
 			end)
@@ -14154,7 +14173,7 @@ function useCommand.simulationradius()
 						v.MaximumSimulationRadius = 0.1
 						sethiddenproperty(cmdlp, "SimulationRadius", 0)
 					else
-						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
+						v.MaximumSimulationRadius = math.huge
 						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(arguments[2],2))
 					end
 				end
@@ -14478,7 +14497,7 @@ end
 function useCommand.replayintro()
 	opx("-","Replaying intro")
 	local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-	Sound2.SoundId = "http://www.roblox.com/asset/?id="..5032588119
+	Sound2.SoundId = asset_id_url..5032588119
 	Sound2:Play()
 	wait(2.638)
 	Sound2:Destroy()
@@ -14720,7 +14739,7 @@ function useCommand.testaudio()
 	if cmdnum(arguments[2]) then
 		opx("-","Now testing audio")
 		local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-		Sound2.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+		Sound2.SoundId = asset_id_url..arguments[2]
 		Sound2:Play()
 	else
 		opx("*","2 arguments are required!")
@@ -14795,11 +14814,11 @@ function useCommand.rejoinrefresh()
     if syn.queue_on_teleport then
 		local c = cmdlp.Character.HumanoidRootPart.CFrame
         syn.queue_on_teleport(string.format([[
-            game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()
-            repeat wait(.1) until game:GetService("Players").LocalPlayer
-            game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+            game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+            repeat wait(.1) until game:GetService('Players').LocalPlayer
+            game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
                 wait(.25)
-                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+                game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
             end)
         ]], c.X, c.Y, c.Z))
     end
@@ -15298,8 +15317,11 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
+		cmdlp.MaximumSimulationRadius = 139
 		sethiddenproperty = sethiddenproperty or set_hidden_prop
-		sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		if sethiddenproperty then
+			sethiddenproperty(cmdlp, "SimulationRadius", 139)
+		end
     end
 end
 
