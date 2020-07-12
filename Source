@@ -168,7 +168,6 @@ local Devs = {
 	["CMD_X"] = "Owner",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
-	["K5RM"] = "Dev",
 	["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }
 
@@ -176,7 +175,6 @@ DevCords = {
 	"pigeon#1818";
 	"hz#4777";
 	"Curvn#2646";
-	"K5RM#????";
 }
 
 local Donors = {
@@ -192,7 +190,7 @@ local Donors = {
 	["Schewpid"] = {Tier = "1"},
 	["LtsDank"] = {Tier = "1"},
 	["HyperLink3"] = {Tier = "1"},
-	["Winnzie"] = {Tier = "1"},
+	["NAT3ES"] = {Tier = "1"},
 	["8dqt"] = {Tier = "1"},
 	["n1bu"] = {Tier = "2"},
 	["Dakisaurus"] = {Tier = "2"},
