@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.9"
+local ver = "1.5.0"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -145,6 +145,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Ve
 if Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	repeat wait() until RunDude == true
+end
+
+if isfile then
+    if not isfile("CMD-X.lua") then
+        Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
+        repeat wait() until RunDude == true
+    end
 end
 
 -- Variables: ------------------------|
@@ -3290,6 +3297,8 @@ table.insert(CMDN, {N = "vloadpos", A = {""}, CMD = "540,vloadpos,(name),Telepor
 table.insert(CMDN, {N = "robloxversion", A = {"rver"}, CMD = "541,robloxversion/rver,,Shows you the version of Roblox you are on."})
 table.insert(CMDN, {N = "freecamloadpos", A = {"fcloadpos"}, CMD = "542,freecamloadpos/fcloadpos,(name),Teleports freecam to waypoint."})
 table.insert(CMDN, {N = "rejoinrefresh", A = {"rjre"}, CMD = "543,rejoinrefresh/rjre,,Rejoins and places you back at the spot you were at."})
+table.insert(CMDN, {N = "forceplay", A = {"fp"}, CMD = "544,forceplay/fp,(plr),Loop plays plrs audio to stop muting."})
+table.insert(CMDN, {N = "unforceplay", A = {"unfp"}, CMD = "545,unforceplay/unfp,(plr),()."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -11507,6 +11516,152 @@ end
 function useCommand.unsupermute()
 	opx("-","UnSuper muted game")
 	mutealls = false
+end
+
+FPed = {}
+fpall = false
+function useCommand.forceplay()
+	if arguments[2] then
+		if arguments[2] == "others" then
+			opx("-","ForcePlay others enabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(cmdp:GetPlayers()) do
+				if v ~= cmdlp then
+					table.insert(FPed,v.Name)
+				end
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until FPed == false
+		elseif arguments[2] == "everyone" or arguments[2] == "all" then
+			opx("-","Forceplay all enabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(cmdp:GetPlayers()) do
+				table.insert(FPed,v.Name)
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		else
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Forceplay "..target.Name.." enabled")
+				fpall = false
+				wait(.2)
+				fpall = true
+				table.insert(FPed,target.Name)
+				repeat wait()
+					for i,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(FPed) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = true
+								end
+							end
+						end
+					end
+				until fpall == false
+			else
+				opx("*","Player does not exist!")
+			end
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.unforceplay()
+	if arguments[2] then
+		if arguments[2] == "others" then
+			opx("-","Forceplay others disabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(FPed) do
+				if v ~= cmdlp.Name then
+					table.remove(FPed,i)
+				end
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		elseif arguments[2] == "everyone" or arguments[2] == "all" then
+			opx("-","Forceplay all disabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(FPed) do
+				table.remove(FPed,i)
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		else
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Forceplay "..target.Name.." disabled")
+				fpall = false
+				wait(.2)
+				fpall = true
+				for i,v in pairs(FPed) do
+					if v == target.Name then
+						table.remove(FPed,i)
+					end
+				end
+				repeat wait()
+					for i,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(FPed) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = true
+								end
+							end
+						end
+					end
+				until fpall == false
+			else
+				opx("*","Player does not exist!")
+			end
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
 end
 
 local muteall = false
