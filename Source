@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.5.0"
+local ver = "1.5.1"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -148,9 +148,20 @@ if Current.Version ~= ver then
 end
 
 if isfile then
+    firstTime = false
+    corruptFile = false
     if not isfile("CMD-X.lua") then
-        Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
+    	Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
         repeat wait() until RunDude == true
+    	firstTime = true
+    end
+    if firstTime == false then
+    	if isfile("CMD-X.lua") then
+    		if #readfile("CMD-X.lua") < 10 then
+    			delfile("CMD-X.lua")
+    			corruptFile = true
+    		end
+    	end
     end
 end
 
@@ -2886,8 +2897,8 @@ table.insert(CMDN, {N = "hidechat", A = {""}, CMD = "132,hidechat,,Turns off cha
 table.insert(CMDN, {N = "showchat", A = {""}, CMD = "133,showchat,,Turns on chat."})
 table.insert(CMDN, {N = "switchteam", A = {""}, CMD = "134,switchteam,(str),Switches your team to str if it exists."})
 table.insert(CMDN, {N = "ping", A = {""}, CMD = "135,ping,,Shows your ping."})
-table.insert(CMDN, {N = "fps", A = {""}, CMD = "136,fps,,Shows your FPS."})
-table.insert(CMDN, {N = "unfps", A = {""}, CMD = "137,unfps,,()"})
+table.insert(CMDN, {N = "toolfps", A = {""}, CMD = "136,toolfps,,Shows your FPS in a tooltip."})
+table.insert(CMDN, {N = "untoolfps", A = {""}, CMD = "137,untoolfps,,()"})
 table.insert(CMDN, {N = "fuckoff", A = {"killgui"}, CMD = "138,killgui/fuckoff,,Closes the GUI."})
 table.insert(CMDN, {N = "messagebox", A = {"message","msg"}, CMD = "139,message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"})
 table.insert(CMDN, {N = "filtering", A = {"fe"}, CMD = "140,fe/filter,,Checks if a game is filtered or not."})
@@ -2956,8 +2967,8 @@ table.insert(CMDN, {N = "unwhitelist", A = {"unwl"}, CMD = "202,unwl/unwhitelist
 table.insert(CMDN, {N = "showwhitelist", A = {"swl"}, CMD = "203,swl/showwhitelist,,Shows whitelist for aimbot."})
 table.insert(CMDN, {N = "spectate", A = {"view"}, CMD = "204,view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"})
 table.insert(CMDN, {N = "unspectate", A = {"unview"}, CMD = "205,unview/unspectate,,()"})
-table.insert(CMDN, {N = "-", A = {""}, CMD = "206,,,", ARG = "Player"})
-table.insert(CMDN, {N = "--", A = {""}, CMD = "207,,,", ARG = "Player"})
+table.insert(CMDN, {N = "resetsaves", A = {"rsaves"}, CMD = "206,resetsaves/rsaves,,Removes your current saves."})
+table.insert(CMDN, {N = "savesaves", A = {"ssaves"}, CMD = "207,savesaves/ssaves,,Saves a backup of your current saves."})
 table.insert(CMDN, {N = "ageprivate", A = {"agepr"}, CMD = "208,agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"})
 table.insert(CMDN, {N = "agepublic", A = {"agepu"}, CMD = "209,agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"})
 table.insert(CMDN, {N = "idprivate", A = {"idpr"}, CMD = "210,idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"})
@@ -3116,7 +3127,7 @@ table.insert(CMDN, {N = "clicktphotkey", A = {""}, CMD = "358,clicktphotkey,(key
 table.insert(CMDN, {N = "permspamspeed", A = {"pss"}, CMD = "359,permspamspeed/pss,(num),Changes the perm spam speed."})
 table.insert(CMDN, {N = "scriptusers", A = {"susers"}, CMD = "360,scriptusers/susers,,Shows people who are using CMD-X in your lobby."})
 table.insert(CMDN, {N = "massid", A = {""}, CMD = "361,massid,,Shows all players IDs."})
-table.insert(CMDN, {N = "---", A = {""}, CMD = "362,,,"})
+table.insert(CMDN, {N = "fps", A = {""}, CMD = "362,fps,,Shows your FPS."})
 table.insert(CMDN, {N = "scriptchat", A = {"schat"}, CMD = "363,scriptchat/schat,,Allows you to talk with other people using CMD-X."})
 table.insert(CMDN, {N = "schatbp", A = {"#"}, CMD = "364,schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."})
 table.insert(CMDN, {N = "mentions", A = {""}, CMD = "365,mentions,(on/off),Turns scriptchat mentions on or off."})
@@ -3129,7 +3140,7 @@ table.insert(CMDN, {N = "servers", A = {""}, CMD = "371,servers,,Lists servers."
 table.insert(CMDN, {N = "streamsnipe", A = {"ssnipe"}, CMD = "372,streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."})
 table.insert(CMDN, {N = "listentercmds", A = {""}, CMD = "373,listentercmds,,Lists enter cmds."})
 table.insert(CMDN, {N = "listhotkeys", A = {""}, CMD = "374,listhotkeys,,Lists hotkeys."})
-table.insert(CMDN, {N = "----", A = {""}, CMD = "375,,,"})
+table.insert(CMDN, {N = "gametime", A = {"gtime"}, CMD = "375,gametime/gtime,,Shows your current elapsed time in game."})
 table.insert(CMDN, {N = "hotkeynoclip", A = {""}, CMD = "376,hotkeynoclip,(key),Adds a hotkey for noclip."})
 table.insert(CMDN, {N = "enabledrops", A = {""}, CMD = "377,enabledrops,,Enables tools dropping features."})
 table.insert(CMDN, {N = "disabledrops", A = {""}, CMD = "378,disabledrops,,Disables tools dropping features."})
@@ -3300,6 +3311,8 @@ table.insert(CMDN, {N = "freecamloadpos", A = {"fcloadpos"}, CMD = "542,freecaml
 table.insert(CMDN, {N = "rejoinrefresh", A = {"rjre"}, CMD = "543,rejoinrefresh/rjre,,Rejoins and places you back at the spot you were at."})
 table.insert(CMDN, {N = "forceplay", A = {"fp"}, CMD = "544,forceplay/fp,(plr),Loop plays plrs audio to stop muting."})
 table.insert(CMDN, {N = "unforceplay", A = {"unfp"}, CMD = "545,unforceplay/unfp,(plr),()."})
+table.insert(CMDN, {N = "migratesaves", A = {"msaves"}, CMD = "546,migratesaves/msaves,(file),Migrates save files/backups to CMD-X.lua."})
+table.insert(CMDN, {N = "resetguipos", A = {"rguipos"}, CMD = "547,resetguipos/rguipos,,Resets GUI position."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -7090,7 +7103,7 @@ function useCommand.ping()
 	opx("-","Pong! Your ping is "..pingexact.."ms")
 end
 
-function useCommand.fps()
+function useCommand.toolfps()
 	opx("-","FPS will now show - Credit to Curvn")
 	local ToolNameGrabber = Instance.new("ScreenGui", getParent)
 	local ToolNameTxt = Instance.new("TextLabel", getParent)
@@ -7131,9 +7144,77 @@ function useCommand.fps()
 	Heartbeat:Connect(HeartbeatUpdate)
 end
 
-function useCommand.unfps()
+function useCommand.fps()
+    local HBFps = 0
+    local Heartbeat = game:GetService("RunService").Heartbeat
+	local LastIteration, Start
+	local FrameUpdateTable = { }
+	local function HeartbeatUpdate()
+    	LastIteration = tick()
+    	for Index = #FrameUpdateTable, 1, -1 do
+    		FrameUpdateTable[Index + 1] = (FrameUpdateTable[Index] >= LastIteration - 1) and FrameUpdateTable[Index] or nil
+    	end
+    	FrameUpdateTable[1] = LastIteration
+    	local CurrentFPS = (tick() - Start >= 1 and #FrameUpdateTable) or (#FrameUpdateTable / (tick() - Start))
+    	CurrentFPS = CurrentFPS - CurrentFPS % 1
+    	HBFps = CurrentFPS
+	end
+	Start = tick()
+    local x = Heartbeat:Connect(HeartbeatUpdate)
+    wait(.5)
+    x:Disconnect()
+	opx("-",HBFps.."FPS")
+end
+
+function useCommand.untoolfps()
 	opx("-","No longer showing FPS")
 	game.CoreGui.ToolNameGrabber:Destroy()
+end
+
+function useCommand.gametime()
+	opx("-",math.floor(workspace.DistributedGameTime).."s in game")
+end
+
+function useCommand.resetsaves()
+	Confirm("Default","This will reset your stats and saves.")
+	if Confirmation then
+		opx("-","Successfully reset your CMD-X.")
+		if isfile("CMD-X.lua") then
+			delfile("CMD-X.lua")
+		end
+	end
+end
+
+function useCommand.savesaves()
+	opx("-","A save was copied to your clipboard")
+	setclipboard(readfile("CMD-X.lua"))
+	writefile("CMD-X.save",readfile("CMD-X.lua"))
+end
+
+function useCommand.migratesaves()
+	Confirm("Default","This will replace your stats and saves.")
+	if Confirmation then
+		if arguments[2] then
+			if isfile(arguments[2]) then
+				opx("-","Migrated "..arguments[2].." to current saves")
+				writefile("CMD-X.lua",readfile(arguments[2]))
+			else
+				opx("*","You do not have a save by that name.")
+			end
+		else
+			if isfile("CMD-X.save") then
+				opx("-","Migrated CMD-X.save to current saves")
+				writefile("CMD-X.lua",readfile("CMD-X.save"))
+			else
+				opx("*","You do not have a CMD-X save.")
+			end
+		end
+	end
+end
+
+function useCommand.resetguipos()
+	opx("-","Reset GUI position")
+	holder.Position = UDim2.new(0, 147, 0, 324)
 end
 
 function useCommand.fuckoff()
@@ -16009,6 +16090,11 @@ if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
 if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
 if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
 if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
+if corruptFile then
+	opx("*","Your CMD-X file was corrupt!")
+	opx("*","This was most likely caused by a crash.")
+	opx("*","If you have a backup / save use .migratesaves")
+end
 
 ---------------------------------------|
 -- Start CMDs: ------------------------|
