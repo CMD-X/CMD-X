@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.4.9"
+local ver = "1.5.1"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -147,6 +147,24 @@ if Current.Version ~= ver then
 	repeat wait() until RunDude == true
 end
 
+if isfile then
+	firstTime = false
+	corruptFile = false
+    if not isfile("CMD-X.lua") then
+        Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
+        repeat wait() until RunDude == true
+		firstTime = true
+    end
+	if firstTime == false then
+    	if isfile("CMD-X.lua") then
+    		if #readfile("CMD-X.lua") < 10 then
+    			delfile("CMD-X.lua")
+    			corruptFile = true
+    		end
+    	end
+    end
+end
+
 -- Variables: ------------------------|
 cmdws = workspace
 local player = cmdlp
@@ -168,7 +186,6 @@ local Devs = {
 	["CMD_X"] = "Owner",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
-	["K5RM"] = "Dev",
 	["coryhofmann"] = "Dev" -- Curvns ALT YOU FAT HEAD
 }
 
@@ -176,7 +193,6 @@ DevCords = {
 	"pigeon#1818";
 	"hz#4777";
 	"Curvn#2646";
-	"K5RM#????";
 }
 
 local Donors = {
@@ -192,7 +208,6 @@ local Donors = {
 	["Schewpid"] = {Tier = "1"},
 	["LtsDank"] = {Tier = "1"},
 	["HyperLink3"] = {Tier = "1"},
-	["Winnzie"] = {Tier = "1"},
 	["8dqt"] = {Tier = "1"},
 	["n1bu"] = {Tier = "2"},
 	["Dakisaurus"] = {Tier = "2"},
@@ -316,7 +331,8 @@ checkArg = {
     [117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46", 
     [838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46", 
     [983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46", 
-    [4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46"
+    [4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46",
+	[3993039278.4] = "",
 }
 local requirements = dp.UserId
 
@@ -1602,23 +1618,23 @@ function sFLY(vfly)
 		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 		spawn(function()
 			repeat wait()
-			if not vfly then
-				cmdlp.Character:FindFirstChild("Humanoid").PlatformStand = true
-			end
-			if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
-				SPEED = 50
-			elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
-				SPEED = 0
-			end
-			if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
-				BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
-				lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
-			elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
-				BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
-			else
-				BV.velocity = Vector3.new(0, 0, 0)
-			end
-			BG.cframe = workspace.CurrentCamera.CoordinateFrame
+				if not vfly then
+					cmdlp.Character:FindFirstChild("Humanoid").PlatformStand = true
+				end
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
+					SPEED = 50
+				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
+					SPEED = 0
+				end
+				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
+				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else
+					BV.velocity = Vector3.new(0, 0, 0)
+				end
+				BG.cframe = workspace.CurrentCamera.CoordinateFrame
 			until not FLYING
 			CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
 			lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
@@ -2666,8 +2682,8 @@ local CMDN = {
 	{N = "showchat", A = {""}, CMD = "showchat,,Turns on chat."},
 	{N = "switchteam", A = {""}, CMD = "switchteam,(str),Switches your team to str if it exists."},
 	{N = "ping", A = {""}, CMD = "ping,,Shows your ping."},
-	{N = "fps", A = {""}, CMD = "fps,,Shows your FPS."},
-	{N = "unfps", A = {""}, CMD = "unfps,,()"},
+	{N = "toolfps", A = {""}, CMD = "toolfps,,Shows your FPS in a tooltip."},
+	{N = "untoolfps", A = {""}, CMD = "untoolfps,,()"},
 	{N = "fuckoff", A = {"killgui"}, CMD = "killgui/fuckoff,,Closes the GUI."},
 	{N = "messagebox", A = {"message","msg"}, CMD = "message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"},
 	{N = "filtering", A = {"fe"}, CMD = "fe/filter,,Checks if a game is filtered or not."},
@@ -2736,6 +2752,8 @@ local CMDN = {
 	{N = "showwhitelist", A = {"swl"}, CMD = "swl/showwhitelist,,Shows whitelist for aimbot."},
 	{N = "spectate", A = {"view"}, CMD = "view/spectate,(plr),Switches your camera view to the player you stated.", ARG = "Player"},
 	{N = "unspectate", A = {"unview"}, CMD = "unview/unspectate,,()"},
+	{N = "resetsaves", A = {"rsaves"}, CMD = "resetsaves/rsaves,,Removes your current saves."},
+	{N = "savesaves", A = {"ssaves"}, CMD = "savesaves/ssaves,,Saves a backup of your current saves."},
 	{N = "ageprivate", A = {"agepr"}, CMD = "agepr/ageprivate,(plr),Says stated users Account Age privately.", ARG = "Player"},
 	{N = "agepublic", A = {"agepu"}, CMD = "agepu/agepublic,(plr),Says stated users Account Age publicly.", ARG = "Player"},
 	{N = "idprivate", A = {"idpr"}, CMD = "idpr/idprivate,(plr),Says stated users ID privately.", ARG = "Player"},
@@ -2894,6 +2912,7 @@ local CMDN = {
 	{N = "permspamspeed", A = {"pss"}, CMD = "permspamspeed/pss,(num),Changes the perm spam speed."},
 	{N = "scriptusers", A = {"susers"}, CMD = "scriptusers/susers,,Shows people who are using CMD-X in your lobby."},
 	{N = "massid", A = {""}, CMD = "massid,,Shows all players IDs."},
+	{N = "fps", A = {""}, CMD = "fps,,Shows your FPS."},
 	{N = "scriptchat", A = {"schat"}, CMD = "scriptchat/schat,,Allows you to talk with other people using CMD-X."},
 	{N = "schatbp", A = {"#"}, CMD = "schatbp/#,(str),Bypasses roblox filter for scriptchat and encodes your message."},
 	{N = "mentions", A = {""}, CMD = "mentions,(on/off),Turns scriptchat mentions on or off."},
@@ -2906,6 +2925,7 @@ local CMDN = {
 	{N = "streamsnipe", A = {"ssnipe"}, CMD = "streamsnipe/ssnipe,(name|gameid/this),Streamsnipes a user."},
 	{N = "listentercmds", A = {""}, CMD = "listentercmds,,Lists enter cmds."},
 	{N = "listhotkeys", A = {""}, CMD = "listhotkeys,,Lists hotkeys."},
+	{N = "gametime", A = {"gtime"}, CMD = "gametime/gtime,,Shows your current elapsed time in game."},
 	{N = "hotkeynoclip", A = {""}, CMD = "hotkeynoclip,(key),Adds a hotkey for noclip."},
 	{N = "enabledrops", A = {""}, CMD = "enabledrops,,Enables tools dropping features."},
 	{N = "disabledrops", A = {""}, CMD = "disabledrops,,Disables tools dropping features."},
@@ -3075,6 +3095,10 @@ local CMDN = {
 	{N = "robloxversion", A = {"rver"}, CMD = "robloxversion/rver,,Shows you the version of Roblox you are on."},
 	{N = "freecamloadpos", A = {"fcloadpos"}, CMD = "freecamloadpos/fcloadpos,(name),Teleports freecam to waypoint."},
 	{N = "rejoinrefresh", A = {"rjre"}, CMD = "rejoinrefresh/rjre,,Rejoins and places you back at the spot you were at."},
+	{N = "forceplay", A = {"fp"}, CMD = "forceplay/fp,(plr),Loop plays plrs audio to stop muting."},
+	{N = "unforceplay", A = {"unfp"}, CMD = "unforceplay/unfp,(plr),()."},
+	{N = "migratesaves", A = {"msaves"}, CMD = "migratesaves/msaves,(file),Migrates save files/backups to CMD-X.lua."},
+	{N = "resetguipos", A = {"rguipos"}, CMD = "resetguipos/rguipos,,Resets GUI position."},
 	
 }
 local CS = {}
@@ -6867,7 +6891,7 @@ function useCommand.ping()
 	opx("-","Pong! Your ping is "..pingexact.."ms")
 end
 
-function useCommand.fps()
+function useCommand.toolfps()
 	opx("-","FPS will now show - Credit to Curvn")
 	local ToolNameGrabber = Instance.new("ScreenGui", getParent)
 	local ToolNameTxt = Instance.new("TextLabel", getParent)
@@ -6908,9 +6932,77 @@ function useCommand.fps()
 	Heartbeat:Connect(HeartbeatUpdate)
 end
 
-function useCommand.unfps()
+function useCommand.fps()
+    local HBFps = 0
+    local Heartbeat = game:GetService("RunService").Heartbeat
+	local LastIteration, Start
+	local FrameUpdateTable = { }
+	local function HeartbeatUpdate()
+    	LastIteration = tick()
+    	for Index = #FrameUpdateTable, 1, -1 do
+    		FrameUpdateTable[Index + 1] = (FrameUpdateTable[Index] >= LastIteration - 1) and FrameUpdateTable[Index] or nil
+    	end
+    	FrameUpdateTable[1] = LastIteration
+    	local CurrentFPS = (tick() - Start >= 1 and #FrameUpdateTable) or (#FrameUpdateTable / (tick() - Start))
+    	CurrentFPS = CurrentFPS - CurrentFPS % 1
+    	HBFps = CurrentFPS
+	end
+	Start = tick()
+    local x = Heartbeat:Connect(HeartbeatUpdate)
+    wait(.5)
+    x:Disconnect()
+	opx("-",HBFps.."FPS")
+end
+
+function useCommand.untoolfps()
 	opx("-","No longer showing FPS")
 	game.CoreGui.ToolNameGrabber:Destroy()
+end
+
+function useCommand.gametime()
+	opx("-",math.floor(workspace.DistributedGameTime).."s in game")
+end
+
+function useCommand.resetsaves()
+	Confirm("Default","This will reset your stats and saves.")
+	if Confirmation then
+		opx("-","Successfully reset your CMD-X.")
+		if isfile("CMD-X.lua") then
+			delfile("CMD-X.lua")
+		end
+	end
+end
+
+function useCommand.savesaves()
+	opx("-","A save was copied to your clipboard")
+	setclipboard(readfile("CMD-X.lua"))
+	writefile("CMD-X.save",readfile("CMD-X.lua"))
+end
+
+function useCommand.migratesaves()
+	Confirm("Default","This will replace your stats and saves.")
+	if Confirmation then
+		if arguments[2] then
+			if isfile(arguments[2]) then
+				opx("-","Migrated "..arguments[2].." to current saves")
+				writefile("CMD-X.lua",readfile(arguments[2]))
+			else
+				opx("*","You do not have a save by that name.")
+			end
+		else
+			if isfile("CMD-X.save") then
+				opx("-","Migrated CMD-X.save to current saves")
+				writefile("CMD-X.lua",readfile("CMD-X.save"))
+			else
+				opx("*","You do not have a CMD-X save.")
+			end
+		end
+	end
+end
+
+function useCommand.resetguipos()
+	opx("-","Reset GUI position")
+	holder.Position = UDim2.new(0, 147, 0, 324)
 end
 
 function useCommand.fuckoff()
@@ -10739,6 +10831,152 @@ function useCommand.unsupermute()
     mutealls = false
 end
 
+FPed = {}
+fpall = false
+function useCommand.forceplay()
+	if arguments[2] then
+		if arguments[2] == "others" then
+			opx("-","ForcePlay others enabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(cmdp:GetPlayers()) do
+				if v ~= cmdlp then
+					table.insert(FPed,v.Name)
+				end
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until FPed == false
+		elseif arguments[2] == "everyone" or arguments[2] == "all" then
+			opx("-","Forceplay all enabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for _,v in pairs(cmdp:GetPlayers()) do
+				table.insert(FPed,v.Name)
+			end
+			repeat wait()
+				for _,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		else
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Forceplay "..target.Name.." enabled")
+				fpall = false
+				wait(.2)
+				fpall = true
+				table.insert(FPed,target.Name)
+				repeat wait()
+					for _,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(FPed) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = true
+								end
+							end
+						end
+					end
+				until fpall == false
+			else
+				opx("*","Player does not exist!")
+			end
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.unforceplay()
+	if arguments[2] then
+		if arguments[2] == "others" then
+			opx("-","Forceplay others disabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i,v in pairs(FPed) do
+				if v ~= cmdlp.Name then
+					table.remove(FPed,i)
+				end
+			end
+			repeat wait()
+				for i,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		elseif arguments[2] == "everyone" or arguments[2] == "all" then
+			opx("-","Forceplay all disabled")
+			fpall = false
+			wait(.2)
+			fpall = true
+			for i in pairs(FPed) do
+				table.remove(FPed,i)
+			end
+			repeat wait()
+				for _,v in pairs(workspace:GetDescendants()) do
+					if v:IsA("Sound") then
+						for _,x in pairs(FPed) do
+							if v.Parent.Parent.Parent.Name == x then
+								v.Playing = true
+							end
+						end
+					end
+				end
+			until fpall == false
+		else
+			target = findplr(arguments[2])
+			if target then
+				opx("-","Forceplay "..target.Name.." disabled")
+				fpall = false
+				wait(.2)
+				fpall = true
+				for i,v in pairs(FPed) do
+					if v == target.Name then
+						table.remove(FPed,i)
+					end
+				end
+				repeat wait()
+					for _,v in pairs(workspace:GetDescendants()) do
+						if v:IsA("Sound") then
+							for _,x in pairs(FPed) do
+								if v.Parent.Parent.Parent.Name == x then
+									v.Playing = true
+								end
+							end
+						end
+					end
+				until fpall == false
+			else
+				opx("*","Player does not exist!")
+			end
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
 local muteall = false
 function useCommand.mute()
 	if arguments[2] then
@@ -12762,7 +13000,7 @@ function useCommand.rejoindiff()
 		for i = 0,Http.TotalCollectionSize do
 		    local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
-			for i,v in pairs(Http.Collection) do
+			for _,v in pairs(Http.Collection) do
 				local SplitCapacityForNum = v.PlayersCapacity:split(" ")
 				if SplitCapacityForNum[1] ~= v.Capacity then
 					opx("-","Possible server, Guid: "..v.Guid)
@@ -12804,7 +13042,7 @@ function useCommand.rejoindiff()
 		for i = 0,Http.TotalCollectionSize do
 		    local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
-			for i,v in pairs(Http.Collection) do
+			for _,v in pairs(Http.Collection) do
 				opx("-","Possible server, Guid: "..v.Guid)
 				PPlaces[#PPlaces+1] = {GUID = v.Guid}
 			end
@@ -12821,7 +13059,7 @@ function useCommand.rejoindiff()
 		for i = 0,Http.TotalCollectionSize do
 		    local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
-			for i,v in pairs(Http.Collection) do
+			for _,v in pairs(Http.Collection) do
 				MathPC = v.PlayersCapacity:split(" ")
 				if MathPC[1] == "7" or MathPC[1] == "6" or MathPC[1] == "5" or MathPC[1] == "4" or MathPC[1] == "3" or MathPC[1] == "2" or MathPC[1] == "1" then
 					opx("-","Possible server, Guid: "..v.Guid)
@@ -15080,6 +15318,11 @@ if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
 if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
 if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
 if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
+if corruptFile then
+	opx("*","Your CMD-X file was corrupt!")
+	opx("*","This was most likely caused by a crash.")
+	opx("*","If you have a backup / save use .migratesaves")
+end
 
 ---------------------------------------|
 -- Start CMDs: ------------------------|
