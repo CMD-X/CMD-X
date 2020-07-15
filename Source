@@ -147,22 +147,9 @@ if Current.Version ~= ver then
 	repeat wait() until RunDude == true
 end
 
-if isfile then
-    firstTime = false
-    corruptFile = false
-    if not isfile("CMD-X.lua") then
-    	Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
-        repeat wait() until RunDude == true
-    	firstTime = true
-    end
-    if firstTime == false then
-    	if isfile("CMD-X.lua") then
-    		if #readfile("CMD-X.lua") < 10 then
-    			delfile("CMD-X.lua")
-    			corruptFile = true
-    		end
-    	end
-    end
+if not isfile("CMD-X.lua") then
+    Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
+    repeat wait() until RunDude == true
 end
 
 -- Variables: ------------------------|
@@ -2073,7 +2060,6 @@ end
 if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
 		cmdlp.MaximumSimulationRadius = 139
-		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		if sethiddenproperty then
 			sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		end
@@ -16090,11 +16076,6 @@ if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
 if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
 if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
 if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
-if corruptFile then
-	opx("*","Your CMD-X file was corrupt!")
-	opx("*","This was most likely caused by a crash.")
-	opx("*","If you have a backup / save use .migratesaves")
-end
 
 ---------------------------------------|
 -- Start CMDs: ------------------------|
@@ -16333,7 +16314,6 @@ end
 if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
 	    cmdlp.MaximumSimulationRadius = 139
-		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		if sethiddenproperty then
 			sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		end
