@@ -16340,7 +16340,6 @@ if AntiCheat.ScriptDetectOff == false then
 	end
 end
 
-wait(2.638)
 if game:GetService("UserInputService").VREnabled then
 	holder.Size = UDim2.new(0.385, 0,0.361, 0)
 	entry.Size = UDim2.new(1.834, 0,0.152, 0)
