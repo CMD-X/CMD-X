@@ -147,9 +147,11 @@ if Current.Version ~= ver then
 	repeat wait() until RunDude == true
 end
 
-if not isfile("CMD-X.lua") then
-    Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
-    repeat wait() until RunDude == true
+if isfile then
+	if not isfile("CMD-X.lua") then
+	    Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
+	    repeat wait() until RunDude == true
+	end
 end
 
 -- Variables: ------------------------|
