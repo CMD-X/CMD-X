@@ -1,3 +1,6 @@
+-- Compatibility: ---------------------|
+if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#1279 for the current KRNL glitch fix.
+---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
 local ver = "1.5.2"
