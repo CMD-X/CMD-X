@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
 -- Constraints: -----------------------|
-local ver = "1.5.1"
+local ver = "1.5.2"
 local nextupd = "08/06/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -148,21 +148,10 @@ if Current.Version ~= ver then
 end
 
 if isfile then
-	firstTime = false
-	corruptFile = false
-    if not isfile("CMD-X.lua") then
-        Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)    
-        repeat wait() until RunDude == true
-		firstTime = true
-    end
-	if firstTime == false then
-    	if isfile("CMD-X.lua") then
-    		if #readfile("CMD-X.lua") < 10 then
-    			delfile("CMD-X.lua")
-    			corruptFile = true
-    		end
-    	end
-    end
+	if not isfile("CMD-X.lua") then
+		Stand("Looks like your new here.","To view commands use .commands","You can use different stuff like .hotkeys and .plugins for add-ons.","","Join the discord if you need help/support.","Ok Cool!",true)
+		repeat wait() until RunDude == true
+	end
 end
 
 -- Variables: ------------------------|
@@ -1859,7 +1848,6 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
-		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		if sethiddenproperty then
 			sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		end
@@ -3038,9 +3026,9 @@ local CMDN = {
 	{N = "cutmuteloop", A = {"cmutel"}, CMD = "cutmuteloop/cmutel,,Cuts your mute loops."},
 	{N = "supermute", A = {"smute"}, CMD = "supermute/smute,,Mutes everyone and the game."},
 	{N = "unsupermute", A = {"unsmute"}, CMD = "unsupermute/unsmute,,()"},
-	{N = "countrypublic", A = {"ctrypu"}, CMD = "countrypublic/ctrypu,(plr),Lists players country."},
-	{N = "countryprivate", A = {"ctrypr"}, CMD = "countryprivate/ctrypr,(plr),Lists players country."},
-	{N = "spoofcountry", A = {"spoofctry"}, CMD = "spoofcountry/spoofctry,(str),Spoofs your country."},
+	{N = "robloxqtversion", A = {"rqtver"}, CMD = "robloxqtversion/rqtver,,Shows Roblox Studios current version."},
+	{N = "teleportstring", A = {"tpstring"}, CMD = "teleportstring/tpstring,(cb/copy),Sends a formatted version of your current teleport info."},
+	{N = "copyoutputlarger", A = {"copyoutputl"}, CMD = "copyoutputlarger/copyoutputl,,Copies current output larger."},
 	{N = "friend", A = {"fr"}, CMD = "friend/fr,(plr/all),Sends friend request to player in your lobby."},
 	{N = "autorejoin", A = {"autorj"}, CMD = "autorejoin/autorj,(on/off),Turns auto rejoin on or off."},
 	{N = "onjoin", A = {""}, CMD = "onjoin,(cmd|plr/arg),Runs a command on player join."},
@@ -3069,8 +3057,8 @@ local CMDN = {
 	{N = "unanimdata", A = {""}, CMD = "unanimdata,,()"},
 	{N = "anticheat", A = {"ac"}, CMD = "anticheat/ac,(var),Sets anticheat variables on or off."},
 	{N = "anticheats", A = {"acs"}, CMD = "anticheats/acs,,Lists anticheat variables."},
-	{N = "dox", A = {"dhox"}, CMD = "dox/dhox,(plr),Fake doxes player."},
-	{N = "masscountry", A = {"massctry"}, CMD = "masscountry/massctry,,Shows countries of all players."},
+	{N = "unfriend", A = {"unfr"}, CMD = "unfriend/unfr,(plr/all),()"},
+	{N = "cutforceplayloop", A = {"cutfploop"}, CMD = "cutforceplayloop/cutfploop,,Cuts forceplay loops that are running."},
 	{N = "freecamgoto", A = {"fcgoto","fcto","fctp"}, CMD = "freecamgoto/fcgoto/fctp/fcto,(plr),Teleports freecam to a player."},
 	{N = 'pi', A = {''}, CMD = 'pi,(length),Shows numbers of pi to given length.'},
 	{N = "vnoclip", A = {"vnc"}, CMD = "vnoclip/vnc,,Turns on vehicle noclip."},
@@ -13034,21 +13022,27 @@ function useCommand.rejoindiff()
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,xPlace,cmdlp)
 	elseif arguments[2] == "smallest" then
 		opx("-","Current Guid: "..game.JobId)
-		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
+		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.placeId.."&startindex=")
 		local fuck = game:HttpGet(URL.."0")
-		local Http = game:GetService("HttpService"):JSONDecode(fuck)
+		local Http, Places = game:GetService("HttpService"):JSONDecode(fuck), {}
 		opx("-","Searching places, this may take a while...")
-		local PPlaces = {}
-		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
-			local Http = game:GetService("HttpService"):JSONDecode(fuck)
+		for i = Http.TotalCollectionSize, 0, -1 do
+			local fuck = game:HttpGet(URL..i)
+			local Http, last = game:GetService("HttpService"):JSONDecode(fuck), 99
 			for _,v in pairs(Http.Collection) do
-				opx("-","Possible server, Guid: "..v.Guid)
-				PPlaces[#PPlaces+1] = {GUID = v.Guid}
+				local cur = tonumber(v.PlayersCapacity:match('[0-9]*'))
+				if cur < last and cur > 0 then
+					Places[#Places + 1] = v.Guid
+					last = cur
+					opx("-","Possible server, Guid: "..v.Guid)
+				end
 			end
+			if #Places > 1 then break end
 		end
 		opx("-","All places finalized, randomizing...")
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[#PPlaces].GUID,cmdlp)
+		local TPS, N = game:GetService('TeleportService'), #Places
+		TPS:TeleportToPlaceInstance(game.PlaceId,Places[N],LP)
+		TPS.TeleportInitFailed:Connect(function()opx("-","Teleport failed. Trying another server...")N=N-1 TPS:TeleportToPlaceInstance(game.PlaceId,Places[N],cmdlp)end)
 	elseif arguments[2] == "small" then
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -13075,24 +13069,24 @@ function useCommand.rejoindiff()
 		opx("-","Current Guid: "..game.JobId)
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
 		local fuck = game:HttpGet(URL.."0")
-		local Http = game:GetService("HttpService"):JSONDecode(fuck)
+		local Http, Place = game:GetService("HttpService"):JSONDecode(fuck)
 		opx("-","Searching places, this may take a while...")
-		local PPlaces = {}
-		for i = 0,Http.TotalCollectionSize do
-		    local fuck = game:HttpGet(URL..i)
+		for i = 0, Http.TotalCollectionSize do
+			local fuck = game:HttpGet(URL..i)
 			local Http = game:GetService("HttpService"):JSONDecode(fuck)
-			for i,v in pairs(Http.Collection) do
-				MathPC = v.PlayersCapacity:split(" ")
-				if MathPC[1] ~= v.Capacity then
-					opx("-","Possible server, Guid: "..v.Guid)
-					PPlaces[#PPlaces+1] = {GUID = v.Guid}
+			for _,v in pairs(Http.Collection) do
+				if v.PlayersCapacity:match('[0-9]*') ~= tostring(v.Capacity) then
+					Place = v.Guid
+					opx("-","Possible server, Guid: "..Place)
+					break
 				else
 					opx("-","Server is full, or does not exist; Skipping...")
 				end
 			end
+			if Place then break end
 		end
 		opx("-","All places finalized, randomizing...")
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[1].GUID,cmdlp)
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,Place,cmdlp)
 	else
 		opx("*","Not a valid preset!")
 	end
@@ -15047,6 +15041,53 @@ function UpdateTracer()
 	end
 end
 
+function useCommand.robloxqtversion()
+	opx("-",game:HttpGet("http://setup.roblox.com/versionQTStudio"))
+end
+
+function useCommand.teleportstring()
+	if arguments[2] == "cb" or "copy" then
+		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
+		setclipboard("game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
+	else
+		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
+	end
+end
+
+function useCommand.copyoutputlarger()
+	if cmdnum(arguments[3]) then
+		local start = arguments[2]
+		local breaker = arguments[3]
+		setclipboard(opxScrolling.Text:sub(start,breaker))
+		opx("-","Copied latest output larger")
+	else
+		setclipboard(opxScrolling.Text)
+		opx("-","Copied latest output larger")
+	end
+end
+
+function useCommand.unfriend()
+	if arguments[2] == "all" then
+		opx("-","Removed friendship from everyone")
+		for i,v in pairs(cmdp:GetPlayers()) do
+			cmdlp:RevokeFriendship(v)
+		end
+	else
+		target = findplr(arguments[2])
+		if target then
+			opx("-","Removed friendship from "..target.Name)
+			cmdlp:RevokeFriendship(target)
+		else
+			opx("*","Player does not exist!")
+		end
+	end
+end
+
+function useCommand.cutforceplayloop()
+	fpall = false
+	opx("-","Stopped forceplay loop")
+end
+
 function useCommand.rejoinrefresh()
     rejoining = true
     if syn.queue_on_teleport then
@@ -15318,11 +15359,6 @@ if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
 if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
 if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
 if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
-if corruptFile then
-	opx("*","Your CMD-X file was corrupt!")
-	opx("*","This was most likely caused by a crash.")
-	opx("*","If you have a backup / save use .migratesaves")
-end
 
 ---------------------------------------|
 -- Start CMDs: ------------------------|
@@ -15561,14 +15597,12 @@ end
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
 		cmdlp.MaximumSimulationRadius = 139
-		sethiddenproperty = sethiddenproperty or set_hidden_prop
 		if sethiddenproperty then
 			sethiddenproperty(cmdlp, "SimulationRadius", 139)
 		end
     end
 end
 
-wait(2.638)
 if game:GetService("UserInputService").VREnabled then
 	holder.Size = UDim2.new(0.385, 0,0.361, 0)
 	entry.Size = UDim2.new(1.834, 0,0.152, 0)
