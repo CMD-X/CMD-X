@@ -16408,7 +16408,7 @@ pcall(function()
 		coroutine.resume(coroutine.create(function()
 			connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()
 				if not debouncergb then
-					if Self ~= nil then
+					if Self ~= nil and game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster") then
 						for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
 							if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
 								for i = 0, 255, 1 do 
