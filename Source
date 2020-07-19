@@ -2221,7 +2221,6 @@ function CreateStatLabel(cmd,times,today)
 	tl2:TweenPosition(UDim2.new(0,3,0,alls2), 'In', 'Quint', 0.5)
 	tl2.TextTransparency = 0
 end
---[[
 function autofriendwl(dowhitelistfriends)
 	local function iterPageItems(pages)
 		return coroutine.wrap(function()
@@ -2265,7 +2264,7 @@ function autofriendwl(dowhitelistfriends)
 			end
 		end
 	end
-end]]
+end
 	   
 function Wl(playerrequested,does)
 	if does then
@@ -8613,12 +8612,12 @@ end
 
 function useCommand.whitelistfriends()
 	opx("-","Every friend of yours was added to the whitelist")
-	--autofriendwl(true)
+	autofriendwl(true)
 end
 
 function useCommand.unwhitelistfriends()
 	opx("-","Every friend of yours was removed from the whitelist")
-	--autofriendwl(false)
+	autofriendwl(false)
 end
 
 function useCommand.whitelist()
