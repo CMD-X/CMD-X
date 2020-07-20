@@ -1,10 +1,10 @@
 -- Compatibility: ---------------------|
 if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#1279 for the current KRNL glitch fix.
 ---------------------------------------|
-repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
+repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.2"
-local nextupd = "08/06/2020"
+local ver = "1.5.4"
+local nextupd = "20/07/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
 }
@@ -31,7 +31,17 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; Unnamed.ResetOnSpawn = false
-
+local a = getrawmetatable(game)
+local b = a.__index
+setreadonly(a,false)
+a.__index = newcclosure(function(self,...)
+	local c = {...}
+	if not checkcaller() and self == getParent and c[1] == Unnamed.Name then
+		return nil
+	end
+	return b(self,...)
+end)
+setreadonly(a,true)
 _G.Unnamed = Unnamed
 _G.dontTween = false
 
@@ -458,8 +468,7 @@ if AntiCheat.AutoAntiKick then
     	local args = {...}
     	local t = getnamecallmethod()
     	if t == "Kick" then
-    	    print(get_calling_script():GetFullName().." t")
-            return wait(9e9)
+            return nil
     	end
     	return namecall(self,...)
     end)
@@ -1719,24 +1728,27 @@ cmdp.PlayerRemoving:Connect(function(plr)
 	end
 end)
 
-cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-	if sets.conFly == true then
-		if FLYING == true then
-			repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-			wait(2)
-			FLYING = false
-			cmdlp.Character.Humanoid.PlatformStand = false 
-			sFLY()
-			speedofthefly = sets.permflyspeed
+if cmdlp.Character then
+	cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
+		if sets.conFly == true then
+			if FLYING == true then
+				repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
+				wait(2)
+				FLYING = false
+				cmdlp.Character.Humanoid.PlatformStand = false 
+				sFLY()
+				speedofthefly = sets.permflyspeed
+			end
 		end
-	end
-	Enabledaimbot = false
-	if Clip == false then
-		Clip = true
-		wait(1)
-		Clip = false
-	end
-end)
+		Enabledaimbot = false
+		if Clip == false then
+			Clip = true
+			wait(1)
+			Clip = false
+		end
+	end)
+end
+
 cmdlp.CharacterAdded:Connect(function(char)
 	wait(2)
 	char:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
@@ -2649,7 +2661,7 @@ local CMDN = {
 	{N = "savegame", A = {"sg"}, CMD = "savegame/sg,,Saves the current game instance to your workspace folder. (SYNAPSE ONLY)"},
 	{N = "btools", A = {"bt"}, CMD = "btools/bt,,Gives you building tools. (CLIENT SIDED)"},
 	{N = "fex", A = {"f3x"}, CMD = "f3x/fex,,Gives you advanced building tools. (CLIENT SIDED) (GUI)"},
-	{N = "remotespy", A = {"r2s"}, CMD = "r2s/remotespy,,Spies remotes. (GUI)"},
+	{N = "remotespy", A = {"sspy"}, CMD = "sspy/remotespy,,Opens remote spy. (GUI)"},
 	{N = "badger", A = {""}, CMD = "badger,,Opens badger V2. (GUI) (<3)"},
 	{N = "explorer", A = {"dex"}, CMD = "explorer/dex,,Spies workspace. (GUI)"},
 	{N = "removeeffects", A = {"reffects"}, CMD = "reffects/removeeffects,,Removes all effects in the game. (CLIENT SIDED)"},
@@ -3090,6 +3102,8 @@ local CMDN = {
 	{N = "unforceplay", A = {"unfp"}, CMD = "unforceplay/unfp,(plr),()."},
 	{N = "migratesaves", A = {"msaves"}, CMD = "migratesaves/msaves,(file),Migrates save files/backups to CMD-X.lua."},
 	{N = "resetguipos", A = {"rguipos"}, CMD = "resetguipos/rguipos,,Resets GUI position."},
+	{N = "properties", A = {"props"}, CMD = "properties/props,(class),Lists all properties of class in Roblox using an API."},
+	{N = "classes", A = {""}, CMD = "classes,,Lists all classes in Roblox using an API."},
 	
 }
 local CS = {}
@@ -3687,7 +3701,7 @@ function BodyAimbot()
 				return true
 			end
 		end
-		while Enabledaimbot == true do
+		while Enabledaimbot do
 			local Distance = 100000
 			for count,TargetP in pairs(cmdp:GetPlayers()) do --Shit to change
 				if searchplr(TargetP) then
@@ -3795,25 +3809,27 @@ function noclip()
 	end
 	Noclipping = game:GetService('RunService').Stepped:connect(NoclipLoop)
 end
-
-cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-	if sets.conFly == true then
-		if FLYING == true then
-			repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-			wait(2)
-			FLYING = false
-			cmdlp.Character.Humanoid.PlatformStand = false 
-			sFLY()
-			speedofthefly = sets.permflyspeed
+if cmdlp.Character and cmdlp:FindFirstChildWhichIsA("Humanoid") then
+	cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
+		if sets.conFly == true then
+			if FLYING == true then
+				repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
+				wait(2)
+				FLYING = false
+				cmdlp.Character.Humanoid.PlatformStand = false 
+				sFLY()
+				speedofthefly = sets.permflyspeed
+			end
 		end
-	end
-	Enabledaimbot = false
-	if Clip == false then
-		Clip = true
-		wait(1)
-		Clip = false
-	end
-end)
+		Enabledaimbot = false
+		if Clip == false then
+			Clip = true
+			wait(1)
+			Clip = false
+		end
+	end)
+end
+
 cmdlp.CharacterAdded:Connect(function(char)
 	wait(2)
 	char:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
@@ -4445,7 +4461,7 @@ end
 local cmdAdvertise = false
 function useCommand.advertise()
 	cmdAdvertise = true
-	while cmdAdvertise == true do
+	while cmdAdvertise do
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6)) 
 		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
@@ -4543,11 +4559,14 @@ function useCommand.defaultgravity()
 end
 
 local bodyPos = false
-for _,v in pairs(cmdlp.Character:GetDescendants()) do
-	if v.Name == "rocket" then
-		v:Destroy()
+if cmdlp.Character then
+	for _,v in pairs(cmdlp.Character:GetDescendants()) do
+		if v.Name == "rocket" then
+			v:Destroy()
+		end
 	end
 end
+
 function useCommand.bodypositionwalkspeed()
 	if arguments[2] and cmdnum(arguments[2]) then
 		local speed = 1 + arguments[2]*0.05
@@ -4560,7 +4579,7 @@ function useCommand.bodypositionwalkspeed()
 	rocket.maxForce = Vector3.new(12500,12500,12500)
 	bodyPos = true
 	opx("-","BodyPositionWalkSpeed activated")
-	while bodyPos == true do
+	while bodyPos do
 		wait()
 		if cmdlp.Character.Humanoid.FloorMaterial == Enum.Material.Air then
 			rocket.Parent = cmdlp.Character
@@ -4570,7 +4589,7 @@ function useCommand.bodypositionwalkspeed()
 			rocket.Parent = cmdlp.Character.HumanoidRootPart
 		end
 	end
-	while bodyPos == true do
+	while bodyPos do
 		wait()
 		rocket.Position = Vector3.new(cmdlp.Character.Torso.Position.X+cmdlp.Character.Humanoid.MoveDirection.X*speed*5.4,cmdlp.Character.Torso.Position.Y,cmdlp.Character.Torso.Position.Z+cmdlp.Character.Humanoid.MoveDirection.Z*speed*5.4)
 	end
@@ -4842,7 +4861,7 @@ local hatSpam = false
 function useCommand.hatspam()
 	opx("-","Now spamming hats")
 	hatSpam = true
-	while hatSpam == true do
+	while hatSpam do
 		refresh()
 		wait(1)
 		for _,v in pairs(cmdlp.Character:GetChildren()) do
@@ -5077,7 +5096,7 @@ function useCommand.flip()
 		_restoreproperties()
 		debounce=false
 	end
-	while Flipping == true do
+	while Flipping do
 		wait()
 		Flip2()
 	end
@@ -5166,7 +5185,7 @@ function useCommand.doubleflip()
 		_restoreproperties()
 		debounce=false
 	end
-	while doubleFlipping == true do
+	while doubleFlipping do
 		wait()
 		Flip3()
 	end
@@ -5497,7 +5516,7 @@ function useCommand.cartwheel()
 		_restoreproperties()
 		debounce = false
 	end
-	while cwFlipping == true do
+	while cwFlipping do
 		wait()
 		Flip()
 	end
@@ -5557,7 +5576,7 @@ function useCommand.seizure()
 		_restoreproperties()
 		debounce = false
 	end
-	while seizureFlipping == true do
+	while seizureFlipping do
 		wait()
 		Flip4()
 	end
@@ -5768,7 +5787,7 @@ function useCommand.annoy()
 			if target.Character and target.Character:FindFirstChild('Humanoid') then
 				Annoy = true
 				opx("-","Now annoying "..target.Name)
-				while Annoy == true do
+				while Annoy do
 					cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,0,0)
 					wait()
 				end
@@ -5787,7 +5806,7 @@ function useCommand.unannoy()
 end
 
 function useCommand.weaken()
-	for i,player in pairs(cmdlp.Character:GetChildren()) do
+	for _,player in pairs(cmdlp.Character:GetChildren()) do
 		if player.ClassName == "Part" then
 			player.CustomPhysicalProperties = PhysicalProperties.new(0, 0.3, 0.5)
 		end
@@ -5796,7 +5815,7 @@ function useCommand.weaken()
 end
 
 function useCommand.strengthen()
-	for i,player in pairs(cmdlp.Character:GetChildren()) do
+	for _,player in pairs(cmdlp.Character:GetChildren()) do
 		if player.ClassName == "Part" then
 			player.CustomPhysicalProperties = PhysicalProperties.new(100, 0.3, 0.5)
 		end
@@ -5805,7 +5824,7 @@ function useCommand.strengthen()
 end
 
 function useCommand.unweak()
-	for i,player in pairs(cmdlp.Character:GetChildren()) do
+	for _,player in pairs(cmdlp.Character:GetChildren()) do
 		if player.ClassName == "Part" then
 			player.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
 		end
@@ -5925,7 +5944,7 @@ function useCommand.leash()
 			if target.Character and target.Character:FindFirstChild('Humanoid') then
 				Follow = true
 				opx("-","Now leashing "..target.Name)
-				while Follow == true do
+				while Follow do
 					cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(0),0)* CFrame.new(-0.9,0,4.5)
 					wait()
 				end
@@ -6364,7 +6383,7 @@ function useCommand.facefuck()
 				else
 					ff = true
 					opx("-","Facefucking/faceraping enabled")
-					while ff == true do
+					while ff do
 						cmdlp.Character.Humanoid.Sit = true
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0,1.6,0.4)
 						wait()
@@ -6402,7 +6421,7 @@ function useCommand.facefuckanim()
 				return
 				else ff2 = true
 					opx("-","Facefucking/faceraping enabled")
-					while ff2 == true do
+					while ff2 do
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0.4,1.6,0.4)
 						wait()
 					end
@@ -6436,7 +6455,7 @@ function useCommand.piggyback()
 				return
 				else pb = true
 					opx("-","Riding/piggybacking enabled")
-					while pb == true do
+					while pb do
 						cmdlp.Character.Humanoid.Sit = true
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
 						wait()
@@ -6476,7 +6495,7 @@ function useCommand.fuck()
 				return
 				else Bang = true
 					opx("-","Fuck/rape enabled")
-					while Bang == true do
+					while Bang do
 						cmdlp.Character.HumanoidRootPart.CFrame=
 						target.Character.HumanoidRootPart.CFrame +  target.Character.HumanoidRootPart.CFrame.lookVector * flwnum
 						wait()
@@ -6512,7 +6531,7 @@ function useCommand.follow()
 				else Follow = true
 					opx("-","Follow/stalk enabled") 
 				end
-				while Follow == true do
+				while Follow do
 					cmdlp.Character.HumanoidRootPart.CFrame=
 					target.Character.HumanoidRootPart.CFrame +  target.Character.HumanoidRootPart.CFrame.lookVector * flwnum
 					wait()
@@ -6587,14 +6606,15 @@ function useCommand.btools()
 end
 
 function useCommand.fex()
-	opx("-","Loaded F3X")
+	opx("-","Loading F3X")
 	loadstring(game:GetObjects("rbxassetid://4698064966")[1].Source)()
+	opx("-","Loaded F3X")
 end
 
 function useCommand.remotespy()
-	opx("-","Loading Mr Spy")
-	loadstring(game:HttpGet("https://pastebin.com/raw/FEKUsHdA", true))()
-	opx("-","Mr Spy has loaded")
+	opx("-","Loading Simple Spy credits to exxtremestuffs")
+	loadstring(game:HttpGet("https://github.com/exxtremestuffs/SimpleSpySource/raw/master/SimpleSpy.lua"))()
+	opx("-","Simple Spy has loaded")
 end
 
 function useCommand.playerstalker()
@@ -7224,6 +7244,54 @@ function useCommand.bluewarn()
 	end
 end
 
+function useCommand.properties()
+    if arguments[2] then
+        local Class = "Players"
+    	local ClassString = ""
+    	local Table
+    	local API = game:GetService("HttpService"):JSONDecode(game:HttpGet("http://setup.roblox.com/"..game:HttpGet("http://setup.roblox.com/versionQTStudio").."-API-Dump.json"))
+    	for _,__ in pairs(API.Classes) do
+    		if __.Name == Class and __.Members then
+    			Table = __.Members
+    		end
+    	end
+    	for _,__ in pairs(Table) do
+            local PropertyString = "("
+    		if __.ValueType then
+    		    PropertyString = PropertyString..__.ValueType.Name   
+    		end
+    		PropertyString = PropertyString..") "..__.MemberType.." | "..__.Name.." ("
+    		if __.Tags then
+    		    for ___,____ in pairs(__.Tags) do
+    		        if ___ ~= #__.Tags then
+    		            PropertyString = PropertyString..____..", "
+    		        else
+    		            PropertyString = PropertyString..____
+    		        end
+    		    end
+            end
+    		PropertyString = PropertyString..")"
+    		ClassString = ClassString..PropertyString.."\n"
+        end
+        print("\n"..ClassString)
+    	opx("-","Printed properties of "..Class.." to F9 (Console)")
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
+function useCommand.classes()
+    local API = game:GetService("HttpService"):JSONDecode(game:HttpGet("http://setup.roblox.com/"..game:HttpGet("http://setup.roblox.com/versionQTStudio").."-API-Dump.json"))
+    local Classes = ""
+    for _,__ in pairs(API.Classes) do
+        if __.Members then
+            Classes = Classes..__.Name.."\n"
+        end
+    end
+    print("\n"..Classes)
+    opx("-","Printed all classes to F9 (Console)")
+end
+
 function useCommand.grabip()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -7335,7 +7403,7 @@ function useCommand.cambobble()
 			cmdlp.Character.Humanoid.CameraOffset = cmdlp.Character.Humanoid.CameraOffset * 0.75
 		end
 	end 
-	while bobbleEffect == true do
+	while bobbleEffect do
 		wait()
 		updateBobbleEffect()
 	end
@@ -7351,7 +7419,7 @@ function useCommand.grapple()
 	opx("-","Now grappling")
 	moveToMouse = true
 	local bpNew = Instance.new("BodyPosition",cmdlp.Character.HumanoidRootPart)
-	while moveToMouse == true do
+	while moveToMouse do
 		wait()
 		local mousePosY = cmdm.Hit.Y
 		local mousePosX = cmdm.Hit.X
@@ -7445,7 +7513,7 @@ local nosit = false
 function useCommand.nosit()
 	nosit = true
 	opx("-","Nosit enabled")
-	while nosit == true do
+	while nosit do
 		wait(.1)
 		if cmdlp.Character.Humanoid.Sit == true then
 		    wait(.1)
@@ -7463,7 +7531,7 @@ local nostun = false
 function useCommand.nostun()
 	nostun = true
 	opx("-","Nostun enabled")
-	while nostun == true do
+	while nostun do
 		wait(.1)
 		if cmdlp.Character.Humanoid.PlatformStand == true then
 		    wait(.1)
@@ -8672,12 +8740,12 @@ local hitler = false
 function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
-	while hitler == true do
-        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲🔲🔲", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
+	while hitler do
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
 		wait(15)
 	end
 end
@@ -9863,7 +9931,7 @@ function useCommand.compliment()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
+			local compPick = {"Them toes lookin cute","You have very nice shoes","If IÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬ ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢m what made your day then your what made this world go round. along with making it a better place just from being here with everyone else","You're a nice person, and i hope you have an amazing week","You somewhat made me kinda sorta smile I guess","Your avatar looks awesome","Your name makes me smile","You are the best person ever","If I could I would hug you","You make me happy","You have brightened up my day","You are the most amazing person I've ever met","Your avatar looks nice today","You are an amazing person","You are the king/queen","Don't drop your crown"}
 			local value = math.random(1,#compPick)
 			local picked_value = compPick[value]
 			opx("-","You complimented "..target.Name)
@@ -9880,7 +9948,7 @@ function useCommand.roast()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œbeautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}
+			local roastPick = {"Anne Frank hid better then you","Go to bed","You need a shower","You look like a barbie doll which i gave a makeover with my markers","Your momma back built like a skate ramp I can do an ollie off her","You look like the 1% of germs that hand-soap doesnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬ ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢t kill","Boy u literally be smelling like tv oil","90% of your ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬ ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“beautyÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬ ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬ ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â can be removed with a Kleenex","No wonder your parents hate you","You haven't had any neurological brain development in the last decade","I will build a sandcastle out of your dead nans ashes","Your brain has the capacity of a dried sea sponge","You make me cringe, I literally want to quit this game because of you","Your outfit is horrendous","Your name is horrendous","Your IQ is so low that even scientists cant zoom in on it","You are a femmie","You are fat","You stink of your nans cremation","How many people does it take to screw in a lightbulb? 20 of your kind","I can smell you through the screen","Candy shop got robbed, didn't know you did it","You are poor","Your brain is the size of an average ants","Everything you've worked for, your whole life is embarassing","Go back to school","Are you dumb or just young","You make me feel e-sick","I very much dislike you","Settle along you peasent","You are worth nothing","I hope you suffer","Your words, they make no sense","Please leave the server you cretin","You make me sick","Huh? Didn't know infants could play roblox","I bet you live in a poverty stricken country","You belong in the special ed class","Is it just me or does someone smell, nvm thats just","Is it just me or is someone dumb, nvm thats just","Is it just me or is someone fat, nvm thats just"}			
 			local value = math.random(1,#roastPick)
 			local picked_value = roastPick[value]
 			opx("-","You roasted "..target.Name)
@@ -10241,15 +10309,15 @@ end
 
 function useCommand.bypass()
 	local message = getstring(2)
-	local s1 = message:gsub("i", "iأ")
-	local s2 = s1:gsub("e", "eأ")
-	local s3 = s2:gsub("u", "uأ")
-	local s4 = s3:gsub("f", "fأ")
-	local s5 = s4:gsub("o", "oأ")
-	local s6 = s5:gsub("c", "cأ")
-	local s7 = s6:gsub("p", "pأ")
-	local s8 = s7:gsub("s", "sأ")
-	local s9 = s8:gsub("t", "tأ")
+	local s1 = message:gsub("i", "iØ£")
+	local s2 = s1:gsub("e", "eØ£")
+	local s3 = s2:gsub("u", "uØ£")
+	local s4 = s3:gsub("f", "fØ£")
+	local s5 = s4:gsub("o", "oØ£")
+	local s6 = s5:gsub("c", "cØ£")
+	local s7 = s6:gsub("p", "pØ£")
+	local s8 = s7:gsub("s", "sØ£")
+	local s9 = s8:gsub("t", "tØ£")
 	opx("-","Successfully bypassed! "..s9)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s9, "All")
 end
@@ -10666,7 +10734,7 @@ function useCommand.loopgoto()
 			if target.Character and target.Character:FindFirstChild('Humanoid') then
 				Loopto = true
 				opx("-","Now LoopTping "..target.Name)
-				while Loopto == true do
+				while Loopto do
 					cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(sets.gotoPosSide,sets.gotoPosHead,sets.gotoPos)
 					wait()
 				end
@@ -11939,7 +12007,7 @@ local chatlag = false
 function useCommand.lagchat()
 	opx("-","Now lagging chat")
 	chatlag = true
-	while chatlag == true do
+	while chatlag do
 		wait()
 		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("_______________________________________", "All")
 	end
@@ -12354,7 +12422,7 @@ function useCommand.clientbring()
 		if target then
 			bringc = true
 			opx("-","Bringing "..target.Name.." on client.")
-			while bringc == true do
+			while bringc do
 				wait()
 				if target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
 					target.Character.HumanoidRootPart.CFrame = cmdlp.Character.HumanoidRootPart.CFrame + cmdlp.Character.HumanoidRootPart.CFrame.lookVector * 2
@@ -12597,7 +12665,7 @@ local deadRefresh = false
 function useCommand.respawndead()
 	deadRefresh = true
 	opx("-","Respawn dead is now on")
-	while deadRefresh == true do
+	while deadRefresh do
 		wait()
 		if cmdlp.Character.Humanoid.Health == 0 then
 			DiedTP = cmdlp.Character.HumanoidRootPart.CFrame
@@ -12707,7 +12775,7 @@ function useCommand.loop()
 		perCmd = arguments[2]
 		GoodNew = findCmd(perCmd)
 		opx("-","Now looping that command")
-		while looping == true do
+		while looping do
 			wait()
 			arguments = loopStat:split(" ")
 			useCommand[GoodNew]()
@@ -15525,16 +15593,18 @@ end
  
 ---------------------------------------|
 -- Chat hook: -------------------------|
-local chatbar = cmdlp.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
-chatbar.Focused:Connect(function()
-	while chatbar:IsFocused() do
-		wait()
-		if chatbar.Text:lower():sub(1,#sets.prefix) == sets.prefix then
-			cmd.Text = chatbar.Text:sub(#sets.prefix+1,100000)
-		elseif chatbar.Text:lower():sub(1,1) == '.' then
-			cmd.Text = chatbar.Text:sub(2,100000)
+pcall(function()
+	local chatbar = cmdlp.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+	chatbar.Focused:Connect(function()
+		while chatbar:IsFocused() do
+			wait()
+			if chatbar.Text:lower():sub(1,#sets.prefix) == sets.prefix then
+				cmd.Text = chatbar.Text:sub(#sets.prefix+1,100000)
+			elseif chatbar.Text:lower():sub(1,1) == '.' then
+				cmd.Text = chatbar.Text:sub(2,100000)
+			end
 		end
-	end
+	end)
 end)
 
 cmdlp.Chatted:Connect(function(v)
@@ -15635,7 +15705,7 @@ pcall(function()
     	if connectionRGBDev then connectionRGBDev:Disconnect() end
     	coroutine.resume(coroutine.create(function()
     		connectionRGBDev = game:GetService("RunService").Heartbeat:Connect(function()
-    			if not debouncergb then
+    			if Self ~= nil and game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster") then
     				if Self ~= nil then
     					for i,v in pairs(game:GetService("CoreGui").RobloxGui.PlayerListMaster.OffsetFrame.PlayerScrollList.SizeOffsetFrame.ScrollingFrameContainer.ScrollingFrameClippingFrame.ScollingFrame.OffsetUndoFrame:GetDescendants()) do
     						if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == Self then
