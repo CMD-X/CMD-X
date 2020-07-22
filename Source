@@ -7454,7 +7454,7 @@ end
 
 function useCommand.properties()
     if arguments[2] then
-        local Class = "Players"
+        local Class = getstring(2)
     	local ClassString = ""
     	local Table
     	local API = game:GetService("HttpService"):JSONDecode(game:HttpGet("http://setup.roblox.com/"..game:HttpGet("http://setup.roblox.com/versionQTStudio").."-API-Dump.json"))
