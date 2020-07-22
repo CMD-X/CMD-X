@@ -3,7 +3,7 @@ if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#127
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.4"
+local ver = "1.5.5"
 local nextupd = "20/07/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.gg/cmd";
@@ -412,18 +412,19 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AC_IDs = {
-	[5188367351] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[4052062489] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true, AutoAntiKick = true},
-	[1962086868] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[2808131030] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[2127551566] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[4238077359] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[2377868063] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[3664995855] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[4160228187] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[4802536077] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true},
-	[176053469] = {IntroAudioOff = true, ScriptDetectOff = true, PrintingOff = true, Custom1 = true},
+	[5188367351] = {ScriptDetectOff = true, PrintingOff = true},
+	[4052062489] = {ScriptDetectOff = true, PrintingOff = true, AutoAntiKick = true},
+	[1962086868] = {ScriptDetectOff = true, PrintingOff = true},
+	[2808131030] = {ScriptDetectOff = true, PrintingOff = true},
+	[2127551566] = {ScriptDetectOff = true, PrintingOff = true},
+	[4238077359] = {ScriptDetectOff = true, PrintingOff = true},
+	[2377868063] = {ScriptDetectOff = true, PrintingOff = true},
+	[3664995855] = {ScriptDetectOff = true, PrintingOff = true},
+	[4160228187] = {ScriptDetectOff = true, PrintingOff = true},
+	[4802536077] = {ScriptDetectOff = true, PrintingOff = true},
+	[176053469] = {ScriptDetectOff = true, PrintingOff = true, Custom1 = true},
 	[17541193] = {ScriptDetectOff = true},
+	[1499872953] = {ScriptDetectOff = true, PrintingOff = true}, 
 }
 
 if AC_IDs[game.PlaceId] then
@@ -490,7 +491,7 @@ end
 
 asset_id_url = "http://www.roblox.com/asset/?id="
 if AntiCheat.IntroAudioOff == false then
-    local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+	local Sound2 = Instance.new("Sound", game:GetService("PolicyService"))
     Sound2.SoundId = asset_id_url..5032588119
     Sound2:Play()
 end
@@ -3104,7 +3105,10 @@ local CMDN = {
 	{N = "resetguipos", A = {"rguipos"}, CMD = "resetguipos/rguipos,,Resets GUI position."},
 	{N = "properties", A = {"props"}, CMD = "properties/props,(class),Lists all properties of class in Roblox using an API."},
 	{N = "classes", A = {""}, CMD = "classes,,Lists all classes in Roblox using an API."},
-	
+	{N = "loopfling", A = {"lfling"}, CMD = "loopfling/lfling,(plr),Loop flings player.", ARG = "Player"},
+	{N = "unloopfling", A = {"unlfling"}, CMD = "unloopfling/unlfling,,()."},
+	{N = "nomouse", A = {""}, CMD = "nomouse,,Disables mouse icon."},
+	{N = "yesmouse", A = {""}, CMD = "yesmouse,,()."},
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -7246,7 +7250,7 @@ end
 
 function useCommand.properties()
     if arguments[2] then
-        local Class = "Players"
+        local Class = getstring(2)
     	local ClassString = ""
     	local Table
     	local API = game:GetService("HttpService"):JSONDecode(game:HttpGet("http://setup.roblox.com/"..game:HttpGet("http://setup.roblox.com/versionQTStudio").."-API-Dump.json"))
@@ -8261,12 +8265,12 @@ function Create(xPlayer, xHead)
 	local ESP = Instance.new("BillboardGui", cmdlp.PlayerGui)
 	local ESPSquare = Instance.new("Frame", ESP)
 	local ESPText = Instance.new("TextLabel", ESP)
-	ESP.Name = "ESP"
+	ESP.Name = "ESP"..xPlayer.Name
 	ESP.Adornee = xHead
 	ESP.AlwaysOnTop = true
 	ESP.ExtentsOffset = Vector3.new(0, 1, 0)
 	ESP.Size = UDim2.new(0, 5, 0, 5)
-    for i,v in pairs(xPlayer.Character:GetChildren()) do
+    for _,v in pairs(xPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") then
             local a = Instance.new("BoxHandleAdornment", ESP)
             a.Name = xPlayer.Name
@@ -8276,6 +8280,7 @@ function Create(xPlayer, xHead)
             a.Size = v.Size
             a.Transparency = 0.5
             a.Color = xPlayer.TeamColor
+			v.Material = "ForceField"
         end
     end
 	ESPText.Name = "NAME"
@@ -8286,7 +8291,8 @@ function Create(xPlayer, xHead)
 	ESPText.Size = UDim2.new(1, 0, 10, 0)
 	ESPText.Visible = true
 	ESPText.ZIndex = 10
-	ESPText.Font = "ArialBold"
+	ESPText.Font = Enum.Font.SourceSansSemibold
+	ESPText.TextStrokeTransparency = 0.6
 	ESPText.TextSize = 20
 	if xPlayer.Team ~= nil then
 	    ESPText.Text = xPlayer.Name.." | ["..xPlayer.Character.Humanoid.Health.."/"..xPlayer.Character.Humanoid.MaxHealth.."] | "..xPlayer.Team
@@ -8298,7 +8304,7 @@ end
 
 function Clear()
 	for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
-		if v.Name == "ESP" and v:IsA("BillboardGui") then
+		if v.Name:sub(1,3) == "ESP" and v:IsA("BillboardGui") then
 			v:Destroy()
 		end
 	end
@@ -8310,9 +8316,9 @@ function Find()
 	while wait() do
 		if Track then
 			Clear() --Shit to change
-			for i,v in pairs(cmdp:GetPlayers()) do
-				if v.Character and v.Character:FindFirstChild("Head") then
-					if v.Character:FindFirstChild("Head") then
+			for _,v in pairs(cmdp:GetPlayers()) do
+				if v ~= cmdlp then
+					if v.Character and v.Character:FindFirstChild("Head") then
 						Create(v, v.Character.Head, true)
 					end
 				end
@@ -8340,6 +8346,13 @@ function useCommand.unesp()
 	ESPEnabled = false
 	Track = false
 	for i = 1,10 do
+	    for _,v in pairs(cmdp:GetPlayers()) do
+    	    for _,y in pairs(v.Character:GetChildren()) do
+    	        if y:IsA("BasePart") then
+    			    y.Material = "Plastic"
+    	        end
+    	    end
+    	end
 	    Clear()
 	    wait()
 	end
@@ -9730,12 +9743,22 @@ function useCommand.unautoplatform()
     end
 end
 
+function CheckTargets(check)
+    for _,v in pairs(FindingTargets) do
+        if v == check then
+            return true
+        end
+    end
+end
+
+FindingTargets = {}
 function useCommand.find()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
+			table.insert(FindingTargets, target.Name)
 			opx("-",target.Name.." is now being found")
-			Locate(target)
+			Create(target, target.Character.Head, true)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -9749,10 +9772,10 @@ function useCommand.unfind()
 		target = findplr(arguments[2])
 		if target then
 			opx("-",target.Name.." is no longer being found")
-			cmdlp.PlayerGui[target.Name.."_LC"]:Destroy()
-			for i,m in pairs(target.Character:GetChildren()) do
-				if m.Name ~= "HumanoidRootPart" and m.Name ~= "Handle" or (m:IsA("Part")) then
-					m.Material = "Plastic"
+			cmdlp.PlayerGui["ESP"..target.Name]:Destroy()
+			for _,y in pairs(target.Character:GetChildren()) do
+				if y:IsA("BasePart") then
+					y.Material = "Plastic"
 				end
 			end
 		else
@@ -13955,12 +13978,45 @@ end
 Pxrts = {}
 function useCommand.truesight()
 	opx("-","Truesight is now on")
-	for i,v in pairs(workspace:GetDescendants()) do
+	for _,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") and v.Transparency == 1 then
 			v.Transparency = 0
 			Pxrts[#Pxrts+1] = v
 		end
 	end
+end
+
+LoopFling = false
+function useCommand.loopfling()
+    if arguments[2] then
+        target = findplr(arguments[2])
+        if target then
+            while LoopFling do
+                arguments = {"fling",target.Name}
+                useCommand.fling()
+                repeat wait(.1) until target.Character ~= nil and target.Character:FindFirstChild('HumanoidRootPart')
+            end
+        else
+            opx("*","Player does not exist!")    
+        end
+    else
+        opx("*","2 arguments are required!")
+    end
+end
+
+function useCommand.unloopfling()
+    opx("-","Stopped loop flinging")
+    LoopFling = false
+end
+
+function useCommand.nomouse()
+    opx("-","Mouse disabled, use ; to focus back on the CMDbar")
+    game:GetService("UserInputService").MouseIconEnabled = false
+end
+
+function useCommand.yesmouse()
+    opx("-","Mouse enabled")
+    game:GetService("UserInputService").MouseIconEnabled = true
 end
 
 function useCommand.untruesight()
@@ -13975,17 +14031,18 @@ function useCommand.disableplayer()
 	if arguments[2] then
 		local target = findplr(arguments[2])
 		if target then
+			target.Character.Head.face.Transparency = 1
 			opx("-","Disabled "..target.Name)
 			PDisabled[#PDisabled+1] = target
 			local UserNum = #PDisabled
-			for i,v in pairs(target.Character:GetDescendants()) do
+			for _,v in pairs(target.Character:GetDescendants()) do
 				if v:IsA("BasePart") then
 					v.Transparency = 1
 				end
 			end
 			target.CharacterAdded:Connect(function(Character)
 				if PDisabled[UserNum] ~= nil then
-					for i,v in pairs(Character:GetDescendants()) do
+					for _,v in pairs(Character:GetDescendants()) do
 						if v:IsA("BasePart") then
 							v.Transparency = 1
 						end
@@ -14004,14 +14061,15 @@ function useCommand.enableplayer()
 	if arguments[2] then
 		local target = findplr(arguments[2])
 		if target then
+			target.Character.Head.face.Transparency = 0
 			opx("-","Enabled "..target.Name)
-			for i,v in pairs(target.Character:GetDescendants()) do
+			for _,v in pairs(target.Character:GetDescendants()) do
 				if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
 					v.Transparency = 0
 				end
 			end
 			for i,v in pairs(PDisabled) do
-				if target == PDisabled[i] then
+				if target == v then
 					table.remove(PDisabled,i)
 				end
 			end
@@ -15350,6 +15408,13 @@ cmdm.KeyDown:connect(function(key)
 			ESPEnabled = false
         	Track = false
         	for i = 1,10 do
+				for _,v in pairs(cmdp:GetPlayers()) do
+            	    for _,y in pairs(v.Character:GetChildren()) do
+            	        if y:IsA("BasePart") then
+            			    y.Material = "Plastic"
+            	        end
+            	    end
+            	end
         	    Clear()
         	    wait()
         	end
@@ -15381,39 +15446,6 @@ end)
 ---------------------------------------|
 -- Print Function: --------------------|
 if AntiCheat.PrintingOff == false then
-    print("[CMD-X LOADED] | "..cmdlp.Name.." | Version: "..ver.." | Prefix: "..sets.prefix)
-    print("\
-                  _____                    _____                    _____                                  \
-                 /\\    \\                  /\\    \\                  /\\    \\                 ______          \
-                /::\\    \\                /::\\____\\                /::\\    \\               |::|   |         \
-               /::::\\    \\              /::::|   |               /::::\\    \\              |::|   |         \
-              /::::::\\    \\            /:::::|   |              /::::::\\    \\             |::|   |         \
-             /:::/\\:::\\    \\          /::::::|   |             /:::/\\:::\\    \\            |::|   |         \
-            /:::/  \\:::\\    \\        /:::/|::|   |            /:::/  \\:::\\    \\           |::|   |         \
-           /:::/    \\:::\\    \\      /:::/ |::|   |           /:::/    \\:::\\    \\          |::|   |         \
-          /:::/    / \\:::\\    \\    /:::/  |::|___|______    /:::/    / \\:::\\    \\         |::|   |         \
-         /:::/    /   \\:::\\    \\  /:::/   |::::::::\\    \\  /:::/    /   \\:::\\ ___\\  ______|::|___|___ ____ \
-        /:::/____/     \\:::\\____\\/:::/    |:::::::::\\____\\/:::/____/     \\:::|    ||:::::::::::::::::|    |\
-        \\:::\\    \\      \\::/    /\\::/    / ~~~~~/:::/    /\\:::\\    \\     /:::|____||:::::::::::::::::|    |\
-         \\:::\\    \\      \\/____/  \\/____/      /:::/    /  \\:::\\    \\   /:::/    /  ~~~~~~|::|~~~|~~~ ~~~~     \
-          \\:::\\    \\                          /:::/    /    \\:::\\    \\ /:::/    /         |::|   |         \
-           \\:::\\    \\                        /:::/    /      \\:::\\    /:::/    /          |::|   |         \
-            \\:::\\    \\                      /:::/    /        \\:::\\  /:::/    /           |::|   |         \
-             \\:::\\    \\                    /:::/    /          \\:::\\/:::/    /            |::|   |         \
-              \\:::\\    \\                  /:::/    /            \\::::::/    /             |::|   |         \
-               \\:::\\____\\                /:::/    /              \\::::/    /              |::|   |         \
-                \\::/    /                \\::/    /                \\__/____/               |::|___|         \
-                 \\/____/                  \\/____/                                          ~~              ") 
-    print("made by "..DevCords[1].." & "..DevCords[2])
-    print("\
-    Having trouble?\
-    Press U for output\
-    Press Q to close and open\
-    Press ; to auto focus\
-    (Free exploits do not work with CMD-X)\
-    Type support into the cmd bar for anymore support (if needed)\
-    To use chat commands use the prefix '"..sets.prefix.."'")
-
     local StarterGui = game:GetService("StarterGui")
     StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Welcome to CMD-X, "..cmdlp.Name..".";Color = Color3.fromRGB(50, 50, 50);Font = Enum.Font.SourceSansBold;TextSize = 25})
     StarterGui:SetCore("ChatMakeSystemMessage", {Text = "Press U for output and F9 for more info!";Color = Color3.fromRGB(100, 100, 100);Font = Enum.Font.SourceSansBold;TextSize = 20})
@@ -15508,13 +15540,15 @@ tabs.MouseEnter:Connect(function()
 	end)
 end)
 tabs.MouseLeave:Connect(function()
-	mdwn:Disconnect()
+	if mdwn then
+	    mdwn:Disconnect()
+	end
 end)
 ---------------------------------------|
 -- Themes: ----------------------------|
- 
+
 styleAS = sets.dStyle:split(" ")
- 
+
 function getAsset(ID)
 	return("http://www.roblox.com/Thumbs/Asset.ashx?format=png&width=420&height=420&assetId="..ID)
 end
