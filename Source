@@ -587,9 +587,6 @@ AntiCheat = {
 }
 
 -- Known Anti CMD-X and unpatches:
-if game.PlaceId == 2228128339 then
-    AntiCheat.ScriptDetectOff = true
-end
 if game.PlaceId == 1499872953 then
 	AntiCheat.ScriptDetectOff = true
 	AntiCheat.PrintingOff = true
