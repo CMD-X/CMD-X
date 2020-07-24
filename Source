@@ -3,7 +3,7 @@ if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#127
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.5"
+local ver = "1.5.6"
 local nextupd = "20/07/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.io/CMD-X";
@@ -3317,6 +3317,9 @@ table.insert(CMDN, {N = "loopfling", A = {"lfling"}, CMD = "550,loopfling/lfling
 table.insert(CMDN, {N = "unloopfling", A = {"unlfling"}, CMD = "551,unloopfling/unlfling,,()."})
 table.insert(CMDN, {N = "nomouse", A = {""}, CMD = "552,nomouse,,Disables mouse icon."})
 table.insert(CMDN, {N = "yesmouse", A = {""}, CMD = "553,yesmouse,,()."})
+table.insert(CMDN, {N = "futurelighting", A = {"flighting"}, CMD = "554,futurelighting/flighting,,Changes lighting to future."})
+table.insert(CMDN, {N = "unfuturelighting", A = {"unflighting"}, CMD = "555,unfuturelighting/unflighting,,()."})
+
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -7467,6 +7470,23 @@ function useCommand.properties()
     	end
     	for _,__ in pairs(Table) do
             local PropertyString = "("
+            if __.Parameters then
+                for ___,____ in pairs(__.Parameters) do
+                    if ___ ~= #__.Parameters then
+                        if ____.Type then
+                            PropertyString = PropertyString..____.Name.."/"..____.Type.Name..", "
+                        else
+                            PropertyString = PropertyString..____.Name..", "
+                        end
+                    else
+                        if ____.Type then
+                            PropertyString = PropertyString..____.Name.."/"..____.Type.Name
+                        else
+                            PropertyString = PropertyString..____.Name
+                        end
+                    end
+                end
+            end
     		if __.ValueType then
     		    PropertyString = PropertyString..__.ValueType.Name   
     		end
@@ -7495,7 +7515,18 @@ function useCommand.classes()
     local Classes = ""
     for _,__ in pairs(API.Classes) do
         if __.Members then
-            Classes = Classes..__.Name.."\n"
+            local ClassString = __.Name.." ("
+            if __.Tags then
+                for ___,____ in pairs(__.Tags) do
+                    if ___ ~= #__.Tags then
+                        ClassString = ClassString..____..", "
+                    else
+                        ClassString = ClassString..____
+                    end
+                end
+            end
+            ClassString = ClassString..")"
+            Classes = Classes..ClassString.."\n"
         end
     end
     print("\n"..Classes)
@@ -11430,6 +11461,17 @@ function useCommand.admindetect()
 	else
 		opx("*","Unable to detect an adminGUI")
 	end
+end
+
+function useCommand.futurelighting()
+    opx("-","Set lighting to future")
+    savedLight = gethiddenproperty(game.Lighting, "Technology")
+    sethiddenproperty(game.Lighting, "Technology", Enum.Technology.Future)
+end
+
+function useCommand.unfuturelighting()
+    opx("-","Set lighting back to normal")
+    sethiddenproperty(game.Lighting, "Technology", savedLight)
 end
 
 function useCommand.streamermode()
