@@ -6,7 +6,7 @@ repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetS
 local ver = "1.5.6"
 local nextupd = "20/07/2020"
 local changeLog = {
-	"Need help? Join our discord! discord.io/CMD-X";
+	"Need help? Join our discord! discord.io/CMD-X (paste in browser)";
 }
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui").RobloxGui, [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -112,7 +112,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Help.Position = UDim2.new(0.492968738, 0, 0.66259259, 0)
 	Help.Size = UDim2.new(0.0130000003, 0, 0.0500000007, 0)
 	Help.Font = Enum.Font.GothamBold
-	Help.Text = "Need help? discord.io/CMD-X"
+	Help.Text = "Need help? discord.io/CMD-X (paste in browser)"
 	Help.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Help.TextSize = 20.000
 
@@ -885,7 +885,7 @@ function Confirm(Reason,Reason2)
 	Help2.Position = UDim2.new(0.467900336, 0, 0.834136486, 0)
 	Help2.Size = UDim2.new(0.0622250475, 0, 0.118617564, 0)
 	Help2.Font = Enum.Font.GothamBold
-	Help2.Text = "Need help? discord.io/CMD-X"
+	Help2.Text = "Need help? discord.io/CMD-X (paste in browser)"
 	Help2.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Help2.TextSize = 20.000
 
@@ -1603,7 +1603,7 @@ output1.BackgroundTransparency = 1
 output1.Position = UDim2.new(0.0157605428, 0, 0.849240005, 0)
 output1.Size = UDim2.new(0, 500, 0, 27)
 output1.Font = Enum.Font.Code
-output1.Text = "Need help? discord.io/CMD-X"
+output1.Text = "Need help? discord.io/CMD-X (paste in browser)"
 output1.TextColor3 = Color3.new(0.698039, 0.698039, 0.698039)
 output1.TextSize = 16
 output1.TextXAlignment = Enum.TextXAlignment.Left
@@ -4182,10 +4182,10 @@ cmd.FocusLost:connect(function()
 				elseif noCMD == true and cmdsy == "yescommands" then
 					useCommand[cmdsy]()
 				else
-					opx("*","Need help? Join our discord! discord.io/CMD-X")
+					opx("*","Need help? Join our discord! discord.io/CMD-X (paste in browser)")
 				end
 			else
-				opx("*","Need help? Join our discord! discord.io/CMD-X")
+				opx("*","Need help? Join our discord! discord.io/CMD-X (paste in browser)")
 			end
 		else
 			cmd.Text = ""
@@ -4646,7 +4646,7 @@ function useCommand.pi()
 	opx("-","Pi is "..math.pi)
 end
 
-local helpCode = "discord.io/CMD-X"
+local helpCode = "discord.io/CMD-X (paste in browser)"
 function useCommand.support()
 	if arguments[2] == "cb" or arguments[2] == "copy" then
 		setclipboard(helpCode)
