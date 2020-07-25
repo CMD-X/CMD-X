@@ -1650,6 +1650,7 @@ output4.TextSize = 16
 output4.TextXAlignment = Enum.TextXAlignment.Left
 output4.TextWrapped = true
 output4.TextTruncate = Enum.TextTruncate.AtEnd
+output4.Text = ""
  
 output5.Name = "output5"
 output5.Parent = output
