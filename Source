@@ -3499,10 +3499,6 @@ function PluginFile(name, full, status, num)
 	tempframelab.TextSize = 14.000
 end
 
-local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
-fuck = game:HttpGet(URL)
-local Http = game:GetService("HttpService"):JSONDecode(fuck)
-output4.Text = Http.text
 PCs = {"using","far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 cmd.Changed:Connect(function()
 	local checkargs = string.split(cmd.Text," ")
