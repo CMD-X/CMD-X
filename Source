@@ -5023,10 +5023,10 @@ xNamingTbl = {}
 function useCommand.nonick()
     opx("-","Blocked nicknames")
     function clean(cplr)
-        if #cplr.DisplayName ~= cplr.Name then
+        if cplr.DisplayName ~= cplr.Name then
             if cplr.Character then cplr.Character:WaitForChild("Humanoid").DisplayName = cplr.Name end
             cplr.CharacterAdded:Connect(function(char)
-                char:WaitForChild("Humanoid").DisplayName = cplr.Name
+                char:WaitForChild("Humanoid").DisplayName = "(NICKNAMED)\n"..cplr.Name
             end)
         end
     end
