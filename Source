@@ -3,7 +3,7 @@ if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#127
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.6"
+local ver = "1.5.7"
 local nextupd = "20/07/2020"
 local changeLog = {
 	"Need help? Join our discord! discord.io/CMD-X (paste in browser)";
@@ -3317,7 +3317,25 @@ table.insert(CMDN, {N = "nomouse", A = {""}, CMD = "552,nomouse,,Disables mouse 
 table.insert(CMDN, {N = "yesmouse", A = {""}, CMD = "553,yesmouse,,()."})
 table.insert(CMDN, {N = "futurelighting", A = {"flighting"}, CMD = "554,futurelighting/flighting,,Changes lighting to future."})
 table.insert(CMDN, {N = "unfuturelighting", A = {"unflighting"}, CMD = "555,unfuturelighting/unflighting,,()."})
-
+table.insert(CMDN, {N = "removelefthand", A = {"rlefthand","rlhand"}, CMD = "556,removelefthand/rlefthand/rlhand,,Removes left hand."})
+table.insert(CMDN, {N = "removerighthand", A = {"rrighthand","rrhand"}, CMD = "557,removerighthand/rrighthand/rrhand,,Removes right hand."})
+table.insert(CMDN, {N = "removeleftfoot", A = {"rleftfoot","rlfoot"}, CMD = "558,removeleftfoot/rleftfoot/rlfoot,,Removes left foot."})
+table.insert(CMDN, {N = "removerightfoot", A = {"rrightfoot","rrfoot"}, CMD = "559,removerightfoot/rrightfoot/rrfoot,,Removes right floor."})
+table.insert(CMDN, {N = "removerightlowerarm", A = {"rrightlowerarm","rrlarm"}, CMD = "560,removerightlowerarm/rrightlowerarm/rrlarm,,Removes right lower arm."})
+table.insert(CMDN, {N = "removeleftlowerarm", A = {"rleftlowerarm","rllarm"}, CMD = "561,removeleftlowerarm/rleftlowerarm/rllarm,,Removes left lower arm."})
+table.insert(CMDN, {N = "removerightlowerleg", A = {"rrightlowerleg","rrlleg"}, CMD = "562,removerightlowerleg/rrightlowerleg/rrlleg,,Removes right lower leg."})
+table.insert(CMDN, {N = "removeleftlowerleg", A = {"rleftlowerleg","rllleg"}, CMD = "563,removeleftlowerleg/rleftlowerleg/rllleg,,Removes left lower leg."})
+table.insert(CMDN, {N = "nonick", A = {""}, CMD = "564,nonick,,Blocks nicknames and shows real names."})
+table.insert(CMDN, {N = "yesnick", A = {""}, CMD = "565,yesnick,,()."})
+table.insert(CMDN, {N = "appearanceidpublic", A = {"aidpu"}, CMD = "566,appearanceidpublic/aidpu,(plr),Publicly shows the character appearance id of player.", ARG = "Player"})
+table.insert(CMDN, {N = "appearanceidprivate", A = {"aidpr"}, CMD = "567,appearanceidprivate/aidpr,(plr),Privately shows the character appearance id of player.", ARG = "Player"})
+table.insert(CMDN, {N = "nilgoto", A = {""}, CMD = "568,nilgoto,(plr),Teleports to player while in nil.", ARG = "Player"})
+table.insert(CMDN, {N = "nilfreegoto", A = {""}, CMD = "569,nilfreegoto,(x|y|z),Freely teleports to position while in nil."})
+table.insert(CMDN, {N = "nilgotopart", A = {""}, CMD = "570,nilgotopart,(part),Teleports to part while in nil."})
+table.insert(CMDN, {N = "nilgotoclass", A = {""}, CMD = "571,nilgotoclass,(class),Teleports to class while in nil."})
+table.insert(CMDN, {N = "removeinworkspace", A = {"rinworkspace"}, CMD = "572,removeinworkspace/rinworkspace,(part),Removes part in workspace."})
+table.insert(CMDN, {N = "listnil", A = {""}, CMD = "573,listnil,,Lists nil instances."})
+table.insert(CMDN, {N = "removeinnil", A = {"rinnil"}, CMD = "574,removeinnil/rinnil,,Removes part in nil instances."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -4926,6 +4944,233 @@ function useCommand.removelimbs()
 			end
 		end
 	end
+end
+
+function useCommand.removelefthand()
+    if cmd15(cmdlp) then
+		opx("-","Removed left hand")
+		cmdlp.Character.LeftHand:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerighthand()
+    if cmd15(cmdlp) then
+		opx("-","Removed right hand")
+		cmdlp.Character.RightHand:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftfoot()
+    if cmd15(cmdlp) then
+		opx("-","Removed left foot")
+		cmdlp.Character.LeftFoot:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightfoot()
+    if cmd15(cmdlp) then
+		opx("-","Removed right foot")
+		cmdlp.Character.RightFoot:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightlowerarm()
+    if cmd15(cmdlp) then
+		opx("-","Removed right lower arm")
+		cmdlp.Character.RightLowerArm:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftlowerarm()
+    if cmd15(cmdlp) then
+		opx("-","Removed left lower arm")
+		cmdlp.Character.LeftLowerArm:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightlowerleg()
+    if cmd15(cmdlp) then
+		opx("-","Removed right lower leg")
+		cmdlp.Character.RightLowerLeg:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftlowerleg()
+    if cmd15(cmdlp) then
+		opx("-","Removed left lower leg")
+		cmdlp.Character.LeftLowerLeg:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+xNamingTbl = {}
+function useCommand.nonick()
+    for i,Player in pairs(game:GetService("Players"):GetPlayers()) do
+        if Player.DisplayName ~= Player.Name then
+            table.insert(xNamingTbl, {Player = Player.Name, Name = Player.DisplayName})
+            Player.DisplayName = Player.Name
+        end    
+    end
+    xNaming = game:GetService("Players").PlayerAdded:Connect(function(Player)
+        if Player.DisplayName ~= Player.Name then
+            table.insert(xNamingTbl, {Player = Player.Name, Name = Player.DisplayName})
+            Player.DisplayName = Player.Name
+        end
+    end)
+end
+
+function useCommand.yesnick()
+    xNaming:Disconnect()
+    for i,v in pairs(xNamingTbl) do
+        if game:GetService("Players")[v.Player] then
+            game:GetService("Players")[v.Player].DisplayName = v.Name
+        end
+    end
+end
+
+function useCommand.appearanceidpublic()
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			opx("-",target.Name.."s User AppearanceID is "..target.CharacterAppearanceId)
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s User AppearanceID is "..target.CharacterAppearanceId, "All")
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.appearanceidprivate()
+    if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			opx("-",target.Name.."s User AppearanceID is "..target.CharacterAppearanceId)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.nilgoto()
+    if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+		    RootNil = cmdlp.Character.HumanoidRootPart
+		    RootNil.Parent = nil
+			cmdlp.Character.Humanoid.Jump = true
+			RootNil.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(gotoPosSide,gotoPosHead,gotoPos)
+			RootNil.Parent = cmdlp.Character
+			opx("-","Teleported to player "..target.Name)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.nilfreegoto()
+    if arguments[4] then
+		opx("-","Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
+		RootNil = cmdlp.Character.HumanoidRootPart
+		RootNil.Parent = nil
+		RootNil.CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])
+		RootNil.Parent = cmdlp.Character
+	else
+		opx("*","4 arguments are required!")
+	end
+end
+
+function useCommand.nilgotopart()
+	if arguments[2] then
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v.Name == getstring(2) then
+				opx("-","Teleported to part")
+				RootNil = cmdlp.Character.HumanoidRootPart
+		        RootNil.Parent = nil
+				cmdlp.Character.Humanoid.Jump = true
+				RootNil.CFrame = v.CFrame
+				RootNil.Parent = cmdlp.Character
+				break
+			else
+				opx("*","Part does not exist")
+			end
+		end
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.nilgotoclass()
+	if arguments[2] then
+		opx("-","Teleported to class part")
+		local Part
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA(arguments[2]) then Part = v; break end
+		end
+		RootNil = cmdlp.Character.HumanoidRootPart
+		RootNil.Parent = nil
+		RootNil.CFrame = Part.CFrame
+		RootNil.Parent = cmdlp.Character
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.removeinworkspace()
+    if arguments[2] then
+        for i,v in pairs(workspace:GetDescendants()) do
+            if v.Name == getstring(2) then
+                v:Destroy()
+            end
+        end
+        opx("-","Removed in workspace "..getstring(2))
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
+function useCommand.listnil()
+    local NilParts = ""
+    for i,v in pairs(getnilinstances()) do
+        if not v:IsDescendantOf(Unnamed) then
+            NilParts = NilParts..v.Name..", "
+        end
+    end
+    opx("-","Listed all nil parts")
+    opxL("Nil Parts",NilParts)
+end
+
+function useCommand.removeinnil()
+    if arguments[2] then
+        for i,v in pairs(getnilinstances()) do
+            if v.Name == getstring(2) then
+                v:Destroy()
+            end
+        end
+        opx("-","Removed in nil "..getstring(2))
+    else
+        opx("*","2 arguments are required!")    
+    end
 end
 
 function useCommand.removeanim()
