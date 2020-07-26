@@ -5020,27 +5020,24 @@ end
 
 xNamingTbl = {}
 function useCommand.nonick()
-    for i,Player in pairs(game:GetService("Players"):GetPlayers()) do
-        if Player.DisplayName ~= Player.Name then
-            table.insert(xNamingTbl, {Player = Player.Name, Name = Player.DisplayName})
-            Player.DisplayName = Player.Name
-        end    
-    end
-    xNaming = game:GetService("Players").PlayerAdded:Connect(function(Player)
-        if Player.DisplayName ~= Player.Name then
-            table.insert(xNamingTbl, {Player = Player.Name, Name = Player.DisplayName})
-            Player.DisplayName = Player.Name
+    opx("-","Blocked nicknames")
+    function clean(cplr)
+        if #cplr.DisplayName ~= cplr.Name then
+            if cplr.Character then cplr.Character:WaitForChild("Humanoid").DisplayName = cplr.Name end
+            cplr.CharacterAdded:Connect(function(char)
+                char:WaitForChild("Humanoid").DisplayName = cplr.Name
+            end)
         end
-    end)
+    end
+    xNaming = cmdp.PlayerAdded:Connect(clean)
+    for _,p in pairs(cmdp:GetPlayers()) do
+        clean(p)
+    end
 end
 
 function useCommand.yesnick()
+    opx("-","Unblocked nicknames")
     xNaming:Disconnect()
-    for i,v in pairs(xNamingTbl) do
-        if game:GetService("Players")[v.Player] then
-            game:GetService("Players")[v.Player].DisplayName = v.Name
-        end
-    end
 end
 
 function useCommand.appearanceidpublic()
