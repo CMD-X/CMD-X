@@ -3004,7 +3004,7 @@ table.insert(CMDN, {N = "outputlarger", A = {"outputl"}, CMD = "242,outputlarger
 table.insert(CMDN, {N = "compliment", A = {""}, CMD = "243,compliment,(plr),Compliments player", ARG = "Player"})
 table.insert(CMDN, {N = "roast", A = {""}, CMD = "244,roast,(plr),Roasts player", ARG = "Player"})
 table.insert(CMDN, {N = "singinfo", A = {""}, CMD = "245,singinfo,,Lists how to make your own song compatible with sing command."})
-table.insert(CMDN, {N = "sing", A = {""}, CMD = "246,sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/babyshark/evilfantasy/$harkattack/dora/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"})
+table.insert(CMDN, {N = "sing", A = {""}, CMD = "246,sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/evilfantasy/$harkattack/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"})
 table.insert(CMDN, {N = "deletepos", A = {"dpos"}, CMD = "247,dpos/deletepos,(str),Deletes specified waypoint."})
 table.insert(CMDN, {N = "clearpos", A = {"cpos"}, CMD = "248,cpos/clearpos,,Clears all waypoints."})
 table.insert(CMDN, {N = "gotopos", A = {""}, CMD = "249,gotopos,(behind/infront/left/right/above/under),Modifies how and where you tp to the character."})
@@ -7153,7 +7153,7 @@ end
 
 function useCommand.badger()
 	opx("-","Loading Badger V2")
-	loadstring(game:HttpGet("https://pastebin.com/raw/AZgbkVzN",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/badger",true))()
 	opx("-","Loaded Badger V2")
 end
 
@@ -7551,7 +7551,7 @@ end
 
 function useCommand.reload()
 	opx("-","Reloading CMD-X...")
-	loadstring(game:HttpGet("https://pastebin.com/raw/HFkyyd1H",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
 end
 
 function useCommand.console()
@@ -11102,37 +11102,14 @@ function useCommand.singinfo()
 	Step 5: Compress the lines to avoid whitespace errors\
 	Step 6: Put your compressed text into a raw data uploading site such as pastebin or hastebin\
 	Step 7: Insert the link into the sing command\
-	To see a sample of what to do, visit: https://pastebin.com/raw/rNcWf8mK")
+	To see a sample of what to do, visit: https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sing/")
 end
 
 stopSingMid = false
 function useCommand.sing()
-	if arguments[2] == "genocide" then
-		getSong = "https://pastebin.com/raw/rNcWf8mK"
-	elseif arguments[2] == "babyshark" then
-		getSong = "https://pastebin.com/raw/n9G4qwR4"
-	elseif arguments[2] == "animethighs" then
-		getSong = "https://pastebin.com/raw/VsUcnYyr"
-	elseif arguments[2] == "evilfantasy" then
-		getSong = "https://pastebin.com/raw/8Mqi4Vtb"
-	elseif arguments[2] == "$harkattack" then
-		getSong = "https://pastebin.com/raw/6aYw5Bih"
-	elseif arguments[2] == "dora" then
-		getSong = "https://pastebin.com/raw/KTruLCL7"
-	elseif arguments[2] == "introversion" then
-		getSong = "https://pastebin.com/raw/pkQNGdU8"
-	elseif arguments[2] == "lucy" then
-		getSong = "https://pastebin.com/raw/j47SaDjL"
-	elseif arguments[2] == "tyler" then
-		getSong = "https://pastebin.com/raw/Sna0chxq"
-	elseif arguments[2] == "methhead" then
-		getSong = "https://pastebin.com/raw/VAgv7eGE"
-	elseif arguments[2] == "superfuntime" then
-		getSong = "https://pastebin.com/raw/cgfzcb3d"
-	elseif arguments[2] == "haha" then
-		getSong = "https://pastebin.com/raw/pGE8kr1x"
-	elseif arguments[2] == "diamonds" then
-		getSong = "https://pastebin.com/raw/j7mvzu4s"
+	local check = {["genocide"]=true,["animethighs"]=true,["evilfantasy"]=true,["$harkattack"]=true,["introversion"]=true,["lucy"]=true,["tyler"]=true,["methhead"]=true,["superfuntime"]=true,["haha"]=true,["diamonds"]=true}
+	if check[string.lower(arguments[2])] then
+		getSong = "https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sing/"..string.lower(arguments[2])
 	else
 		getSong = arguments[2]
 	end
@@ -11319,7 +11296,7 @@ end
 
 function useCommand.antiwrldsgui()
 	opx("-","antiwrldsGUI loading")
-	loadstring(game:HttpGet(('https://pastebin.com/raw/1LUE7bXP'),true))()
+	loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/main'),true))()
 	opx("-","antiwrldsGUI loaded")
 end
 
@@ -13837,15 +13814,15 @@ function useCommand.ungod()
 end
 
 function useCommand.randomchat()
-	local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
+	local tbl1 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
+	local tbl2 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
+	local tbl3 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/3"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
+	local tbl4 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/4"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
+	local tbl5 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/5"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
+	local tbl6 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/6"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
+	local tbl7 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/7"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
+	local tbl8 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/8"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
+	local tbl9 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/9"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
 	local r1 = math.random(1,#tbl1)
 	local r2 = math.random(1,#tbl2)
 	local r3 = math.random(1,#tbl3)
@@ -14382,9 +14359,7 @@ function useCommand.directjoin()
 	end
 end
 
-pcall(function()
-	loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
-end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/depthoffield",true))()
 -- Thanks to MrAsyncRoblox on github, full credits.
 
 function useCommand.timedcmd()
@@ -14403,15 +14378,15 @@ end
 
 function useCommand.randomos()
 	opx("-","Changed your OS to a random string")
-	local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
+	local tbl1 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
+	local tbl2 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
+	local tbl3 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/3"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
+	local tbl4 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/4"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
+	local tbl5 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/5"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
+	local tbl6 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/6"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
+	local tbl7 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/7"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
+	local tbl8 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/8"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
+	local tbl9 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/9"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
 	local r1 = math.random(1,#tbl1)
 	local r2 = math.random(1,#tbl2)
 	local r3 = math.random(1,#tbl3)
@@ -15090,7 +15065,7 @@ end
 
 function useCommand.sentinelexplorer()
 	opx("-","Loading SENTINEL DEX")
-	loadstring(game:HttpGet("https://pastebin.com/raw/v1pL8YzY", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sdex", true))()
 	opx("-","Loaded SENTINEL DEX")
 end
 
