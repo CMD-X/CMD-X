@@ -3,10 +3,11 @@ if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#127
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.5"
+local ver = "1.5.8"
 local nextupd = "20/07/2020"
+local cordCode = "discord.gg/cmd"
 local changeLog = {
-	"Need help? Join our discord! discord.gg/cmd";
+	"Need help? Join our discord! ".. cordCode;
 }
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui").RobloxGui, [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -110,7 +111,7 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Help.Position = UDim2.new(0.492968738, 0, 0.66259259, 0)
 	Help.Size = UDim2.new(0.0130000003, 0, 0.0500000007, 0)
 	Help.Font = Enum.Font.GothamBold
-	Help.Text = "Need help? discord.gg/cmd"
+	Help.Text = "Need help? ".. cordCode
 	Help.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Help.TextSize = 20.000
 
@@ -424,7 +425,7 @@ AC_IDs = {
 	[4802536077] = {ScriptDetectOff = true, PrintingOff = true},
 	[176053469] = {ScriptDetectOff = true, PrintingOff = true, Custom1 = true},
 	[17541193] = {ScriptDetectOff = true},
-	[1499872953] = {ScriptDetectOff = true, PrintingOff = true}, 
+	[1499872953] = {ScriptDetectOff = true, PrintingOff = true},
 }
 
 if AC_IDs[game.PlaceId] then
@@ -678,7 +679,7 @@ function Confirm(Reason,Reason2)
 	Help2.Position = UDim2.new(0.467900336, 0, 0.834136486, 0)
 	Help2.Size = UDim2.new(0.0622250475, 0, 0.118617564, 0)
 	Help2.Font = Enum.Font.GothamBold
-	Help2.Text = "Need help? discord.gg/cmd"
+	Help2.Text = "Need help? ".. cordCode
 	Help2.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Help2.TextSize = 20.000
 
@@ -1396,7 +1397,7 @@ output1.BackgroundTransparency = 1
 output1.Position = UDim2.new(0.0157605428, 0, 0.849240005, 0)
 output1.Size = UDim2.new(0, 500, 0, 27)
 output1.Font = Enum.Font.Code
-output1.Text = "Need help? discord.gg/cmd"
+output1.Text = "Need help? ".. cordCode
 output1.TextColor3 = Color3.new(0.698039, 0.698039, 0.698039)
 output1.TextSize = 16
 output1.TextXAlignment = Enum.TextXAlignment.Left
@@ -1443,6 +1444,7 @@ output4.TextSize = 16
 output4.TextXAlignment = Enum.TextXAlignment.Left
 output4.TextWrapped = true
 output4.TextTruncate = Enum.TextTruncate.AtEnd
+output4.Text = ""
  
 output5.Name = "output5"
 output5.Parent = output
@@ -2796,7 +2798,7 @@ local CMDN = {
 	{N = "compliment", A = {""}, CMD = "compliment,(plr),Compliments player", ARG = "Player"},
 	{N = "roast", A = {""}, CMD = "roast,(plr),Roasts player", ARG = "Player"},
 	{N = "singinfo", A = {""}, CMD = "singinfo,,Lists how to make your own song compatible with sing command."},
-	{N = "sing", A = {""}, CMD = "sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/babyshark/evilfantasy/$harkattack/dora/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"},
+	{N = "sing", A = {""}, CMD = "sing,(link/preset),Makes your character sing a song (Presets: genocide/animethighs/evilfantasy/$harkattack/introversion/lucy/tyler/methhead/superfuntime/haha/diamonds)"},
 	{N = "deletepos", A = {"dpos"}, CMD = "dpos/deletepos,(str),Deletes specified waypoint."},
 	{N = "clearpos", A = {"cpos"}, CMD = "cpos/clearpos,,Clears all waypoints."},
 	{N = "gotopos", A = {""}, CMD = "gotopos,(behind/infront/left/right/above/under),Modifies how and where you tp to the character."},
@@ -3109,6 +3111,28 @@ local CMDN = {
 	{N = "unloopfling", A = {"unlfling"}, CMD = "unloopfling/unlfling,,()."},
 	{N = "nomouse", A = {""}, CMD = "nomouse,,Disables mouse icon."},
 	{N = "yesmouse", A = {""}, CMD = "yesmouse,,()."},
+	{N = "futurelighting", A = {"flighting"}, CMD = "futurelighting/flighting,,Changes lighting to future."},
+	{N = "unfuturelighting", A = {"unflighting"}, CMD = "unfuturelighting/unflighting,,()."},
+	{N = "removelefthand", A = {"rlefthand","rlhand"}, CMD = "removelefthand/rlefthand/rlhand,,Removes left hand."},
+	{N = "removerighthand", A = {"rrighthand","rrhand"}, CMD = "removerighthand/rrighthand/rrhand,,Removes right hand."},
+	{N = "removeleftfoot", A = {"rleftfoot","rlfoot"}, CMD = "removeleftfoot/rleftfoot/rlfoot,,Removes left foot."},
+	{N = "removerightfoot", A = {"rrightfoot","rrfoot"}, CMD = "removerightfoot/rrightfoot/rrfoot,,Removes right floor."},
+	{N = "removerightlowerarm", A = {"rrightlowerarm","rrlarm"}, CMD = "removerightlowerarm/rrightlowerarm/rrlarm,,Removes right lower arm."},
+	{N = "removeleftlowerarm", A = {"rleftlowerarm","rllarm"}, CMD = "removeleftlowerarm/rleftlowerarm/rllarm,,Removes left lower arm."},
+	{N = "removerightlowerleg", A = {"rrightlowerleg","rrlleg"}, CMD = "removerightlowerleg/rrightlowerleg/rrlleg,,Removes right lower leg."},
+	{N = "removeleftlowerleg", A = {"rleftlowerleg","rllleg"}, CMD = "removeleftlowerleg/rleftlowerleg/rllleg,,Removes left lower leg."},
+	{N = "nonick", A = {""}, CMD = "nonick,,Blocks nicknames and shows real names."},
+	{N = "yesnick", A = {""}, CMD = "yesnick,,()."},
+	{N = "appearanceidpublic", A = {"aidpu"}, CMD = "appearanceidpublic/aidpu,(plr),Publicly shows the character appearance id of player.", ARG = "Player"},
+	{N = "appearanceidprivate", A = {"aidpr"}, CMD = "appearanceidprivate/aidpr,(plr),Privately shows the character appearance id of player.", ARG = "Player"},
+	{N = "nilgoto", A = {""}, CMD = "nilgoto,(plr),Teleports to player while in nil.", ARG = "Player"},
+	{N = "nilfreegoto", A = {""}, CMD = "nilfreegoto,(x|y|z),Freely teleports to position while in nil."},
+	{N = "nilgotopart", A = {""}, CMD = "nilgotopart,(part),Teleports to part while in nil."},
+	{N = "nilgotoclass", A = {""}, CMD = "nilgotoclass,(class),Teleports to class while in nil."},
+	{N = "removeinworkspace", A = {"rinworkspace"}, CMD = "removeinworkspace/rinworkspace,(part),Removes part in workspace."},
+	{N = "listnil", A = {""}, CMD = "listnil,,Lists nil instances."},
+	{N = "removeinnil", A = {"rinnil"}, CMD = "removeinnil/rinnil,,Removes part in nil instances."},
+	{N = 'translate', A = {''}, CMD = 'translate,(langs/from|to|text),Shows languages or translates message.'},
 }
 local CS = {}
 currentCMDNUM = "437"
@@ -3292,10 +3316,6 @@ function PluginFile(name, full, status, num)
     tempframelab.TextSize = 14.000
 end
 
-local URL = "https://uselessfacts.jsph.pl/random.json?language=en"
-fuck = game:HttpGet(URL)
-local Http = game:GetService("HttpService"):JSONDecode(fuck)
-output4.Text = Http.text
 PCs = {"using","far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 cmd.Changed:Connect(function()
 	local checkargs = string.split(cmd.Text," ")
@@ -3466,9 +3486,6 @@ function CreateCMDLabel(num,name,arg,func)
 		if v then
 			alls2 = v.Size.Y.Offset + alls2
 		end
-		if not v then
-			alls2 = 0
-		end
 	end
 	local tl2 = Instance.new('TextLabel', sf2)
 	local il2 = Instance.new('Frame', tl2)
@@ -3502,7 +3519,8 @@ end
 Cmdsearch.FocusLost:Connect(function()
 	Scrollingcmdi:ClearAllChildren()
 	if Cmdsearch.Text ~= "" then
-		for i,v in pairs(CMDN) do
+		for i=1, #CMDN do
+			local v = CMDN[i]
 			for _,x in pairs(v.A) do
 				if string.find(v.N,Cmdsearch.Text) then
 					if v.N:sub(1,#Cmdsearch.Text) == Cmdsearch.Text then
@@ -3924,8 +3942,7 @@ function findCmd(cmd_name)
 end
 
 function giveCmd(cmd_name)
-	for i=1, #CMDN do
-		local v = CMDN[i]
+	for _,v in pairs(CMDN) do
 		for _,x in pairs(v.A) do
 			if v.N:lower() == cmd_name:lower() or x:lower() == cmd_name:lower() then
 				return v
@@ -3977,10 +3994,10 @@ cmd.FocusLost:connect(function()
     			elseif noCMD == true and cmdsy == "yescommands" then
     				useCommand[cmdsy]()
     			else
-    				opx("*","Need help? Join our discord! discord.gg/cmd")
+    				opx("*","Need help? Join our discord! ".. cordCode)
     			end
     		else
-    		    opx("*","Need help? Join our discord! discord.gg/cmd")
+    		    opx("*","Need help? Join our discord! ".. cordCode)
     		end
 		else
 			cmd.Text = ""
@@ -4439,7 +4456,7 @@ function useCommand.pi()
 	opx("-",game:HttpGet('http://www.geom.uiuc.edu/~huberty/math5337/groupe/digits.html', true):match('3.1[0-9]*'):sub(1, arguments[2] or 10))
 end
 
-local helpCode = "discord.gg/cmd"
+local helpCode = cordCode
 function useCommand.support()
 	if arguments[2] == "cb" or arguments[2] == "copy" then
 		setclipboard(helpCode)
@@ -4723,6 +4740,230 @@ function useCommand.removelimbs()
 			end
 		end
 	end
+end
+
+function useCommand.removelefthand()
+    if cmd15(cmdlp) then
+		opx("-","Removed left hand")
+		cmdlp.Character.LeftHand:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerighthand()
+    if cmd15(cmdlp) then
+		opx("-","Removed right hand")
+		cmdlp.Character.RightHand:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftfoot()
+    if cmd15(cmdlp) then
+		opx("-","Removed left foot")
+		cmdlp.Character.LeftFoot:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightfoot()
+    if cmd15(cmdlp) then
+		opx("-","Removed right foot")
+		cmdlp.Character.RightFoot:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightlowerarm()
+    if cmd15(cmdlp) then
+		opx("-","Removed right lower arm")
+		cmdlp.Character.RightLowerArm:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftlowerarm()
+    if cmd15(cmdlp) then
+		opx("-","Removed left lower arm")
+		cmdlp.Character.LeftLowerArm:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removerightlowerleg()
+    if cmd15(cmdlp) then
+		opx("-","Removed right lower leg")
+		cmdlp.Character.RightLowerLeg:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+function useCommand.removeleftlowerleg()
+    if cmd15(cmdlp) then
+		opx("-","Removed left lower leg")
+		cmdlp.Character.LeftLowerLeg:Destroy()
+	else
+		opx("*","You need to be R15 for this command!")
+	end
+end
+
+xNamingTbl = {}
+function useCommand.nonick()
+	opx("-","Blocked nicknames")
+	function clean(cplr)
+		if cplr.DisplayName ~= cplr.Name then
+			if cplr.Character then cplr.Character:WaitForChild("Humanoid").DisplayName = cplr.Name end
+			cplr.CharacterAdded:Connect(function(char)
+				char:WaitForChild("Humanoid").DisplayName = "(NICKNAMED)\n"..cplr.Name
+			end)
+		end
+	end
+	xNaming = cmdp.PlayerAdded:Connect(clean)
+    for _,p in pairs(cmdp:GetPlayers()) do
+        clean(p)
+    end
+end
+
+function useCommand.yesnick()
+	opx("-","Unblocked nicknames")
+	xNaming:Disconnect()
+end
+
+function useCommand.appearanceidpublic()
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			opx("-",target.Name.."s User AppearanceID is "..target.CharacterAppearanceId)
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s User AppearanceID is "..target.CharacterAppearanceId, "All")
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.appearanceidprivate()
+    if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			opx("-",target.Name.."s User AppearanceID is "..target.CharacterAppearanceId)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.nilgoto()
+    if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+		    RootNil = cmdlp.Character.HumanoidRootPart
+		    RootNil.Parent = nil
+			cmdlp.Character.Humanoid.Jump = true
+			RootNil.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(gotoPosSide,gotoPosHead,gotoPos)
+			RootNil.Parent = cmdlp.Character
+			opx("-","Teleported to player "..target.Name)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are needed for this command!")
+	end
+end
+
+function useCommand.nilfreegoto()
+    if arguments[4] then
+		opx("-","Teleported to "..arguments[2].." "..arguments[3].." "..arguments[4])
+		RootNil = cmdlp.Character.HumanoidRootPart
+		RootNil.Parent = nil
+		RootNil.CFrame = CFrame.new(arguments[2], arguments[3], arguments[4])
+		RootNil.Parent = cmdlp.Character
+	else
+		opx("*","4 arguments are required!")
+	end
+end
+
+function useCommand.nilgotopart()
+	if arguments[2] then
+		for _,v in pairs(workspace:GetDescendants()) do
+			if v.Name == getstring(2) then
+				opx("-","Teleported to part")
+				RootNil = cmdlp.Character.HumanoidRootPart
+		        RootNil.Parent = nil
+				cmdlp.Character.Humanoid.Jump = true
+				RootNil.CFrame = v.CFrame
+				RootNil.Parent = cmdlp.Character
+				break
+			else
+				opx("*","Part does not exist")
+			end
+		end
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.nilgotoclass()
+	if arguments[2] then
+		opx("-","Teleported to class part")
+		local Part
+		for _,v in pairs(workspace:GetDescendants()) do
+			if v:IsA(arguments[2]) then Part = v; break end
+		end
+		RootNil = cmdlp.Character.HumanoidRootPart
+		RootNil.Parent = nil
+		RootNil.CFrame = Part.CFrame
+		RootNil.Parent = cmdlp.Character
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.removeinworkspace()
+    if arguments[2] then
+        for _,v in pairs(workspace:GetDescendants()) do
+            if v.Name == getstring(2) then
+                v:Destroy()
+            end
+        end
+        opx("-","Removed in workspace "..getstring(2))
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
+function useCommand.listnil()
+    local NilParts = ""
+    for _,v in pairs(getnilinstances()) do
+        if not v:IsDescendantOf(Unnamed) then
+            NilParts = NilParts..v.Name..", "
+        end
+    end
+    opx("-","Listed all nil parts")
+    opxL("Nil Parts",NilParts)
+end
+
+function useCommand.removeinnil()
+    if arguments[2] then
+        for _,v in pairs(getnilinstances()) do
+            if v.Name == getstring(2) then
+                v:Destroy()
+            end
+        end
+        opx("-","Removed in nil "..getstring(2))
+    else
+        opx("*","2 arguments are required!")    
+    end
 end
 
 function useCommand.removeanim()
@@ -6079,234 +6320,312 @@ end
 function useCommand.animpack()
 	arguments[2] = arguments[2]:lower()
 	if arguments[2] == "sneaky" then
-		local Char = game.Players.LocalPlayer.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."132461372"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."132469004"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."132473842"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."132477671"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."132489853"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."132494274"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."132500520"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."132506407"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."132510133"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."132461372"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."132469004"
+		Char.idle.Animation1.AnimationId = asset_id_url.."132473842"
+		Char.idle.Animation2.AnimationId = asset_id_url.."132477671"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."132489853"
+		Char.run.RunAnim.AnimationId = asset_id_url.."132494274"
+		Char.swim.Swim.AnimationId = asset_id_url.."132500520"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."132506407"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."132510133"
 	elseif arguments[2] == "old" then
-		local Char = game.Players.LocalPlayer.Character
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."87947158"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."87947464"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."87947975"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16092998"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."82460631"
+		local Char = cmdlp.Character.Animate
+		Char.idle.Animation1.AnimationId = asset_id_url.."87947158"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."87947464"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.run.RunAnim.AnimationId = asset_id_url.."87947975"
+		Char.swim.Swim.AnimationId = asset_id_url.."16092998"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."82460631"
 	elseif arguments[2] == "toy" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."82843869"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."82846423"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."82841498"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."82845736"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."82847020"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."82842708"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."82844582"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."82845186"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."82843345"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."82843869"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."82846423"
+		Char.idle.Animation1.AnimationId = asset_id_url.."82841498"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."82845736"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."82847020"
+		Char.run.RunAnim.AnimationId = asset_id_url.."82842708"
+		Char.swim.Swim.AnimationId = asset_id_url.."82844582"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."82845186"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."82843345"
 	elseif arguments[2] == "pirate" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."50779899"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."50780242"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."50781874"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."50782770"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."50782230"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."50783738"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."50784579"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."50785176"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."50785693"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."50779899"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."50780242"
+		Char.idle.Animation1.AnimationId = asset_id_url.."50781874"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."50782770"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."50782230"
+		Char.run.RunAnim.AnimationId = asset_id_url.."50783738"
+		Char.swim.Swim.AnimationId = asset_id_url.."50784579"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."50785176"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."50785693"
 	elseif arguments[2] == "knight" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."58360781"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."57600338"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."57595757"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."57568135"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."58409194"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."57564596"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."57560551"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."57557095"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."57552124"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."58360781"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."57600338"
+		Char.idle.Animation1.AnimationId = asset_id_url.."57595757"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."57568135"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."58409194"
+		Char.run.RunAnim.AnimationId = asset_id_url.."57564596"
+		Char.swim.Swim.AnimationId = asset_id_url.."57560551"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."57557095"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."57552124"
 	elseif arguments[2] == "astronaut" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."91609353"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."91617961"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."91621366"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."91633237"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."91627522"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."91636393"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."91639666"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."91663592"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."91636393"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."91609353"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."91617961"
+		Char.idle.Animation1.AnimationId = asset_id_url.."91621366"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."91633237"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."91627522"
+		Char.run.RunAnim.AnimationId = asset_id_url.."91636393"
+		Char.swim.Swim.AnimationId = asset_id_url.."91639666"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."91663592"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."91636393"
 	elseif arguments[2] == "vampire" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."083439238"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."083443587"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."083445855"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."083450166"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."083455352"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."083462077"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."083464683"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."083467779"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."083473930"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."083439238"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."083443587"
+		Char.idle.Animation1.AnimationId = asset_id_url.."083445855"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."083450166"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."083455352"
+		Char.run.RunAnim.AnimationId = asset_id_url.."083462077"
+		Char.swim.Swim.AnimationId = asset_id_url.."083464683"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."083467779"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."083473930"
 	elseif arguments[2] == "robot" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16086039"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16087089"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16088211"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16089559"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16090535"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16091570"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16092998"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16095330"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."16086039"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."16087089"
+		Char.idle.Animation1.AnimationId = asset_id_url.."16088211"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."16089559"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."16090535"
+		Char.run.RunAnim.AnimationId = asset_id_url.."16091570"
+		Char.swim.Swim.AnimationId = asset_id_url.."16092998"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16094091"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."16095330"
 	elseif arguments[2] == "levitation" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16003713"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16005863"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16006778"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16008087"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16008936"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16010382"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16011509"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16012453"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16013216"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."16003713"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."16005863"
+		Char.idle.Animation1.AnimationId = asset_id_url.."16006778"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."16008087"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."16008936"
+		Char.run.RunAnim.AnimationId = asset_id_url.."16010382"
+		Char.swim.Swim.AnimationId = asset_id_url.."16011509"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16012453"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."16013216"
 	elseif arguments[2] == "bubbly" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."09997997"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."10001910"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."10004836"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."10009958"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."10016857"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."10025107"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."10028158"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."10030921"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."10034870"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."09997997"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."10001910"
+		Char.idle.Animation1.AnimationId = asset_id_url.."10004836"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."10009958"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."10016857"
+		Char.run.RunAnim.AnimationId = asset_id_url.."10025107"
+		Char.swim.Swim.AnimationId = asset_id_url.."10028158"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."10030921"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."10034870"
 	elseif arguments[2] == "werewolf" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."083182000"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."083189019"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."083195517"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."083214717"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."083218792"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."083216690"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."083222527"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."083225406"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."083178339"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."083182000"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."083189019"
+		Char.idle.Animation1.AnimationId = asset_id_url.."083195517"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."083214717"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."083218792"
+		Char.run.RunAnim.AnimationId = asset_id_url.."083216690"
+		Char.swim.Swim.AnimationId = asset_id_url.."083222527"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."083225406"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."083178339"
 	elseif arguments[2] == "stylish" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16133594"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16134815"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16136790"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16138447"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16139451"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16140816"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16143378"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16144772"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16146177"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."16133594"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."16134815"
+		Char.idle.Animation1.AnimationId = asset_id_url.."16136790"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."16138447"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."16139451"
+		Char.run.RunAnim.AnimationId = asset_id_url.."16140816"
+		Char.swim.Swim.AnimationId = asset_id_url.."16143378"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16144772"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."16146177"
 	elseif arguments[2] == "mage" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."07826056"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."07829716"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."07742142"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."07855907"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."07853694"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."07861613"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."07876443"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."07894699"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."07897309"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."07826056"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."07829716"
+		Char.idle.Animation1.AnimationId = asset_id_url.."07742142"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."07855907"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."07853694"
+		Char.run.RunAnim.AnimationId = asset_id_url.."07861613"
+		Char.swim.Swim.AnimationId = asset_id_url.."07876443"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."07894699"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."07897309"
 	elseif arguments[2] == "cartoony" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."42636889"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."42637151"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."42637544"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."42638445"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."42637942"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."42638842"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."42639220"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."42639812"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."42640026"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."42636889"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."42637151"
+		Char.idle.Animation1.AnimationId = asset_id_url.."42637544"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."42638445"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."42637942"
+		Char.run.RunAnim.AnimationId = asset_id_url.."42638842"
+		Char.swim.Swim.AnimationId = asset_id_url.."42639220"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."42639812"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."42640026"
 	elseif arguments[2] == "zombie" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16156119"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16157476"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16158929"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16160636"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16161997"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16163682"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16165109"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16166655"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16168032"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."16156119"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."16157476"
+		Char.idle.Animation1.AnimationId = asset_id_url.."16158929"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."16160636"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."16161997"
+		Char.run.RunAnim.AnimationId = asset_id_url.."16163682"
+		Char.swim.Swim.AnimationId = asset_id_url.."16165109"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16166655"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."16168032"
 	elseif arguments[2] == "superhero" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."16104706"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."16108001"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."16111295"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."16113536"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."16115533"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."16117076"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."16119360"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."16120861"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."16122287"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."16104706"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."16108001"
+		Char.idle.Animation1.AnimationId = asset_id_url.."16111295"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."16113536"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."16115533"
+		Char.run.RunAnim.AnimationId = asset_id_url.."16117076"
+		Char.swim.Swim.AnimationId = asset_id_url.."16119360"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."16120861"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."16122287"
 	elseif arguments[2] == "ninja" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."56114359"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."56115606"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."56117400"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."56118341"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."56117878"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."56118852"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."56119721"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."56121397"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."56121766"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."56114359"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."56115606"
+		Char.idle.Animation1.AnimationId = asset_id_url.."56117400"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."56118341"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."56117878"
+		Char.run.RunAnim.AnimationId = asset_id_url.."56118852"
+		Char.swim.Swim.AnimationId = asset_id_url.."56119721"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."56121397"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."56121766"
 	elseif arguments[2] == "elder" then
-		local Char = cmdlp.Character
-		Char.Animate.climb.ClimbAnim.AnimationId = asset_id_url.."45392038"
-		Char.Animate.fall.FallAnim.AnimationId = asset_id_url.."45396048"
-		Char.Animate.idle.Animation1.AnimationId = asset_id_url.."45397899"
-		Char.Animate.idle.Animation1.Weight.Value = "9"
-		Char.Animate.idle.Animation2.AnimationId = asset_id_url.."45400520"
-		Char.Animate.idle.Animation2.Weight.Value = "1"
-		Char.Animate.jump.JumpAnim.AnimationId = asset_id_url.."45398858"
-		Char.Animate.run.RunAnim.AnimationId = asset_id_url.."45386501"
-		Char.Animate.swim.Swim.AnimationId = asset_id_url.."45401742"
-		Char.Animate.swimidle.SwimIdle.AnimationId = asset_id_url.."45403127"
-		Char.Animate.walk.WalkAnim.AnimationId = asset_id_url.."45403856"
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."45392038"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."45396048"
+		Char.idle.Animation1.AnimationId = asset_id_url.."45397899"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."45400520"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."45398858"
+		Char.run.RunAnim.AnimationId = asset_id_url.."45386501"
+		Char.swim.Swim.AnimationId = asset_id_url.."45401742"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."45403127"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."45403856"
+	elseif arguments[2] == "oldschool" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."5319816685"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."5319839762"
+		Char.idle.Animation1.AnimationId = asset_id_url.."5319828216"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."5319831086"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."5319841935"
+		Char.run.RunAnim.AnimationId = asset_id_url.."5319844329"
+		Char.swim.Swim.AnimationId = asset_id_url.."5319850266"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."5319852613"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."5319847204"
+	elseif arguments[2] == "confident" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."1069946257"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."1069973677"
+		Char.idle.Animation1.AnimationId = asset_id_url.."1069977950"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."1069987858"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."1069984524"
+		Char.run.RunAnim.AnimationId = asset_id_url.."1070001516"
+		Char.swim.Swim.AnimationId = asset_id_url.."1070009914"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."1070012133"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."1070017263"
+	elseif arguments[2] == "popstar" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."1213044953"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."1212900995"
+		Char.idle.Animation1.AnimationId = asset_id_url.."1212900985"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."1212900985"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."1212954642"
+		Char.run.RunAnim.AnimationId = asset_id_url.."1212980348"
+		Char.swim.Swim.AnimationId = asset_id_url.."1212852603"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."1212998578"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."1212980338"
+	elseif arguments[2] == "patrol" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."1148811837"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."1148863382"
+		Char.idle.Animation1.AnimationId = asset_id_url.."1149612882"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."1150842221"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."1150944216"
+		Char.run.RunAnim.AnimationId = asset_id_url.."1150967949"
+		Char.swim.Swim.AnimationId = asset_id_url.."1151204998"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."1151221899"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."1151231493"
+	elseif arguments[2] == "princess" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."940996062"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."941000007"
+		Char.idle.Animation1.AnimationId = asset_id_url.."941003647"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."941013098"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."941008832"
+		Char.run.RunAnim.AnimationId = asset_id_url.."941015281"
+		Char.swim.Swim.AnimationId = asset_id_url.."941018893"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."941025398"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."941028902"
+	elseif arguments[2] == "cowboy" then
+		local Char = cmdlp.Character.Animate
+		Char.climb.ClimbAnim.AnimationId = asset_id_url.."1014380606"
+		Char.fall.FallAnim.AnimationId = asset_id_url.."1014384571"
+		Char.idle.Animation1.AnimationId = asset_id_url.."1014390418"
+		Char.idle.Animation1.Weight.Value = "9"
+		Char.idle.Animation2.AnimationId = asset_id_url.."1014398616"
+		Char.idle.Animation2.Weight.Value = "1"
+		Char.jump.JumpAnim.AnimationId = asset_id_url.."1014394726"
+		Char.run.RunAnim.AnimationId = asset_id_url.."1014401683"
+		Char.swim.Swim.AnimationId = asset_id_url.."1014406523"
+		Char.swimidle.SwimIdle.AnimationId = asset_id_url.."1014411816"
+		Char.walk.WalkAnim.AnimationId = asset_id_url.."1014421541"
 	else
 		opx("*","2 arguments are required for this command!")
 	end
@@ -6629,7 +6948,7 @@ end
 
 function useCommand.badger()
 	opx("-","Loading Badger V2")
-	loadstring(game:HttpGet("https://pastebin.com/raw/AZgbkVzN",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/badger",true))()
 	opx("-","Loaded Badger V2")
 end
 
@@ -7027,7 +7346,7 @@ end
 
 function useCommand.reload()
 	opx("-","Reloading CMD-X...")
-	loadstring(game:HttpGet("https://pastebin.com/raw/HFkyyd1H",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source",true))()
 end
 
 function useCommand.console()
@@ -7261,6 +7580,23 @@ function useCommand.properties()
     	end
     	for _,__ in pairs(Table) do
             local PropertyString = "("
+			if __.Parameters then
+                for ___,____ in pairs(__.Parameters) do
+                    if ___ ~= #__.Parameters then
+                        if ____.Type then
+                            PropertyString = PropertyString..____.Name.."/"..____.Type.Name..", "
+                        else
+                            PropertyString = PropertyString..____.Name..", "
+                        end
+                    else
+                        if ____.Type then
+                            PropertyString = PropertyString..____.Name.."/"..____.Type.Name
+                        else
+                            PropertyString = PropertyString..____.Name
+                        end
+                    end
+                end
+            end
     		if __.ValueType then
     		    PropertyString = PropertyString..__.ValueType.Name   
     		end
@@ -7289,7 +7625,18 @@ function useCommand.classes()
     local Classes = ""
     for _,__ in pairs(API.Classes) do
         if __.Members then
-            Classes = Classes..__.Name.."\n"
+			local ClassString = __.Name.." ("
+            if __.Tags then
+                for ___,____ in pairs(__.Tags) do
+                    if ___ ~= #__.Tags then
+                        ClassString = ClassString..____..", "
+                    else
+                        ClassString = ClassString..____
+                    end
+                end
+            end
+            ClassString = ClassString..")"
+            Classes = Classes..ClassString.."\n"
         end
     end
     print("\n"..Classes)
@@ -9993,37 +10340,14 @@ function useCommand.singinfo()
 	Step 5: Compress the lines to avoid whitespace errors\
 	Step 6: Put your compressed text into a raw data uploading site such as pastebin or hastebin\
 	Step 7: Insert the link into the sing command\
-	To see a sample of what to do, visit: https://pastebin.com/raw/rNcWf8mK")
+	To see a sample of what to do, visit: https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sing/")
 end
 
 stopSingMid = false
 function useCommand.sing()
-	if arguments[2] == "genocide" then
-		getSong = "https://pastebin.com/raw/rNcWf8mK"
-	elseif arguments[2] == "babyshark" then
-		getSong = "https://pastebin.com/raw/n9G4qwR4"
-	elseif arguments[2] == "animethighs" then
-		getSong = "https://pastebin.com/raw/VsUcnYyr"
-	elseif arguments[2] == "evilfantasy" then
-		getSong = "https://pastebin.com/raw/8Mqi4Vtb"
-	elseif arguments[2] == "$harkattack" then
-		getSong = "https://pastebin.com/raw/6aYw5Bih"
-	elseif arguments[2] == "dora" then
-		getSong = "https://pastebin.com/raw/KTruLCL7"
-	elseif arguments[2] == "introversion" then
-		getSong = "https://pastebin.com/raw/pkQNGdU8"
-	elseif arguments[2] == "lucy" then
-		getSong = "https://pastebin.com/raw/j47SaDjL"
-	elseif arguments[2] == "tyler" then
-		getSong = "https://pastebin.com/raw/Sna0chxq"
-	elseif arguments[2] == "methhead" then
-		getSong = "https://pastebin.com/raw/VAgv7eGE"
-	elseif arguments[2] == "superfuntime" then
-		getSong = "https://pastebin.com/raw/cgfzcb3d"
-	elseif arguments[2] == "haha" then
-		getSong = "https://pastebin.com/raw/pGE8kr1x"
-	elseif arguments[2] == "diamonds" then
-		getSong = "https://pastebin.com/raw/j7mvzu4s"
+	local check = {genocide=1,animethighs=1,evilfantasy=1,['$harkattack']=1,introversion=1,lucy=1,tyler=1,methhead=1,superfuntime=1,haha=1,diamonds=1}
+	if check[ string.lower(arguments[2]) ] then
+		getSong = "https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sing/"..string.lower(arguments[2])
 	else
 		getSong = arguments[2]
 	end
@@ -10210,7 +10534,7 @@ end
 
 function useCommand.antiwrldsgui()
 	opx("-","antiwrldsGUI loading")
-	loadstring(game:HttpGet(('https://pastebin.com/raw/1LUE7bXP'),true))()
+	loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/main'),true))()
 	opx("-","antiwrldsGUI loaded")
 end
 
@@ -10667,6 +10991,17 @@ function useCommand.admindetect()
 	else
 		opx("*","Unable to detect an adminGUI")
 	end
+end
+
+function useCommand.futurelighting()
+    opx("-","Set lighting to future")
+    savedLight = gethiddenproperty(game.Lighting, "Technology")
+    sethiddenproperty(game.Lighting, "Technology", Enum.Technology.Future)
+end
+
+function useCommand.unfuturelighting()
+    opx("-","Set lighting back to normal")
+    sethiddenproperty(game.Lighting, "Technology", savedLight)
 end
 
 function useCommand.streamermode()
@@ -12716,26 +13051,14 @@ function useCommand.ungod()
 end
 
 function useCommand.randomchat()
-	local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-	local r1 = math.random(1,#tbl1)
-	local r2 = math.random(1,#tbl2)
-	local r3 = math.random(1,#tbl3)
-	local r4 = math.random(1,#tbl4)
-	local r5 = math.random(1,#tbl5)
-	local r6 = math.random(1,#tbl6)
-	local r7 = math.random(1,#tbl7)
-	local r8 = math.random(1,#tbl8)
-	local r9 = math.random(1,#tbl9)
-	opx("-",tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9])
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9],"All")
+	local tbl = {}
+	for i=1, 9 do
+		tbl[i] = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/"..i):gsub('"',""):gsub('{',""):gsub('}',""):split(",")
+	end
+	local tbl2 = {tbl[1][math.random(#tbl[1])],tbl[2][math.random(#tbl[2])],tbl[3][math.random(#tbl[3])],tbl[4][math.random(#tbl[4])],tbl[5][math.random(#tbl[5])],tbl[6][math.random(#tbl[6])],tbl[7][math.random(#tbl[7])],tbl[8][math.random(#tbl[8])],tbl[9][math.random(#tbl[9])] }
+	local str = table.concat(tbl2, ' ')
+	opx("-", str)
+	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str,"All")
 end
 
 function useCommand.enablereset()
@@ -13261,7 +13584,7 @@ function useCommand.directjoin()
 end
 
 pcall(function()
-    loadstring(game:HttpGet("https://pastebinp.com/raw/N8pR8EYH",true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/depthoffield",true))()
 end)
 -- Thanks to MrAsyncRoblox on github, full credits.
 
@@ -13280,26 +13603,13 @@ function useCommand.timedcmd()
 end
 
 function useCommand.randomos()
-    opx("-","Changed your OS to a random string")
-    local tbl1 = game:HttpGet("https://pastebin.com/raw/aUD58y32"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-    local tbl2 = game:HttpGet("https://pastebin.com/raw/Bj97ZwPp"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-    local tbl3 = game:HttpGet("https://pastebin.com/raw/jNWum66L"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-    local tbl4 = game:HttpGet("https://pastebin.com/raw/9GdmNVrc"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-    local tbl5 = game:HttpGet("https://pastebin.com/raw/izGHZLha"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-    local tbl6 = game:HttpGet("https://pastebin.com/raw/PFHG47S2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-    local tbl7 = game:HttpGet("https://pastebin.com/raw/HPZswDsv"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-    local tbl8 = game:HttpGet("https://pastebin.com/raw/tKpFPgzj"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-    local tbl9 = game:HttpGet("https://pastebin.com/raw/9uHe83wS"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-    local r1 = math.random(1,#tbl1)
-    local r2 = math.random(1,#tbl2)
-    local r3 = math.random(1,#tbl3)
-    local r4 = math.random(1,#tbl4)
-    local r5 = math.random(1,#tbl5)
-    local r6 = math.random(1,#tbl6)
-    local r7 = math.random(1,#tbl7)
-    local r8 = math.random(1,#tbl8)
-    local r9 = math.random(1,#tbl9)
-    cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
+	opx("-","Changed your OS to a random string")
+	local tbl = {}
+	for i=1, 9 do
+		tbl[i] = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/"..i):gsub('"',""):gsub('{',""):gsub('}',""):split(",")
+	end
+	local tbl2 = {tbl[1][math.random(#tbl[1])],tbl[2][math.random(#tbl[2])],tbl[3][math.random(#tbl[3])],tbl[4][math.random(#tbl[4])],tbl[5][math.random(#tbl[5])],tbl[6][math.random(#tbl[6])],tbl[7][math.random(#tbl[7])],tbl[8][math.random(#tbl[8])],tbl[9][math.random(#tbl[9])] }
+    cmdlp.OsPlatform = table.concat(tbl2, ' ')
 end
 
 function useCommand.depth()
@@ -13963,15 +14273,15 @@ function useCommand.antikick()
 end
 
 function useCommand.cmdinfo()
-	local useOf = giveCmd(arguments[2])
+	local useOf = giveCmd(getstring(2))
 	local CSplus = useOf.CMD:split(",")
-	opx("-",CSplus[1]..". "..CSplus[2].." "..CSplus[3].." = "..CSplus[4])
-	opxL("Command",CSplus[1]..". "..CSplus[2].." "..CSplus[3].." = "..CSplus[4])
+	opx("-",CSplus[1].." "..CSplus[2].." = "..CSplus[3])
+	opxL("Command",CSplus[1].." "..CSplus[2].." = "..CSplus[3])
 end
 
 function useCommand.sentinelexplorer()
 	opx("-","Loading SENTINEL DEX")
-	loadstring(game:HttpGet("https://pastebin.com/raw/v1pL8YzY", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sdex", true))()
 	opx("-","Loaded SENTINEL DEX")
 end
 
@@ -14017,6 +14327,47 @@ end
 function useCommand.yesmouse()
     opx("-","Mouse enabled")
     game:GetService("UserInputService").MouseIconEnabled = true
+end
+
+function useCommand.translate()
+	if not arguments[2] then 
+		return opx('*','3 arguments are required! [use: translate langs]')
+	end
+	local langs = {es='Spanish',co='Corsican',is='Icelandic',ms='Malay',rw='Kinyarwanda',ps='Pashto',bg='Bulgarian',ro='Romanian',ur='Urdu',mg='Malagasy',sv='Swedish',uk='Ukrainian',ig='Igbo',tg='Tajik',['zh-cn']='Chinese (Simplified)',lo='Lao',ko='Korean',kk='Kazakh',eo='Esperanto',mk='Macedonian',bs='Bosnian',bn='Bengali',fr='French',jv='Javanese',hr='Croatian',hmn='Hmong',yi='Yiddish',mr='Marathi',vi='Vietnamese',lv='Latvian',af='Afrikaans',sr='Serbian',zu='Zulu',sn='Shona',mn='Mongolian',tr='Turkish',az='Azerbaijani',tk='Turkmen',de='German',kn='Kannada',gu='Gujarati',en='English',ar='Arabic',pa='Punjabi',ky='Kyrgyz',my='Myanmar (Burmese)',sk='Slovak',hu='Hungarian',am='Amharic',km='Khmer',eu='Basque',ja='Japanese',ny='Nyanja (Chichewa)',ca='Catalan',si='Sinhala (Sinhalese)',cy='Welsh',lb='Luxembourgish',be='Belarusian',hy='Armenian',ml='Malayalam',ku='Kurdish',ka='Georgian',sm='Samoan',he='Hebrew',ha='Hausa',cs='Czech',so='Somali',st='Sesotho',la='Latin',xh='Xhosa',hi='Hindi',haw='Hawaiian',fi='Finnish',mi='Maori',ru='Russian',sq='Albanian',ta='Tamil',it='Italian',pl='Polish',fy='Frisian',ht='Haitian Creole',et='Estonian',da='Danish',no='Norwegian',ceb='Cebuano',tt='Tatar',yo='Yoruba',nl='Dutch',pt='Portuguese',mt='Maltese',th='Thai',ne='Nepali',lt='Lithuanian',sl='Slovenian',tl='Tagalog (Filipino)',['or']='Odia (Oriya)',su='Sundanese',id='Indonesian',sw='Swahili',gd='Scots Gaelic',['zh-tw']='Chinese (Traditional)',te='Telugu',fa='Persian',sd='Sindhi',uz='Uzbek',gl='Galician',ga='Irish',el='Greek',ug='Uyghur'}
+	if arguments[2]:find('lang') then
+		local l,t = '',{}
+		for k,v in pairs(langs)do t[#t+1]={k,v}end
+		table.sort(t, function(a,b) return a[2] < b[2] end)
+		for i=1,#t do 
+			l = l..t[i][2].. ' = '..t[i][1]..'\n   '
+		end
+		return print('\nLanguages\n   '.. l..'\nexample: translate en ru Hello how are you.\n output: Привет, как ты.'), opx('-','Press F9 to see an example and all available languages.')
+	end
+	local from = langs[(arguments[2] or ''):lower()] and arguments[2]:lower()
+	if not from then 
+		return opx('*','From language not found!'), opx('*','To see languages use: translate langs')
+	end
+	local to = langs[(arguments[3] or ''):lower()] and arguments[3]:lower()
+	if not to then 
+		return opx('*','To language not found!'), opx('*','To see languages use: translate langs')
+	end
+	local text = table.concat( {unpack(arguments, 4)}, ' ')
+	if #text == #text:match('%s*') then 
+		return opx('*','Message not found!')
+	end
+	local HS = game:GetService('HttpService')
+	local url = 'https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&ie=UTF-8&oe=UTF-8&sl='..from..'&tl='..to..'&q='..HS:UrlEncode(text)
+	local al, text_back = pcall(function() 
+		local res = game:HttpGet(url, true)
+		local parsed = HS:JSONDecode(res)
+		return parsed[1][1][1]
+	end)
+	if al then
+		opx('-','Successfully translated! '.. text_back)
+		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(text_back, "All")
+	else
+		opx('*','Failed to translate.')
+	end
 end
 
 function useCommand.untruesight()
@@ -14875,7 +15226,7 @@ end
 function useCommand.mass()
 	opx("-","Executing player command in mass")
 	FinalCMD = findCmd(arguments[2])
-	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
+	for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
 		arguments = FinalCMD.." "..v.Name
 		arguments = arguments:split(" ")
 		useCommand[FinalCMD]()
@@ -14883,7 +15234,7 @@ function useCommand.mass()
 end
 
 function FindPart(Name)
-	for i,v in pairs(workspace:GetDescendants()) do
+	for _,v in pairs(workspace:GetDescendants()) do
 		if v.Name == Name then
 			return v
 		end
@@ -15487,10 +15838,10 @@ if #sets.enterCMD > 0 then
 		cmd:ReleaseFocus()
 	end
 end
-user.Changed:connect(function()
+user.Changed:Connect(function()
 	user.Text = user.Text:sub(1,13)..">"
 end)
-cmd.Focused:connect(function() 
+cmd.Focused:Connect(function() 
 	local NumberOf = #History
 	cmduis.InputBegan:Connect(function()
 		if cmduis:IsKeyDown(Enum.KeyCode.LeftShift) and cmduis:IsKeyDown(Enum.KeyCode.Backspace) then
