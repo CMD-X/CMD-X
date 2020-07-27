@@ -5,7 +5,7 @@ repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetS
 -- Constraints: -----------------------|
 local ver = "1.5.8"
 local nextupd = "20/07/2020"
-local cordCode = "discord.io/CMD-X"
+local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
 	"Need help? Join our discord! "..cordCode;
 }
