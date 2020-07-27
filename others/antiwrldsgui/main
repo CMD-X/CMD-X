@@ -1420,16 +1420,13 @@ Duration = 20;
 end)
 
 Rep.MouseButton1Click:connect(function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/ptE1TqPL'),true))()
-
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/rep'),true))()
 end)
 
 Mem.MouseButton1Click:connect(function()
-loadstring(game:HttpGet(("https://pastebin.com/raw/EKNiUNdu"),true))()
-
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/mem"),true))()
 end)
 
 ColGui.MouseButton1Click:connect(function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/kz1Et0kG'),true))()
-
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/colgui'),true))()
 end)
