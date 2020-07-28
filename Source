@@ -3330,13 +3330,20 @@ table.insert(CMDN, {N = "nonick", A = {""}, CMD = "564,nonick,,Blocks nicknames 
 table.insert(CMDN, {N = "yesnick", A = {""}, CMD = "565,yesnick,,()."})
 table.insert(CMDN, {N = "appearanceidpublic", A = {"aidpu"}, CMD = "566,appearanceidpublic/aidpu,(plr),Publicly shows the character appearance id of player.", ARG = "Player"})
 table.insert(CMDN, {N = "appearanceidprivate", A = {"aidpr"}, CMD = "567,appearanceidprivate/aidpr,(plr),Privately shows the character appearance id of player.", ARG = "Player"})
-table.insert(CMDN, {N = "nilgoto", A = {""}, CMD = "568,nilgoto,(plr),Teleports to player while in nil.", ARG = "Player"})
-table.insert(CMDN, {N = "nilfreegoto", A = {""}, CMD = "569,nilfreegoto,(x|y|z),Freely teleports to position while in nil."})
-table.insert(CMDN, {N = "nilgotopart", A = {""}, CMD = "570,nilgotopart,(part),Teleports to part while in nil."})
-table.insert(CMDN, {N = "nilgotoclass", A = {""}, CMD = "571,nilgotoclass,(class),Teleports to class while in nil."})
+table.insert(CMDN, {N = "nilgoto", A = {"niltp","nilto"}, CMD = "568,nilgoto/nilto/niltp,(plr),Teleports to player while in nil.", ARG = "Player"})
+table.insert(CMDN, {N = "nilfreegoto", A = {"nilfreetp","nilfreeto"}, CMD = "569,nilfreegoto/nilfreeto/nilfreetp,(x|y|z),Freely teleports to position while in nil."})
+table.insert(CMDN, {N = "nilgotopart", A = {"niltopart","niltppart"}, CMD = "570,nilgotopart/niltopart/niltppart,(part),Teleports to part while in nil."})
+table.insert(CMDN, {N = "nilgotoclass", A = {"niltoclass","niltpclass"}, CMD = "571,nilgotoclass/niltoclass/niltpclass,(class),Teleports to class while in nil."})
 table.insert(CMDN, {N = "removeinworkspace", A = {"rinworkspace"}, CMD = "572,removeinworkspace/rinworkspace,(part),Removes part in workspace."})
 table.insert(CMDN, {N = "listnil", A = {""}, CMD = "573,listnil,,Lists nil instances."})
 table.insert(CMDN, {N = "removeinnil", A = {"rinnil"}, CMD = "574,removeinnil/rinnil,,Removes part in nil instances."})
+table.insert(CMDN, {N = "noclaim", A = {""}, CMD = "575,noclaim,,Stops you from being network claimed."})
+table.insert(CMDN, {N = "yesclaim", A = {""}, CMD = "576,yesclaim,,()."})
+table.insert(CMDN, {N = "destroyheight", A = {"dheight"}, CMD = "577,destroyheight/dheight,(num),Sets fallen parts destroy height."})
+table.insert(CMDN, {N = "nameesp", A = {"nesp"}, CMD = "578,nameesp/nesp,,Runs ESP with only names."})
+table.insert(CMDN, {N = "unnameesp", A = {"unnesp"}, CMD = "579,unnesp,,()."})
+table.insert(CMDN, {N = "spectatepart", A = {"viewpart"}, CMD = "580,spectatepart/viewpart,(part),Views part."})
+table.insert(CMDN, {N = "rejoinexecute", A = {"rje"}, CMD = "581,rejoinexecute/rje,,Rejoins and re-executes CMD-X once."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -15927,6 +15934,132 @@ function useCommand.compilecommand()
 	xCMD = xCMD..getstring(4)..'"}'
 	setclipboard(xCMD)
 	opx("-","Compiled command to your clipboard.")
+end
+
+function useCommand.noclaim()
+    opx("-","Turned on noclaim")
+    DHSaved = workspace.FallenPartsDestroyHeight
+    workspace.FallenPartsDestroyHeight = math.huge - math.huge
+end
+
+function useCommand.yesclaim()
+    opx("-","Turned off noclaim")
+    workspace.FallenPartsDestroyHeight = DHSaved
+end
+
+function useCommand.destroyheight()
+    if cmdnum(arguments[2]) then
+        opx("-","Set destroyheight to "..arguments[2])
+        workspace.FallenPartsDestroyHeight = arguments[2]
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
+TrackN = false
+
+function CreateN(xPlayer, xHead)
+	local ESP = Instance.new("BillboardGui", cmdlp.PlayerGui)
+	local ESPSquare = Instance.new("Frame", ESP)
+	local ESPText = Instance.new("TextLabel", ESP)
+	ESP.Name = "ESPN"..xPlayer.Name
+	ESP.Adornee = xHead
+	ESP.AlwaysOnTop = true
+	ESP.ExtentsOffset = Vector3.new(0, 1, 0)
+	ESP.Size = UDim2.new(0, 5, 0, 5)
+	ESPText.Name = "NAME"
+	ESPText.BackgroundColor3 = Color3.new(255, 255, 255)
+	ESPText.BackgroundTransparency = 1
+	ESPText.BorderSizePixel = 0
+	ESPText.Position = UDim2.new(0, 0, 0, -40)
+	ESPText.Size = UDim2.new(1, 0, 10, 0)
+	ESPText.Visible = true
+	ESPText.ZIndex = 10
+	ESPText.Font = Enum.Font.SourceSansSemibold
+	ESPText.TextStrokeTransparency = 0.6
+	ESPText.TextSize = 20
+	ESPText.Text = xPlayer.Name
+	ESPText.TextColor = xPlayer.TeamColor
+end
+
+function ClearN()
+	for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
+		if v.Name:sub(1,4) == "ESPN" and v:IsA("BillboardGui") then
+			v:Destroy()
+		end
+	end
+end
+
+function FindN()
+	ClearN()
+	TrackN = true
+	while wait() do
+		if TrackN then
+			ClearN() --Shit to change
+			for i,v in pairs(cmdp:GetPlayers()) do
+    			if v ~= cmdlp then
+    				if v.Character and v.Character:FindFirstChild("Head") then
+    					CreateN(v, v.Character.Head, true)
+    				end
+    			end
+			end
+		end
+		wait(1)
+	end
+end
+
+local ESPNEnabled = false
+function useCommand.nameesp()
+	opx("-","Name ESP Enabled")
+	FindN()
+	ESPNEnabled = true
+	repeat
+		wait()
+		if ESPNEnabled == true then
+			FindN()
+		end
+	until ESPNEnabled == false
+end
+
+function useCommand.unnameesp() -- unnesp
+	opx("-","Name ESP Disabled")
+	ESPNEnabled = false
+	TrackN = false
+	for i = 1,10 do
+		ClearN()
+		wait()
+	end
+end
+
+function useCommand.spectatepart()
+    if arguments[2] then
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v.Name == getstring(2) then
+				opx("-","Viewing to part")
+				workspace.CurrentCamera.CameraSubject = v
+				break
+			else
+				opx("*","Part does not exist")
+			end
+		end
+	else
+		opx("*","2 arguments are required!")
+	end
+end
+
+function useCommand.rejoinexecute()
+    rejoining = true
+    if syn.queue_on_teleport then
+        syn.queue_on_teleport([[
+            game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+            repeat wait(.1) until game:GetService('Players').LocalPlayer
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
+        ]])
+    end
+    opx("-","Rejoining game")
+    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+    wait(3)
+    rejoining = false
 end
 
 function useCommand.newaudios()
