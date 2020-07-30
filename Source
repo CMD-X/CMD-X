@@ -16076,7 +16076,7 @@ end
 function useCommand.newaudios()
 	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")
 	if not arguments[2] then arguments[2] = "10" end
-	local fuck = ame:HttpGet(URL..arguments[2])
+	local fuck = game:HttpGet(URL..arguments[2])
 	local Http = game:GetService("HttpService"):JSONDecode(fuck)
 	xIds = ""
 	for i,v in pairs(Http) do
