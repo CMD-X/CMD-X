@@ -641,6 +641,9 @@ end
 if game.PlaceId == 17541193 then
 	AntiCheat.ScriptDetectOff = true
 end
+if game.PlaceId == 5206831707 then
+    AntiCheat.ScriptDetectOff = true
+end
 
 if AntiCheat.Custom1 then
 	local old
