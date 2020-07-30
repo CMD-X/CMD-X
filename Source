@@ -3,7 +3,7 @@ if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#127
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.8"
+local ver = "1.5.9"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -3058,7 +3058,7 @@ table.insert(CMDN, {N = "hotkeydel", A = {""}, CMD = "294,hotkeydel,(cmd),Delete
 table.insert(CMDN, {N = "hotkeysclr", A = {""}, CMD = "295,hotkeysclr,,Clears the hotkeys."})
 table.insert(CMDN, {N = "changestyle", A = {"cs"}, CMD = "296,cs/changestyle,(style),Changes the style of your CMD-X refer to csinfo for more info on this command."})
 table.insert(CMDN, {N = "csinfo", A = {""}, CMD = "297,csinfo,,Lists info about changestyle/cs."})
-table.insert(CMDN, {N = "chat", A = {""}, CMD = "298,chat,(str),Forces you to chat whatever you put in str (Bypasses any mute)."})
+table.insert(CMDN, {N = "chat", A = {"ch"}, CMD = "298,chat/ch,(str),Forces you to chat whatever you put in str (Bypasses any mute)."})
 table.insert(CMDN, {N = "curvetools", A = {""}, CMD = "299,curvetools,,Curves your tools."})
 table.insert(CMDN, {N = "spiraltools", A = {""}, CMD = "300,spiraltools,,Spirals your tools."})
 table.insert(CMDN, {N = "toggleconfly", A = {"tcfly"}, CMD = "301,tcfly/toggleconfly,(on/off),Toggles if your fly starts again after a reset."})
@@ -3344,6 +3344,12 @@ table.insert(CMDN, {N = "nameesp", A = {"nesp"}, CMD = "578,nameesp/nesp,,Runs E
 table.insert(CMDN, {N = "unnameesp", A = {"unnesp"}, CMD = "579,unnesp,,()."})
 table.insert(CMDN, {N = "spectatepart", A = {"viewpart"}, CMD = "580,spectatepart/viewpart,(part),Views part."})
 table.insert(CMDN, {N = "rejoinexecute", A = {"rje"}, CMD = "581,rejoinexecute/rje,,Rejoins and re-executes CMD-X once."})
+table.insert(CMDN, {N = "multispam", A = {"ms"}, CMD = "582,multispam/ms,(str|comma|str),Spams strings seperated by commas."})
+table.insert(CMDN, {N = "logspam", A = {"ls"}, CMD = "583,logspam/ls,(str/),Spams any chat loggers without showing in chat."})
+table.insert(CMDN, {N = "unlogspam", A = {"unls"}, CMD = "584,unlogspam/unls,,()."})
+table.insert(CMDN, {N = "logchat", A = {"lch"}, CMD = "585,logchat/lch,(str),Sends message to any chat loggers without showing in chat."})
+table.insert(CMDN, {N = "removeroot", A = {"rroot"}, CMD = "586,removeroot/rroot,,Removes characters HumanoidRootPart. (SOME COMMANDS MAY NOT WORK WHILE RUNNING)"})
+table.insert(CMDN, {N = "rejoinrefreshexecute", A = {"rjree"}, CMD = "587,rejoinrefreshexecute/rjree,,Rejoins and places your character in the original spot and executes."})
 currentCMDNUM = "437"
 if not syn then syn = {} end
 if KeepCMDXOn and syn.queue_on_teleport then
@@ -10378,14 +10384,16 @@ end
 --Shit to change
 cmdp.PlayerAdded:connect(function(plr)
 	plr.Chatted:connect(function(msg)
-		if logsEnabled == true then
-			CreateLabel(plr.Name,msg)
+		if logsEnabled == true and #msg < 200 then
+		    wait(.2)
+			CreateLabel(v.Name,msg)
 		end
 	end)
 end) --Shit to change
 for i,v in pairs(cmdp:GetPlayers()) do
 	v.Chatted:connect(function(msg)
-		if logsEnabled == true then
+		if logsEnabled == true and #msg < 200 then
+		    wait(.2)
 			CreateLabel(v.Name,msg)
 		end
 	end)
@@ -16462,6 +16470,27 @@ function useCommand.rejoinrefresh()
     rejoining = false
 end
 
+function useCommand.rejoinrefreshexecute()
+    rejoining = true
+    if syn.queue_on_teleport then
+        local c = cmdlp.Character.HumanoidRootPart.CFrame
+        syn.queue_on_teleport(string.format([[
+            game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+            repeat wait(.1) until game:GetService('Players').LocalPlayer
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
+            game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
+                wait(.25)
+                game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+            end)
+        ]], c.X, c.Y, c.Z))
+    end
+    opx("-","Rejoining game")
+    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+    wait(3)
+    rejoining = false
+end
+
+
 TracerEnabled = false
 function useCommand.tracers()
 	if Drawing then
@@ -16477,6 +16506,80 @@ function useCommand.tracers()
 		until TracerEnabled == false
 	else
 		opx("*","Your exploit does not support Drawing API!")
+	end
+end
+
+function useCommand.removeroot() -- yoooo gg metatables CMD-X gang on top no lie
+    opx("-","Removed HumanoidRootPart")
+    local mt = getrawmetatable(game)
+    local oind = mt.__index
+    local hrp = cmdlp.Character.HumanoidRootPart
+    local selves = {
+        [hrp.Parent] = true,
+        [cmdlp.Character] = true
+    }
+    local inds = {
+        [hrp.Name] = true,
+        ["HumanoidRootPart"] = true,
+        ["PrimaryPart"] = true
+    }
+    setreadonly(mt, false)
+    mt.__index = newcclosure(function(self,ind,...)
+        if not checkcaller() and selves[self] and inds[ind] then
+            return hrp
+        end
+        return oind(self,ind,...)
+    end)
+    setreadonly(mt, true)
+    cmdlp.Character.HumanoidRootPart.Parent = workspace
+end
+
+function useCommand.logchat()
+    if firesignal then
+        if arguments[2] then
+            string = getstring(2)
+        else
+            string = string.rep("CMD-X Gang", 100)    
+        end
+        opx("-","Chatted to logs")
+        firesignal(cmdlp.Chatted, string)
+    else
+        opx("*","Your exploit does not support firesignal!")    
+    end
+end
+
+function useCommand.logspam()
+    if firesignal then
+        if arguments[2] then
+            string = getstring(2)
+        else
+            string = string.rep("CMD-X Gang", 100)    
+        end
+        opx("-","Now spamming logs")
+        mostSpam = game:GetService("RunService").Heartbeat:Connect(function()
+            firesignal(cmdlp.Chatted, string)
+        end)
+    else
+        opx("*","Your exploit does not support firesignal!")    
+    end
+end
+
+function useCommand.unlogspam()
+    opx("-","Stopped spamming logs")
+    mostSpam:Disconnect()    
+end
+
+function useCommand.multispam()
+    speedofthespam = permspamspeed
+	spammies = true
+	if arguments[2] then
+	    local topstring = getstring(2):split(",")
+		opx("-","You are now spamming")
+		repeat wait(speedofthespam)
+			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(topstring[math.random(1,#topstring)], "All")
+		until spammies == false
+	else
+		opx("*","Spam is missing text")
 	end
 end
 
