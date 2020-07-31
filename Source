@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.9"
+local ver = "1.6.0"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
