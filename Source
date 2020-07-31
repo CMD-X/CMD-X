@@ -1,9 +1,7 @@
--- Compatibility: ---------------------|
-if KRNL_LOADED then getgenv().sethiddenproperty = nil end -- Thanks to ZWRh3#1279 for the current KRNL glitch fix.
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.5.9"
+local ver = "1.6.0"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -15332,7 +15330,7 @@ end
 function useCommand.newaudios()
 	local URL = ("https://search.roblox.com/catalog/json?CatalogContext=2&Category=9&SortType=3&IncludeNotForSale=true&ResultsPerPage=")
 	if not arguments[2] then arguments[2] = "10" end
-    local fuck = ame:HttpGet(URL..arguments[2])
+    local fuck = game:HttpGet(URL..arguments[2])
 	local Http = game:GetService("HttpService"):JSONDecode(fuck)
 	xIds = ""
 	for i,v in pairs(Http) do
