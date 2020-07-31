@@ -217,13 +217,14 @@ local Donors = {
 	["Dakisaurus"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
 	["overreaction"] = {Tier = "Custom1", Tag = "Administrator"},
-	["Irritatory"] = {Tier = "Top"},
+	["Irritatory"] = {Tier = "Custom4", Tag = "Ex-Donor},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
 	["TheChosenOne123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 	["ClydeGrant"] = {Tier = "2"},
 	["Yarhibol"] = {Tier = "1"},
+	["DuBz_Bubby"] = {Tier = "Top", Tag = "DuBz_Bubby"}
 }
 
 ---------------------------------------|
@@ -17107,6 +17108,8 @@ function colorName(Self,Tbl)
 				v.TextColor3 = Color3.fromRGB(170, 1, 20)
 			elseif Tbl.Tier == "Custom3" then
 				v.TextColor3 = Color3.fromRGB(63, 0, 0)
+			elseif Tbl.Tier == "Custom4" then
+				v.TextColor3 = Color3.fromRGB(255,0,255)
 			elseif Tbl.Tier == "Top" then
 				RGBDev(Self)
 			end
