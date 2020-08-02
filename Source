@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.0"
+local ver = "1.6.1"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -214,13 +214,14 @@ local Donors = {
 	["Dakisaurus"] = {Tier = "2"},
 	["xniped"] = {Tier = "2"},
 	["overreaction"] = {Tier = "Custom1", Tag = "Administrator"},
-	["Irritatory"] = {Tier = "Top"},
+	["Irritatory"] = {Tier = "Custom4", Tag = "Ex-Donor"},
 	["tyswrld"] = {Tier = "1"},
 	["InternetSpeeds"] = {Tier = "Custom2", Tag = "Infernal"},
 	["TheChosenOne123"] = {Tier = "Custom3", Tag = "The Chosen"},
 	["8avu"] = {Tier = "1"},
 	["ClydeGrant"] = {Tier = "2"},
 	["Yarhibol"] = {Tier = "1"},
+	["DuBz_Bubby"] = {Tier = "Top", Tag = "DuBz_Bubby"},
 }
 
 ---------------------------------------|
@@ -411,6 +412,7 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AC_IDs = {
+	[1068523756] = {ScriptDetectOff = true}
 	[1499872953] = {ScriptDetectOff = true, PrintingOff = true},
 	[5188367351] = {ScriptDetectOff = true, PrintingOff = true},
 	[4052062489] = {ScriptDetectOff = true, PrintingOff = true, AutoAntiKick = true},
@@ -2691,7 +2693,7 @@ local CMDN = {
 	{N = "untoolfps", A = {""}, CMD = "untoolfps,,()"},
 	{N = "fuckoff", A = {"killgui"}, CMD = "killgui/fuckoff,,Closes the GUI."},
 	{N = "messagebox", A = {"message","msg"}, CMD = "message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"},
-	{N = "filtering", A = {"fe"}, CMD = "fe/filter,,Checks if a game is filtered or not."},
+
 	{N = "gameid", A = {"placeid"}, CMD = "gameid/placeid,,Lets you know the GameID of the game you are in."},
 	{N = "error", A = {""}, CMD = "error,(str),Tests error in F9."},
 	{N = "print", A = {""}, CMD = "print,(str),Tests print in F9."},
@@ -9113,11 +9115,11 @@ function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
 	while hitler do
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
 		wait(15)
 	end
 end
@@ -10670,15 +10672,15 @@ end
 
 function useCommand.bypass()
 	local message = getstring(2)
-	local s1 = message:gsub("i", "iØ£")
-	local s2 = s1:gsub("e", "eØ£")
-	local s3 = s2:gsub("u", "uØ£")
-	local s4 = s3:gsub("f", "fØ£")
-	local s5 = s4:gsub("o", "oØ£")
-	local s6 = s5:gsub("c", "cØ£")
-	local s7 = s6:gsub("p", "pØ£")
-	local s8 = s7:gsub("s", "sØ£")
-	local s9 = s8:gsub("t", "tØ£")
+	local s1 = message:gsub("i", "iˁ")
+	local s2 = s1:gsub("e", "eˁ")
+	local s3 = s2:gsub("u", "uˁ")
+	local s4 = s3:gsub("f", "fˁ")
+	local s5 = s4:gsub("o", "oˁ")
+	local s6 = s5:gsub("c", "cˁ")
+	local s7 = s6:gsub("p", "pˁ")
+	local s8 = s7:gsub("s", "sˁ")
+	local s9 = s8:gsub("t", "tˁ")
 	opx("-","Successfully bypassed! "..s9)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s9, "All")
 end
@@ -15787,7 +15789,7 @@ function useCommand.removeroot() -- yoooo gg metatables CMD-X gang on top no lie
         return oind(self,ind,...)
     end)
     setreadonly(mt, true)
-    cmdlp.Character.HumanoidRootPart.Parent = workspace
+    cmdlp.Character.HumanoidRootPart.Parent = getnilinstances()
 end
 
 function useCommand.logchat()
@@ -16362,6 +16364,8 @@ function colorName(Self,Tbl)
 			    v.TextColor3 = Color3.fromRGB(170, 1, 20)
 			elseif Tbl.Tier == "Custom3" then
 			    v.TextColor3 = Color3.fromRGB(63, 0, 0)
+			elseif Tbl.Tier == "Custom4" then
+				v.TextColor3 = Color3.fromRGB(255,0,255)
 			elseif Tbl.Tier == "Top" then
 			    RGBDev(Self)
 			end
