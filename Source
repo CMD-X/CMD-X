@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.0"
+local ver = "1.6.1"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -2903,7 +2903,7 @@ table.insert(CMDN, {N = "toolfps", A = {""}, CMD = "136,toolfps,,Shows your FPS 
 table.insert(CMDN, {N = "untoolfps", A = {""}, CMD = "137,untoolfps,,()"})
 table.insert(CMDN, {N = "fuckoff", A = {"killgui"}, CMD = "138,killgui/fuckoff,,Closes the GUI."})
 table.insert(CMDN, {N = "messagebox", A = {"message","msg"}, CMD = "139,message/messagebox/msg,(str),Makes a message box appear containing the string you entered. (SYNAPSE ONLY)"})
-table.insert(CMDN, {N = "filtering", A = {"fe"}, CMD = "140,fe/filter,,Checks if a game is filtered or not."})
+table.insert(CMDN, {N = "--", A = {""}, CMD = "140,--,,"})
 table.insert(CMDN, {N = "gameid", A = {"placeid"}, CMD = "141,gameid/placeid,,Lets you know the GameID of the game you are in."})
 table.insert(CMDN, {N = "error", A = {""}, CMD = "142,error,(str),Tests error in F9."})
 table.insert(CMDN, {N = "print", A = {""}, CMD = "143,print,(str),Tests print in F9."})
@@ -11438,15 +11438,15 @@ end
 
 function useCommand.bypass()
 	local message = getstring(2)
-	local s1 = message:gsub("i", "iØ£")
-	local s2 = s1:gsub("e", "eØ£")
-	local s3 = s2:gsub("u", "uØ£")
-	local s4 = s3:gsub("f", "fØ£")
-	local s5 = s4:gsub("o", "oØ£")
-	local s6 = s5:gsub("c", "cØ£")
-	local s7 = s6:gsub("p", "pØ£")
-	local s8 = s7:gsub("s", "sØ£")
-	local s9 = s8:gsub("t", "tØ£")
+	local s1 = message:gsub("i", "iˁ")
+	local s2 = s1:gsub("e", "eˁ")
+	local s3 = s2:gsub("u", "uˁ")
+	local s4 = s3:gsub("f", "fˁ")
+	local s5 = s4:gsub("o", "oˁ")
+	local s6 = s5:gsub("c", "cˁ")
+	local s7 = s6:gsub("p", "pˁ")
+	local s8 = s7:gsub("s", "sˁ")
+	local s9 = s8:gsub("t", "tˁ")
 	opx("-","Successfully bypassed! "..s9)
 	game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s9, "All")
 end
@@ -16536,7 +16536,7 @@ function useCommand.removeroot() -- yoooo gg metatables CMD-X gang on top no lie
         return oind(self,ind,...)
     end)
     setreadonly(mt, true)
-    cmdlp.Character.HumanoidRootPart.Parent = workspace
+    cmdlp.Character.HumanoidRootPart.Parent = getnilinstances()
 end
 
 function useCommand.logchat()
