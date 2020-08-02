@@ -9345,11 +9345,11 @@ function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
 	while hitler do
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ®ðŸ”²ðŸ®ðŸ®ðŸ®ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²ðŸ”²", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🏮🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🔲🔲🔲🔲🔲🔲🔲🔲", "All")
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("🔲🔲🔲🔲🔲🏮🔲🏮🏮🏮🔲🔲🔲🔲🔲🔲", "All")
 		wait(15)
 	end
 end
