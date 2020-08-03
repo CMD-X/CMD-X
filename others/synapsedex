@@ -1,0 +1,18 @@
+local mt = getrawmetatable(game)
+local nc = mt.__namecall
+
+setreadonly(mt, false)
+
+game.Loaded:Connect(newcclosure(function()
+	mt.__namecall = newcclosure(function(self,...)
+		local args = {...}
+		if getnamecallmethod() == "GetObjects" and self == game then
+			if args[1] == "rbxassetid://3567096419" then
+				args[1] = "rbxassetid://5475777257"
+				-- Beta version: "rbxassetid://5482100934"
+			end
+		end
+		return Namecall(self, unpack(Arguments))
+	end)
+	setreadonly(Metatable,true)
+end))
