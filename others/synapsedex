@@ -14,5 +14,5 @@ game.Loaded:Connect(newcclosure(function()
 		end
 		return Namecall(self, unpack(Arguments))
 	end)
-	setreadonly(Metatable,true)
+	setreadonly(mt, true)
 end))
