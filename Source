@@ -412,6 +412,7 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AC_IDs = {
+	[5488236339] = {ScriptDetectOff = true},
 	[1068523756] = {ScriptDetectOff = true},
 	[1499872953] = {ScriptDetectOff = true, PrintingOff = true},
 	[5188367351] = {ScriptDetectOff = true, PrintingOff = true},
