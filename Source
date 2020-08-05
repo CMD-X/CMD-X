@@ -2033,9 +2033,11 @@ pcall(function()
 	cmdlp.CharacterAdded:Connect(function(char)
 		wait()
 		if conFly then
-			if FLYING == true then
+			if FLYING then
 				FLYING = false
-				cmdlp.Character.Humanoid.PlatformStand = false 
+				if cmdlp.Character.Humanoid then
+					cmdlp.Character.Humanoid.PlatformStand = false 
+				end
 				sFLY()
 				speedofthefly = permflyspeed
 			end
@@ -2043,7 +2045,7 @@ pcall(function()
 		Enabledaimbot = false
 		if Clip == false then
 			Clip = true
-			wait(1)
+			wait()
 			Clip = false
 		end
 	end)
