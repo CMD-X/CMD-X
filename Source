@@ -2030,48 +2030,24 @@ cmdp.PlayerRemoving:Connect(function(plr)
 	end
 end)
 pcall(function()
-	if cmdlp.Character then
-		cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-			if conFly == true then
-				if FLYING == true then
-					repeat wait() until cmdlp.Character and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-					wait(2)
-					FLYING = false
-					cmdlp.Character.Humanoid.PlatformStand = false 
-					sFLY()
-					speedofthefly = permflyspeed
-				end
-			end
-			Enabledaimbot = false
-			if Clip == false then
-				Clip = true
-				wait(1)
-				Clip = false
-			end
-		end)
-	end
 	cmdlp.CharacterAdded:Connect(function(char)
 		wait()
-		char:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-			if conFly == true then
-				if FLYING == true then
-					repeat wait() until cmdlp.Character and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-					wait(.1)
-					FLYING = false
-					cmdlp.Character.Humanoid.PlatformStand = false 
-					sFLY()
-					speedofthefly = permflyspeed
-				end
+		if conFly then
+			if FLYING == true then
+				FLYING = false
+				cmdlp.Character.Humanoid.PlatformStand = false 
+				sFLY()
+				speedofthefly = permflyspeed
 			end
-			Enabledaimbot = false
-			if Clip == false then
-				Clip = true
-				wait(1)
-				Clip = false
-			end
-		end)
+		end
+		Enabledaimbot = false
+		if Clip == false then
+			Clip = true
+			wait(1)
+			Clip = false
+		end
 	end)
-
+end)
 
 opxholder = Instance.new("Frame", getParent)
 opxviewertitle = Instance.new("TextLabel", getParent)
