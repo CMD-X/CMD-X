@@ -255,11 +255,12 @@ local Donors = {
 	["HyperLink3"] = "1",
 	["OFFTheBatter"] = "1",
 	["DisturbedCult"] = "1",
+	["614SHAD"] = "1",
 
 	["skrask"] = "2",
 	["xniped"] = "2",
 	["ClydeGrant"] = "2",
-	["Dakisaurus"] = "2",
+	["bytekeeper"] = "2",
 	["Fxalling_Love"] = "2",
 	
 	["overreaction"] = "Custom1",
