@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.2"
+local ver = "1.6.3"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -3431,13 +3431,14 @@ CMDS.commands = {
 	["unfixbubblechat"] = "()",
 	["darkbubbles"] = "Makes bubblechat dark themed.",
 	["undarkbubbles"] = "()",
---	["tweenwalkspeed"] = "Makes you slowly accelerate as you walk.",
---	["untweenwalkspeed"] = "()",
+    --[[["tweenwalkspeed"] = "Makes you slowly accelerate as you walk.",
+    ["untweenwalkspeed"] = "()",]]
 	["combo"] = "Runs a chain of commands together.",
 	["combos"] = "Lists combos.",
 	["combonew"] = "Creates a new combo.",
 	["combodel"] = "Removes a combo.",
 	["combosclr"] = "Clears all combos.",
+	["hd"] = "HD Admin hook.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3659,6 +3660,7 @@ CMDS.usage = {
 	["multispam"] = "(str) (comma as a separator) (str)",
 	["logspam"] = "(str)",
 	["logchat"] = "(str)",
+	["hd"] = "(str)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -4146,10 +4148,10 @@ CMDS.aliases = {
 	["bcunfix"] = "unfixbubblechat",
 	["dbubbles"] = "darkbubbles",
 	["lbubbles"] = "undarkbubbles",
---[[	["tweenws"] = "tweenwalkspeed",
+    --[[["tweenws"] = "tweenwalkspeed",
 	["tws"] = "tweenwalkspeed",
 	["untweenws"] = "untweenwalkspeed",
-	["untws"] = "untweenwalkspeed",--]]
+	["untws"] = "untweenwalkspeed",]]
 	["c_"] = "combo",
 	["c_s"] = "combos",
 	["c_new"] = "combonew",
@@ -5043,6 +5045,39 @@ function findCmd(cmd_name)
 end
 
 local noCMD = false
+
+function HDAdminCheck()
+    if workspace:FindFirstChild("HDAdminWorkspaceFolder") then
+        for i,v in pairs(game:GetService("ReplicatedStorage").HDAdminClient.Signals.RetrieveServerRanks:InvokeServer()) do
+            if v.Player == game:GetService("Players").LocalPlayer then
+                return true    
+            end
+        end
+    end
+    return false
+end
+
+HDBanString = {["itle"] = "", [""] = ""}
+CMDS.hd = {}
+if HDAdminCheck() then
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HDAdminGUIs.MainFrame.Pages.Commands.Commands:GetChildren()) do
+        if v:FindFirstChild("Arrow") then
+            if not HDBanString[v.TextLabel.Text:sub(2,#v.TextLabel.Text)] then
+                table.insert(CMDS.hd, v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+                table.insert(CMDS.hd, "un"..v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+            end
+        end
+    end
+end
+
+function CheckHDList(str)
+    for i,v in pairs(CMDS.hd) do
+        if v == str then
+            return true
+        end
+    end
+    return false
+end
 
 fixedArgs = false
 Debugging = false
@@ -5992,6 +6027,25 @@ function useCommand.nilfreegoto()
 	else
 		opx("*","4 arguments are required!")
 	end
+end
+
+function useCommand.hd()
+    if HDAdminCheck() then
+        if arguments[2] and CheckHDList(arguments[2]) then
+            local cmd = arguments[2]
+            table.remove(arguments, 2)
+            table.remove(arguments, 1)
+            argsHD = ""
+            if arguments[3] then
+                argsHD = unpack(arguments) 
+            end
+            game:GetService("ReplicatedStorage").HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
+        else
+            opx("*","Command not found!")
+        end
+    else
+        opx("*","HD admin wasnt found!")    
+    end
 end
 
 function useCommand.nilgotopart()
@@ -12151,25 +12205,16 @@ function useCommand.admindetect()
 		adframe.Visible = true
 		CreateADLabel("","")
 		CreateADLabel("","")
-		local sR = cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Admin["Server Ranks"]
-		for i,v in pairs(sR:GetChildren()) do
-			potentialLabel = v.Name
-			findDetect = "Label"
-			local z = string.find(potentialLabel,findDetect)
-			if z ~= nil then
-				local rankSub = v.PlrRank.Text:sub(0,#v.PlrRank.Text-6)
-				CreateADLabel(v.PlrName.Text,rankSub)
-			end
-		end
-		sR.ChildAdded:Connect(function(obj)
-			potentialLabel = obj.Name
-			findDetect = "Label"
-			local z = string.find(potentialLabel,findDetect)
-			if z ~= nil then
-				local rankSub = v.PlrRank.Text:sub(0,#v.PlrRank.Text-6)
-				CreateADLabel(v.PlrName.Text,rankSub.." | HDADMIN")
-			end
-		end)
+		for i,v in pairs(game:GetService("ReplicatedStorage").HDAdminClient.Signals.RetrieveServerRanks:InvokeServer()) do
+    		CreateADLabel(v.Player.Name.." | HDADMIN")   
+        end
+        cmdp.PlayerAdded:Connect(function(JoinedPlayer)
+            for i,v in pairs(game:GetService("ReplicatedStorage").HDAdminClient.Signals.RetrieveServerRanks:InvokeServer()) do
+                if v.Player == JoinedPlayer then
+    				CreateADLabel(v.Player.Name.." | HDADMIN")   
+                end
+            end
+        end)
 	elseif workspace:FindFirstChild("Kohl's Admin Infinite") then
 		opx("-","KOHL'S found")
 		adframe.Visible = true
@@ -17106,31 +17151,37 @@ function useCommand.undarkbubbles()
 	opx("-","Dark bubbles have been disabled.")
 end
 
---[[function useCommand.tweenwalkspeed()
-	opx("-","Tween Walkspeed is now on")
-	WaitTimer = .4
-	cmdlp.Character.Humanoid.WalkSpeed = 4
-	function Accelerate()
-		if cmdlp.Character.Humanoid.MoveDirection ~= Vector3.new(0, 0, 0) and MoveDirDB == false and cmdlp.Character.Humanoid.WalkSpeed < 16 then
-			MoveDirDB = true
-			while cmdlp.Character.Humanoid.MoveDirection ~= Vector3.new(0, 0, 0) and cmdlp.Character.Humanoid.WalkSpeed < 16 do
-				cmdlp.Character.Humanoid.WalkSpeed = cmdlp.Character.Humanoid.WalkSpeed + 1
-				wait(WaitTimer)
-				WaitTimer = .4 / 1.1
-			end
-			MoveDirDB = false
-		elseif cmdlp.Character.Humanoid.MoveDirection == Vector3.new(0, 0, 0) then
-			WaitTimer = .4
-			cmdlp.Character.Humanoid.WalkSpeed = 4
-		end
-	end
-	tws = cmdlp.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(Accelerate)
-end--]]
+function useCommand.tweenwalkspeed()
+    if arguments[2] then
+        walkspeedSet = arguments[2]
+    	opx("-","Tween Walkspeed is now on")
+    	WaitTimer = .4
+    	cmdlp.Character.Humanoid.WalkSpeed = 4
+    	function Accelerate()
+    		if cmdlp.Character.Humanoid.MoveDirection ~= Vector3.new(0, 0, 0) and MoveDirDB == false and cmdlp.Character.Humanoid.WalkSpeed < walkspeedSet then
+    			MoveDirDB = true
+    			while cmdlp.Character.Humanoid.MoveDirection ~= Vector3.new(0, 0, 0) and cmdlp.Character.Humanoid.WalkSpeed < walkspeedSet do
+    				cmdlp.Character.Humanoid.WalkSpeed = cmdlp.Character.Humanoid.WalkSpeed + 1
+    				wait(WaitTimer)
+    				WaitTimer = .4 / 1.1
+    			end
+    			MoveDirDB = false
+    		elseif cmdlp.Character.Humanoid.MoveDirection == Vector3.new(0, 0, 0) then
+    			WaitTimer = .4
+    			cmdlp.Character.Humanoid.WalkSpeed = 4
+    		end
+    	end
+    	tws = cmdlp.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(Accelerate)
+    else
+        opx("*","2 arguments are required!")
+    end
+end
 
---[[function useCommand.untweenwalkspeed()
+function useCommand.untweenwalkspeed()
 	opx("-","Tween Walkspeed is no longer on")
+	cmdlp.Character.Humanoid.WalkSpeed = 16
 	tws:Disconnect()
-end--]]
+end
 
 function useCommand.combo()
 	if arguments[2] then
