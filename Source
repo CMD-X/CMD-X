@@ -191,8 +191,13 @@ LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","D
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 
+if XPROTECT then
+    Stand("We do not support Sirhurt!","CMD-X cannot run.","","For a more detailed explanation refer to the discord.","","Run Anyway",true) 
+    repeat wait() until RunDude == true
+end
+
 if not writefile then
-	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher, SirHurt (buggy)","Free: KRNL (buggy)","Run Anyway",true)
+	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher","Free: KRNL (buggy)","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
 
