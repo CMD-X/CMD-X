@@ -139,12 +139,9 @@ function DynamicDepth:Init()
 		
 		--Set properties to config properties
 		for property, value in pairs(PROPERTIRES) do
-			if (depthEffect[property] == nil) then
-				warn("Invalid property: " .. property)
-				continue
+			if depthEffect[property] then
+				depthEffect[property] = value
 			end
-			
-			depthEffect[property] = value
 		end
 	end
 end
