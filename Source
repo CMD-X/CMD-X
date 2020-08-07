@@ -5047,7 +5047,7 @@ end
 local noCMD = false
 
 function HDAdminCheck()
-    if workspace:FindFirstChild("HDAdminWorkspaceFolder") then
+    if game:GetService("ReplicatedStorage"):FindFirstChild("HDAdminClient") then
         for i,v in pairs(game:GetService("ReplicatedStorage").HDAdminClient.Signals.RetrieveServerRanks:InvokeServer()) do
             if v.Player == game:GetService("Players").LocalPlayer then
                 return true    
