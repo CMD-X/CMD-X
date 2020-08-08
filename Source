@@ -191,7 +191,7 @@ local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 
 if not writefile then
-	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher, SirHurt (buggy)","Free: KRNL (buggy)","Run Anyway",true)
+	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher","Free: KRNL (buggy)","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
 
@@ -13792,7 +13792,7 @@ function useCommand.rejoindiff()
 			end
 		end
 		opx("-","All places finalized, randomizing...")
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[math.random(1,#PPlaces)].GUID,cmdlp)
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,PPlaces[math.random(#PPlaces)].GUID,cmdlp)
 	elseif arguments[2] == "quick" or arguments[2] == "q" then
 		local xPlace = 0
 		local URL = ("https://www.roblox.com/games/getgameinstancesjson?placeId="..game.PlaceId.."&startindex=")
@@ -16625,7 +16625,7 @@ if AntiCheat.PrintingOff == false then
 		TextSize = 20
 	})
 	StarterGui:SetCore("ChatMakeSystemMessage", {
-		Text = "To use chat commands use the prefix '"..prefix.."'";
+		Text = "To use chat commands use the prefix '"..sets.prefix.."'";
 		Color = Color3.fromRGB(100, 100, 100);
 		Font = Enum.Font.SourceSansBold;
 		TextSize = 20
