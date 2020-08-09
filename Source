@@ -665,7 +665,15 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AntiCheat.Games = {
-
+    
+    [1068523756] = function()
+        AntiCheat.ScriptDetectOff = true
+    end,
+    
+    [4528990187] = function()
+        AntiCheat.ScriptDetectOff = true
+    end,
+    
 	[1499872953] = function()
 		AntiCheat.ScriptDetectOff = true
 		AntiCheat.PrintingOff = true
