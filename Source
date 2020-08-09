@@ -6037,11 +6037,9 @@ function useCommand.hd()
     if HDAdminCheck() then
         if arguments[2] then
             local cmd = arguments[2]
-            table.remove(arguments, 2)
-            table.remove(arguments, 1)
             argsHD = ""
             if arguments[3] then
-                argsHD = unpack(arguments) 
+                argsHD = getstring(3)
             end
             game:GetService("ReplicatedStorage").HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
         else
@@ -12847,9 +12845,7 @@ for i,v in pairs(cmdp:GetPlayers()) do
 			elseif argscmdFix[1] == "execmd" then
 			    local x = findplr(argscmdFix[2])
 			    if x == cmdlp then
-			        table.remove(argscmdFix,2); table.remove(argscmdFix,1)
-			        local nextarg = unpack(argscmdFix)
-			        ExeCmdLegal(nextarg)
+			        ExeCmdLegal(argscmdFix[3])
 			    end
 			end
 		end)
@@ -12873,9 +12869,7 @@ cmdp.PlayerAdded:Connect(function(v)
 			elseif argscmdFix[1] == "execmd" then
 			    local x = findplr(argscmdFix[2])
 			    if x == cmdlp then
-			        table.remove(argscmdFix,2); table.remove(argscmdFix,1)
-			        local nextarg = unpack(argscmdFix)
-			        ExeCmdLegal(nextarg)
+			        ExeCmdLegal(argscmdFix[3])
 			    end
 			end
 		end)
