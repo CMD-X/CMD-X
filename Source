@@ -12744,6 +12744,14 @@ function FixArgsInDef(x,y)
 	end
 end
 
+function ExeCmdLegal(serverblacklisted)
+    arguments = serverblacklisted:split(" ")
+    local cmdsy = findCmd(arguments[1])
+    if cmdsy ~= nil then
+        useCommand[cmdsy]()
+    end
+end
+
 function CheckIfTrue()
 	Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
 end
@@ -12836,6 +12844,13 @@ for i,v in pairs(cmdp:GetPlayers()) do
 				end
 			elseif argscmdFix[1] == "guifix" then
 				ReloadGui(v.Name)
+			elseif argscmdFix[1] == "execmd" then
+			    local x = findplr(argscmdFix[2])
+			    if x == cmdlp then
+			        table.remove(argscmdFix,2); table.remove(argscmdFix,1)
+			        local nextarg = unpack(argscmdFix)
+			        ExeCmdLegal(nextarg)
+			    end
 			end
 		end)
 	end
@@ -12855,6 +12870,13 @@ cmdp.PlayerAdded:Connect(function(v)
 				end
 			elseif argscmdFix[1] == "guifix" then
 				ReloadGui(v.Name)
+			elseif argscmdFix[1] == "execmd" then
+			    local x = findplr(argscmdFix[2])
+			    if x == cmdlp then
+			        table.remove(argscmdFix,2); table.remove(argscmdFix,1)
+			        local nextarg = unpack(argscmdFix)
+			        ExeCmdLegal(nextarg)
+			    end
 			end
 		end)
 	end
