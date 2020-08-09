@@ -6035,7 +6035,7 @@ end
 
 function useCommand.hd()
     if HDAdminCheck() then
-        if arguments[2] and CheckHDList(arguments[2]) then
+        if arguments[2] then
             local cmd = arguments[2]
             table.remove(arguments, 2)
             table.remove(arguments, 1)
