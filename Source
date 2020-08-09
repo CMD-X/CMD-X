@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.3"
+local ver = "1.6.4"
 local nextupd = "20/07/2020"
 local cordCode = "discord.io/CMD-X (paste in browser)"
 local changeLog = {
@@ -3439,6 +3439,9 @@ CMDS.commands = {
 	["combodel"] = "Removes a combo.",
 	["combosclr"] = "Clears all combos.",
 	["hd"] = "HD Admin hook.",
+	["clearchat"] = "Clears chat using a long string.",
+	["colourbubbles"] = "Gives you coloured chat bubbles to your custom.",
+	["uncolourbubbles"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3661,6 +3664,7 @@ CMDS.usage = {
 	["logspam"] = "(str)",
 	["logchat"] = "(str)",
 	["hd"] = "(str)",
+	["colourbubbles"] = "(bgx, bgy, bgz) (tx, ty, tz)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -13641,6 +13645,13 @@ function useCommand.lagchat()
 	end
 end
 
+function useCommand.clearchat()
+    opx("-","Cleared chat")
+    for i = 1,3 do
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻", "All")
+    end
+end
+
 function useCommand.funfact()
 	local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 	local fuck = game:HttpGet(URL)
@@ -17107,7 +17118,7 @@ function useCommand.fixbubblechat()
 		opx("*","Bubble chat has already been fixed")
 		return
 	end
-	_G.bcfix = game.Players.LocalPlayer.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+	_G.bcfix = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
 		if msg:IsA("TextLabel") and msg.Name == "BubbleText" then
 			msg.TextSize = 21
 		end
@@ -17130,7 +17141,7 @@ function useCommand.darkbubbles()
 		opx("*","Dark bubbles are already enabled.")
 		return
 	end
-	_G.darkbubbles = game.Players.LocalPlayer.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+	_G.darkbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
 		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
 			msg.ImageColor3 = Color3.fromRGB(0,0,0)
 		end
@@ -17149,6 +17160,38 @@ function useCommand.undarkbubbles()
 	_G.darkbubbles:Disconnect()
 	_G.darkbubbles = nil
 	opx("-","Dark bubbles have been disabled.")
+end
+
+function useCommand.colourbubbles()
+    if arguments[7] then
+    	if _G.darkbubbles or _G.colourbubbles then
+    		opx("*","Coloured bubbles are already enabled.")
+    		return
+    	end
+    	local x,y,z = arguments[2],arguments[3],arguments[4]
+    	local c,m,d = arguments[5],arguments[6],arguments[7]
+    	_G.colourbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+    		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
+    			msg.ImageColor3 = Color3.fromRGB(x,y,z)
+    		end
+    		if msg:IsA("TextLabel") and msg.Name == "BubbleText" then
+    			msg.TextColor3 = Color3.fromRGB(c,m,d)
+    			msg.BackgroundColor3 = Color3.fromRGB(x,y,z)
+    		end
+    	end)
+    	opx("-","Colour bubbles have been enabled.")
+    else
+        opx("*","7 arguments are required!")    
+    end
+end
+
+function useCommand.uncolourbubbles()
+	if not _G.colourbubbles then
+		opx("*","Colour bubbles are not enabled.")
+	end
+	_G.colourbubbles:Disconnect()
+	_G.colourbubbles = nil
+	opx("-","Colour bubbles have been disabled.")
 end
 
 function useCommand.tweenwalkspeed()
