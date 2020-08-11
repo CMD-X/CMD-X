@@ -1,9 +1,9 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.3"
+local ver = "1.6.5"
 local nextupd = "20/07/2020"
-local cordCode = "discord.io/CMD-X (paste in browser)"
+local cordCode = "discord.gg/cmd"
 local changeLog = {
 	"Need help? Join our discord! ".. cordCode;
 }
@@ -255,6 +255,7 @@ local Donors = {
 	["OFFTheBatter"] = "1",
 	["DisturbedCult"] = "1",
 	["614SHAD"] = "1",
+	["HelIaSketchers"] = "1",
 	["skrask"] = "2",
 	["xniped"] = "2",
 	["ClydeGrant"] = "2",
@@ -361,7 +362,7 @@ defaultsettings = {
 	dStyle = "rounded",
 	conFly = true,
 	suggestions = true,
-	CMDStat = {},
+	CMDStats = {},
 	oldNum = 0,
 	hotkeyctp = "LeftControl",
 	permspamspeed = 1,
@@ -485,7 +486,9 @@ AntiCheat = {
 }
 
 -- Known Anti CMD-X and unpatches:
-AC_IDs = {
+AntiCheat.Games = {
+	[4375619868] = {ScriptDetectOff = true},
+	[4528990187] = {ScriptDetectOff = true},
 	[5488236339] = {ScriptDetectOff = true},
 	[1068523756] = {ScriptDetectOff = true},
 	[1499872953] = {ScriptDetectOff = true, PrintingOff = true},
@@ -504,8 +507,8 @@ AC_IDs = {
 	[5206831707] = {ScriptDetectOff = true},
 }
 
-if AC_IDs[game.PlaceId] then
-	for k, v in pairs(AC_IDs[game.PlaceId]) do
+if AntiCheat.Games[game.PlaceId] then
+	for k, v in pairs( AntiCheat.Games[game.PlaceId] ) do
 		AntiCheat[k] = v
 	end
 end
@@ -2003,7 +2006,7 @@ Save.TextColor3 = Color3.new(1, 1, 1)
 Save.TextSize = 14
 Save.MouseButton1Down:Connect(function()
 	writestats = "\n"
-	for _,v in pairs(sets.CMDStat) do
+	for _,v in pairs(sets.CMDStats) do
 		if v.T ~= 0 then
 			writestats = writestats.."\n".._.." "..v.T
 		end
@@ -2740,7 +2743,7 @@ CMDS.commands = {
 	["error"] = "Tests error in F9.",
 	["print"] = "Tests print in F9.",
 	["output"] = "Tests output.",
-	["forceshiftlock"] = "If the developer of the game your playing on has disabled Shift Lock this will enable it for your character.",
+	["enableshiftlock"] = "If the developer of the game your playing on has disabled Shift Lock this will enable it for your character.",
 	["maxcamunlock"] = "Unlocks your characters max zooming distance.",
 	["position"] = "Sends your characters position to output.",
 	["audiolog"] = "Logs what a user is playing.",
@@ -3203,6 +3206,17 @@ CMDS.commands = {
 	["combodel"] = "Removes a combo.",
 	["combosclr"] = "Clears all combos.",
 	["hd"] = "HD Admin hook.",
+	["clearchat"] = "Clears chat using a long string.",
+	["colourbubbles"] = "Gives you coloured chat bubbles to your custom.",
+	["uncolourbubbles"] = "()",
+	["kohls"] = "Kohls Admin hook.",
+	["creatoridpublic"] = "Publicly shows the creatorid of the game.",
+	["creatoridprivate"] = "Privately showws the creatorid of the game.",
+	["creatorid"] = "Sets your ID's to the creators.",
+	["transparentbubbles"] = "Gives you transparent chat bubbles.",
+	["untransparentbubbles"] = "()",
+	["disableshiftlock"] = "()",
+	["robloxfromdiscordid"] = "Gets roblox account from discord id.",
 	['translate'] = 'Translates message to language',
 }
 CMDS.usage = {
@@ -3324,7 +3338,7 @@ CMDS.usage = {
 	["height"] = "(plr)",
 	["clientfreeze"] = "(plr)",
 	["unclientfreeze"] = "(plr)",
-	["avatar"] = "(userid)",
+	["avatar"] = "(name)",
 	["bluewarn"] = "(str)",
 	["grabip"] = "(plr)",
 	["loop"] = "(str)",
@@ -3426,6 +3440,10 @@ CMDS.usage = {
 	["logspam"] = "(str)",
 	["logchat"] = "(str)",
 	["hd"] = "(str)",
+	["colourbubbles"] = "(bgx, bgy, bgz) (tx, ty, tz)",
+	["kohls"] = "(str)",
+	["transparentbubbles"] = "(num)",
+	["robloxfromdiscordid"] = "(discid)"
 	['translate'] = '(langs) / (from) (to) (message)',
 }
 CMDS.aliases = {
@@ -3541,8 +3559,7 @@ CMDS.aliases = {
 	["msg"] = "messagebox",
 	["fe"] = "filtering",
 	["placeid"] = "gameid",
-	["sl"] = "forceshiftlock",
-	["shiftlock"] = "forceshiftlock",
+	["esl"] = "enableshiftlock",
 	["camunlock"] = "maxcamunlock",
 	["pos"] = "position",
 	["audioid"] = "audiolog",
@@ -3924,6 +3941,14 @@ CMDS.aliases = {
 	["c_del"] = "combodel",
 	["c_clr"] = "combosclr",
 	["c_sclear"] = "combosclr",
+	["ks"] = "kohls",
+	["cidpu"] = "creatoridpublic",
+	["cidpr"] = "creatoridprivate",
+	["cid"] = "creatorid",
+	["transbubbles"] = "transparentbubbles",
+	["untransbubbles"] = "untransparentbubbles",
+	["dsl"] = "disableshiftlock",
+	["rfromdiscid"] = "robloxfromdiscordid",
 }
 --[[
 function SortFunc(myTable)
@@ -3977,9 +4002,9 @@ for i,v in pairs(CMDS.suggestions) do
 end
 
 for i,_ in pairs(CMDS.commands) do
-	if not sets.CMDStat[i] then
-		sets.CMDStat[i] = {}
-		sets.CMDStat[i].T = 0
+	if not sets.CMDStats[i] then
+		sets.CMDStats[i] = {}
+		sets.CMDStats[i].T = 0
 	end
 end
 
@@ -4862,7 +4887,7 @@ cmd.FocusLost:connect(function()
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy then
 			History[#History+1] = cmd.Text
-			for _,v in pairs(sets.CMDStat) do
+			for _,v in pairs(sets.CMDStats) do
 				if cmdsy == _ then
 					v.T = v.T + 1
 				end
@@ -5519,9 +5544,9 @@ function useCommand.bodypositionwalkspeed()
 end
 
 function useCommand.avatar()
-    if cmdnum(arguments[2]) then
+    if arguments[2] then
         opx("-","Inspecting avatar")
-        game:GetService("GuiService"):InspectPlayerFromUserId(arguments[2])
+        game:GetService("GuiService"):InspectPlayerFromUserId(cmdp:GetUserIdFromNameAsync(arguments[2]))
     else
         opx("*","2 arguments are required!")
     end
@@ -5797,13 +5822,11 @@ end
 
 function useCommand.hd()
     if HDAdminCheck() then
-        if arguments[2] and CheckHDList(arguments[2]) then
+        if arguments[2] then
             local cmd = arguments[2]
-            table.remove(arguments, 2)
-            table.remove(arguments, 1)
             argsHD = ""
             if arguments[3] then
-                argsHD = unpack(arguments) 
+                argsHD = getstring(3)
             end
             game:GetService("ReplicatedStorage").HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
         else
@@ -5812,6 +5835,38 @@ function useCommand.hd()
     else
         opx("*","HD admin wasnt found!")    
     end
+end
+
+function useCommand.kohls()
+    if workspace:FindFirstChild("Kohl's Admin Infinite") then
+        if agruments[2] then
+            local cmd = arguments[2]
+            argsHD = ""
+            if arguments[3] then
+                argsHD = getstring(3)
+            end
+            require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(":"..cmd.." "..argsHD)
+        else
+            opx("*","Command not found!")
+        end
+    else
+        opx("*","Kohls admin was not found!")    
+    end
+end
+
+function useCommand.creatoridpublic()
+    opx("-","The creator of the games id is "..game.CreatorId)
+    cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The creator of the games id is "..game.CreatorId,"All")
+end
+
+function useCommand.creatoridprivate()
+    opx("-","The creator of the games id is "..game.CreatorId)
+end
+
+function useCommand.creatorid()
+    opx("-","Set your ID to the creator")
+    cmdlp.UserId = game.CreatorId
+    cmdlp.CharacterAppearanceId = game.CreatorId
 end
 
 function useCommand.nilgotopart()
@@ -8611,9 +8666,14 @@ function useCommand.masscountry()
     opxL("Countries",xCC)
 end
 
-function useCommand.forceshiftlock()
+function useCommand.enableshiftlock()
 	cmdlp.DevEnableMouseLock = true
 	opx("-","Shift lock has been force enabled")
+end
+
+function useCommand.disableshiftlock()
+    cmdlp.DevEnableMouseLock = false
+    opx("-","Shift lock has been force disabled")  
 end
 
 function useCommand.maxcamunlock()
@@ -10632,6 +10692,20 @@ function useCommand.testa()
 	workspace.Baby:Destroy()
 end
 
+--[[
+function useCommand.time()
+	if arguments[2] then
+		local URL = ("http://worldclockapi.com/api/json/"..arguments[2].."/now")
+		local fuck = game:HttpGet(URL)
+		local Http = game:GetService("HttpService"):JSONDecode(fuck)
+		local Time = Http.currentDateTime:split("T")[2]:split("-")[1]
+		opx("-","The time in "..arguments[2].." is "..Time)
+		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The time in "..arguments[2].." is "..Time,"All")
+	else
+		opx("*","2 arguments are required!")    
+	end
+]]
+
 function useCommand.time()
 	arguments[2] = arguments[2]:upper()
     local stime = game:HttpGet('https://www.worldtimeserver.com/time-zones/'..arguments[2], true)
@@ -11952,6 +12026,14 @@ function FixArgsInDef(x,y)
     end
 end
 
+function ExeCmdLegal(serverblacklisted)
+    arguments = serverblacklisted:split(" ")
+    local cmdsy = findCmd(arguments[1])
+    if cmdsy ~= nil then
+        useCommand[cmdsy]()
+    end
+end
+
 function CheckIfTrue()
     Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
 end
@@ -12044,6 +12126,11 @@ for i,v in pairs(cmdp:GetPlayers()) do
                 end
             elseif argscmdFix[1] == "guifix" then
                 ReloadGui(v.Name)
+			elseif argscmdFix[1] == "execmd" then
+			    local x = findplr(argscmdFix[2])
+			    if x == cmdlp then
+			        ExeCmdLegal(argscmdFix[3])
+			    end
             end
         end)
 	end
@@ -12063,6 +12150,11 @@ cmdp.PlayerAdded:Connect(function(v)
                 end
             elseif argscmdFix[1] == "guifix" then
                 ReloadGui(v.Name)
+			elseif argscmdFix[1] == "execmd" then
+			    local x = findplr(argscmdFix[2])
+			    if x == cmdlp then
+			        ExeCmdLegal(argscmdFix[3])
+			    end
             end
         end)
     end
@@ -12851,6 +12943,13 @@ function useCommand.lagchat()
 	end
 end
 
+function useCommand.clearchat()
+    opx("-","Cleared chat")
+    for i = 1,3 do
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻", "All")
+    end
+end
+
 function useCommand.funfact()
     local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
     local fuck = game:HttpGet(URL)
@@ -13192,7 +13291,7 @@ function useCommand.statistics()
 	opx("-","Loaded CMD Statistics")
 	Scrollingstats:ClearAllChildren()
 	statholder.Visible = true
-	for i,v in pairs(sets.CMDStat) do
+	for i,v in pairs(sets.CMDStats) do
 		if v.T ~= 0 then
 			CreateStatLabel(i,v.T)
 		end
@@ -13939,6 +14038,33 @@ function useCommand.irltime()
     while wait(1) do
     	game:GetService("Lighting").TimeOfDay = os.date("!*t").hour + 1 ..":"..os.date("!*t").min..":00"
     end
+end
+
+function useCommand.transparentbubbles()
+    if arguments[2] then
+        if _G.transbubbles then
+            opx("*","Transparent bubbles are already enabled.")
+            return
+        end
+        local Transparency = arguments[2]
+        _G.transbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+            if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
+                msg.ImageTransparency = Transparency
+            end
+        end)
+        opx("-","Transparent bubbles have been enabled.")
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
+function useCommand.untransparentbubbles()
+    if not _G.transbubbles then
+        opx("*","Transparent bubbles are not enabled.")
+    end
+    _G.transbubbles:Disconnect()
+    _G.transbubbles = nil
+    opx("-","Transparent bubbles have been disabled.")
 end
 
 function useCommand.directjoin()
@@ -16015,7 +16141,7 @@ function createTracer(character)
 	l.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
 	l.Transparency = .77
 	l.Thickness = 2
-	l.Color = Color3.new(255, 255, 255)
+	l.Color = character.Parent.TeamColor
 	l.To = l.From
 	Lines[character] = {}
 	Lines[character]["Tracer"] = l
@@ -16046,12 +16172,22 @@ function useCommand.robloxqtversion()
 	opx("-",game:HttpGet("http://setup.roblox.com/versionQTStudio"))
 end
 
+function useCommand.robloxfromdiscordid()
+    if cmdnum(arguments[2]) then
+        local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
+        local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+        opx("-","User: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
+    else
+        opx("*","2 arguments are required!")    
+    end
+end
+
 function useCommand.teleportstring()
 	if arguments[2] == "cb" or "copy" then
-		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
-		setclipboard("game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
+		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.PlaceId.."',"..game.JobId..",game:GetService('Players').LocalPlayer)")
+		setclipboard("game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.PlaceId.."',"..game.JobId..",game:GetService('Players').LocalPlayer)")
 	else
-		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.JobId.."',"..game.PlaceId..",game:GetService('Players').LocalPlayer)")
+		opx("-","game:GetService('TeleportService'):TeleportToPlaceInstance('"..game.PlaceId.."',"..game.JobId..",game:GetService('Players').LocalPlayer)")
 	end
 end
 
@@ -16115,11 +16251,11 @@ function useCommand.rejoinrefreshexecute()
 		syn.queue_on_teleport(string.format([[
 			game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
 			repeat wait(.1) until game:GetService('Players').LocalPlayer
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
 			game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
 				wait(.25)
 				game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
 			end)
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source', true))()
 		]], c.X, c.Y, c.Z))
 	end
 	opx("-","Rejoining game")
@@ -16182,33 +16318,25 @@ function useCommand.removeroot()
 end
 
 function useCommand.logchat()
-    if firesignal then
-        if arguments[2] then
-            string = getstring(2)
-        else
-            string = string.rep("CMD-X Gang", 100)    
-        end
-        opx("-","Chatted to logs")
-        firesignal(cmdlp.Chatted, string)
-    else
-        opx("*","Your exploit does not support firesignal!")    
-    end
+	if arguments[2] then
+		string = getstring(2)
+	else
+		string = string.rep("CMD-X Gang", 100)
+	end
+	opx("-","Chatted to logs")
+    require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(string)
 end
 
 function useCommand.logspam()
-    if firesignal then
-        if arguments[2] then
-            string = getstring(2)
-        else
-            string = string.rep("CMD-X Gang", 100)    
-        end
-        opx("-","Now spamming logs")
-        mostSpam = game:GetService("RunService").Heartbeat:Connect(function()
-            firesignal(cmdlp.Chatted, string)
-        end)
-    else
-        opx("*","Your exploit does not support firesignal!")    
-    end
+    if arguments[2] then
+		string = getstring(2)
+	else
+		string = string.rep("CMD-X Gang", 100)    
+	end
+	opx("-","Now spamming logs")
+	mostSpam = game:GetService("RunService").Heartbeat:Connect(function()
+		require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(string)
+	end)
 end
 
 function useCommand.unlogspam()
@@ -16337,7 +16465,7 @@ function useCommand.fixbubblechat()
 		opx("*","Bubble chat has already been fixed")
 		return
 	end
-	_G.bcfix = game.Players.LocalPlayer.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+	_G.bcfix = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
 		if msg:IsA("TextLabel") and msg.Name == "BubbleText" then
 			msg.TextSize = 21
 		end
@@ -16360,7 +16488,7 @@ function useCommand.darkbubbles()
 		opx("*","Dark bubbles are already enabled.")
 		return
 	end
-	_G.darkbubbles = game.Players.LocalPlayer.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+	_G.darkbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
 		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
 			msg.ImageColor3 = Color3.fromRGB(0,0,0)
 		end
@@ -16379,6 +16507,37 @@ function useCommand.undarkbubbles()
 	_G.darkbubbles:Disconnect()
 	_G.darkbubbles = nil
 	opx("-","Dark bubbles have been disabled.")
+end
+
+function useCommand.colourbubbles()
+    if arguments[7] then
+    	if _G.darkbubbles or _G.colourbubbles then
+    		return opx("*","Coloured bubbles are already enabled.")
+    	end
+    	local x,y,z = arguments[2],arguments[3],arguments[4]
+    	local c,m,d = arguments[5],arguments[6],arguments[7]
+    	_G.colourbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+    		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
+    			msg.ImageColor3 = Color3.fromRGB(x,y,z)
+    		end
+    		if msg:IsA("TextLabel") and msg.Name == "BubbleText" then
+    			msg.TextColor3 = Color3.fromRGB(c,m,d)
+    			msg.BackgroundColor3 = Color3.fromRGB(x,y,z)
+    		end
+    	end)
+    	opx("-","Colour bubbles have been enabled.")
+    else
+        opx("*","7 arguments are required!")    
+    end
+end
+
+function useCommand.uncolourbubbles()
+	if not _G.colourbubbles then
+		opx("*","Colour bubbles are not enabled.")
+	end
+	_G.colourbubbles:Disconnect()
+	_G.colourbubbles = nil
+	opx("-","Colour bubbles have been disabled.")
 end
 
 function useCommand.tweenwalkspeed()
