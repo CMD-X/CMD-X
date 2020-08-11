@@ -3,7 +3,7 @@ repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetS
 -- Constraints: -----------------------|
 local ver = "1.6.5"
 local nextupd = "20/07/2020"
-local cordCode = "discord.io/CMD-X (paste in browser)"
+local cordCode = "discord.gg/cmd"
 local changeLog = {
 	"Need help? Join our discord! "..cordCode;
 }
@@ -665,6 +665,10 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AntiCheat.Games = {
+    
+    [4375619868] = function()
+        AntiCheat.ScriptDetectOff = true    
+    end,
     
     [1068523756] = function()
         AntiCheat.ScriptDetectOff = true
