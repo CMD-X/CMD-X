@@ -16368,7 +16368,7 @@ function createTracer(character)
 	l.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
 	l.Transparency = .77
 	l.Thickness = 2
-	l.Color = character.Parent.TeamColor
+	l.Color = Color3.new(255,255,255)
 	l.To = l.From
 
 	Lines[character] = {}
