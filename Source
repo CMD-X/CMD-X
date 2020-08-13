@@ -2601,7 +2601,7 @@ Save22.TextSize = 14
 Save22.TextScaled = true
 Save22.PlaceholderText = "Type here..."
 Save22.FocusLost:Connect(function()
-	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console/type/"..Save22.Text)
+	firesignal(cmdlp.Chatted, "SCHAT/console/type/"..Save22.Text)
 end)
 
 
@@ -13244,7 +13244,7 @@ if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
         spawn(function()
             repeat
-                require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console")
+                firesignal(cmdlp.Chatted, "SCHAT/console")
                 wait(60)
             until nil
         end)
@@ -16570,7 +16570,7 @@ function useCommand.logchat()
 		string = string.rep("CMD-X Gang", 100)    
 	end
 	opx("-","Chatted to logs")
-	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(string)
+	firesignal(cmdlp.Chatted, string)
 end
 
 function useCommand.logspam()
@@ -16581,7 +16581,7 @@ function useCommand.logspam()
 	end
 	opx("-","Now spamming logs")
 	mostSpam = game:GetService("RunService").Heartbeat:Connect(function()
-		require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(string)
+		firesignal(cmdlp.Chatted, string)
 	end)
 end
 
