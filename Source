@@ -13255,16 +13255,7 @@ for i,v in pairs(cmdp:GetPlayers()) do
     v.Chatted:Connect(function(t)
         if t:sub(1,19) == "SCHAT/console/type/" then
             local msg = t:sub(20,#t)
-            if Devs[v.Name] then
-				CreateSCLabel(Devs[v.Name]:upper(),v.Name..": "..msg)
-			elseif Donors[v.Name] then
-				CreateSCLabel(Tier[Donors[v.Name]].SCHAT,v.Name..": "..msg)
-			else
-				CreateSCLabel("USER",v.Name..": "..msg)
-			end
-			if string.match(msg, cmdlp.Name) and mentions == true then
-				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
-			end
+			CreateSCLabel("USER",v.Name..": "..msg)
         end
         if t == "SCHAT/console" then
             local Added = false
@@ -13283,16 +13274,10 @@ cmdp.PlayerAdded:Connect(function(v)
     v.Chatted:Connect(function(t)
         if t:sub(1,19) == "SCHAT/console/type/" then
             local msg = t:sub(20,#t)
-            if Devs[v.Name] then
-				CreateSCLabel(Devs[v.Name]:upper(),v.Name..": "..msg)
-			elseif Donors[v.Name] then
-				CreateSCLabel(Tier[Donors[v.Name]].SCHAT,v.Name..": "..msg)
-			else
-				CreateSCLabel("USER",v.Name..": "..msg)
-			end
-			if string.match(msg, cmdlp.Name) and mentions == true then
-				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
-			end
+            if t:sub(1,19) == "SCHAT/console/type/" then
+                local msg = t:sub(20,#t)
+    			CreateSCLabel("USER",v.Name..": "..msg)
+            end
         end
         if t == "SCHAT/console" then
             local Added = false
