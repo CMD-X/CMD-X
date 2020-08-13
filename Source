@@ -13267,7 +13267,14 @@ for i,v in pairs(cmdp:GetPlayers()) do
 			end
         end
         if t == "SCHAT/console" then
-            table.insert(Users, v.Name)    
+            local Added = false
+            for i,x in pairs(Users) do
+                if x.Name == v.Name then
+                    Added = true
+                    break
+                end
+            end
+            if Added == false then table.insert(Users, v.Name) end
         end
     end)
 end
@@ -13288,7 +13295,14 @@ cmdp.PlayerAdded:Connect(function(v)
 			end
         end
         if t == "SCHAT/console" then
-            table.insert(Users, v.Name)    
+            local Added = false
+            for i,x in pairs(Users) do
+                if x.Name == v.Name then
+                    Added = true
+                    break
+                end
+            end
+            if Added == false then table.insert(Users, v.Name) end
         end
     end)
 end)
