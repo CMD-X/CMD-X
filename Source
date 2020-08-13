@@ -2156,10 +2156,12 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
-		cmdlp.MaximumSimulationRadius = 139
-		if sethiddenproperty then
-			sethiddenproperty(cmdlp, "SimulationRadius", 139)
-		end
+    	game:GetService("RunService").RenderStepped:Connect(function()
+    		cmdlp.MaximumSimulationRadius = 140
+    		if sethiddenproperty then
+    			sethiddenproperty(cmdlp, "SimulationRadius", 139)
+    		end
+    	end)
 	end
 end
 
@@ -13239,33 +13241,11 @@ function useCommand.unclicktp()
 	clicktps = false
 end
 
-Users = {}
-if AntiCheat.ScriptDetectOff == false then
-	if sDetect == true then
-        spawn(function()
-            repeat
-                firesignal(cmdlp.Chatted, "SCHAT/console")
-                wait(60)
-            until nil
-        end)
-	end
-end
-
 for i,v in pairs(cmdp:GetPlayers()) do
     v.Chatted:Connect(function(t)
         if t:sub(1,19) == "SCHAT/console/type/" then
             local msg = t:sub(20,#t)
 			CreateSCLabel("USER",v.Name..": "..msg)
-        end
-        if t == "SCHAT/console" then
-            local Added = false
-            for i,x in pairs(Users) do
-                if x.Name == v.Name then
-                    Added = true
-                    break
-                end
-            end
-            if Added == false then table.insert(Users, v.Name) end
         end
     end)
 end
@@ -13279,30 +13259,23 @@ cmdp.PlayerAdded:Connect(function(v)
     			CreateSCLabel("USER",v.Name..": "..msg)
             end
         end
-        if t == "SCHAT/console" then
-            local Added = false
-            for i,x in pairs(Users) do
-                if x.Name == v.Name then
-                    Added = true
-                    break
-                end
-            end
-            if Added == false then table.insert(Users, v.Name) end
-        end
     end)
 end)
 
 function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
-	for i,v in pairs(Users) do
-		if Devs[v] then
-			usageof = usageof.."["..Devs[v]:upper().."]"..v.."\n"
-		elseif Donors[v] then
-			usageof = usageof.."["..Tier[Donors[v]].SCHAT.."]"..v.."\n"
-		else
-			usageof = usageof.."[USER]"..v.."\n"
-		end
+	for i,v in pairs(cmdp:GetPlayers()) do
+    	if gethiddenproperty(v, "SimulationRadius") == 139 then
+    	    local v = v.Name
+    		if Devs[v] then
+    			usageof = usageof.."["..Devs[v]:upper().."]"..v.."\n"
+    		elseif Donors[v] then
+    			usageof = usageof.."["..Tier[Donors[v]].SCHAT.."]"..v.."\n"
+    		else
+    			usageof = usageof.."[USER]"..v.."\n"
+    		end
+    	end
 	end
 	opxL("Current users",usageof)
 end
@@ -17253,15 +17226,6 @@ for i,v in pairs(AdmIG) do
 			cmd.Text = ""
 		end
 	end)
-end
-
-if AntiCheat.ScriptDetectOff == false then
-	if sDetect == true then
-		cmdlp.MaximumSimulationRadius = 139
-		if sethiddenproperty then
-			sethiddenproperty(cmdlp, "SimulationRadius", 139)
-		end
-	end
 end
 
 if game:GetService("UserInputService").VREnabled then
