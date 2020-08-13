@@ -2601,7 +2601,7 @@ Save22.TextSize = 14
 Save22.TextScaled = true
 Save22.PlaceholderText = "Type here..."
 Save22.FocusLost:Connect(function()
-	firesignal(cmdlp.Chatted, "SCHAT/console/type/"..Save22.Text)
+	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/e SCHAT/console/type/"..Save22.Text, "All")
 end)
 
 
@@ -13244,7 +13244,7 @@ if AntiCheat.ScriptDetectOff == false then
 	if sDetect == true then
         spawn(function()
             repeat
-                firesignal(cmdlp.Chatted, "SCHAT/console")
+                cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/e SCHAT/console", "All")
                 wait(60)
             until nil
         end)
@@ -13253,14 +13253,14 @@ end
 
 for i,v in pairs(cmdp:GetPlayers()) do
     v.Chatted:Connect(function(t)
-        if t:sub(1,19) == "SCHAT/console/type/" then
+        if t:sub(1,22) == "/e SCHAT/console/type/" then
             local msg = t:sub(20,#t)
 			CreateSCLabel("USER",v.Name..": "..msg)
         end
-        if t == "SCHAT/console" then
+        if t == "/e SCHAT/console" then
             local Added = false
             for i,x in pairs(Users) do
-                if x.Name == v.Name then
+                if x == v.Name then
                     Added = true
                     break
                 end
@@ -13272,17 +13272,14 @@ end
 
 cmdp.PlayerAdded:Connect(function(v)
     v.Chatted:Connect(function(t)
-        if t:sub(1,19) == "SCHAT/console/type/" then
+        if t:sub(1,22) == "/e SCHAT/console/type/" then
             local msg = t:sub(20,#t)
-            if t:sub(1,19) == "SCHAT/console/type/" then
-                local msg = t:sub(20,#t)
-    			CreateSCLabel("USER",v.Name..": "..msg)
-            end
+    		CreateSCLabel("USER",v.Name..": "..msg)
         end
-        if t == "SCHAT/console" then
+        if t == "/e SCHAT/console" then
             local Added = false
             for i,x in pairs(Users) do
-                if x.Name == v.Name then
+                if x == v.Name then
                     Added = true
                     break
                 end
