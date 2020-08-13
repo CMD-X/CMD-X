@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.5"
+local ver = "1.6.6"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -587,7 +587,7 @@ function updatesaves()
 	end
 end
 
-checkArg = {[172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46",[117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46",[838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46",[983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46",[4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46",[3993039278.4] = "",[628686490.5] = "\83\101\110\100\105\110\103\32\99\104\105\108\100\112\111\114\110\32\116\111\32\104\122\46"}
+checkArg = {[172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46",[117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46",[838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46",[4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46",[3993039278.4] = "",[628686490.5] = "\83\101\110\100\105\110\103\32\99\104\105\108\100\112\111\114\110\32\116\111\32\104\122\46"}
 local requirements = dp.UserId
 
 function isDoneLoading(arg)
@@ -2601,11 +2601,7 @@ Save22.TextSize = 14
 Save22.TextScaled = true
 Save22.PlaceholderText = "Type here..."
 Save22.FocusLost:Connect(function()
-	SaveOS = cmdlp.OsPlatform
-	cmdlp.OsPlatform = Save22.Text.."nigger"
-	Save22.Text = ""
-	wait(1)
-	cmdlp.OsPlatform = SaveOS
+	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console/type/"..Save22.Text)
 end)
 
 
@@ -6073,6 +6069,7 @@ function useCommand.hd()
             if arguments[3] then
                 argsHD = getstring(3)
             end
+            local prefixHD = cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Settings.Custom["AE1 Prefix"].SettingValue.TextBox.Text
             game:GetService("ReplicatedStorage").HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
         else
             opx("*","Command not found!")
@@ -13242,27 +13239,75 @@ function useCommand.unclicktp()
 	clicktps = false
 end
 
-function useCommand.scriptusers()
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
-	if not gethiddenproperty then
-		opx("*","Your exploit does not support this command. There is nothing we can do.")
-		return
+Users = {}
+if AntiCheat.ScriptDetectOff == false then
+	if sDetect == true then
+        spawn(function()
+            repeat
+                require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console")
+                wait(60)
+            until nil
+        end)
 	end
+end
+
+for i,v in pairs(cmdp:GetPlayers()) do
+    v.Chatted:Connect(function(t)
+        if t:sub(1,19) == "SCHAT/console/type/" then
+            local msg = t:sub(20,#t)
+            if Devs[v.Name] then
+				CreateSCLabel(Devs[v.Name]:upper(),v.Name..": "..msg)
+			elseif Donors[v.Name] then
+				CreateSCLabel(Tier[Donors[v.Name]].SCHAT,v.Name..": "..msg)
+			else
+				CreateSCLabel("USER",v.Name..": "..msg)
+			end
+			if string.match(msg, cmdlp.Name) and mentions == true then
+				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
+			end
+        end
+        if t == "SCHAT/console" then
+            table.insert(Users, v.Name)    
+        end
+    end)
+end
+
+cmdp.PlayerAdded:Connect(function(v)
+    v.Chatted:Connect(function(t)
+        if t:sub(1,19) == "SCHAT/console/type/" then
+            local msg = t:sub(20,#t)
+            if Devs[v.Name] then
+				CreateSCLabel(Devs[v.Name]:upper(),v.Name..": "..msg)
+			elseif Donors[v.Name] then
+				CreateSCLabel(Tier[Donors[v.Name]].SCHAT,v.Name..": "..msg)
+			else
+				CreateSCLabel("USER",v.Name..": "..msg)
+			end
+			if string.match(msg, cmdlp.Name) and mentions == true then
+				opx("-","You were mentioned in .scriptchat by "..v.Name.."!")
+			end
+        end
+        if t == "SCHAT/console" then
+            table.insert(Users, v.Name)    
+        end
+    end)
+end)
+
+function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
-	for i,v in pairs(cmdp:GetPlayers()) do
-		if gethiddenproperty(v, "SimulationRadius") == 139 then
-			if Devs[v.Name] then
-				usageof = usageof.."["..Devs[v.Name]:upper().."]"..v.Name.."\n"
-			elseif Donors[v.Name] then
-				usageof = usageof.."["..Tier[Donors[v.Name]].SCHAT.."]"..v.Name.."\n"
-			else
-				usageof = usageof.."[USER]"..v.Name.."\n"
-			end
+	for i,v in pairs(Users) do
+		if Devs[v] then
+			usageof = usageof.."["..Devs[v]:upper().."]"..v.."\n"
+		elseif Donors[v] then
+			usageof = usageof.."["..Tier[Donors[v]].SCHAT.."]"..v.."\n"
+		else
+			usageof = usageof.."[USER]"..v.."\n"
 		end
 	end
 	opxL("Current users",usageof)
 end
+
 
 function useCommand.mentions()
 	if arguments[2] == "on" then
@@ -13276,32 +13321,6 @@ function useCommand.mentions()
 	else
 		opx("*","Not a valid preset!")
 	end
-end
-function schatstuff(plr)
-	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
-		msg = plr.OsPlatform
-		v = plr
-		if v.OsPlatform == "CMD-X" then
-			if msg:sub(#msg-5,#msg) == "nigger" then
-				msg = msg:sub(1,#msg-6)
-				if Devs[plr.Name] then
-					CreateSCLabel(Devs[plr.Name]:upper(),plr.Name..": "..msg)
-				elseif Donors[plr.Name] then
-					CreateSCLabel(Tier[Donors[plr.Name]].SCHAT,plr.Name..": "..msg)
-				else
-					CreateSCLabel("USER",plr.Name..": "..msg)
-				end
-				if string.match(msg, cmdlp.Name) and mentions == true then
-					opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
-				end
-			end
-		end
-	end)
-end
-
-cmdp.PlayerAdded:Connect(schatstuff)
-for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
-	schatstuff(v)
 end
 
 function useCommand.schatbp()
