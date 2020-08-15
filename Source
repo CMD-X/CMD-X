@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.6"
+local ver = "1.6.7"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -3461,6 +3461,14 @@ CMDS.commands = {
 	["untransparentbubbles"] = "()",
 	["disableshiftlock"] = "()",
 	["robloxfromdiscordid"] = "Gets roblox account from discord id.",
+	["nilchatcmds"] = "Makes CMD-X chat commands not appear on chat.",
+	["unnilchatcmds"] = "()",
+	["thirdperson"] = "Sets your camera to third person.",
+	["firstperson"] = "Sets your camera to first person.",
+	["xraycamera"] = "Allows your camera to look through walls.",
+	["unxraycamera"] = "()",
+	["randomizechat"] = "Randomizes your chat on message posting.",
+	["unrandomizechat"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -4191,6 +4199,8 @@ CMDS.aliases = {
 	["untransbubbles"] = "untransparentbubbles",
 	["dsl"] = "disableshiftlock",
 	["rfromdiscid"] = "robloxfromdiscordid",
+	["nilccmds"] = "nilchatcmds",
+	["unnilccmds"] = "unnilchatcmds",
 }
 --[[
 function SortFunc(myTable)
@@ -11428,7 +11438,7 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-	if _G.oldhook then
+	if _G.oldhook or _G.soldhook or _G.ssoldhook then
 		opx("*", "Bypass is already enabled.")
 		return
 	end
@@ -11468,6 +11478,29 @@ function useCommand.bypass()
 	opx("-", "Bypass enabled.")
 end
 
+function useCommand.nilchatcmds()
+	if _G.soldhook or _G.ssoldhook or _G.oldhook then
+		opx("*", "Nil ChatCmds is already enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	_G.soldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			if message:sub(1,#prefix) == prefix or message:sub(1,1) == "." then
+			    return require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(message)
+			end
+		end
+		return _G.soldhook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Nil ChatCmds enabled.")
+end
+
+
 function useCommand.unbypass()
 	if not _G.oldhook then
 		opx("*", "Bypass is not enabled.")
@@ -11479,6 +11512,81 @@ function useCommand.unbypass()
 	setreadonly(mt, true)
 	opx("-", "Bypass disabled.")
 	_G.oldhook = nil
+end
+
+function useCommand.unnilchatcmds()
+	if not _G.soldhook then
+		opx("*", "Nil ChatCmds is not enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	setreadonly(mt, false)
+	mt.__namecall = _G.soldhook
+	setreadonly(mt, true)
+	opx("-", "Nil ChatCmds disabled.")
+	_G.soldhook = nil
+end
+
+function useCommand.thirdperson()
+    opx("-","Third person enabled")
+    cmdlp.CameraMode = "Classic"
+end
+
+function useCommand.firstperson()
+    opx("-","First person enabled")
+    cmdlp.CameraMode = "LockFirstPerson"
+end
+
+function useCommand.xraycamera()
+    opx("-","X-Ray camera enabled")
+    SavedCamera = {Max = cmdlp.CameraMinZoomDistance, Min = cmdlp.CameraMaxZoomDistance}
+    cmdlp.CameraMinZoomDistance = math.huge - math.huge
+	cmdlp.CameraMaxZoomDistance = math.huge - math.huge    
+end
+
+function useCommand.unxraycamera()
+    opx("-","X-Ray camera disabled")
+    cmdlp.CameraMinZoomDistance = SavedCamera.Min
+	cmdlp.CameraMaxZoomDistance = SavedCamera.Max
+end
+
+function useCommand.randomizechat()
+	if _G.ssoldhook or _G.soldhook or _G.oldhook then
+		opx("*", "Randomize chat is already enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	_G.ssoldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			local x4 = ""
+			for i = 1,#message do
+			    local x2 = math.random(1,#message)
+			    local x3 = message:sub(x2,x2)
+			    x4 = x4..x3
+			end
+			return _G.ssoldhook(event, x4, args[2])
+		end
+		return _G.ssoldhook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Randomize chat enabled.")
+end
+
+function useCommand.unrandomizechat()
+	if not _G.ssoldhook then
+		opx("*", "Randomize chat is not enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	setreadonly(mt, false)
+	mt.__namecall = _G.ssoldhook
+	setreadonly(mt, true)
+	opx("-", "Randomize chat disabled.")
+	_G.ssoldhook = nil
 end
 
 function useCommand.emote()
@@ -14342,12 +14450,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/ot
 function useCommand.timedcmd()
 	if arguments[3] then
 		opx("-","Executing command after time given")
-		local useOf = arguments[3]
-		local useArgs = getstring(3)
-		GoodNewBad = findCmd(useOf)
+		local newarguments = getstring(3)
 		wait(arguments[2])
-		arguments = useArgs
-		useCommand[GoodNewBad]()
+		arguments = newarguments:split(" ")
+		useCommand[arguments[1]]()
 	else
 		opx("*","2 arguments are required!")
 	end
