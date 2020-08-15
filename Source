@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.5"
+local ver = "1.6.7"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -410,7 +410,7 @@ function updatesaves()
 	end
 end
 
-checkArg = {[172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46",[117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46",[838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46",[983858851.7] = "\39\72\97\114\100\39\32\97\117\100\105\111\32\109\97\107\101\114\44\32\73\32\111\78\108\89\32\85\115\69\32\67\109\68\45\88\32\70\111\82\32\84\104\69\32\78\111\67\108\73\112\46",[4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46",[3993039278.4] = "",[628686490.5] = "\83\101\110\100\105\110\103\32\99\104\105\108\100\112\111\114\110\32\116\111\32\104\122\46"}
+checkArg = {[172667278.9] = "\85\115\105\110\103\32\98\111\116\115\32\116\111\32\39\97\116\116\101\109\112\116\39\32\116\111\32\114\97\105\100\32\67\77\68\45\88\32\115\101\114\118\101\114\46",[117849776.6] = "\83\116\105\108\108\32\110\101\101\100\32\116\104\97\116\32\114\101\97\115\111\110\32\111\110\32\119\104\121\46",[838753790.5] = "\100\117\110\110\111\32\119\104\121\32\121\111\117\114\32\98\108\39\101\100\32\98\117\116\32\103\111\110\110\97\32\107\101\101\112\32\117\32\115\105\110\99\101\32\117\114\32\112\114\111\102\105\108\101\32\103\97\121\46",[4238827073.2] = "\116\104\105\115\32\100\117\100\101\32\100\111\110\116\32\101\118\101\110\32\101\120\112\108\111\105\116\32\108\109\97\111\46",[3993039278.4] = "",[628686490.5] = "\83\101\110\100\105\110\103\32\99\104\105\108\100\112\111\114\110\32\116\111\32\104\122\46"}
 local requirements = dp.UserId
 
 function isDoneLoading(arg)
@@ -1910,9 +1910,12 @@ end
 
 if AntiCheat.ScriptDetectOff == false then
     if sets.sDetect == true then
-		if sethiddenproperty then
-			sethiddenproperty(cmdlp, "SimulationRadius", 139)
-		end
+		game:GetService("RunService").RenderStepped:Connect(function()
+			cmdlp.MaximumSimulationRadius = 140
+			if sethiddenproperty then
+				sethiddenproperty(cmdlp, "SimulationRadius", 139)
+			end
+		end)
     end
 end
 
@@ -2355,11 +2358,7 @@ Save22.TextSize = 14
 Save22.TextScaled = true
 Save22.PlaceholderText = "Type here..."
 Save22.FocusLost:Connect(function()
-	SaveOS = cmdlp.OsPlatform
-	cmdlp.OsPlatform = Save22.Text.."nigger"
-	Save22.Text = ""
-	wait(1)
-	cmdlp.OsPlatform = SaveOS
+	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console/type/"..Save22.Text)
 end)
 
 
@@ -3217,6 +3216,14 @@ CMDS.commands = {
 	["untransparentbubbles"] = "()",
 	["disableshiftlock"] = "()",
 	["robloxfromdiscordid"] = "Gets roblox account from discord id.",
+	["nilchatcmds"] = "Makes CMD-X chat commands not appear on chat.",
+	["unnilchatcmds"] = "()",
+	["thirdperson"] = "Sets your camera to third person.",
+	["firstperson"] = "Sets your camera to first person.",
+	["xraycamera"] = "Allows your camera to look through walls.",
+	["unxraycamera"] = "()",
+	["randomizechat"] = "Randomizes your chat on message posting.",
+	["unrandomizechat"] = "()",
 	['translate'] = 'Translates message to language',
 }
 CMDS.usage = {
@@ -3443,7 +3450,7 @@ CMDS.usage = {
 	["colourbubbles"] = "(bgx, bgy, bgz) (tx, ty, tz)",
 	["kohls"] = "(str)",
 	["transparentbubbles"] = "(num)",
-	["robloxfromdiscordid"] = "(discid)"
+	["robloxfromdiscordid"] = "(discid)",
 	['translate'] = '(langs) / (from) (to) (message)',
 }
 CMDS.aliases = {
@@ -3949,6 +3956,8 @@ CMDS.aliases = {
 	["untransbubbles"] = "untransparentbubbles",
 	["dsl"] = "disableshiftlock",
 	["rfromdiscid"] = "robloxfromdiscordid",
+	["nilccmds"] = "nilchatcmds",
+	["unnilccmds"] = "unnilchatcmds",
 }
 --[[
 function SortFunc(myTable)
@@ -5828,6 +5837,7 @@ function useCommand.hd()
             if arguments[3] then
                 argsHD = getstring(3)
             end
+			local prefixHD = cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Settings.Custom["AE1 Prefix"].SettingValue.TextBox.Text
             game:GetService("ReplicatedStorage").HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
         else
             opx("*","Command not found!")
@@ -11180,7 +11190,7 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-	if _G.oldhook then
+	if _G.oldhook or _G.soldhook or _G.ssoldhook then
 		return opx("*", "Bypass is already enabled.")
 	end
 
@@ -11220,6 +11230,27 @@ function useCommand.bypass()
 	opx("-", "Bypass enabled.")
 end
 
+function useCommand.nilchatcmds()
+	if _G.soldhook or _G.ssoldhook or _G.oldhook then
+		return opx("*", "Nil ChatCmds is already enabled.")
+	end
+	local mt = getrawmetatable(game)
+	_G.soldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			if message:sub(1,#prefix) == prefix or message:sub(1,1) == "." then
+			    return require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(message)
+			end
+		end
+		return _G.soldhook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Nil ChatCmds enabled.")
+end
+
 function useCommand.unbypass()
 	if not _G.oldhook then
 		return opx("*", "Bypass is not enabled.")
@@ -11230,6 +11261,81 @@ function useCommand.unbypass()
 	setreadonly(mt, true)
 	opx("-", "Bypass disabled.")
 	_G.oldhook = nil
+end
+
+function useCommand.unnilchatcmds()
+	if not _G.soldhook then
+		opx("*", "Nil ChatCmds is not enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	setreadonly(mt, false)
+	mt.__namecall = _G.soldhook
+	setreadonly(mt, true)
+	opx("-", "Nil ChatCmds disabled.")
+	_G.soldhook = nil
+end
+
+function useCommand.thirdperson()
+    opx("-","Third person enabled")
+    cmdlp.CameraMode = "Classic"
+end
+
+function useCommand.firstperson()
+    opx("-","First person enabled")
+    cmdlp.CameraMode = "LockFirstPerson"
+end
+
+function useCommand.xraycamera()
+    opx("-","X-Ray camera enabled")
+    SavedCamera = {Max = cmdlp.CameraMinZoomDistance, Min = cmdlp.CameraMaxZoomDistance}
+    cmdlp.CameraMinZoomDistance = math.huge - math.huge
+	cmdlp.CameraMaxZoomDistance = math.huge - math.huge    
+end
+
+function useCommand.unxraycamera()
+    opx("-","X-Ray camera disabled")
+    cmdlp.CameraMinZoomDistance = SavedCamera.Min
+	cmdlp.CameraMaxZoomDistance = SavedCamera.Max
+end
+
+function useCommand.randomizechat()
+	if _G.ssoldhook or _G.soldhook or _G.oldhook then
+		opx("*", "Randomize chat is already enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	_G.ssoldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			local x4 = ""
+			for i = 1,#message do
+			    local x2 = math.random(1,#message)
+			    local x3 = message:sub(x2,x2)
+			    x4 = x4..x3
+			end
+			return _G.ssoldhook(event, x4, args[2])
+		end
+		return _G.ssoldhook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Randomize chat enabled.")
+end
+
+function useCommand.unrandomizechat()
+	if not _G.ssoldhook then
+		opx("*", "Randomize chat is not enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	setreadonly(mt, false)
+	mt.__namecall = _G.ssoldhook
+	setreadonly(mt, true)
+	opx("-", "Randomize chat disabled.")
+	_G.ssoldhook = nil
 end
 
 function useCommand.emote()
@@ -12990,23 +13096,36 @@ function useCommand.unclicktp()
 	clicktps = false
 end
 
-function useCommand.scriptusers()
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
-	if not gethiddenproperty then
-		opx("*","Your exploit does not support this command. There is nothing we can do.")
-		return
-	end
+for i,v in pairs(cmdp:GetPlayers()) do
+	v.Chatted:Connect(function(t)
+		if t:sub(1,19) == "SCHAT/console/type/" then
+			local msg = t:sub(20,#t)
+            CreateSCLabel("USER",v.Name..": "..msg)
+		end
+	end)
+end
 
+cmdp.PlayerAdded:Connect(function(v)
+    v.Chatted:Connect(function(t)
+		if t:sub(1,19) == "SCHAT/console/type/" then
+            local msg = t:sub(20,#t)
+			CreateSCLabel("USER",v.Name..": "..msg)
+		end
+	end)
+end)
+
+function useCommand.scriptusers()
 	opx("-","Showing players using CMD-X")
 	local usageof = ""
 	for i,v in pairs(cmdp:GetPlayers()) do
 		if gethiddenproperty(v, "SimulationRadius") == 139 then
-			if Devs[v.Name] then
-				usageof = usageof.."["..Devs[v.Name]:upper().."]"..v.Name.."\n"
-			elseif Donors[v.Name] then
-				usageof = usageof.."["..Tier[Donors[v.Name]].SCHAT.."]"..v.Name.."\n"
+			local v = v.Name
+			if Devs[v] then
+				usageof = usageof.."["..Devs[v]:upper().."]"..v.."\n"
+			elseif Donors[v] then
+				usageof = usageof.."["..Tier[Donors[v]].SCHAT.."]"..v.."\n"
 			else
-				usageof = usageof.."[USER]"..v.Name.."\n"
+				usageof = usageof.."[USER]"..v.."\n"
 			end
 		end
 	end
@@ -13025,33 +13144,6 @@ function useCommand.mentions()
 	else
 		opx("*","Not a valid preset!")
 	end
-end
-
-function schatstuff(plr)
-	plr:GetPropertyChangedSignal("OsPlatform"):Connect(function()
-		msg = plr.OsPlatform
-		v = plr
-    	if v.OsPlatform == "CMD-X" then
-    		if msg:sub(#msg-5,#msg) == "nigger" then
-    			msg = msg:sub(1,#msg-6)
-    			if Devs[plr.Name] then
-    				CreateSCLabel(Devs[plr.Name]:upper(),plr.Name..": "..msg)
-    			elseif Donors[plr.Name] then
-    				CreateSCLabel(Tier[Donors[plr.Name]].SCHAT,plr.Name..": "..msg)
-    			else
-    				CreateSCLabel("USER",plr.Name..": "..msg)
-    			end
-    			if string.match(msg, cmdlp.Name) and mentions == true then
-    				opx("-","You were mentioned in .scriptchat by "..plr.Name.."!")
-    			end
-    		end
-    	end
-	end)
-end
-
-cmdp.PlayerAdded:Connect(schatstuff)
-for _,v in pairs(cmdp:GetPlayers()) do --Shit to change
-	schatstuff(v)
 end
 
 function useCommand.schatbp()
@@ -14091,12 +14183,10 @@ end)
 function useCommand.timedcmd()
     if arguments[3] then
         opx("-","Executing command after time given")
-        local useOf = arguments[3]
-        local useArgs = getstring(3)
-        GoodNewBad = findCmd(useOf)
+		local newarguments = getstring(3)
         wait(arguments[2])
-        arguments = useArgs
-        useCommand[GoodNewBad]()
+		arguments = newarguments:split(" ")
+		useCommand[arguments[1]]()
     else
         opx("*","2 arguments are required!")
     end
@@ -16141,7 +16231,7 @@ function createTracer(character)
 	l.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
 	l.Transparency = .77
 	l.Thickness = 2
-	l.Color = character.Parent.TeamColor
+	l.Color = Color3.new(1,1,1)
 	l.To = l.From
 	Lines[character] = {}
 	Lines[character]["Tracer"] = l
@@ -17002,15 +17092,6 @@ for i=1, #AdmIG do
 			cmd.Text = ""
 		end
 	end)
-end
-
-if AntiCheat.ScriptDetectOff == false then
-    if sets.sDetect == true then
-		cmdlp.MaximumSimulationRadius = 139
-		if sethiddenproperty then
-			sethiddenproperty(cmdlp, "SimulationRadius", 139)
-		end
-    end
 end
 
 if game:GetService("UserInputService").VREnabled then
