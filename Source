@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.6.7"
+local ver = "1.6.8"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -666,6 +666,10 @@ AntiCheat = {
 
 -- Known Anti CMD-X and unpatches:
 AntiCheat.Games = {
+    
+    [738548299] = function()
+        AntiCheat.ScriptDetectOff = true    
+    end,
     
     [4375619868] = function()
         AntiCheat.ScriptDetectOff = true    
@@ -1757,8 +1761,9 @@ output4.TextSize = 16
 output4.TextXAlignment = Enum.TextXAlignment.Left
 output4.TextWrapped = true
 output4.TextTruncate = Enum.TextTruncate.AtEnd
-output4.Text = ""
- 
+local Hints = {"Did you know you can execute multiple commands with ';;'?","Did you know you can create a wait using timedcmd in loops?","You can find commands using 'cmds'.","You can change your prefix by doing 'prefixnew (key)'","Did you know CMD-X was created in October 2019?"}
+output4.Text = Hints[math.random(1,#Hints)]
+
 output5.Name = "output5"
 output5.Parent = output
 output5.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -3469,6 +3474,8 @@ CMDS.commands = {
 	["unxraycamera"] = "()",
 	["randomizechat"] = "Randomizes your chat on message posting.",
 	["unrandomizechat"] = "()",
+	["retardchat"] = "Retards your chat on message posting.",
+	["unretardchat"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -5126,26 +5133,25 @@ fixedArgs = false
 Debugging = false
 local History = {}
 local useCommand = {}
-cmd.FocusLost:connect(function()
+function executeCommand(com)
     wait(.1)
-	if cmd.Text:lower():sub(1,#prefix) == prefix then
-		cmd.Text = cmd.Text:sub(#prefix+1,#cmd.Text)
-	elseif cmd.Text:lower():sub(1,1) == '.' then
-		cmd.Text = cmd.Text:sub(2,#cmd.Text)
+	if com:lower():sub(1,#prefix) == prefix then
+		com = com:sub(#prefix+1,#com)
+	elseif com:lower():sub(1,1) == '.' then
+		com = com:sub(2,#com)
 	end
-	if cmd.Text ~= "" then
+	if com ~= "" then
 		local matchCommand = ""
-		alignFunctions(cmd.Text)
+		alignFunctions(com)
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy then
-			History[#History+1] = cmd.Text
+			History[#History+1] = com
 			for _,v in pairs(CMDStats) do
 				if cmdsy == _ then
 					v.T = v.T + 1
 				end
 			end
 			updatesaves()
-			cmd.Text = ""
 			if fixedArgs == false then
 				if commandsLoaded() and noCMD == false then
 					if Debugging == false then
@@ -5162,14 +5168,21 @@ cmd.FocusLost:connect(function()
 				opx("*","Need help? Join our discord! "..cordCode)
 			end
 		else
-			cmd.Text = ""
 			local invalidString = getstring(1)
 			if #invalidString > 38 then
 				invalidString = invalidString:sub(1,35).."..."
 			end
 			opx("*",invalidString.." is not a valid command.")
 		end
-	end
+	end    
+end
+
+cmd.FocusLost:connect(function()
+    local comsToExe = cmd.Text:split(";;")
+    cmd.Text = ""
+    for i,v in pairs(comsToExe) do
+        executeCommand(v)
+    end
 end)
 
 function useCommand.prefix()
@@ -11438,7 +11451,7 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-	if _G.oldhook or _G.soldhook or _G.ssoldhook then
+	if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook then
 		opx("*", "Bypass is already enabled.")
 		return
 	end
@@ -11479,7 +11492,7 @@ function useCommand.bypass()
 end
 
 function useCommand.nilchatcmds()
-	if _G.soldhook or _G.ssoldhook or _G.oldhook then
+	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook then
 		opx("*", "Nil ChatCmds is already enabled.")
 		return
 	end
@@ -11500,6 +11513,47 @@ function useCommand.nilchatcmds()
 	opx("-", "Nil ChatCmds enabled.")
 end
 
+function useCommand.retardchat()
+    if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook then
+		opx("*", "Retard chat is already enabled.")
+		return
+    end
+        local stringka = {"UvU","uvu","^w^",">w<","(´•ω•`)","><",">>",":3",">:3",":D"}
+    local mt = getrawmetatable(game)
+	_G.sssoldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]:gsub("l","w"):gsub("L","W"):gsub("r","w"):gsub("n","ny"):split(" ")
+			local messagefin = ""
+			for i,v in pairs(message) do
+        		if i == 1 then
+        			v = (v:sub(1,1).."-"):rep(math.random(1,2))..v:sub(2,#v)
+        		    messagefin = messagefin..v.." "
+        		else
+        	        messagefin = messagefin..v.." "
+        		end
+			end
+			messagefin = messagefin..stringka[math.random(1,#stringka)]
+			return _G.sssoldhook(event, messagefin, args[2])
+		end
+		return _G.sssoldhook(event, ...)
+	end)
+end
+
+function useCommand.unretardchat()
+	if not _G.sssoldhook then
+		opx("*", "Retard chat is not enabled.")
+		return
+	end
+	local mt = getrawmetatable(game)
+	setreadonly(mt, false)
+	mt.__namecall = _G.sssoldhook
+	setreadonly(mt, true)
+	opx("-", "Retard chat disabled.")
+	_G.sssoldhook = nil
+end
 
 function useCommand.unbypass()
 	if not _G.oldhook then
@@ -11513,6 +11567,7 @@ function useCommand.unbypass()
 	opx("-", "Bypass disabled.")
 	_G.oldhook = nil
 end
+
 
 function useCommand.unnilchatcmds()
 	if not _G.soldhook then
@@ -11551,7 +11606,7 @@ function useCommand.unxraycamera()
 end
 
 function useCommand.randomizechat()
-	if _G.ssoldhook or _G.soldhook or _G.oldhook then
+	if _G.ssoldhook or _G.soldhook or _G.oldhook or _G.sssoldhook then
 		opx("*", "Randomize chat is already enabled.")
 		return
 	end
@@ -11709,6 +11764,11 @@ function useCommand.chatframe()
 		target = findplr(arguments[2])
 		if target then
 			game:GetService("Chat"):Chat(target.Character.Head,getstring(3),Enum.ChatColor.White)
+        	game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        		Text = "["..target.Name.."]: "..getstring(3);
+        		Color = Color3.fromRGB(255,255,255);
+        		Font = Enum.Font.SourceSansBold;TextSize = 18
+        	})
 			opx("-","Forced "..target.Name.." to say "..getstring(3))
 		else
 			opx("*","Player does not exist!")
