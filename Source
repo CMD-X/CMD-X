@@ -661,6 +661,7 @@ AntiCheat = {
 	OneTimeScramble = false;
 	PrintingOff = false;
 	NoGui = false;
+	AntiFocus = false;
 	Custom1 = false;
 }
 
@@ -765,6 +766,19 @@ AntiCheat.Games = {
 
 if AntiCheat.Games[game.PlaceId] then
 	AntiCheat.Games[game.PlaceId]()
+end
+
+if AntiCheat.AntiFocus then
+    mt = getrawmetatable(game)
+    namecall = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(...)
+        if not checkcaller() and getnamecallmethod() == "GetFocusedTextbox" and namecall(...) == cmd then
+            return nil
+        end
+        return namecall(...)
+    end)
+    setreadonly(mt, true)
 end
 
 if AntiCheat.Custom1 then
