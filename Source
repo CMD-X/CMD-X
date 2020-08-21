@@ -671,9 +671,16 @@ AntiCheat.Games = {
 	[4052062489] = function()
 		AntiCheat.AutoAntiKick = true
 	end,
-
-	[176053469] = function()
-		AntiCheat.Custom1 = true
+	
+	[5278850819] = function()
+	    cmdlp.Character.AntiExploit.Disabled = true
+	    cmdlp.CharacterAdded:Connect(function()
+	        wait(.1)
+	        cmdlp.Character.AntiExploit.Disabled = true
+	    end)
+        workspace.FallenPartsDestroyHeight = 0/0
+        workspace.Structure.KillRoof.Position = Vector3.new(0,math.huge,0)
+        workspace.Structure.KillPart.Position = Vector3.new(0,math.huge,0)    
 	end,
 
 }
