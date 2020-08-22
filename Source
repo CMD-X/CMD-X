@@ -684,10 +684,15 @@ AntiCheat.Games = {
         workspace.Structure.KillPart.Position = Vector3.new(0,math.huge,0)    
 	end,
 
+    [2988554876] = function()
+        game:GetService("ReplicatedStorage").AC:Destroy()
+        cmdlp.PlayerScripts.AntiCheat:Destroy()
+    end,
+
 }
 
 if AntiCheat.Games[game.PlaceId] then
-	AntiCheat.Games[game.PlaceId]()
+	pcall(function() AntiCheat.Games[game.PlaceId]() end)
 end
 
 if AntiCheat.AntiFocus then
