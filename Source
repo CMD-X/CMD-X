@@ -667,6 +667,7 @@ AntiCheat = {
 	NoGui = false;
 	AntiFocus = false;
 	Custom1 = false;
+	Attachment = "HairAttachment"
 }
 
 -- Known Anti CMD-X and unpatches:
@@ -677,14 +678,7 @@ AntiCheat.Games = {
 	end,
 	
 	[5278850819] = function()
-	    cmdlp.Character.AntiExploit.Disabled = true
-	    cmdlp.CharacterAdded:Connect(function()
-	        wait(.1)
-	        cmdlp.Character.AntiExploit.Disabled = true
-	    end)
-        workspace.FallenPartsDestroyHeight = 0/0
-        workspace.Structure.KillRoof.Position = Vector3.new(0,math.huge,0)
-        workspace.Structure.KillPart.Position = Vector3.new(0,math.huge,0)    
+	    AntiCheat.Attachment = "NeckAttachment"
 	end,
 
     [2988554876] = function()
@@ -2107,7 +2101,7 @@ if _G.sCheck then _G.sCheck:Disconnect() end
 if sDetect then
     local check1 = cmdlp.Character:FindFirstChild("Head")
     if check1 then
-        local check2 = check1:FindFirstChild("HairAttachment")
+        local check2 = check1:FindFirstChild(AntiCheat.Attachment)
         if check2 then
             check2:Destroy()
         end
@@ -2117,7 +2111,7 @@ if sDetect then
             wait(1)
             local check1 = cmdlp.Character:FindFirstChild("Head")
             if check1 then
-                local check2 = check1:FindFirstChild("HairAttachment")
+                local check2 = check1:FindFirstChild(AntiCheat.Attachment)
                 if check2 then
                     check2:Destroy()
                 end
@@ -13453,7 +13447,7 @@ function useCommand.scriptusers()
             wait(.2)
             local check1 = v.Character:FindFirstChild("Head")
             if check1 then
-                local check2 = check1:FindFirstChild("HairAttachment")
+                local check2 = check1:FindFirstChild(AntiCheat.Attachment)
                 if not check2 then
                     local v = v.Name
             		if Devs[v] then
