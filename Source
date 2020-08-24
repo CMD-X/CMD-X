@@ -3429,6 +3429,7 @@ CMDS.commands = {
 	["unretardchat"] = "()",
 	["scriptusers"] = "Shows people currently using CMD-X.",
 	["noshow"] = "Allows you to appear off .scriptusers.",
+	["reverse"] = "Allows you to reverse your HumanoidRootParts CFrame."
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3653,6 +3654,7 @@ CMDS.usage = {
 	["transparentbubbles"] = "(num)",
 	["robloxfromdiscordid"] = "(discid)",
 	["noshow"] = "(on/off)",
+	["reverse"] = "(num)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -11509,6 +11511,47 @@ function useCommand.unretardchat()
 	setreadonly(mt, true)
 	opx("-", "Retard chat disabled.")
 	_G.sssoldhook = nil
+end
+
+function useCommand.reverse()
+    if arguments[2] then
+            opx("-","Now Reversing")
+            local reversesettings = {
+            delay = arguments[2];
+            }
+
+        repeat until game.Players.LocalPlayer.Character
+        local rp = game.Players.LocalPlayer.Character.HumanoidRootPart
+        local health = game.Players.LocalPlayer.Character.Humanoid.Health
+        local Table={rp.CFrame}
+        for i=1, #Table do
+            for count = 1, reversesettings.delay-1 do
+                game:GetService("RunService").RenderStepped:Wait()
+                table.insert(Table, rp.CFrame)
+            end
+
+            local hyro = Instance.new("BodyGyro")
+            hyro.Parent = rp
+            hyro.MaxTorque = Vector3.new(1000,1000,1000)
+            hyro.D = Vector3.new(0,0,0)
+        
+            rp.CFrame = (rp.CFrame)
+            local number = reversesettings.delay+1
+            for count = 1, reversesettings.delay do
+                game:GetService("RunService").RenderStepped:Wait()
+                number = number-1
+                rp.CFrame = (Table[number])
+                hyro.CFrame = (Table[number])
+            end
+            for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BodyVelocity") or v:IsA("BodyGyro") or v:IsA("RocketPropulsion") or v:IsA("BodyThrust") or v:IsA("BodyAngularVelocity") or v:IsA("AngularVelocity") or v:IsA("BodyForce") or v:IsA("VectorForce") or v:IsA("LineForce") then
+	            v:Destroy()
+            end
+        end
+        end
+    else
+        opx("*","2 arguments are required for this command!")
+    end
 end
 
 function useCommand.unbypass()
