@@ -668,6 +668,7 @@ AntiCheat = {
 	AntiFocus = false;
 	Custom1 = false;
 	Attachment = "HairAttachment"
+	Warning1 = false
 }
 
 -- Known Anti CMD-X and unpatches:
@@ -691,6 +692,7 @@ AntiCheat.Games = {
         end)
         workspace.FallenPartsDestroyHeight = 0/0
 	    AntiCheat.Attachment = "NeckAttachment"
+	    AntiCheat.Warning1 = true
 	end,
 
     [2988554876] = function()
@@ -17192,6 +17194,7 @@ if AntiCheat.IntroAudioOff then opx("*","Turned intro off due to anticheat") end
 if AntiCheat.DontJumbleNames then opx("*","Jumble names is off due to anticheat") end
 if AntiCheat.OneTimeScramble then opx("*","Scrambled names once due to anticheat") end
 if AntiCheat.PrintingOff then opx("*","Printing has been turned off due to anticheat") end
+if AntiCheat.Warning1 then opx("*","This game is known to have a float/fly anticheat becareful") end
 
 ---------------------------------------|
 -- Start CMDs: ------------------------|
