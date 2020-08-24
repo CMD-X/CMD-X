@@ -678,6 +678,9 @@ AntiCheat.Games = {
 	end,
 	
 	[5278850819] = function()
+	    pcall(function() game.ReplicatedStorage.Remotes.event:Destroy() end)
+        for _,v in pairs(getnilinstances()) do if v:IsA("LocalScript") then v.Disabled = true end end
+        for _,v in pairs(getloadedmodules()) do if v.Name == "Anti" then v:Destroy() end end
 	    AntiCheat.Attachment = "NeckAttachment"
 	end,
 
