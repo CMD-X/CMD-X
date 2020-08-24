@@ -689,6 +689,7 @@ AntiCheat.Games = {
                 v:Destroy()
             end
         end)
+        workspace.FallenPartsDestroyHeight = 0/0
 	    AntiCheat.Attachment = "NeckAttachment"
 	end,
 
