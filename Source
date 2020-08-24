@@ -667,8 +667,8 @@ AntiCheat = {
 	NoGui = false;
 	AntiFocus = false;
 	Custom1 = false;
-	Attachment = "HairAttachment"
-	Warning1 = false
+	Attachment = "HairAttachment",
+	Warning1 = false,
 }
 
 -- Known Anti CMD-X and unpatches:
