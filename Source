@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.7.1"
+local ver = "1.7.2"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/DD2w2cZ"
 local changeLog = {
@@ -364,6 +364,7 @@ defaultsettings = {
 	permjumppower = 150;
 	permhipheight = 20;
 	permgravity = 50;
+	permmaxsl = 89.99;
 	Adm = {};
 	hkBinds = {};
 	dStyle = "rounded";
@@ -416,6 +417,7 @@ function saves()
 				if json.permjumppower then permjumppower = json.permjumppower else permjumppower = 150 end
 				if json.permhipheight then permhipheight = json.permhipheight else permhipheight = 20 end
 				if json.permgravity then permgravity = json.permgravity else permgravity = 50 end
+			    if json.permmaxsl then permmaxsl = json.permmaxsl else permmaxsl = 89.99 end
 				if json.Adm then Adm = json.Adm else Adm = {} end
 				if json.hkBinds then hkBinds = json.hkBinds else hkBinds = {} end
 				if json.dStyle then dStyle = json.dStyle else dStyle = "rounded" end
@@ -470,6 +472,7 @@ function saves()
 				permjumppower = 150
 				permhipheight = 20
 				permgravity = 50
+				permmaxsl = 89.99
 				Adm = {}
 				hkBinds = {}
 				dStyle = "rounded"
@@ -516,6 +519,7 @@ function saves()
 		permjumppower = 150
 		permhipheight = 20
 		permgravity = 50
+		permmaxsl = 89.99
 		Adm = {}
 		hkBinds = {}
 		dStyle = "rounded"
@@ -567,6 +571,7 @@ function updatesaves()
 			permjumppower = permjumppower;
 			permhipheight = permhipheight;
 			permgravity = permgravity;
+			permmaxsl = permmaxsl;
 			Adm = Adm;
 			hkBinds = hkBinds;
 			dStyle = dStyle;
@@ -3443,7 +3448,10 @@ CMDS.commands = {
 	["unretardchat"] = "()",
 	["scriptusers"] = "Shows people currently using CMD-X.",
 	["noshow"] = "Allows you to appear off .scriptusers.",
-	["reverse"] = "Allows you to reverse your HumanoidRootParts CFrame."
+	["reverse"] = "Allows you to reverse your HumanoidRootParts CFrame.",
+	["maxslopeangle"] = "Changes your MaxSlopeAngle.",
+	["permmaxslopeangle"] = "Permanently changes your MaxSlopeAngle.",
+	["defaultmaxslopeangle"] = "Sets your MaxSlopeAngle to default.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3669,6 +3677,8 @@ CMDS.usage = {
 	["robloxfromdiscordid"] = "(discid)",
 	["noshow"] = "(on/off)",
 	["reverse"] = "(num)",
+	["maxslopeangle"] = "(num)",
+	["permmaxslopeangle"] = "(num)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -4174,6 +4184,9 @@ CMDS.aliases = {
 	["unnilccmds"] = "unnilchatcmds",
 	["stats"] = "statistics",
 	["susers"] = "scriptusers",
+	["maxsl"] = "maxslopeangle",
+	["permmaxsl"] = "permmaxslopeangle",
+	["dmaxsl"] = "defaultmaxslopeangle",
 }
 --[[
 function SortFunc(myTable)
@@ -5676,6 +5689,21 @@ end
 
 function useCommand.nextupdate()
 	opx("-","Next update: "..nextupd)
+end
+
+function useCommand.maxslopeangle()
+    if arguments[2] and cmdnum(arguments[2]) then
+		cmdlp.Character.Humanoid.MaxSlopeAngle = arguments[2]
+		opx("-","MaxSlopeAngle set to "..arguments[2])
+	else
+		cmdlp.Character.Humanoid.MaxSlopeAngle = permmaxsl
+		opx("-","MaxSlopeAngle set to "..permmaxsl)
+	end
+end
+
+function useCommand.defaultmaxslopeangle()
+	cmdlp.Character.Humanoid.MaxSlopeAngle = 89
+	opx("-","MaxSlopeAngle set to default (89)")
 end
 
 function useCommand.walkspeed()
@@ -12143,6 +12171,16 @@ function useCommand.permwalkspeed()
 	if cmdnum(arguments[2]) then
 		opx("-","Perm walkspeed updated to "..arguments[2])
 		permwalkspeed = arguments[2]
+		updatesaves()
+	else
+		opx("*","2 arguments are required for this command")
+	end
+end
+
+function useCommand.permmaxslopeangle()
+	if cmdnum(arguments[2]) then
+		opx("-","Perm maxslopeangle updated to "..arguments[2])
+		permmaxsl = arguments[2]
 		updatesaves()
 	else
 		opx("*","2 arguments are required for this command")
