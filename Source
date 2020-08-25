@@ -704,12 +704,6 @@ AntiCheat.Games = {
         cmdrs.AC:Destroy()
         cmdlp.PlayerScripts.AntiCheat:Destroy()
     end,
-    
-    [5388509011] = function()
-        for _,v in pairs(game:GetService("ReplicatedStorage").Tools:GetChildren()) do
-            game:GetService("ReplicatedStorage").PurchaseFinished:FireServer(v.Name, -9e9)
-        end
-    end,
 
 }
 
