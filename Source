@@ -686,6 +686,7 @@ AntiCheat.Games = {
 	[5278850819] = function()
 	    pcall(function() game.ReplicatedStorage.Remotes.event:Destroy() end)
         for _,v in pairs(getnilinstances()) do if v:IsA("LocalScript") then v.Disabled = true end end
+        AntiCheat.AutoAntiKick = true
         pcall(function()
             for _,v in pairs(workspace.Structure.KillPart:GetChildren()) do
                 v:Destroy()
@@ -695,9 +696,8 @@ AntiCheat.Games = {
             end
         end)
         workspace.FallenPartsDestroyHeight = 0/0
-	    AntiCheat.Attachment = "NeckAttchment"
+	    AntiCheat.Attachment = "Sf"
 	    AntiCheat.Warning1 = true
-	    AntiCheat.AutoAntiKick = true
 	end,
 
     [2988554876] = function()
