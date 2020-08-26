@@ -684,19 +684,15 @@ AntiCheat.Games = {
 	end,
 	
 	[5278850819] = function()
-	    pcall(function() game.ReplicatedStorage.Remotes.event:Destroy() end)
-        AntiCheat.AutoAntiKick = true
-        pcall(function()
-            for _,v in pairs(workspace.Structure.KillPart:GetChildren()) do
-                v:Destroy()
-            end
-            for _,v in pairs(workspace.Structure.Edges:GetChildren()) do
-                v:Destroy()
-            end
-        end)
-        workspace.FallenPartsDestroyHeight = 0/0
+	    workspace.FallenPartsDestroyHeight = 0/0
 	    AntiCheat.Attachment = "Sf"
 	    AntiCheat.Warning1 = true
+	    for _,v in pairs(workspace.Structure.KillPart:GetChildren()) do
+            v:Destroy()
+        end
+        for _,v in pairs(workspace.Structure.Edges:GetChildren()) do
+            v:Destroy()
+        end
 	end,
 
     [2988554876] = function()
