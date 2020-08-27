@@ -693,6 +693,12 @@ AntiCheat.Games = {
         for _,v in pairs(workspace.Structure.Edges:GetChildren()) do
             v:Destroy()
         end
+        for _,c in pairs(getconnections(char.DescendantAdded)) do c:Disable() end
+        for _,c in pairs(getconnections(hrp:GetPropertyChangedSignal("Velocity"))) do c:Disable() end
+        for _,c in pairs(getconnections(hum:GetPropertyChangedSignal("WalkSpeed"))) do c:Disable() end
+        for _,c in pairs(getconnections(hum:GetPropertyChangedSignal("JumpPower"))) do c:Disable() end
+        for _,c in pairs(getconnections(game.ReplicatedStorage.Remotes.ChildRemoved)) do c:Disable() end
+        game.ReplicatedStorage.Remotes.event:Destroy()
 	end,
 
     [2988554876] = function()
