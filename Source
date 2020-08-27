@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.7.2"
+local ver = "1.7.3"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -684,7 +684,7 @@ AntiCheat.Games = {
 	end,
 	
 	[5278850819] = function()
-	    workspace.FallenPartsDestroyHeight = 0/0
+        workspace.FallenPartsDestroyHeight = 0/0
 	    AntiCheat.Attachment = "Sf"
 	    AntiCheat.Warning1 = true
 	    for _,v in pairs(workspace.Structure.KillPart:GetChildren()) do
@@ -3441,6 +3441,8 @@ CMDS.commands = {
 	["maxslopeangle"] = "Changes your MaxSlopeAngle.",
 	["permmaxslopeangle"] = "Permanently changes your MaxSlopeAngle.",
 	["defaultmaxslopeangle"] = "Sets your MaxSlopeAngle to default.",
+	["notouch"] = "Stops touch interests from being fired.",
+	["yestouch"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -6129,8 +6131,6 @@ function useCommand.nilgotopart()
 				RootNil.CFrame = v.CFrame
 				RootNil.Parent = cmdlp.Character
 				break
-			else
-				opx("*","Part does not exist")
 			end
 		end
 	else
@@ -12708,8 +12708,6 @@ function useCommand.vgotopart()
 				local Car = cmdlp.Character.Humanoid.SeatPart
 				Car.Parent.Parent:MoveTo(v.Position)
 				break
-			else
-				opx("*","Part does not exist")
 			end
 		end
 	else
@@ -15130,8 +15128,6 @@ function useCommand.freecamgotopart()
 					navSpeed = permfcspeed
 					NAV_KEYBOARD_SPEED = Vector3.new(permfcspeed, permfcspeed, permfcspeed)
 					break
-				else
-					opx("*","Part does not exist")
 				end
 			end
 		else
@@ -15405,8 +15401,6 @@ function useCommand.gotopart()
 				cmdlp.Character.Humanoid.Jump = true
 				cmdlp.Character.HumanoidRootPart.CFrame = v.CFrame
 				break
-			else
-				opx("*","Part does not exist")
 			end
 		end
 	else
@@ -16313,7 +16307,7 @@ end
 function useCommand.mass()
 	opx("-","Executing player command in mass")
 	FinalCMD = findCmd(arguments[2])
-	for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
+	for i,v in pairs(cmdp:GetPlayers()) do
 		arguments = FinalCMD.." "..v.Name
 		arguments = arguments:split(" ")
 		useCommand[FinalCMD]()
@@ -16486,7 +16480,9 @@ function useCommand.gotobpclass()
 	end
 end
 
+HATGIVE = false
 function useCommand.hatgiverspam()
+    opx("-","Now spamming hat givers")
 	local HATS = {}
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("TouchTransmitter") and v.Parent.Name ~= "Handle" then 
@@ -16497,7 +16493,7 @@ function useCommand.hatgiverspam()
 		end
 	end
 	local HRP = cmdlp.Character.HumanoidRootPart
-	local X = true
+	HATGIVE = true
 	local Number = 0
 	repeat game:GetService("RunService").RenderStepped:Wait()
 		for i,v in pairs(HATS) do
@@ -16518,18 +16514,42 @@ function useCommand.hatgiverspam()
 				Number = Number+1 
 			end
 		end
-	until X == false
+	until HATGIVE == false
+end
+
+function useCommand.unhatgiverspam()
+    HATGIVE = false
+    opx("-","No longer spamming hat givers")
 end
 
 function useCommand.playingaudios()
 	opx("-","Showing playing audios")
 	xaudios = ""
 	for i,v in pairs(workspace:GetDescendants()) do
-		if v:IsA("Sound") then
-			xaudios = xaudios.."\n"
+		if v:IsA("Sound") and v.Playing then
+			xaudios = xaudios..v.SoundId.."\n"
 		end
 	end
 	opxL("Audios Playing",xaudios)
+end
+
+local notouchTouches = {}
+function useCommand.notouch()
+    opx("-","Disabled all touchinterests")
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("TouchTransmitter") then
+            table.insert(notouchTouches, {part = v, pare = v.Parent})
+            v.Parent = game:GetService("PolicyService")
+        end
+    end
+end
+
+function useCommand.yestouch()
+    opx("-","Enabled all touchinterests")
+    for i,v in pairs(notouchTouches) do
+        table.remove(notuchTouches, i)
+        v.part.Parent = v.pare
+    end
 end
 
 function useCommand.testaudio()
