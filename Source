@@ -17623,7 +17623,7 @@ if fakefocus then
 	setreadonly(mt, false)
 	local oldncall = mt.__namecall
 	mt.__namecall = newcclosure(function(...)
-		if not checkcaller() and getnamecallmethod() == "GetFocusedTextBox" and oldncall(...) == cmd then
+		if not checkcaller() and getnamecallmethod() == "GetFocusedTextBox" or getnamecallmethod() == "TextBoxFocusReleased" and oldncall(...) == cmd then
 			return fakefocus
 		end
 		return oldncall(...)
