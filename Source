@@ -15783,14 +15783,19 @@ end
 IHaveSimmed = false
 function useCommand.simulationradius()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
-	gethiddenproperty = gethiddenproperty or get_hidden_prop
-	if not sethiddenproperty or not gethiddenproperty then
+	setsimulationradius = setsimulationradius or set_simulation_radius
+	if not sethiddenproperty then
 		opx("*","Your exploit does not support this command. There is nothing we can do.")
 		return
 	end
-	IHaveSimmed = true
-	sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
-    setsimulationradius(1e308)
+    if setsimulationradius then
+    	IHaveSimmed = true
+    	sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
+        setsimulationradius(1e308)
+    else
+        sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
+        sethiddenproperty(cmdlp,"SimulationRadius",1e308)
+    end
 end
 
 IHaveGrabbed = false
