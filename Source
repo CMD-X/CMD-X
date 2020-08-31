@@ -1,7 +1,7 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.7.4"
+local ver = "1.7.5"
 local nextupd = "20/07/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -3450,7 +3450,11 @@ CMDS.commands = {
 	["notouch"] = "Stops touch interests from being fired.",
 	["yestouch"] = "()",
 	["badgesnipe"] = "Snipes a users game by badges earnt.",
-	["viewserver"] = "Allows you to see players in another server."
+	["viewserver"] = "Allows you to see players in another server.",
+	["chatprivacypublic"] = "Says a users chat privacy mode publicly.",
+	["chatprivacyprivate"] = "Says a users chat privacy mode privately.",
+	["chatprivacy"] = "Sets your chat privacy.",
+	["masschatprivacy"] = "Says everyones chat privacy.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3613,7 +3617,6 @@ CMDS.usage = {
 	["depth"] = "(num)",
 	["atmosphere"] = "(num)",
 	["cmdinfo"] = "(cmd)",
-	["simulationradius"] = "(num / max)",
 	["grabunanchored"] = "(model)",
 	["spinunanchored"] = "(offset)",
 	["masscmd"] = "(cmd) (cmd) ...",
@@ -3681,6 +3684,9 @@ CMDS.usage = {
 	["badgesnipe"] = "(user)",
 	["viewserver"] = "(placeid/this) (guid)",
 	["servers"] = "(placeid/this)",
+	["chatprivacy"] = "(AllUsers/NoOne/Friends)",
+	["chatprivacypublic"] = "(plr)",
+	["chatprivacyprivate"] = "(plr)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -4190,6 +4196,10 @@ CMDS.aliases = {
 	["permmaxsl"] = "permmaxslopeangle",
 	["dmaxsl"] = "defaultmaxslopeangle",
 	["bsnipe"] = "badgesnipe",
+	["cprivpu"] = "chatprivacypublic",
+	["cprivpr"] = "chatprivacyprivate",
+	["cpriv"] = "chatprivacy",
+	["masscpriv"] = "masschatprivacy",
 }
 --[[
 function SortFunc(myTable)
@@ -15779,39 +15789,8 @@ function useCommand.simulationradius()
 		return
 	end
 	IHaveSimmed = true
-	if arguments[2] == "max" then
-		opx("-","Updated simulation radius")
-		coroutine.resume(coroutine.create(function()
-			settings().Physics.AllowSleep = false
-			game:GetService("RunService").RenderStepped:Connect(function()
-				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
-					if v ~= cmdlp then
-						v.MaximumSimulationRadius = 0.1
-						sethiddenproperty(cmdlp, "SimulationRadius", 0)
-					else
-						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(math.huge,2))
-					end
-				end
-			end)
-		end))
-	else
-		opx("-","Updated simulation radius")
-		coroutine.resume(coroutine.create(function()
-			settings().Physics.AllowSleep = false
-			game:GetService("RunService").RenderStepped:Connect(function()
-				for i,v in pairs(cmdp:GetPlayers()) do --Shit to change
-					if v ~= cmdlp then
-						v.MaximumSimulationRadius = 0.1
-						sethiddenproperty(cmdlp, "SimulationRadius", 0)
-					else
-						v.MaximumSimulationRadius = math.pow(math.huge, math.huge)
-						sethiddenproperty(cmdlp, "SimulationRadius", math.pow(arguments[2],2))
-					end
-				end
-			end)
-		end))
-	end
+	sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
+    setsimulationradius(1e308)
 end
 
 IHaveGrabbed = false
@@ -17102,6 +17081,93 @@ function useCommand.combosclr()
 	opx("-","Cleared combos list")
 	combos = {}
 	updatesaves()
+end
+
+function useCommand.chatprivacypublic()
+    local gethiddenproperty = gethiddenproperty or get_hidden_property
+    if not gethiddenproperty then
+        opx("*","Gethiddenproperty is needed!")
+        return
+    end
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    target = findplr(arguments[2])
+    if not target then
+        opx("*","Player does not exist!")
+        return
+    end
+    local GetCPM = gethiddenproperty(target,"ChatPrivacyMode")
+    if GetCPM == Enum.ChatPrivacyMode.AllUsers then
+        opx("-",target.Name.."'s privacy mode is Everyone")
+        cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."'s privacy mode is Everyone","All")
+    elseif GetCPM == Enum.ChatPrivacyMode.Friends then
+        opx("-",target.Name.."'s privacy mode is Friends")
+        cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."'s privacy mode is Friends","All")
+    elseif GetCPM == Enum.ChatPrivacyMode.NoOne then
+        opx("-",target.Name.."'s privacy mode is No-one")
+        cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."'s privacy mode is No-one","All")
+    end
+end
+
+function useCommand.chatprivacyprivate()
+    local gethiddenproperty = gethiddenproperty or get_hidden_property
+    if not gethiddenproperty then
+        opx("*","Gethiddenproperty is needed!")
+        return
+    end
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    target = findplr(arguments[2])
+    if not target then
+        opx("*","Player does not exist!")
+        return
+    end
+    local GetCPM = gethiddenproperty(target,"ChatPrivacyMode")
+    if GetCPM == Enum.ChatPrivacyMode.AllUsers then
+        opx("-",target.Name.."'s privacy mode is Everyone")
+    elseif GetCPM == Enum.ChatPrivacyMode.Friends then
+        opx("-",target.Name.."'s privacy mode is Friends")
+    elseif GetCPM == Enum.ChatPrivacyMode.NoOne then
+        opx("-",target.Name.."'s privacy mode is No-one")
+    end
+end
+
+function useCommand.chatprivacy()
+    local sethiddenproperty = sethiddenproperty or set_hidden_property
+    if not sethiddenproperty then
+        opx("*","Sethiddenproperty is needed!")
+        return
+    end
+    if not arguments[2] then
+        opx("*","A proper preset is required!")
+        return
+    end
+    opx("-","Set your Chat Privacy to "..arguments[2])
+    sethiddenproperty(cmdlp,"ChatPrivacyMode",Enum.ChatPrivacyMode[arguments[2]])    
+end
+
+function useCommand.masschatprivacy()
+    local gethiddenproperty = gethiddenproperty or get_hidden_property
+    if not gethiddenproperty then
+        opx("*","Gethiddenproperty is needed!")
+        return
+    end
+    local xCPM = ""
+    for i,v in pairs(cmdp:GetPlayers()) do
+        local GetCPM = gethiddenproperty(v,"ChatPrivacyMode")
+        if GetCPM == Enum.ChatPrivacyMode.AllUsers then
+            xCPM = xCPM..v.Name.."'s privacy mode is Everyone\n"
+        elseif GetCPM == Enum.ChatPrivacyMode.Friends then
+            xCPM = xCPM..v.Name.."'s privacy mode is Friends\n"
+        elseif GetCPM == Enum.ChatPrivacyMode.NoOne then
+            xCPM = xCPM..v.Name.."'s privacy mode is No-one\n"
+        end
+    end
+    opxL("Chat Privacy",xCPM)
 end
 
 user.Changed:connect(function()
