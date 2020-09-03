@@ -1,7 +1,7 @@
 ---------------------------------------|
 if not game:FindFirstChild("PlayerGui") then repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui end
 -- Constraints: -----------------------|
-local ver = "1.7.7"
+local ver = "1.7.8"
 local nextupd = "05/09/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
