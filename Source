@@ -31,7 +31,10 @@ if game:GetService("UserInputService").VREnabled then
 	getParent = Parents[2] 
 end
 
-Unnamed = Instance.new("ScreenGui", getParent); Unnamed.Name = "Unnamed"; Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; Unnamed.ResetOnSpawn = false
+Unnamed = Instance.new("ScreenGui", getParent)
+Unnamed.Name = "Unnamed";
+Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+Unnamed.ResetOnSpawn = false
 if not syn then syn = {} end
 if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
@@ -92,10 +95,14 @@ end
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	RunDude = false
-	LoadingFrame = Instance.new("Frame", getParent); RandomReason = Instance.new("TextLabel", getParent)
-	RunQuestion = Instance.new("TextLabel", getParent); Executors = Instance.new("TextLabel", getParent)
-	Paid = Instance.new("TextLabel", getParent); Free = Instance.new("TextLabel", getParent)
-	Help = Instance.new("TextLabel", getParent); HmmButton = Instance.new("TextButton", getParent)
+	LoadingFrame = Instance.new("Frame", getParent)
+	RandomReason = Instance.new("TextLabel", getParent)
+	RunQuestion = Instance.new("TextLabel", getParent)
+	Executors = Instance.new("TextLabel", getParent)
+	Paid = Instance.new("TextLabel", getParent)
+	Free = Instance.new("TextLabel", getParent)
+	Help = Instance.new("TextLabel", getParent)
+	HmmButton = Instance.new("TextButton", getParent)
 
 	LoadingFrame.Name = "LoadingFrame"
 	LoadingFrame.Parent = Unnamed
@@ -189,13 +196,11 @@ function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
 	Free.TextSize = 17.000
 end
 
-LoadingPhrase = {"Making sure version is on "..ver..".","Deleting all noobs.","Destroying anti-cheats.","Loading CMD-X.","Thanking pigeon#1818.","Thanking hz#4777.","Robbing game owner out of his robux.","Removing all free-sploiters.","Asking you to join the discord.","Loading themes.","Loading plugins.","Hacking the mainframe.","Getting ready."}
-
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 
 if not writefile then
-	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher","Free: KRNL (buggy)","Run Anyway",true)
+	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher","Free: KRNL, Fluxus, Oxygen U","Run Anyway",true)
 	repeat wait() until RunDude == true
 end
 
@@ -788,15 +793,8 @@ entry = Instance.new("Frame", getParent)
 user = Instance.new("TextLabel", getParent)
 cmd = Instance.new("TextBox", getParent)
 cmdsu = Instance.new("TextLabel", getParent)
-name = Instance.new("Frame", getParent)
-local ehcmdshit = Instance.new("ScrollingFrame", getParent)
-local cmdslool = Instance.new("TextLabel", getParent)
-local shitlabeljpeg = Instance.new("TextLabel", getParent)
 local ScreenGuipoo = Instance.new("ScreenGui", getParent)
 local TextButtonpoo = Instance.new("TextButton", getParent)
-local ScrollingFrame = Instance.new("ScrollingFrame", getParent)
-local logsframe = Instance.new("Frame", getParent)
-local logstitle = Instance.new("TextButton", getParent)
 output.Name = "output"
 output.Parent = holder
 output.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
@@ -935,13 +933,6 @@ function Confirm(Reason,Reason2)
 
 	repeat wait(.01) until HeyDestroyed == true
 end
-
-ScrollingFrame.Parent = logsframe
-ScrollingFrame.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-ScrollingFrame.BackgroundTransparency = 0.30000001192093
-ScrollingFrame.BorderSizePixel = 0
-ScrollingFrame.Position = UDim2.new(0, 0, 0.0680000037, 0)
-ScrollingFrame.Size = UDim2.new(0, 300, 0, 404)
 
 holder.Name = "holder"
 holder.Parent = Unnamed
@@ -1188,47 +1179,6 @@ output9.TextSize = 16
 output9.TextXAlignment = Enum.TextXAlignment.Left
 output9.TextWrapped = true
 output9.TextTruncate = Enum.TextTruncate.AtEnd
- 
-name.Name = "name"
-name.Parent = Unnamed
-name.Active = true
-createDrag(name)
-name.BackgroundColor3 = Color3.new(0.0823529, 0.0823529, 0.0823529)
-name.BorderSizePixel = 0
-name.Position = UDim2.new(0.683800638, 0, 0.119778864, 0)
-name.Size = UDim2.new(0, 214, 0, 30)
-name.Visible = false
- 
-ehcmdshit.Name = "ehcmdshit"
-ehcmdshit.Parent = name
-ehcmdshit.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-ehcmdshit.BorderSizePixel = 0
-ehcmdshit.Position = UDim2.new(0, 0, 1.00000024, 0)
-ehcmdshit.Size = UDim2.new(0, 214, 0, 263)
- 
-cmdslool.Name = "cmdslool"
-cmdslool.Parent = ehcmdshit
-cmdslool.BackgroundColor3 = Color3.new(1, 1, 1)
-cmdslool.BackgroundTransparency = 1
-cmdslool.Position = UDim2.new(0.0420560762, 0, 0.0418250933, 0)
-cmdslool.Size = UDim2.new(0, 177, 0, 675)
-cmdslool.Font = Enum.Font.Gotham
-cmdslool.Text = ""
-cmdslool.TextColor3 = Color3.new(1, 1, 1)
-cmdslool.TextSize = 13
-cmdslool.TextXAlignment = Enum.TextXAlignment.Left
-cmdslool.TextYAlignment = Enum.TextYAlignment.Top
- 
-shitlabeljpeg.Name = "shitlabeljpeg"
-shitlabeljpeg.Parent = name
-shitlabeljpeg.BackgroundColor3 = Color3.new(1, 1, 1)
-shitlabeljpeg.BackgroundTransparency = 1
-shitlabeljpeg.BorderSizePixel = 0
-shitlabeljpeg.Size = UDim2.new(0, 214, 0, 29)
-shitlabeljpeg.Font = Enum.Font.GothamSemibold
-shitlabeljpeg.Text = "Commands"
-shitlabeljpeg.TextColor3 = Color3.new(1, 1, 1)
-shitlabeljpeg.TextSize = 14
  
 ScreenGuipoo.Parent = Unnamed
 
@@ -1858,7 +1808,6 @@ function x(v)
 end
 
 logsholding2 = Instance.new("Frame", getParent)
-logsviewertitle2 = Instance.new("TextLabel", getParent)
 xoutoflogs2 = Instance.new("TextButton", getParent)
 logsscrollholder2 = Instance.new("Frame", getParent)
 refereral2 = Instance.new("TextLabel", getParent)
@@ -1940,7 +1889,6 @@ Save22.PlaceholderText = "Type here..."
 Save22.FocusLost:Connect(function()
 	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire("SCHAT/console/type/"..Save22.Text)
 end)
-
 
 function CreateSCLabel(Prefix, Text)
 	local plr = cmdp:GetChildren()
@@ -3793,11 +3741,8 @@ end)
 
 local cmdsholder = Instance.new("Frame", getParent)
 local Cmdsearch = Instance.new("TextBox", getParent)
-local cmdviewertitle = Instance.new("TextLabel", getParent)
 local xoutofcmds = Instance.new("TextButton", getParent)
 local scrollholder = Instance.new("Frame", getParent)
-local ref = Instance.new("TextLabel", getParent)
-local splitter = Instance.new("Frame", getParent)
 local Scrollingcmdi = Instance.new("ScrollingFrame", getParent)
 local Hovercmdi = Instance.new("Frame", getParent)
 local Hovertexti = Instance.new("TextLabel", getParent)
@@ -3824,17 +3769,6 @@ Cmdsearch.Text = ""
 Cmdsearch.TextColor3 = Color3.fromRGB(255, 255, 255)
 Cmdsearch.TextSize = 14
 
-cmdviewertitle.Name = "cmdviewertitle"
-cmdviewertitle.Parent = cmdsholder
-cmdviewertitle.BackgroundColor3 = Color3.new(1, 1, 1)
-cmdviewertitle.BackgroundTransparency = 1
-cmdviewertitle.Position = UDim2.new(0.264150947, 0, 0, 0)
-cmdviewertitle.Size = UDim2.new(0, 200, 0, 22)
-cmdviewertitle.Font = Enum.Font.GothamBold
-cmdviewertitle.Text = "CMD-X COMMANDS VIEWER"
-cmdviewertitle.TextColor3 = Color3.new(1, 1, 1)
-cmdviewertitle.TextSize = 14
-
 xoutofcmds.Name = "xoutofcmds"
 xoutofcmds.Parent = cmdsholder
 xoutofcmds.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -3856,24 +3790,6 @@ scrollholder.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
 scrollholder.BorderSizePixel = 0
 scrollholder.Position = UDim2.new(0.0306603778, 0, 0.0748299286, 0)
 scrollholder.Size = UDim2.new(0, 397, 0, 232)
-
-ref.Name = "ref"
-ref.Parent = scrollholder
-ref.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
-ref.BorderSizePixel = 0
-ref.Size = UDim2.new(0, 397, 0, 20)
-ref.Font = Enum.Font.Gotham
-ref.Text = "Num | Name | Aliases"
-ref.TextColor3 = Color3.new(1, 1, 1)
-ref.TextSize = 14
-ref.TextXAlignment = Enum.TextXAlignment.Left
-
-splitter.Name = "splitter"
-splitter.Parent = scrollholder
-splitter.BackgroundColor3 = Color3.new(1, 1, 1)
-splitter.BorderColor3 = Color3.new(1, 1, 1)
-splitter.Position = UDim2.new(0.0100755664, 0, 0.0892857313, 0)
-splitter.Size = UDim2.new(0, 389, 0, 0)
 
 Scrollingcmdi.Name = "Scrollingcmdi"
 Scrollingcmdi.Parent = scrollholder
@@ -16392,10 +16308,10 @@ function useCommand.hotkeyplatformflytoggle()
 			toggled = not toggled
 			if not toggled then
 				workspace.Gravity = 0
-				cmdlp.Character.Humanoid.Sit = true
+				cmdlp.Character.Humanoid.PlatformStand = true
 			else
 				workspace.Gravity = gravity
-				cmdlp.Character.Humanoid.Sit = false
+				cmdlp.Character.Humanoid.PlatformStand = false
 			end
 		end
 	end)
