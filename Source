@@ -1,8 +1,8 @@
 ---------------------------------------|
 repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui
 -- Constraints: -----------------------|
-local ver = "1.7.5"
-local nextupd = "20/07/2020"
+local ver = "1.7.6"
+local nextupd = "05/09/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
 	"Need help? Join our discord! "..cordCode;
@@ -2479,12 +2479,6 @@ function x(v)
 		end
 	end
 end
-cmdlp.CharacterAdded:connect(function()
-	if spawning and sppos ~= nil then
-		repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart')
-		cmdlp.Character.HumanoidRootPart.CFrame = sppos
-	end
-end)
 
 logsholding2 = Instance.new("Frame", getParent)
 logsviewertitle2 = Instance.new("TextLabel", getParent)
@@ -2959,9 +2953,6 @@ CMDS.commands = {
 	["messagebox"] = "Makes a message box appear containing the string you entered. (SYNAPSE ONLY)",
 	["filtering"] = "Checks if a game is filtered or not.",
 	["gameid"] = "Lets you know the GameID of the game you are in.",
-	["error"] = "Tests error in F9.",
-	["print"] = "Tests print in F9.",
-	["warn"] = "Tests warn in F9.",
 	["output"] = "Tests output.",
 	["enableshiftlock"] = "If the developer of the game your playing on has disabled Shift Lock this will enable it for your character.",
 	["maxcamunlock"] = "Unlocks your characters max zooming distance.",
@@ -2980,7 +2971,6 @@ CMDS.commands = {
 	["nostun"] = "Stops your character from being PlatformStood.",
 	["yesstun"] = "()",
 	["badges"] = "Gets all badges if there are any named (Default: BadgeAwarder).",
-	["spawnpoint"] = "Sets spawnpoint to your current position.",
 	["bunnyhop"] = "Bunny hops your character.",
 	["unbunnyhop"] = "()",
 	["invisible"] = "Makes your character invisible.",
@@ -3166,7 +3156,6 @@ CMDS.commands = {
 	["god"] = "Gods your character (wont work on games that use :LoadCharacter()).",
 	["avatar"] = "Shows UserId's avatar.",
 	["statistics"] = "Shows your most used commands.",
-	["bluewarn"] = "Sends a warning to F9 in blue.",
 	["grabip"] = "Grabs a fake IP designed to scare the player (RANDOM).",
 	["enablereset"] = "Force enables the reset button incase a game has disabled it.",
 	["disablereset"] = "Disables the reset button.",
@@ -3490,9 +3479,6 @@ CMDS.usage = {
 	["math"] = "(num) (+ / - / / / *)",
 	["switchteam"] = "(str)",
 	["messagebox"] = "(str)",
-	["error"] = "(str)",
-	["print"] = "(str)",
-	["warn"] = "(str)",
 	["output"] = "(str)",
 	["position"] = "(CB / COPY)",
 	["audiolog"] = "(plr) (CB / COPY)",
@@ -3576,7 +3562,6 @@ CMDS.usage = {
 	["clientfreeze"] = "(plr)",
 	["unclientfreeze"] = "(plr)",
 	["avatar"] = "(name)",
-	["bluewarn"] = "(str)",
 	["grabip"] = "(plr)",
 	["loop"] = "(str)",
 	["hotkeyfly"] = "(key)",
@@ -3808,7 +3793,6 @@ CMDS.aliases = {
 	["spiderman"] = "grapple",
 	["unspiderman"] = "ungrapple",
 	["afk"] = "antiafk",
-	["spawn"] = "spawnpoint",
 	["bhop"] = "bunnyhop",
 	["unbhop"] = "unbunnyhop",
 	["invis"] = "invisible",
@@ -8759,52 +8743,12 @@ function useCommand.jobid()
 	opx("-",game.JobId)
 end
 
-function useCommand.error()
-	if arguments[2] then
-		local errorstring = getstring(2)
-		opx("-","Errored "..errorstring.." to console")
-		error(errorstring)
-	else
-		opx("*","Error is missing text")
-	end
-end
-
-function useCommand.print()
-	if arguments[2] then
-		local printstring = getstring(2)
-		opx("-","Printed "..printstring.." to console")
-		print(printstring)
-	else
-		opx("*","Print is missing text")
-	end
-end
-
-function useCommand.warn()
-	if arguments[2] then
-		local warnstring = getstring(2)
-		opx("-","Warned "..warnstring.." to console")
-		warn(warnstring)
-	else
-		opx("*","Warn is missing text")
-	end
-end
-
 function useCommand.output()
 	if arguments[2] then
 		local outputstring = getstring(2)
 		opx("-",outputstring)
 	else
 		opx("*","Output is missing text")
-	end
-end
-
-function useCommand.bluewarn()
-	if arguments[2] then
-		local bwstring = getstring(2)
-		game:GetService("TestService"):Message(bwstring)
-		opx("-",bwstring.." was bluewarned in F9")
-	else
-		opx("*","Blue warn is missing text")
 	end
 end
 
@@ -9163,13 +9107,6 @@ function useCommand.badges()
 			v.CanCollide = false
 		end
 	end  
-end
-
-local spawning = false
-function useCommand.spawnpoint()
-	sppos = cmdlp.Character.HumanoidRootPart.CFrame
-	spawning = true
-	opx("-","Spawnpoint set")
 end
 
 local bhopping = false
@@ -15603,6 +15540,8 @@ function useCommand.rappr()
 	end
 end
 
+-- CTRL+F
+
 PGUI = {}
 function useCommand.noguis()
 	opx("-","No guis enabled")
@@ -15659,15 +15598,15 @@ function useCommand.yesbillboardguis()
 end
 
 function useCommand.grippos()
-	if cmdnum(arguments[4]) then
-		local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
-		tool.Parent = cmdlp.Backpack
-		tool.GripPos = Vector3.new(arguments[2],arguments[3],arguments[4])
-		tool.Parent = cmdlp.Character
-		opx("-","Set GripPos")
-	else
-		opx("*","2 arguments are required!")
+	if not cmdnum(arguments[4]) then
+		opx("*","4 arguments are required!")
+		return
 	end
+	local tool = cmdlp.Character:FindFirstChildOfClass("Tool")
+	tool.Parent = cmdlp.Backpack
+	tool.GripPos = Vector3.new(arguments[2],arguments[3],arguments[4])
+	tool.Parent = cmdlp.Character
+	opx("-","Set GripPos")
 end
 
 SWs = false
@@ -15717,6 +15656,7 @@ function useCommand.noresult()
 	output7.Text = output8.Text
 	output8.Text = output9.Text
 end
+
 local bAe = Instance.new("Animation")
 bAe.AnimationId = "rbxassetid://259438880"
 local cAe = Instance.new("Animation")
@@ -15785,7 +15725,7 @@ function useCommand.simulationradius()
 	sethiddenproperty = sethiddenproperty or set_hidden_prop
 	setsimulationradius = setsimulationradius or set_simulation_radius
 	if not sethiddenproperty then
-		opx("*","Your exploit does not support this command. There is nothing we can do.")
+		opx("*","sethiddenproperty is not supported on your executor!")
 		return
 	end
     if setsimulationradius then
@@ -15800,36 +15740,36 @@ end
 
 IHaveGrabbed = false
 function useCommand.grabunanchored()
-	if IHaveSimmed == true then
-		IHaveGrabbed = true
-		if arguments[2] then
-			opx("-","Updated anchored parts list from "..arguments[2])
-			for i,v in pairs(worksapce:GetDescendants()) do
-				if v.Name == arguments[2] then
-					UnanchoredPart = v.Name
-					break
-				end
+	if not IHaveSimmed then
+        opx("*",".simulationradius is required!")
+        return
+    end
+	IHaveGrabbed = true
+	if arguments[2] then
+		opx("-","Updated anchored parts list from "..arguments[2])
+		for i,v in pairs(worksapce:GetDescendants()) do
+			if v.Name == arguments[2] then
+				UnanchoredPart = v.Name
+				break
 			end
-			grabUnanchored(UnanchoredPart)
-		else
-			opx("-","Updated anchored parts list from workspace")
-			grabUnanchored(workspace)
 		end
+		grabUnanchored(UnanchoredPart)
 	else
-		opx("*","You need to do .simulationradius max first!")
+		opx("-","Updated anchored parts list from workspace")
+		grabUnanchored(workspace)
 	end
 end
 
 function useCommand.setbackunanchored()
-	if IHaveGrabbed == true then
-		opx("-","Set back unanchored parts")
-		for i,v in pairs(xOrig) do
-			if xAnchored[i] ~= nil then
-				xOrig[i].par.Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(xOrig[i].pos)
-			end
+	if not IHaveGrabbed then
+        opx("*",".grabunanchored is required!")
+        return
+    end
+	opx("-","Set back unanchored parts")
+	for i,v in pairs(xOrig) do
+		if xAnchored[i] ~= nil then
+			xOrig[i].par.Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(xOrig[i].pos)
 		end
-	else
-		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
@@ -15839,37 +15779,37 @@ function useCommand.clearunanchored()
 end
 
 function useCommand.bringunanchored()
-	if IHaveGrabbed == true then
-		if arguments[2] then
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Brung unanchored parts")
-				for i,v in pairs(xAnchored) do
-					if xAnchored[i] ~= nil then
-						xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
-					end
-				end
-			else
-				opx("*","Player does not exist!")
-			end
-		else
-			opx("*","2 arguments are required for this command!")
+    if not IHaveGrabbed then
+        opx("*",".grabunanchored is required!")
+        return
+    end
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+	target = findplr(arguments[2])
+    if not target then
+        opx("*","Player does not exist!")
+        return
+    end
+	opx("-","Brung unanchored parts")
+	for i,v in pairs(xAnchored) do
+		if xAnchored[i] ~= nil then
+			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(gotoPosSide,gotoPosHead,gotoPos))
 		end
-	else
-		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
 function useCommand.removeunanchored()
-	if IHaveGrabbed == true then
-		opx("-","Removed unanchored parts")
-		for i,v in pairs(xAnchored) do
-			if xAnchored[i] ~= nil then
-				xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0,-500,0))
-			end
+	if not IHaveGrabbed then
+        opx("*",".grabunanchored is required!")
+        return
+    end
+	opx("-","Removed unanchored parts")
+	for i,v in pairs(xAnchored) do
+		if xAnchored[i] ~= nil then
+			xAnchored[i].Position = target.Character:FindFirstChild("HumanoidRootPart").CFrame:PointToWorldSpace(Vector3.new(0,-500,0))
 		end
-	else
-		opx("*","You need to do .grabunanchored first!")
 	end
 end
 
@@ -15884,36 +15824,36 @@ end
 ActUp = {}
 SpinningFor = false
 function useCommand.spinunanchored()
-	if IHaveGrabbed == true then
-		if arguments[2] then
-			ActUp = {}
-			opx("-","Spinning unanchored parts")
-			SpinningFor = true
-			iffy = arguments[2]
-			normspin = 0
-			function RotatePointAtDist(Point, Angle, Dist)
-				local Rotation = CFrame.Angles(0, math.rad(Angle),0)
-				return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
-			end
-			for i,v in pairs(xAnchored) do
-				normspin = normspin + 30
-				xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
-				ActUp[#ActUp+1] = normspin
-			end
-			game:GetService("RunService").RenderStepped:Connect(function()
-				if SpinningFor == true then
-					for i,v in pairs(xAnchored) do
-						xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
-						ActUp[i] = ActUp[i]-.1
-					end
-				end
-			end)
-		else
-			opx("-","2 arguments are required!")
-		end
-	else
-		opx("*","You need to do .grabunanchored first!")
+    if not IHaveGrabbed then
+        opx("*",".grabunanchored is required!")
+        return
+    end
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+	ActUp = {}
+	opx("-","Spinning unanchored parts")
+	SpinningFor = true
+	iffy = arguments[2]
+	normspin = 0
+	function RotatePointAtDist(Point, Angle, Dist)
+		local Rotation = CFrame.Angles(0, math.rad(Angle),0)
+		return (CFrame.new(Point) *  Rotation * CFrame.new(0,0,Dist)).Position
 	end
+	for i,v in pairs(xAnchored) do
+		normspin = normspin + 30
+		xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, normspin, iffy)
+		ActUp[#ActUp+1] = normspin
+	end
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if SpinningFor == true then
+			for i,v in pairs(xAnchored) do
+				xAnchored[i].Position = RotatePointAtDist(cmdlp.Character.HumanoidRootPart.Position, ActUp[i]-.1, iffy)
+				ActUp[i] = ActUp[i]-.1
+			end
+		end
+	end)
 end
 
 function useCommand.unspinunanchored()
@@ -15922,63 +15862,62 @@ function useCommand.unspinunanchored()
 end
 
 function useCommand.animationsteal()
-	if arguments[2] then
-		if cmd15(cmdlp) then
-			local target = findplr(arguments[2])
-			if target then
-				if cmd15(target) then
-					if target.Character:FindFirstChild("Animate") then
-						if cmdlp.Character:FindFirstChild("Animate") then
-							checkifmyanim = cmdlp.Character:FindFirstChild("animstorage")
-							if checkifmyanim then
-								local z = cmdlp.Character:FindFirstChild("Animate")
-								if z then z:Destroy() end
-								checkifmyanim.Name = "Animate"
-								checkifmyanim.Disabled = false
-							end
-						end
-						local z = cmdlp.Character:FindFirstChild("Animate")
-						if z then
-							z.Name = "animstorage"
-							z.Disabled = true
-						end
-			
-						local newanim = target.Character.Animate:Clone()
-						newanim.Parent = cmdlp.Character
-						newanim.Name = "Animate"
-						opx("-","Stole "..target.Name.."'s animations")
-					else
-						opx("*","Target is missing proper animations.")
-					end
-				else
-					opx("*","Player is not R15!")
-				end
-			else
-				opx("*","Player does not exist!")
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    if not cmd15(cmdlp) then
+        opx("*","R15 is required!")
+        return
+    end
+	local target = findplr(arguments[2])
+	if not target then
+        opx("*","Player does not exist!")
+        return
+    end
+	if not cmd15(target) then
+        opx("*",target..", R15 is required!")
+        return
+    end
+	if target.Character:FindFirstChild("Animate") then
+		if cmdlp.Character:FindFirstChild("Animate") then
+				checkifmyanim = cmdlp.Character:FindFirstChild("animstorage")
+			if checkifmyanim then
+				local z = cmdlp.Character:FindFirstChild("Animate")
+				if z then z:Destroy() end
+				checkifmyanim.Name = "Animate"
+				checkifmyanim.Disabled = false
 			end
-		else
-			opx("*","R15 required!")
 		end
+		local z = cmdlp.Character:FindFirstChild("Animate")
+		if z then
+			z.Name = "animstorage"
+			z.Disabled = true
+		end
+		local newanim = target.Character.Animate:Clone()
+		newanim.Parent = cmdlp.Character
+		newanim.Name = "Animate"
+		opx("-","Stole "..target.Name.."'s animations")
 	else
-		opx("*","2 arguments are required!")
+		opx("*","Target is missing proper animations.")
 	end
 end
 
 function useCommand.unanimationsteal()
-	if cmd15(cmdlp) then
-		if cmdlp.Character:FindFirstChild("animstorage") then
-			if cmdlp.Character:FindFirstChild("Animate") then
-				cmdlp.Character:FindFirstChild("Animate"):Destroy()
-			end
-			local as = cmdlp.Character:FindFirstChild("animstorage")
-			as.Name = "Animate"
-			as.Disabled = false
-			opx("-","Animations reverted to normal.")
-		else
-			opx("*","Animations haven't been stolen!")
+	if not cmd15(cmdlp) then
+        opx("*","R15 is required!")
+        return
+    end
+	if cmdlp.Character:FindFirstChild("animstorage") then
+		if cmdlp.Character:FindFirstChild("Animate") then
+			cmdlp.Character:FindFirstChild("Animate"):Destroy()
 		end
+		local as = cmdlp.Character:FindFirstChild("animstorage")
+		as.Name = "Animate"
+		as.Disabled = false
+		opx("-","Animations reverted to normal.")
 	else
-		opx("*","R15 required!")
+		opx("*","Animations haven't been stolen!")
 	end
 end
 
@@ -16096,12 +16035,12 @@ function useCommand.yesclaim()
 end
 
 function useCommand.destroyheight()
-	if cmdnum(arguments[2]) then
-		opx("-","Set destroyheight to "..arguments[2])
-		workspace.FallenPartsDestroyHeight = arguments[2]
-	else
-		opx("*","2 arguments are required!")    
-	end
+	if not cmdnum(arguments[2]) then
+        opx("*","2 arguments are required!")
+        return
+    end
+	opx("-","Set destroyheight to "..arguments[2])
+	workspace.FallenPartsDestroyHeight = arguments[2]
 end
 
 TrackN = false
@@ -16143,7 +16082,7 @@ function FindN()
 	TrackN = true
 	while wait() do
 		if TrackN then
-			ClearN() --Shit to change
+			ClearN()
 			for i,v in pairs(cmdp:GetPlayers()) do
 				if v ~= cmdlp then
 					if v.Character and v.Character:FindFirstChild("Head") then
@@ -16169,7 +16108,7 @@ function useCommand.nameesp()
 	until ESPNEnabled == false
 end
 
-function useCommand.unnameesp() -- unnesp
+function useCommand.unnameesp()
 	opx("-","Name ESP Disabled")
 	ESPNEnabled = false
 	TrackN = false
@@ -16180,30 +16119,29 @@ function useCommand.unnameesp() -- unnesp
 end
 
 function useCommand.spectatepart()
-	if arguments[2] then
-		for i,v in pairs(workspace:GetDescendants()) do
-			if v.Name == getstring(2) then
-				opx("-","Viewing to part")
-				workspace.CurrentCamera.CameraSubject = v
-				break
-			else
-				opx("*","Part does not exist")
-			end
+	if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v.Name == getstring(2) then
+			opx("-","Now viewing part")
+			workspace.CurrentCamera.CameraSubject = v
+			break
 		end
-	else
-		opx("*","2 arguments are required!")
 	end
 end
 
 function useCommand.rejoinexecute()
-	rejoining = true
-	if syn.queue_on_teleport then
-		syn.queue_on_teleport([[
-			game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
-			repeat wait(.1) until game:GetService('Players').LocalPlayer
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
-		]])
+    if not syn.queue_on_teleport then
+	    opx("*","queue_on_teleport is not supported on your executor!")    
 	end
+	rejoining = true
+	syn.queue_on_teleport([[
+		game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+		repeat wait(.1) until game:GetService('Players').LocalPlayer
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
+	]])
 	opx("-","Rejoining game")
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
@@ -16363,62 +16301,62 @@ function useCommand.unclickdetectormaxdistance()
 end
 
 function useCommand.clickdetectors()
-	if fireclickdetector then
-		opx("-","Fired click detectors")
-		if arguments[2] then
-			local Part = FindPart(arguments[2])
-			for i,v in pairs(Part:GetDescendants()) do
-				if v:IsA("ClickDetector") then
-					fireclickdetector(v)
-				end
-			end
-		else
-			for i,v in pairs(workspace:GetDescendants()) do
-				if v:IsA("ClickDetector") then
-					fireclickdetector(v)
-				end
+	if not fireclickdetector then
+        opx("*","fireclickdetector is not supported on your executor!")
+        return
+    end
+	opx("-","Fired click detectors")
+	if arguments[2] then
+		local Part = FindPart(arguments[2])
+		for i,v in pairs(Part:GetDescendants()) do
+			if v:IsA("ClickDetector") then
+				fireclickdetector(v)
 			end
 		end
 	else
-		opx("*","Your exploit does not support fireclickdetector!")
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("ClickDetector") then
+				fireclickdetector(v)
+			end
+		end
 	end
 end
 
 function useCommand.singleclickdetector()
-	if fireclickdetector then
-		opx("-","Fired click detector")
-		local touch = FindPart(arguments[2])
-		fireclickdetector(touch)
-	else
-		opx("*","Your exploit does not support fireclickdetector!")
-	end
+    if not fireclickdetector then
+        opx("*","fireclickdetector is not supported on your executor!")
+        return
+    end
+	opx("-","Fired click detector")
+	local touch = FindPart(arguments[2])
+	fireclickdetector(touch)
 end
 
 function useCommand.gotoclass()
-	if arguments[2] then
-		opx("-","Teleported to class part")
-		local Part
-		for i,v in pairs(workspace:GetDescendants()) do
-			if v:IsA(arguments[2]) then Part = v; break end
-		end
-		cmdlp.Character.HumanoidRootPart.CFrame = Part.CFrame
-	else
-		opx("*","2 arguments are required!")
+	if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+	opx("-","Teleported to class part")
+	local Part
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v:IsA(arguments[2]) then Part = v; break end
 	end
+	cmdlp.Character.HumanoidRootPart.CFrame = Part.CFrame
 end
 
 function useCommand.gotobpclass()
-	if arguments[2] then
-		for i,v in pairs(workspace:GetDescendants()) do
-			if v.ClassName == getstring(2) then
-				opx("-","Bypass Teleported to part")
-				cmdlp.Character.Humanoid.Jump = true
-				game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
-				break
-			end
+	if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+	for i,v in pairs(workspace:GetDescendants()) do
+		if v.ClassName == getstring(2) then
+			opx("-","Bypass Teleported to part")
+			cmdlp.Character.Humanoid.Jump = true
+			game:GetService("TweenService"):Create(cmdlp.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
+			break
 		end
-	else
-		opx("*","2 arguments are required!")
 	end
 end
 
@@ -16495,14 +16433,14 @@ function useCommand.yestouch()
 end
 
 function useCommand.testaudio()
-	if cmdnum(arguments[2]) then
-		opx("-","Now testing audio")
-		local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
-		Sound2.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
-		Sound2:Play()
-	else
-		opx("*","2 arguments are required!")
-	end
+    if not cmdnum(arguments[2]) then
+        opx("*","2 arguments are required!")
+        return
+    end
+	opx("-","Now testing audio")
+	local Sound2 = Instance.new("Sound",game:GetService("Lighting"))
+	Sound2.SoundId = "http://www.roblox.com/asset/?id="..arguments[2]
+	Sound2:Play()
 end
 
 function useCommand.debugging()
@@ -16518,26 +16456,26 @@ function useCommand.debugging()
 end
 
 function useCommand.freereach()
-	if arguments[4] and cmdnum(arguments[4]) then
-		for i,v in pairs(cmdlp.Character:GetDescendants()) do
-			if v:IsA("Tool") then
-				currentToolSize = v.Handle.Size
-				local a = Instance.new("SelectionBox",v.Handle)
-				a.Name = "SelectionBoxCreated"
-				a.Adornee = v.Handle
-				a.Color3 = Color3.new(255, 255, 255)
-				a.LineThickness = 0.01
-				v.Handle.Massless = true
-				v.Handle.Size = Vector3.new(arguments[2],arguments[3],arguments[4])
-				v.GripPos = Vector3.new(0,0,0)
-				v.Parent = cmdlp.Backpack
-				v.Parent = cmdlp.Character
-			end
+	if not cmdnum(arguments[4]) then
+        opx("*","4 arguments are required!")
+        return
+    end
+	for i,v in pairs(cmdlp.Character:GetDescendants()) do
+		if v:IsA("Tool") then
+			currentToolSize = v.Handle.Size
+			local a = Instance.new("SelectionBox",v.Handle)
+			a.Name = "SelectionBoxCreated"
+			a.Adornee = v.Handle
+			a.Color3 = Color3.new(255, 255, 255)
+			a.LineThickness = 0.01
+			v.Handle.Massless = true
+			v.Handle.Size = Vector3.new(arguments[2],arguments[3],arguments[4])
+			v.GripPos = Vector3.new(0,0,0)
+			v.Parent = cmdlp.Backpack
+			v.Parent = cmdlp.Character
 		end
-		opx("-","Reach set")
-	else
-		opx("*","4 arguments are needed for this command!")
 	end
+	opx("-","Reach set")
 end
 
 function useCommand.robloxqtversion()
@@ -16545,13 +16483,13 @@ function useCommand.robloxqtversion()
 end
 
 function useCommand.robloxfromdiscordid()
-    if cmdnum(arguments[2]) then
-        local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
-        local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
-        opx("-","User: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
-    else
-        opx("*","2 arguments are required!")    
+    if not cmdnum(arguments[2]) then
+        opx("*","2 arguments are required!")
+        return
     end
+    local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
+    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    opx("-","User: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
 end
 
 function useCommand.teleportstring()
@@ -16675,18 +16613,19 @@ function useCommand.cutforceplayloop()
 end
 
 function useCommand.rejoinrefresh()
-	rejoining = true
-	if syn.queue_on_teleport then
-		local c = cmdlp.Character.HumanoidRootPart.CFrame
-		syn.queue_on_teleport(string.format([[
-			game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
-			repeat wait(.1) until game:GetService('Players').LocalPlayer
-			game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
-				wait(.25)
-				game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
-			end)
-		]], c.X, c.Y, c.Z))
+    if not syn.queue_on_teleport then
+	    opx("*","queue_on_teleport is not supported on your executor!")    
 	end
+	rejoining = true
+	local c = cmdlp.Character.HumanoidRootPart.CFrame
+	syn.queue_on_teleport(string.format([[
+		game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+		repeat wait(.1) until game:GetService('Players').LocalPlayer
+		game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
+			wait(.25)
+			game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+		end)
+	]], c.X, c.Y, c.Z))
 	opx("-","Rejoining game")
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
@@ -16694,19 +16633,20 @@ function useCommand.rejoinrefresh()
 end
 
 function useCommand.rejoinrefreshexecute()
-	rejoining = true
-	if syn.queue_on_teleport then
-		local c = cmdlp.Character.HumanoidRootPart.CFrame
-		syn.queue_on_teleport(string.format([[
-			game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
-			repeat wait(.1) until game:GetService('Players').LocalPlayer
-			game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
-				wait(.25)
-				game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
-			end)
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
-		]], c.X, c.Y, c.Z))
+	if not syn.queue_on_teleport then
+	    opx("*","queue_on_teleport is not supported on your executor!")    
 	end
+	rejoining = true
+	local c = cmdlp.Character.HumanoidRootPart.CFrame
+	syn.queue_on_teleport(string.format([[
+		game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
+		repeat wait(.1) until game:GetService('Players').LocalPlayer
+		game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
+			wait(.25)
+			game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+		end)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
+	]], c.X, c.Y, c.Z))
 	opx("-","Rejoining game")
 	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
 	wait(3)
@@ -16743,20 +16683,20 @@ end
 
 TracerEnabled = false
 function useCommand.tracers()
-	if Drawing then
-		opx("-","Tracers enabled")
-		for i,v in pairs(Lines) do
-			v:Remove()
-		end
-		Lines = {}
-		TracerEnabled = true
-		repeat
-			UpdateTracer()
-			wait(.0001)
-		until TracerEnabled == false
-	else
-		opx("*","Your exploit does not support Drawing API!")
+	if not Drawing then
+        opx("*","Drawing API is not supported on your executor!")
+        return    
+    end
+	opx("-","Tracers enabled")
+	for i,v in pairs(Lines) do
+		v:Remove()
 	end
+	Lines = {}
+	TracerEnabled = true
+	repeat
+		UpdateTracer()
+		wait(.00001)
+	until TracerEnabled == false
 end
 
 function useCommand.untracers()
@@ -16821,17 +16761,17 @@ function useCommand.unlogspam()
 end
 
 function useCommand.multispam()
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return    
+    end
 	speedofthespam = permspamspeed
 	spammies = true
-	if arguments[2] then
-		local topstring = getstring(2):split(",")
-		opx("-","You are now spamming")
-		repeat wait(speedofthespam)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(topstring[math.random(1,#topstring)], "All")
-		until spammies == false
-	else
-		opx("*","Spam is missing text")
-	end
+	local topstring = getstring(2):split(",")
+	opx("-","You are now spamming")
+	repeat wait(speedofthespam)
+		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(topstring[math.random(1,#topstring)], "All")
+	until spammies == false
 end
 
 function useCommand.antifling()
@@ -16919,12 +16859,12 @@ function useCommand.yesfallbp()
 end
 
 function useCommand.fixbubblechat()
-	if _G.bcfix then
+	if _G.connections["bcfix"] then
 		opx("*","Bubble chat has already been fixed")
 		return
 	end
     if cmdlp.PlayerGui:FindFirstChild("BubbleChat") then
-    	_G.bcfix = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+    	_G.connections["bcfix"] = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
     		if msg:IsA("TextLabel") and msg.Name == "BubbleText" then
     			msg.TextSize = 21
     		end
@@ -16934,22 +16874,22 @@ function useCommand.fixbubblechat()
 end
 
 function useCommand.unfixbubblechat()
-	if not _G.bcfix then
+	if not _G.connections["bcfix"] then
 		opx("*","Bubble chat isn't fixed.")
 		return
 	end
-	_G.bcfix:Disconnect()
-	_G.bcfix = nil
+	_G.connections["bcfix"]:Disconnect()
+	_G.connections["bcfix"] = nil
 	opx("*","Bubble chat has been unfixed.")
 end
 
 function useCommand.darkbubbles()
-	if _G.darkbubbles then
+	if _G.connections["darkbubbles"] then
 		opx("*","Dark bubbles are already enabled.")
 		return
 	end
     if cmdlp.PlayerGui:FindFirstChild("BubbleChat") then
-    	_G.darkbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+    	_G.connections["darkbubbles"] = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
     		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
     			msg.ImageColor3 = Color3.fromRGB(0,0,0)
     		end
@@ -16963,24 +16903,24 @@ function useCommand.darkbubbles()
 end
 
 function useCommand.undarkbubbles()
-	if not _G.darkbubbles then
+	if not _G.connections["darkbubbles"] then
 		opx("*","Dark bubbles are not enabled.")
 	end
-	_G.darkbubbles:Disconnect()
-	_G.darkbubbles = nil
+	_G.connections["darkbubbles"]:Disconnect()
+	_G.connections["darkbubbles"] = nil
 	opx("-","Dark bubbles have been disabled.")
 end
 
 function useCommand.colourbubbles()
     if arguments[7] then
-    	if _G.darkbubbles or _G.colourbubbles then
+    	if _G.connections["darkbubbles"] or _G.connections["colourbubbles"] then
     		opx("*","Coloured bubbles are already enabled.")
     		return
     	end
     	local x,y,z = arguments[2],arguments[3],arguments[4]
     	local c,m,d = arguments[5],arguments[6],arguments[7]
         if cmdlp.PlayerGui:FindFirstChild("BubbleChat") then
-        	_G.colourbubbles = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
+        	_G.connections["colourbubbles"] = cmdlp.PlayerGui.BubbleChat.DescendantAdded:connect(function(msg)
         		if msg:IsA("ImageLabel") and msg.Name == "ChatBubble" or msg:IsA("ImageLabel") and msg.Name == "ChatBubbleTail" or msg:IsA("ImageLabel") and msg.Name == "SmallTalkBubble" then
         			msg.ImageColor3 = Color3.fromRGB(x,y,z)
         		end
@@ -16997,11 +16937,11 @@ function useCommand.colourbubbles()
 end
 
 function useCommand.uncolourbubbles()
-	if not _G.colourbubbles then
+	if not _G.connections["colourbubbles"] then
 		opx("*","Colour bubbles are not enabled.")
 	end
-	_G.colourbubbles:Disconnect()
-	_G.colourbubbles = nil
+	_G.connections["colourbubbles"]:Disconnect()
+	_G.connections["colourbubbles"] = nil
 	opx("-","Colour bubbles have been disabled.")
 end
 
