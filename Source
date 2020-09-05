@@ -1,7 +1,7 @@
 ---------------------------------------|
 if not game:FindFirstChild("PlayerGui") then repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui end
 -- Constraints: -----------------------|
-local ver = "1.7.8"
+local ver = "1.7.9"
 local nextupd = "05/09/2020"
 local cordCode = "discord.gg/cmd"
 local changeLog = {
@@ -2751,15 +2751,19 @@ CMDS.commands = {
 	["chatprivacyprivate"] = "Says a users chat privacy mode privately.",
 	["chatprivacy"] = "Sets your chat privacy.",
 	["masschatprivacy"] = "Says everyones chat privacy.",
-	["hotkeyplatformflytoggle"] = "",
-	["hotkeyplatformflyhold"] = "Just do it.",
-	["hotkeysitflytoggle"] = "Just do it.",
-	["hotkeysitflyhold"] = "Just do it.",
-	["unplatformfly"] = "Just do it.",
-	["platformfly"] = "Just do it.",
-	["unsitfly"] = "Just do it.",
-	["sitfly"] = "Just do it.",
-	["hotkeyflyhold"] = "Fly, but only when held"
+	["hotkeyplatformflytoggle"] = "Hotkey for pfly toggle.",
+	["hotkeyplatformflyhold"] = "Hotkey for pfly hold.",
+	["hotkeysitflytoggle"] = "Hotkey for sfly toggle.",
+	["hotkeysitflyhold"] = "Hotkey for sfly hold.",
+	["unplatformfly"] = "()",
+	["platformfly"] = "Allows you to fly with a platform.",
+	["unsitfly"] = "()",
+	["sitfly"] = "Allows you to fly while sitting.",
+	["hotkeyflyhold"] = "Fly, but only when held.",
+	["cameraoffset"] = "Changes the offset of your camera.",
+	["norotate"] = "Stops rotation of the body.",
+	["yesrotate"] = "()",
+	["outofbody"] = "Allows you to walk around like a normal character, out of body.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -2988,6 +2992,7 @@ CMDS.usage = {
 	["chatprivacy"] = "(AllUsers/NoOne/Friends)",
 	["chatprivacypublic"] = "(plr)",
 	["chatprivacyprivate"] = "(plr)",
+	["cameraoffset"] = "(num1,num2,num3)"
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3496,6 +3501,9 @@ CMDS.aliases = {
 	["cprivpr"] = "chatprivacyprivate",
 	["cpriv"] = "chatprivacy",
 	["masscpriv"] = "masschatprivacy",
+	["camoffset"] = "cameraoffset",
+	["norot"] = "norotate",
+	["yesrot"] = "yesrotate",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -15375,6 +15383,35 @@ function useCommand.clickdetectors()
 			end
 		end
 	end
+end
+
+function useCommand.outofbody()
+    if not cmd15(cmdlp) then
+        opx("*","R15 is required!")
+        return
+    end
+    cmdlp.Character.LowerTorso.Anchored = true
+    cmdlp.Character.LowerTorso.Root:Destroy()
+    opx("-","You are now out of your body")
+end
+
+function useCommand.norotate()
+    cmdlp.Character.Humanoid.AutoRotate = false
+    opx("-","You will no longer rotate")
+end
+
+function useCommand.yesrotate()
+    cmdlp.Character.Humanoid.AutoRotate = true
+    opx("-","You will now rotate")
+end
+
+function useCommand.cameraoffset()
+    if not arguments[4] then
+        opx("*","4 arguments are needed!")
+        return
+    end
+    cmdlp.Character.Humanoid.CameraOffset = Vector3.new(arguments[2],arguments[3],arguments[4])
+    opx("-","Set camera offset to "..arguments[2].." "..arguments[3].." "..arguments[4])
 end
 
 function useCommand.singleclickdetector()
