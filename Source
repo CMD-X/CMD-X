@@ -203,9 +203,11 @@ if not writefile then
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
-if Current.Version ~= ver then
+if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
-	repeat wait() until RunDude == true
+	while not RunDude do
+		wait()
+	end
 end
 
 if isfile then
