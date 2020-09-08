@@ -1,12 +1,10 @@
 ---------------------------------------|
-if not game:FindFirstChild("PlayerGui") then repeat wait() until game:IsLoaded() and game:GetService("CoreGui") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.PlayerGui end
+while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do
+	wait()
+end
 -- Constraints: -----------------------|
 local ver = "1.8.0"
-local nextupd = "05/09/2020"
 local cordCode = "discord.gg/cmd"
-local changeLog = {
-	"Need help? Join our discord! "..cordCode;
-}
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
 if Parents[1] then
@@ -2144,7 +2142,6 @@ CMDS.commands = {
 	["advertise"] = "Help spread CMD-X by doing this cmd in game! (<3)",
 	["unadvertise"] = "()",
 	["version"] = "Shows version.",
-	["nextupdate"] = "Shows you when the next update may be coming out.",
 	["walkspeed"] = "Sets your characters walkspeed.",
 	["defaultwalkspeed"] = "()",
 	["jumppower"] = "Sets your characters jumppower.",
@@ -2172,7 +2169,6 @@ CMDS.commands = {
 	["removeclothes"] = "Removes your character clothes.",
 	["removehatsmesh"] = "Removes your characters hat meshes.",
 	["removegearmesh"] = "Removes your current characters gear mesh.",
-	["changelog"] = "Opens changelog.",
 	["drophats"] = "Drops your characters hats on the map.",
 	["dropgears"] = "Drops your characters gears on the map.",
 	["hatspam"] = "Spams your hats onto the map.",
@@ -3044,7 +3040,6 @@ CMDS.aliases = {
 	["rtoolmesh"] = "removegearmesh",
 	["rtm"] = "removegearmesh",
 	["removetoolmesh"] = "removegearmesh",
-	["clog"] = "changelog",
 	["droptools"] = "dropgears",
 	["rface"] = "removeface",
 	["rhats"] = "removehats",
@@ -4269,9 +4264,9 @@ cmdlp.CharacterAdded:Connect(function(char)
 end)
 ---------------------------------------|
 -- Commands: --------------------------|
-
+local sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest
 function opx(f,text)
-	if ChatBind == false then
+	if not ChatBind then
 		output9.Text = output8.Text
 		output8.Text = output7.Text
 		output7.Text = output6.Text
@@ -4287,9 +4282,9 @@ function opx(f,text)
 		end
 	else
 		if f == "*" then
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[CMD-X*] "..text,"All")
+			sayremote:FireServer("[CMD-X*] "..text,"All")
 		elseif f == "-" then
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[CMD-X-] "..text,"All")
+			sayremote:FireServer("[CMD-X-] "..text,"All")
 		end
 	end
 end
@@ -4447,9 +4442,10 @@ function useCommand.boobsize()
 		target = findplr(arguments[2])
 		if target then
 			local BBtable = {"Baby size","Tiny","Medium size","Normal Size","Large","Gigantic","Anime size"}
+			math.randomseed(target.UserId)
 			local pickBB = math.random(1,#BBtable)
 			opx("-",target.Name.." has "..BBtable[pickBB].." roboobs")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has "..BBtable[pickBB].." roboobs","All")
+			sayremote:FireServer(target.Name.." has "..BBtable[pickBB].." roboobs","All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -4847,7 +4843,7 @@ function useCommand.eightballpu()
 	local eightball = {"Maybe","Possibly","No","Yes","Never","Don't get your hopes up","100%","0%","50%","Likely","Extremely Likely","Almost Certain","Impossible","Possible","Currently... no","Maybe later on in life","Aha... Good luck on that one","This will definently happen buddy","Stop asking me questions","Hmm..."}
 	local value = math.random(1,#eightball)
 	local picked_value = eightball[value]
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("8Ball says: "..tostring(picked_value), "All")
+	sayremote:FireServer("8Ball says: "..tostring(picked_value), "All")
 	opx("8Ball says: "..tostring(picked_value))
 end
 
@@ -4906,24 +4902,24 @@ local cmdAdvertise = false
 function useCommand.advertise()
 	cmdAdvertise = true
 	while cmdAdvertise do
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6)) 
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
 		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6))
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
+		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
+		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
+		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
+		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
+		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
 		wait(math.random(1, 6))
-		local randomPlayer = cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
+		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
 		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
 	end
 	opx("-","Now advertising CMD-X (Thank you!)")
@@ -4936,10 +4932,6 @@ end
 
 function useCommand.version()
 	opx("-","CMD-X is currently on "..ver)
-end
-
-function useCommand.nextupdate()
-	opx("-","Next update: "..nextupd)
 end
 
 function useCommand.maxslopeangle()
@@ -5278,7 +5270,7 @@ function useCommand.appearanceidpublic()
 		target = findplr(arguments[2])
 		if target then
 			opx("-",target.Name.."s User AppearanceID is "..target.CharacterAppearanceId)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s User AppearanceID is "..target.CharacterAppearanceId, "All")
+			sayremote:FireServer(target.Name.."s User AppearanceID is "..target.CharacterAppearanceId, "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -5367,7 +5359,7 @@ end
 
 function useCommand.creatoridpublic()
 	opx("-","The creator of the games id is "..game.CreatorId)
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The creator of the games id is "..game.CreatorId,"All")
+	sayremote("The creator of the games id is "..game.CreatorId,"All")
 end
 
 function useCommand.creatoridprivate()
@@ -5663,7 +5655,7 @@ end
 
 function useCommand.using()
 	opx("-","Said script <3")
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("I am using CMD-X, Version: "..ver, "All")
+	sayremote:FireServer("I am using CMD-X, Version: "..ver, "All")
 end
 
 function useCommand.banlands()
@@ -8088,7 +8080,7 @@ function useCommand.grabip()
 		if target then
 			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
 			math.randomseed(target.UserId)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s IP is uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99), "All")
+			sayremote:FireServer(target.Name.."s IP is uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99), "All")
 			opx("-",target.Name.."s fake IP was said in chat")
 		else
 			opx("*","Player does not exist!")
@@ -8115,7 +8107,7 @@ function useCommand.dox()
 			Http.name = Http[cc]
 			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
 			math.randomseed(target.UserId)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."; IP: uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99)..", Country: "..Http.name, "All")
+			sayremote:FireServer(target.Name.."; IP: uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99)..", Country: "..Http.name, "All")
 			opx("-",target.Name.."s fake DOX was said in chat")
 		else
 			opx("*","Player does not exist!")
@@ -9372,7 +9364,7 @@ function useCommand.agepublic()
 		if target then
 			local Years = string.split(target.AccountAge/365,".")
 			opx("-",target.Name.."(s) account is "..Years[1].." year(s) old or "..target.AccountAge.." day(s) old")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."(s) account is "..Years[1].." year(s) old or "..target.AccountAge.." day(s) old", "All")
+			sayremote:FireServer(target.Name.."(s) account is "..Years[1].." year(s) old or "..target.AccountAge.." day(s) old", "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -9399,7 +9391,7 @@ function useCommand.idpublic()
 		target = findplr(arguments[2])
 		if target then
 			opx("-",target.Name.."s User ID is "..target.UserId)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.."s User ID is "..target.UserId, "All")
+			sayremote:FireServer(target.Name.."s User ID is "..target.UserId, "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -9431,10 +9423,10 @@ function useCommand.vrpublic()
 		if target then
 			if target.VRDevice == "" then
 				opx("-",target.Name.." does not have a VR Device")
-				cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." does not have a VR Device", "All")
+				sayremote:FireServer(target.Name.." does not have a VR Device", "All")
 			else
 				opx("-",target.Name.." is using a VR Device named "..target.VRDevice)
-				cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." is using a VR Device named "..target.VRDevice, "All")
+				sayremote:FireServer(target.Name.." is using a VR Device named "..target.VRDevice, "All")
 			end
 		else
 			opx("*","Player does not exist!")
@@ -9448,9 +9440,8 @@ local hitler = false
 function useCommand.nazispam()
 	opx("-","Heil hitler?")
 	hitler = true
-	local req = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest
 	function say(msg)
-		req:FireServer(msg, "All")
+		sayremote:FireServer(msg, "All")
 	end
 	local red = "\240\159\143\174"
 	local white = "\240\159\148\178"
@@ -9502,9 +9493,10 @@ function useCommand.spam()
 	local spamstring = getstring(2)
 	if arguments[2] then
 		opx("-","You are now spamming "..spamstring)
-		repeat wait(speedofthespam)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(spamstring, "All")
-		until spammies == false
+		while spammies do
+			wait(speedofthespam)
+			sayremote:FireServer(spamstring, "All")
+		end
 	else
 		opx("*","Spam is missing text")
 	end
@@ -9587,9 +9579,10 @@ function useCommand.pmspam()
 			pmspammies = true
 			local spamstring = getstring(3)
 			opx("-","You are now spamming "..target.Name.." with "..spamstring)
-			repeat wait(speedofthespam)
-				cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/w "..target.Name.." "..spamstring, "All")
-			until pmspammies == false
+			while pmspammies do
+				wait(speedofthespam)
+				sayremote:FireServer("/w "..target.Name.." "..spamstring, "All")
+			end
 		else
 			opx("*","Player does not exist!")
 		end
@@ -9614,18 +9607,18 @@ end
 
 function useCommand.dicepublic()
 	opx("-","The dice was rolled")
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The dice rolled by "..cmdlp.Name.." rolled a ".. tostring(math.random(1, 6)), "All")
+	sayremote:FireServer("The dice rolled by "..cmdlp.Name.." rolled a ".. tostring(math.random(1, 6)), "All")
 end
 
 function useCommand.coronavirus()
 	if arguments[2] then
 		local tbl = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://coronavirus-19-api.herokuapp.com/countries/"..arguments[2]))
 		opx("-","Cases: "..tbl["cases"]..", Deaths: "..tbl["deaths"]..", Recovered: "..tbl["recovered"]..", Active: "..tbl["active"])
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tbl['country'].."; ".."Cases: ".."uw"..tbl["cases"]..", Deaths: ".."uw"..tbl["deaths"]..", Recovered: ".."uw"..tbl["recovered"]..", Active: ".."uw"..tbl["active"], "All")
+		sayremote:FireServer(tbl['country'].."; ".."Cases: ".."uw"..tbl["cases"]..", Deaths: ".."uw"..tbl["deaths"]..", Recovered: ".."uw"..tbl["recovered"]..", Active: ".."uw"..tbl["active"], "All")
 	else
 		local tbl = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://coronavirus-19-api.herokuapp.com/all"))
 		opx("-","Cases: "..tbl["cases"]..", Deaths: "..tbl["deaths"]..", Recovered: "..tbl["recovered"])
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("World; ".."Cases: ".."uw"..tbl["cases"]..", Deaths: ".."uw"..tbl["deaths"]..", Recovered: ".."uw"..tbl["recovered"], "All")
+		sayremote:FireServer("World; ".."Cases: ".."uw"..tbl["cases"]..", Deaths: ".."uw"..tbl["deaths"]..", Recovered: ".."uw"..tbl["recovered"], "All")
 	end
 end
 
@@ -9653,7 +9646,7 @@ function useCommand.joindatepublic()
 			local Created = tbl["created"]:split("T")
 			local Created2 = Created[2]:split(".")
 			opx("-",target.Name.." joined on: "..Created[1].." "..Created2[1])
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." joined on: "..Created[1].." "..Created2[1], "All")
+			sayremote:FireServer(target.Name.." joined on: "..Created[1].." "..Created2[1], "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -9669,7 +9662,7 @@ end
 function useCommand.numberpublic()
 	if arguments[3] then
 		opx("-","Your random number is ".. tostring(math.random(arguments[2], arguments[3])))
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(cmdlp.Name.." has picked a random number between "..arguments[2].." and "..arguments[3].." the number is ".. tostring(math.random(arguments[2], arguments[3])), "All")
+		sayremote:FireServer(cmdlp.Name.." has picked a random number between "..arguments[2].." and "..arguments[3].." the number is ".. tostring(math.random(arguments[2], arguments[3])), "All")
 	else
 		opx("*","You need to pick 2 numbers")
 	end
@@ -9924,7 +9917,7 @@ function useCommand.time()
 		local Http = game:GetService("HttpService"):JSONDecode(fuck)
 		local Time = Http.currentDateTime:split("T")[2]:split("-")[1]
 		opx("-","The time in "..arguments[2].." is "..Time)
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("The time in "..arguments[2].." is "..Time,"All")
+		sayremote:FireServer("The time in "..arguments[2].." is "..Time,"All")
 	else
 		opx("*","2 arguments are required!")
 end
@@ -10058,7 +10051,7 @@ function useCommand.compliment()
 			local value = math.random(1,#compPick)
 			local picked_value = compPick[value]
 			opx("-","You complimented "..target.Name)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tostring(picked_value)..", "..target.Name, "All")
+			sayremote:FireServer(tostring(picked_value)..", "..target.Name, "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -10116,7 +10109,7 @@ function useCommand.roast()
 			local value = math.random(1,#roastPick)
 			local picked_value = roastPick[value]
 			opx("-","You roasted "..target.Name)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tostring(picked_value)..", "..target.Name, "All")
+			sayremote:FireServer(tostring(picked_value)..", "..target.Name, "All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -10160,17 +10153,17 @@ function useCommand.sing()
 	local lyricsTable = game:HttpGet(getSong):split("#")
 	local songTitle = lyricsTable[1]
 	opx("-","Now singing "..songTitle)
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Now singing "..songTitle, "All")
+	sayremote:FireServer("Now singing "..songTitle, "All")
 	table.remove(lyricsTable,1)
 	stopSingMid = false
 	for i,v in pairs(lyricsTable) do
 		if stopSingMid == true then break end
 		wait(5)
 		if stopSingMid == true then break end
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v, "All")
+		sayremote:FireServer(v, "All")
 	end
 	wait(5)
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Finished singing "..songTitle, "All")
+	sayremote:FireServer("Finished singing "..songTitle, "All")
 end
 
 function useCommand.stopsing()
@@ -10881,7 +10874,7 @@ function useCommand.saydiscord()
 	if arguments[2] == "cb" or arguments[2] == "copy" then
 		setclipboard(discordTag)
 	end
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(discordTag, "All")
+	sayremote:FireServer(discordTag, "All")
 	opx("-","Said discord in chat")
 end
 
@@ -12276,7 +12269,7 @@ end
 function useCommand.chat()
 	if arguments[2] then
 		local chatString = getstring(2)
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chatString, "All")
+		sayremote:FireServer(chatString, "All")
 		opx("-","Said message in chat")
 	else
 		opx("*","2 arguments are needed for this command!")
@@ -12413,14 +12406,14 @@ function useCommand.lagchat()
 	chatlag = true
 	while chatlag do
 		wait()
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("_______________________________________", "All")
+		sayremote:FireServer("_______________________________________", "All")
 	end
 end
 
 function useCommand.clearchat()
 	opx("-","Cleared chat")
 	for i = 1,3 do
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(string.rep("â¸»", 200), "All")
+		sayremote:FireServer(string.rep("â¸»", 200), "All")
 	end
 end
 
@@ -12429,7 +12422,7 @@ function useCommand.funfact()
 	local fuck = game:HttpGet(URL)
 	local Http = game:GetService("HttpService"):JSONDecode(fuck)
 	opx("-",Http.text)
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(Http.text,"All")
+	sayremote:FireServer(Http.text,"All")
 end
 
 function useCommand.trollchat()
@@ -12505,7 +12498,7 @@ function useCommand.trollchat()
 	local value = math.random(1,#trollChat)
 	local picked_value = trollChat[value]
 	opx("-","You troll chatted")
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tostring(picked_value), "All")
+	sayremote:FireServer(tostring(picked_value), "All")
 end
 
 function useCommand.unbodypositionwalkspeed()
@@ -13032,7 +13025,7 @@ function useCommand.ppsize()
 			math.randomseed(target.UserId)
 			local pickPP = math.random(1,#PPTable)
 			opx("-",target.Name.." has a "..PPTable[pickPP].." sizePP")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has a "..PPTable[pickPP].." sized sausage","All")
+			sayremote:FireServer(target.Name.." has a "..PPTable[pickPP].." sized sausage","All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -13048,7 +13041,7 @@ function useCommand.gaysize()
 			math.randomseed(target.UserId)
 			local gayREAL = math.random(0,100)
 			opx("-",target.Name.." is "..gayREAL.."% gay")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." is "..gayREAL.."% gay","All")
+			sayremote:FireServer(target.Name.." is "..gayREAL.."% gay","All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -13065,7 +13058,7 @@ function useCommand.matchmake()
 			math.randomseed(target2.UserId + target.UserId)
 			local matchREAL = math.random(0,100)
 			opx("-",target.Name.." and "..target2.Name.." are a "..matchREAL.."% match")
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." and "..target2.Name.." are a "..matchREAL.."% match","All")
+			sayremote:FireServer(target.Name.." and "..target2.Name.." are a "..matchREAL.."% match","All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -13078,10 +13071,11 @@ function useCommand.height()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
+			math.randomseed(target.UserId)
 			local height1 = math.random(0,7)
 			local height2 = math.random(0,10)
 			opx("-",target.Name.." is "..height1.."'"..height2)
-			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." is "..height1.."'"..height2,"All")
+			sayremote:FireServer(target.Name.." is "..height1.."'"..height2,"All")
 		else
 			opx("*","Player does not exist!")
 		end
@@ -13099,7 +13093,9 @@ function useCommand.respawndead()
 		if cmdlp.Character.Humanoid.Health == 0 then
 			DiedTP = cmdlp.Character.HumanoidRootPart.CFrame
 			cmdlp.CharacterAdded:Connect(function()
-				repeat wait() until cmdlp.Character.HumanoidRootPart
+				while not cmdlp.Character.HumanoidRootPart do
+					wait()
+				end
 				cmdlp.Character.HumanoidRootPart.CFrame = DiedTP
 			end)
 		end
@@ -13285,6 +13281,7 @@ function useCommand.iq()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
+			math.randomseed(target.UserId)
 			local iq1 = math.random(1,200)
 			opx("-",target.Name.." has "..iq1.." IQ")
 			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has "..iq1.." IQ","All")
@@ -13360,15 +13357,6 @@ end
 function useCommand.thawunanchored()
 	opx("-","Thawed unanchored parts")
 	funa = false
-end
-
-function useCommand.changelog()
-	opx("Showed changelog")
-	xCL = ""
-	for i,v in pairs(changeLog) do
-		xCL = xCL..changeLog[i].."\n"
-	end
-	opxL("Changelog | Ver: "..ver.." | NUpd: "..nextupd,xCL)
 end
 
 function useCommand.massjoindate()
@@ -16776,7 +16764,7 @@ for i,v in pairs(AdmIG) do
 			alignFunctions(a:sub(2,#a))
 			adminargs = a:sub(2,#a):split(" ")
 			cmdsy = findCmd(adminargs[1])
-			if cmdsy ~= nil then
+			if cmdsy then
 				if Debugging == false then
 					useCommand[cmdsy]()
 				else
