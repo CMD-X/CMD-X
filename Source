@@ -3,7 +3,7 @@ while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetServi
 	wait()
 end
 -- Constraints: -----------------------|
-local ver = "1.8.1"
+local ver = "1.8.2"
 local cordCode = "discord.gg/cmd"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -30,6 +30,138 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 Unnamed = Instance.new("ScreenGui", getParent)
+sgui = Instance.new("ScreenGui", Unnamed)
+sgui.IgnoreGuiInset = true
+local function Draw(positionsent, line, thickness)
+	local positions = {
+		[1] = positionsent and positionsent[1] and UDim2.new(0, positionsent[1].X, 0, positionsent[1].Y) or UDim2.new(0, 0, 0, 0),
+		[2] = positionsent and positionsent[2] and UDim2.new(0, positionsent[2].X, 0, positionsent[2].Y) or UDim2.new(0, 0, 0, 0)
+	}
+	local distances = {
+		X = positions[2].X.Offset - positions[1].X.Offset,
+		Y = positions[2].Y.Offset - positions[1].Y.Offset
+	}
+	local distance = (distances.X ^ 2 + distances.Y ^ 2) ^ .5
+	local angle = math.atan2(distances.Y, distances.X)
+	line.Size = UDim2.new(0, distance, 0, thickness)
+	local center = Vector2.new(
+		(positions[1].X.Offset + positions[2].X.Offset) / 2,
+		(positions[1].Y.Offset + positions[2].Y.Offset) / 2
+	)
+	line.Position = UDim2.new(0, center.X - distance / 2, 0, center.Y - thickness / 2)
+	line.Rotation = math.deg(angle)
+	line.BorderSizePixel = 0
+	return line
+end
+
+oldDrawing = Drawing
+newDrawing = {new = function(DrawingType)
+	if DrawingType == "Line" then 
+		local line = {}
+		local line_object = Instance.new("Frame", sgui)
+		line_object.ZIndex = 3000
+		return setmetatable({},{
+			__index = function(self,key)
+				if key == "Remove" then
+					line_object:Destroy()
+					return function() end
+				end
+			end,
+			__newindex = function(self,key,value)
+				local thickness = 1
+				if key == "Visible" then
+					line_object.Visible = value
+				elseif key == "From" or key == "To" then
+					line[key] = value
+				elseif key == "Thickness" then
+					thickness = value
+				end
+				Draw({line.From, line.To}, line_object, thickness * 2)
+			end
+		})
+	elseif DrawingType == "Circle" then
+		local circle = {}
+		local circle_object = Instance.new("Frame",Parent)
+		circle_object.BorderSizePixel = 0
+		circle_object.AnchorPoint = Vector2.new(0.5, 0.5)
+		Instance.new("UICorner",circle_object).CornerRadius = UDim.new(1,0)
+		return setmetatable({},{
+			__index = function(self,key)
+				if key == "Remove" then
+					return function() circle_object:Destroy() end
+				end
+			end,
+			__newindex = function(self,key,value)
+				if key == "Visible" then
+					circle_object.Visible = value
+				elseif key == "Color" then
+					circle_object.BackgroundColor3 = value
+				elseif key == "Position" then
+					circle_object.Position = UDim2.new(0, value.X, 0, value.Y)
+				elseif key == "Radius" then
+					circle_object.Size = UDim2.new(0, value * 2, 0, value * 2)
+				end
+			end
+		})
+	elseif DrawingType == "Text" then
+		local text = {}
+		local text_object = Instance.new("TextLabel",Parent)
+		text_object.BorderSizePixel = 0
+		text_object.AnchorPoint = Vector2.new(0.5, 0.5)
+		return setmetatable({},{
+			__index = function(self,key)
+				if key == "Remove" then
+					return function() text_object:Destroy() end
+				end
+			end,
+			__newindex = function(self,key,value)
+				if key == "Visible" then
+					text_object.Visible = value
+				elseif key == "Color" then
+					text_object.TextColor3 = value
+				elseif key == "Position" then
+					text_object.Position = UDim2.new(0,value.X,0,value.Y)
+				elseif key == "Size" then
+					text_object.TextSize = value
+				elseif key == "Text" then
+					text_object.Text = value
+				end
+			end
+		})
+	elseif DrawingType == "Square" then
+		local box = {}
+		local box_object = Instance.new("Frame",Parent)
+		box_object.BorderSizePixel = 0
+		box_object.AnchorPoint = Vector2.new(0.5, 0.5)
+		return setmetatable({},{
+			__index = function(self,key)
+				if key == "Remove" then
+					return function() box_object:Destroy() end
+				end
+			end,
+			__newindex = function(self,key,value)
+				if key == "Visible" then
+					box_object.Visible = value
+				elseif key == "Color" then
+						box_object.BackgroundColor3 = value
+				elseif key == "Position" then
+					box_object.Position = UDim2.new(0,value.X,0,value.Y)
+				elseif key == "Size" then
+					box_object.Size = UDim2.new(0,value.X,0,value.Y)
+				end
+			end
+		})
+	end
+end}
+Drawing = Drawing or newDrawing
+if drawingtype == "new" then
+	if Drawing then
+		setreadonly(Drawing, false)
+	end
+	Drawing = newDrawing
+	setreadonly(Drawing, true)
+end
+
 Unnamed.Name = "Unnamed";
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
 Unnamed.ResetOnSpawn = false
@@ -386,64 +518,67 @@ defaultsettings = {
 	ifKickedAuto = false;
 	whyIs = 0;
 	combos = {};
+	drawingtype = "old";
 }
  
 defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
 
 function saves()
 	if writefileExploit() then
-		if pcall(function() readfile("CMD-X.lua") end) then
-			if readfile("CMD-X.lua") then
-				local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
-				if json.text2 then text2 = json.text2 else text2 = {} end
-				if json.hotkeyopen then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
-				if json.hotkeyopx then hotkeyopx = json.hotkeyopx else hotkeyopx = 'u' end
-				if json.hotkeyfocus then hotkeyfocus = json.hotkeyfocus else hotkeyfocus = ';' end
-				if json.hotkeyfly then hotkeyfly = json.hotkeyfly else hotkeyfly = '' end
-				if json.hotkeyxray then hotkeyxray = json.hotkeyxray else hotkeyxray = '' end
-				if json.prefix then prefix = json.prefix else prefix = '.' end
-				if json.prompt then prompt = json.prompt else prompt = 'CMD-X Prompt >' end
-				if json.enterCMD then enterCMD = json.enterCMD else enterCMD = {} end
-				if json.gotoPos then gotoPos = json.gotoPos else gotoPos = 0 end
-				if json.gotoPosSide then gotoPosSide = json.gotoPosSide else gotoPosSide = 0 end
-				if json.gotoPosHead then gotoPosHead = json.gotoPosHead else gotoPosHead = 0 end
-				if json.WPs then WPs = json.WPs else WPs = {} end
-				if json.Plugins then Plugins = json.Plugins else Plugins = {} end
-				if json.discordTag then discordTag = json.discordTag else discordTag = '' end
-				if json.hotkeyaimbot then hotkeyaimbot = json.hotkeyaimbot else hotkeyaimbot = '' end
-				if json.hotkeyesp then hotkeyesp = json.hotkeyesp else hotkeyesp = '' end
-				if json.permfcspeed then permfcspeed = json.permfcspeed else permfcspeed = 1 end
-				if json.permflyspeed then permflyspeed = json.permflyspeed else permflyspeed = 1 end
-				if json.permwalkspeed then permwalkspeed = json.permwalkspeed else permwalkspeed = 50 end
-				if json.permjumppower then permjumppower = json.permjumppower else permjumppower = 150 end
-				if json.permhipheight then permhipheight = json.permhipheight else permhipheight = 20 end
-				if json.permgravity then permgravity = json.permgravity else permgravity = 50 end
-				if json.permmaxsl then permmaxsl = json.permmaxsl else permmaxsl = 89.99 end
-				if json.Adm then Adm = json.Adm else Adm = {} end
-				if json.hkBinds then hkBinds = json.hkBinds else hkBinds = {} end
-				if json.dStyle then dStyle = json.dStyle else dStyle = "rounded" end
-				if json.conFly then conFly = json.conFly else conFly = true end
-				if json.suggestions then suggestions = json.suggestions else suggestions = true end
-				if json.CMDStats then CMDStats = json.CMDStats else CMDStats = {} end
-				if json.oldNum then oldNum = json.oldNum else oldNum = 0 end
-				if json.hotkeyctp then hotkeyctp = json.hotkeyctp else hotkeyctp = "LeftControl" end
-				if json.permspamspeed then permspamspeed = json.permspamspeed else permspamspeed = 1 end
-				if json.mentions then mentions = json.mentions else mentions = true end
-				if json.sDetect then sDetect = json.sDetect else sDetect = true end
-				if json.SavedPos then SavedPos = json.SavedPos else SavedPos = {X = 800, Y = 300} end
-				if json.hotkeynoclip then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
-				if json.ChatBind then ChatBind = json.ChatBind else ChatBind = false end
-				if json.CMDTab then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
-				if json.TabsOff then TabsOff = json.TabsOff else TabsOff = true end
-				if json.KeepCMDXOn then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
-				if json.ifKickedAuto then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
-				if json.whyIs then whyIs = json.whyIs else whyIs = 0 end
-				if json.combos then combos = json.combos else combos = {} end
-			else
-				writefileCooldown("CMD-X.lua", defaults)
-				wait()
-				saves()
-			end
+		local a, text = pcall(function() readfile("CMD-X.lua") end)
+		if text == "" or text == "\n" or text == "\n\n" or text == " \n" or text == "\n " then
+			Stand("Looks like your config corrupted..","Truly sorry, we're looking for a fix in future updates!","This means your statistics and keybinds have been lost.","","Join the discord if you need any help using the script, false tickets will result in a ban.","Okay",true)
+			writefileCooldown("CMD-X.lua", defaults)
+			wait()
+			saves()
+		end
+		if a then
+			local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+			if json.text2 then text2 = json.text2 else text2 = {} end
+			if json.hotkeyopen then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
+			if json.hotkeyopx then hotkeyopx = json.hotkeyopx else hotkeyopx = 'u' end
+			if json.hotkeyfocus then hotkeyfocus = json.hotkeyfocus else hotkeyfocus = ';' end
+			if json.hotkeyfly then hotkeyfly = json.hotkeyfly else hotkeyfly = '' end
+			if json.hotkeyxray then hotkeyxray = json.hotkeyxray else hotkeyxray = '' end
+			if json.prefix then prefix = json.prefix else prefix = '.' end
+			if json.prompt then prompt = json.prompt else prompt = 'CMD-X Prompt >' end
+			if json.enterCMD then enterCMD = json.enterCMD else enterCMD = {} end
+			if json.gotoPos then gotoPos = json.gotoPos else gotoPos = 0 end
+			if json.gotoPosSide then gotoPosSide = json.gotoPosSide else gotoPosSide = 0 end
+			if json.gotoPosHead then gotoPosHead = json.gotoPosHead else gotoPosHead = 0 end
+			if json.WPs then WPs = json.WPs else WPs = {} end
+			if json.Plugins then Plugins = json.Plugins else Plugins = {} end
+			if json.discordTag then discordTag = json.discordTag else discordTag = '' end
+			if json.hotkeyaimbot then hotkeyaimbot = json.hotkeyaimbot else hotkeyaimbot = '' end
+			if json.hotkeyesp then hotkeyesp = json.hotkeyesp else hotkeyesp = '' end
+			if json.permfcspeed then permfcspeed = json.permfcspeed else permfcspeed = 1 end
+			if json.permflyspeed then permflyspeed = json.permflyspeed else permflyspeed = 1 end
+			if json.permwalkspeed then permwalkspeed = json.permwalkspeed else permwalkspeed = 50 end
+			if json.permjumppower then permjumppower = json.permjumppower else permjumppower = 150 end
+			if json.permhipheight then permhipheight = json.permhipheight else permhipheight = 20 end
+			if json.permgravity then permgravity = json.permgravity else permgravity = 50 end
+			if json.permmaxsl then permmaxsl = json.permmaxsl else permmaxsl = 89.99 end
+			if json.Adm then Adm = json.Adm else Adm = {} end
+			if json.hkBinds then hkBinds = json.hkBinds else hkBinds = {} end
+			if json.dStyle then dStyle = json.dStyle else dStyle = "rounded" end
+			if json.conFly then conFly = json.conFly else conFly = true end
+			if json.suggestions then suggestions = json.suggestions else suggestions = true end
+			if json.CMDStats then CMDStats = json.CMDStats else CMDStats = {} end
+			if json.oldNum then oldNum = json.oldNum else oldNum = 0 end
+			if json.hotkeyctp then hotkeyctp = json.hotkeyctp else hotkeyctp = "LeftControl" end
+			if json.permspamspeed then permspamspeed = json.permspamspeed else permspamspeed = 1 end
+			if json.mentions then mentions = json.mentions else mentions = true end
+			if json.sDetect then sDetect = json.sDetect else sDetect = true end
+			if json.SavedPos then SavedPos = json.SavedPos else SavedPos = {X = 800, Y = 300} end
+			if json.hotkeynoclip then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
+			if json.ChatBind then ChatBind = json.ChatBind else ChatBind = false end
+			if json.CMDTab then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
+			if json.TabsOff then TabsOff = json.TabsOff else TabsOff = true end
+			if json.KeepCMDXOn then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
+			if json.ifKickedAuto then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
+			if json.whyIs then whyIs = json.whyIs else whyIs = 0 end
+			if json.combos then combos = json.combos else combos = {} end
+			if json.drawingtype then drawingtype = json.drawingtype else drawingtype = "old" end
 		else
 			writefileCooldown("CMD-X.lua", defaults)
 			wait()
@@ -494,6 +629,7 @@ function saves()
 				ifKickedAuto = false
 				whyIs = 0
 				combos = {}
+				drawingtype = "old"
 			end
 		end
 	else
@@ -541,6 +677,7 @@ function saves()
 		ifKickedAuto = false
 		whyIs = 0
 		combos = {}
+		drawingtype = "old"
 	end
 	dp = cmdlp
 end
@@ -592,6 +729,7 @@ function updatesaves()
 			KeepCMDXOn = KeepCMDXOn;
 			ifKickedAuto = ifKickedAuto;
 			whyIs = whyIs;
+			drawingtype = drawingtype;
 		}
 		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 	end
@@ -2596,7 +2734,7 @@ CMDS.commands = {
 	["tabs"] = "Turns tabs on or off.",
 	["changetab"] = "Changes a tab from 1-9.",
 	["debugging"] = "Allows error showing on commands.",
-	["runafter"] = "If CMD-X should run after rejoin (SYNAPSE ONLY).",
+	["runafter"] = "Makes CMD-X automatically re-execute on rejoin.",
 	["removeinchar"] = "Removes whatever you state from character.",
 	["unsitwalk"] = "()",
 	["setbackunanchored"] = "Sets back all unanchored parts to original positions.",
@@ -2765,6 +2903,8 @@ CMDS.commands = {
 	["norotate"] = "Stops rotation of the body.",
 	["yesrotate"] = "()",
 	["outofbody"] = "Allows you to walk around like a normal character, out of body.",
+	["drawingnew"] = "Uses a lua drawing library instead of your exploits",
+	["drawingold"] = "Uses your exploits drawing api if it has one",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -2997,6 +3137,8 @@ CMDS.usage = {
 	["chatprivacypublic"] = "(plr)",
 	["chatprivacyprivate"] = "(plr)",
 	["cameraoffset"] = "(num1 | num2 | num3)",
+	["drawingnew"] = "(default for exploits without drawing)",
+	["drawingold"] = "(reverts .drawingnew)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3510,6 +3652,7 @@ CMDS.aliases = {
 	["camoffset"] = "cameraoffset",
 	["norot"] = "norotate",
 	["yesrot"] = "yesrotate",
+	["autorun"] = "runafter",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -3936,13 +4079,13 @@ Cmdsearch.FocusLost:Connect(function()
 	end
 end)
 function refresh()
-	LPos = cmdlp.Character.HumanoidRootPart.CFrame
-	cmdlp.Character.Humanoid.PlatformStand = false
-	cmdlp.Character.Humanoid.Health = 0
-	cmdlp.Character.Head.CFrame = CFrame.new(1e9,0,1e9)
-	cmdlp.Character.HumanoidRootPart:Destroy()
-	repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart')
-	cmdlp.Character.HumanoidRootPart.CFrame = LPos
+	local oldpos = cmdlp.Character.HumanoidRootPart.CFrame
+	cmdlp.Character:BreakJoints()
+	local charadded
+	charadded = cmdlp.CharacterAdded:Connect(function(char)
+		char:WaitForChild("HumanoidRootPart").CFrame = oldpos
+		charadded:Disconnect()
+	end)
 end
 function IESP(v)
 	spawn(function()
@@ -15742,10 +15885,13 @@ function useCommand.rejoinrefresh()
 	local c = cmdlp.Character.HumanoidRootPart.CFrame
 	syn.queue_on_teleport(string.format([[
 		game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
-		repeat wait(.1) until game:GetService('Players').LocalPlayer
-		game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
-			wait(.25)
-			game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+		local playeradded, charadded
+		playeradded = game:GetService('Players').PlayerAdded:Connect(function(plr)
+			charadded = plr.CharacterAdded:Connect(function(char)
+				char:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(%f, %f, %f)
+				charadded:Disconnect()
+			end)
+			playeradded:Disconnect()
 		end)
 	]], c.X, c.Y, c.Z))
 	opx("-","Rejoining game")
@@ -15762,10 +15908,13 @@ function useCommand.rejoinrefreshexecute()
 	local c = cmdlp.Character.HumanoidRootPart.CFrame
 	syn.queue_on_teleport(string.format([[
 		game:GetService('ReplicatedFirst'):RemoveDefaultLoadingScreen()
-		repeat wait(.1) until game:GetService('Players').LocalPlayer
-		game:GetService('Players').LocalPlayer.CharacterAdded:Connect(function()
-			wait(.25)
-			game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(%f, %f, %f)
+		local playeradded, charadded
+		playeradded = game:GetService('Players').PlayerAdded:Connect(function(plr)
+			charadded = plr.CharacterAdded:Connect(function(char)
+				char:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(%f, %f, %f)
+				charadded:Disconnect()
+			end)
+			playeradded:Disconnect()
 		end)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
 	]], c.X, c.Y, c.Z))
@@ -15815,10 +15964,10 @@ end
 	end
 	Lines = {}
 	TracerEnabled = true
-	repeat
+	while TracerEnabled do
 		UpdateTracer()
-		wait(.00001)
-	until TracerEnabled == false
+		game:GetService("RunService").RenderStepped:Wait()
+	end
 end
 
 function useCommand.untracers()
@@ -16276,9 +16425,8 @@ function useCommand.hotkeysitflyhold()
 	workspace.Gravity = gravity
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
-	local wantedkey = Enum.KeyCode[arguments[2]:upper()]
 	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == wantedkey then
+		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = 0
 			cmdlp.Character.Humanoid.Sit = true
 		end
@@ -16305,9 +16453,8 @@ function useCommand.hotkeyplatformflyhold()
 	workspace.Gravity = gravity
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
-	local wantedkey = Enum.KeyCode[arguments[2]:upper()]
 	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == wantedkey then
+		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = 0
 			cmdlp.Character.Humanoid.PlatformStand = true
 		end
@@ -16335,9 +16482,8 @@ function useCommand.hotkeysitflytoggle()
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
 	local toggled = true
-	local wantedkey = Enum.KeyCode[arguments[2]:upper()]
 	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == wantedkey then
+		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			toggled = not toggled
 			if not toggled then
 				workspace.Gravity = 0
@@ -16365,9 +16511,8 @@ function useCommand.hotkeyplatformflytoggle()
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
 	local toggled = true
-	local wantedkey = Enum.KeyCode[arguments[2]:upper()]
 	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == wantedkey then
+		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			toggled = not toggled
 			if not toggled then
 				workspace.Gravity = 0
@@ -16391,9 +16536,8 @@ function useCommand.hotkeyflyhold()
 		v:Disconnect()
 	end
 	_G.connections["fly"] = {}
-	local wantedkey = Enum.KeyCode[arguments[2]:upper()]
 	_G.connections["fly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == wantedkey then
+		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			FLYING = true
 			sFLY()
 		end
@@ -16404,6 +16548,36 @@ function useCommand.hotkeyflyhold()
 		end
 	end)
 	opx("-", "Fly enabled on key "..arguments[2]:upper().." on hold")
+end
+
+function useCommand.drawingnew()
+	if newDrawing == Drawing then
+		opx("*", "Already using new drawing.")
+		return
+	end
+	if Drawing then
+		setreadonly(Drawing, false)
+	end
+	Drawing = newDrawing
+	setreadonly(Drawing, true)
+	opx("-", "Now using new Drawing API")
+end
+
+function useCommand.drawingold()
+	if not oldDrawing then
+		opx("*", "Your exploit doesn't have it's own Drawing API.")
+		return
+	end
+	if oldDrawing == Drawing then
+		opx("*", "Already using your exploits Drawing API.")
+		return
+	end
+	if Drawing then
+		setreadonly(Drawing, false)
+	end
+	Drawing = oldDrawing
+	setreadonly(Drawing, false)
+	opx("-", "Now using your exploits Drawing API")
 end
 
 user.Changed:connect(function()
@@ -16549,7 +16723,7 @@ cmdm.KeyDown:connect(function(key)
 end)
 ---------------------------------------|
 -- Print Function: --------------------|
-if AntiCheat.PrintingOff == false then
+if not AntiCheat.PrintingOff then
 	local StarterGui = game:GetService("StarterGui")
 	StarterGui:SetCore("ChatMakeSystemMessage", {
 		Text = "Welcome to CMD-X, "..cmdlp.Name..".";
