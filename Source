@@ -408,7 +408,9 @@ local Donors = {
 	["InternetSpeeds"] = "Custom2",
 	["TheChosenOne123"] = "Custom3",
 	["Irritatory"] = "Custom4",
-	["DuBz_Bubby"] = "Custom5" -- top donor {$200}
+	["DuBz_Bubby"] = "Custom5", -- top donor {$200}
+	["YanniLove"] = "Custom6",
+
 }
 
 local Tier = {
@@ -446,6 +448,11 @@ local Tier = {
 		Tag = "DuBz_Bubby",
 		Color = "RGBDev",
 		SCHAT = "TOP DONOR"
+	},
+	["Custom6"] = {
+		Tag = "Classy Cute",
+		Color = Color3.fromRGB(252,144,3),
+		SCHAT = "SUGAR DADDY"
 	}
 }
 
