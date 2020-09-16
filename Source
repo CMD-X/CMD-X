@@ -4419,7 +4419,7 @@ cmdlp.CharacterAdded:Connect(function(char)
 end)
 ---------------------------------------|
 -- Commands: --------------------------|
-local sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest
+if cmdrs:FindFirstChild("DefaultChatSystemChatEvents") then sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest end
 function opx(f,text)
 	if not ChatBind then
 		output9.Text = output8.Text
