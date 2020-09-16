@@ -1,9 +1,7 @@
 ---------------------------------------|
-while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do
-	wait()
-end
+while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.8.2"
+local ver = "1.8.3"
 local cordCode = "discord.gg/cmd"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2606,8 +2604,8 @@ CMDS.commands = {
 	["removefog"] = "Removes fog.",
 	["clientfreeze"] = "Freezes player on client.",
 	["unclientfreeze"] = "()",
-	["respawndead"] = "Refreshes your character when death occurs.",
-	["unrespawndead"] = "()",
+	["refreshdead"] = "Refreshes your character when death occurs.",
+	["unrefreshdead"] = "()",
 	["god"] = "Gods your character (wont work on games that use :LoadCharacter()).",
 	["avatar"] = "Shows UserId's avatar.",
 	["statistics"] = "Shows your most used commands.",
@@ -2910,8 +2908,11 @@ CMDS.commands = {
 	["norotate"] = "Stops rotation of the body.",
 	["yesrotate"] = "()",
 	["outofbody"] = "Allows you to walk around like a normal character, out of body.",
-	["drawingnew"] = "Uses a lua drawing library instead of your exploits",
-	["drawingold"] = "Uses your exploits drawing api if it has one",
+	["drawingnew"] = "Uses a lua drawing library instead of your exploits.",
+	["drawingold"] = "Uses your exploits drawing api if it has one.",
+	["nomessages"] = "Stops messages from being sent (HD,Instances).",
+	["yesmessages"] = "()",
+	["removecmd"] = "Removes command from your CMD-X temporarily.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3144,8 +3145,7 @@ CMDS.usage = {
 	["chatprivacypublic"] = "(plr)",
 	["chatprivacyprivate"] = "(plr)",
 	["cameraoffset"] = "(num1 | num2 | num3)",
-	["drawingnew"] = "(default for exploits without drawing)",
-	["drawingold"] = "(reverts .drawingnew)",
+	["removecmd"] = "(cmd)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3403,8 +3403,8 @@ CMDS.aliases = {
 	["rfog"] = "removefog",
 	["cfreeze"] = "clientfreeze",
 	["uncfreeze"] = "unclientfreeze",
-	["redead"] = "respawndead",
-	["unredead"] = "unrespawndead",
+	["redead"] = "refreshdead",
+	["unredead"] = "unrefreshdead",
 	["ip"] = "grabip",
 	["massjd"] = "massjoindate",
 	["savegears"] = "savetools",
@@ -3660,6 +3660,9 @@ CMDS.aliases = {
 	["norot"] = "norotate",
 	["yesrot"] = "yesrotate",
 	["autorun"] = "runafter",
+	["nomsgs"] = "nomessages",
+	["yesmsgs"] = "yesmessages",
+	["rcmd"] = "removecmd",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -13169,6 +13172,26 @@ function useCommand.playercases()
 	using - Chooses a player that is using CMD-X")
 end
 
+function useCommand.nomessages()
+    if _G.connections["MessageGame"] then
+        opx("*","NoMessages is already loaded!")
+        return
+    end
+    opx("-","NoMessages is now on")
+    _G.connections.MesssageGame = workspace.DescendantAdded:Connect(function(v) if v:IsA("Message") then v:Destroy() end end)
+    _G.connections.MessagesHD = cmdlp.PlayerGui.HDAdminGUIs.MessageContainer.Messages.ChildAdded:Connect(function(v) v:Destroy() end)
+end
+
+function useCommand.yesmessages()
+    if not _G.connections.MessageGame then
+        opx("*","NoMessages is not already loaded!")
+        return
+    end
+    opx("-","NoMessages is no longer on")
+    _G.connections.MessageGame:Disconnect()
+    _G.connections.MessageHD:Disconnect()
+end
+
 function useCommand.ppsize()
 	if arguments[2] then
 		target = findplr(arguments[2])
@@ -13237,26 +13260,24 @@ function useCommand.height()
 end
 
 local deadRefresh = false
-function useCommand.respawndead()
-	deadRefresh = true
-	opx("-","Respawn dead is now on")
-	while deadRefresh do
+function useCommand.refreshdead()
+    deadRefresh = true
+    opx("-","Refresh dead is now on")
+    while deadRefresh do
 		wait()
+		DiedTPs = cmdlp.Character.HumanoidRootPart.CFrame
 		if cmdlp.Character.Humanoid.Health == 0 then
-			DiedTP = cmdlp.Character.HumanoidRootPart.CFrame
-			cmdlp.CharacterAdded:Connect(function()
-				while not cmdlp.Character.HumanoidRootPart do
-					wait()
-				end
-				cmdlp.Character.HumanoidRootPart.CFrame = DiedTP
+			_G.connections.dRefresh = cmdlp.CharacterAdded:Connect(function(char)
+        		wait(2)
+        		cmdlp.Character.HumanoidRootPart.CFrame = DiedTPs
 			end)
 		end
 	end
 end
 
-function useCommand.unrespawndead()
+function useCommand.unrefreshdead()
 	deadRefresh = false
-	opx("-", "Respawn dead is now off")
+	opx("-", "Refresh dead is now off")
 end
 
 function useCommand.god()
@@ -13396,6 +13417,16 @@ function useCommand.plague()
 	else
 		opx("*","You need 2 arguments!")
 	end
+end
+
+function useCommand.removecmd()
+    local removingcmd = findCmd(arguments[2])
+    if not removingcmd then
+        opx("*","Command does not exist!")
+        return
+    end
+    opx("-","Removed command")
+    useCommand[removingcmd] = function() wait() end
 end
 
 function useCommand.removecustomnametag()
