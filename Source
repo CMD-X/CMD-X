@@ -1610,6 +1610,9 @@ end
 
 if _G.sCheck then _G.sCheck:Disconnect() end
 if sDetect then
+	while not cmdlp.Character do
+		cmdrs2.RenderStepped:Wait()
+	end
 	local check1 = cmdlp.Character:FindFirstChild("Head")
 	if check1 then
 		local check2 = check1:FindFirstChild(AntiCheat.Attachment)
