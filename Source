@@ -540,7 +540,7 @@ function saves()
 			wait()
 			saves()
 		end
-		if a then
+		if a and readfile("CMD-X.lua") then
 			local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
 			if json.text2 then text2 = json.text2 else text2 = {} end
 			if json.hotkeyopen then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
