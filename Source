@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.8.5"
+local ver = "1.8.6"
 local cordCode = "discord.gg/cmdx"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2919,6 +2919,10 @@ CMDS.commands = {
 	["nomessages"] = "Stops messages from being sent (HD,Instances).",
 	["yesmessages"] = "()",
 	["removecmd"] = "Removes command from your CMD-X temporarily.",
+	["spoofgrouprole"] = "Spoofs group role (only works on client scripts).",
+	["unspoofgrouprole"] = "()",
+	["nogameteleport"] = "Stops you from teleporting to other games (only works on client scripts).",
+	["yesgameteleport"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3152,6 +3156,7 @@ CMDS.usage = {
 	["chatprivacyprivate"] = "(plr)",
 	["cameraoffset"] = "(num1 | num2 | num3)",
 	["removecmd"] = "(cmd)",
+	["spoofgrouprole"] = "(role)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3669,6 +3674,12 @@ CMDS.aliases = {
 	["nomsgs"] = "nomessages",
 	["yesmsgs"] = "yesmessages",
 	["rcmd"] = "removecmd",
+	["spoofgr"] = "spoofgrouprole",
+	["unspoofgr"] = "unspoofgrouprole",
+	["nogametp"] = "nogameteleport",
+	["nogtp"] = "nogameteleport",
+	["yesgametp"] = "yesgameteleport",
+	["yesgtp"] = "yesgameteleport",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -16559,6 +16570,75 @@ function useCommand.hotkeyplatformflytoggle()
 		end
 	end)
 	opx("-", "Platformfly enabled on key "..arguments[2]:upper().." on toggle")
+end
+
+function useCommand.spoofgrouprole()
+    if _G.rolehook then
+        opx("*","Spoof group role already enabled!")
+        return
+    end
+    local xRole = "Owner"
+    if arguments[2] then
+        xRole = arguments[2]    
+    end
+    opx("-","Spoofed role")
+    local mt = getrawmetatable(game)
+    _G.rolehook = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(self, ...)
+        if not checkcaller() and self == cmdlp then
+            if getnamecallmethod() == "GetRankInGroup" then
+                return 255
+            elseif getnamecallmethod() == "GetRoleInGroup" then
+                return xRole
+            end
+            return _G.rolehook(self, ...)
+        end
+        return _G.rolehook(self, ...)
+    end)
+    setreadonly(mt, true)
+end
+
+function useCommand.unspoofgrouprole()
+    if not _G.rolehook then
+        opx("*", "Spoof group role is not enabled.")
+        return
+    end
+    setreadonly(mt, false)
+    mt.__namecall = _G.rolehook
+    setreadonly(mt, true)
+    opx("-", "Spoof group role is now disabled.")
+    _G.rolehook = nil    
+end
+
+function useCommand.nogameteleport()
+    if _G.gtphook then
+        opx("*","No game teleport already enabled!")
+        return
+    end
+    opx("-","No game teleport is now enabled")
+    local mt = getrawmetatable(game)
+    _G.gtphook = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(self, ...)
+        if not checkcaller() and getnamecallmethod() == "Teleport" then
+            return nil
+        end
+        return _G.gtphook(self, ...)
+    end)
+    setreadonly(mt, true)    
+end
+
+function useCommand.yesgameteleport()
+    if not _G.gtphook then
+        opx("*", "No game teleport is not enabled.")
+        return
+    end
+    setreadonly(mt, false)
+    mt.__namecall = _G.gtphook
+    setreadonly(mt, true)
+    opx("-", "No game teleport is now disabled.")
+    _G.gtphook = nil   
 end
 
 function useCommand.hotkeyflyhold()
