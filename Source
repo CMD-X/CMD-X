@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.8.6"
+local ver = "1.8.7"
 local cordCode = "discord.gg/cmdx"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2923,6 +2923,8 @@ CMDS.commands = {
 	["unspoofgrouprole"] = "()",
 	["nogameteleport"] = "Stops you from teleporting to other games (only works on client scripts).",
 	["yesgameteleport"] = "()",
+	["parttracers"] = "Enables tracers on parts.",
+	["unparttracers"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3157,6 +3159,8 @@ CMDS.usage = {
 	["cameraoffset"] = "(num1 | num2 | num3)",
 	["removecmd"] = "(cmd)",
 	["spoofgrouprole"] = "(role)",
+	["chaos"] = "(num)",
+	["parttracers"] = "(name / class) (item)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3398,6 +3402,8 @@ CMDS.aliases = {
 	["orb"] = "orbit",
 	["corb"] = "closeorbit",
 	["unorb"] = "unorbit",
+	["uncloseorbit"] = "unorbit",
+	["uncorb"] = "unorbit",
 	["cbring"] = "clientbring",
 	["uncbring"] = "unclientbring",
 	["script"] = "using",
@@ -3680,6 +3686,8 @@ CMDS.aliases = {
 	["nogtp"] = "nogameteleport",
 	["yesgametp"] = "yesgameteleport",
 	["yesgtp"] = "yesgameteleport",
+	["ptracers"] = "parttracers",
+	["unptracers"] = "unparttracers",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -8007,7 +8015,7 @@ function useCommand.partesp()
 		IESPenabled = true
 		for _,i in pairs(workspace:GetDescendants()) do
 			if i:IsA(arguments[3]) then
-				if arguments[3] == "ClickDetector" or arguments[2] == "TouchInterest" then
+				if arguments[3] == "ClickDetector" or arguments[3] == "TouchInterest" then
 					if i:IsA("BasePart") then
 						IESP(i.Parent)
 					end
@@ -15249,18 +15257,25 @@ end
 
 Chaos = false
 function useCommand.chaos()
+    local chaosspeed = arguments[2]
 	Chaos = true
 	opx("-","Chaos mode is now on")
 	while Chaos do
+	    local x = 1
+	    local outputx = math.random(1,600)
 		for i,_ in pairs(CMDS.commands) do
-			if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
-				if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
-					arguments = i:split(" ")
-					useCommand[i]()
-					wait(5)
-				end
-			end
+		    x = x + 1
+		    if x == outputx then
+    			if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
+    				if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
+    					arguments = i:split(" ")
+    					opx("-",i.." use .? (cmd) for more info")
+    					pcall(function() useCommand[i]() end)
+    				end
+    			end
+    		end
 		end
+		wait(chaosspeed)
 	end
 end	
 function useCommand.unchaos()
@@ -15444,9 +15459,20 @@ function useCommand.newaudios()
 end
 
 function useCommand.randomcmd()
-	local CCmd = CMDN[math.random(1,#CMDN)]
-	useCommand[CCmd.N]()
-	opx("-",CCmd.N.." use .? (cmd) for more info")
+	local x = 1
+	local outputx = math.random(1,600)
+	for i,_ in pairs(CMDS.commands) do
+		x = x + 1
+		if x == outputx then
+    		if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
+    			if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
+    				arguments = i:split(" ")
+    				opx("-",i.." use .? (cmd) for more info")
+    				pcall(function() useCommand[i]() end)
+    			end
+    		end
+    	end
+	end
 end
 
 function useCommand.replayintro()
@@ -16003,7 +16029,7 @@ function useCommand.tracers()
 	if not Drawing then
 		opx("*","Drawing API is not supported on your executor!")
 		return
-end
+    end
 	opx("-","Tracers enabled")
 	for i,v in pairs(Lines) do
 		v:Remove()
@@ -16023,6 +16049,75 @@ function useCommand.untracers()
 		v:Remove()
 	end
 	Lines = {}
+end
+
+PartLines = {}
+function UpdatePartTracer(partarg,partname)
+	for i,v in pairs(PartLines) do
+		v:Remove()
+	end
+	PartLines = {}
+	for i,v in pairs(workspace:GetDescendants()) do
+	    if partarg == "class" then
+	        if v:IsA("BasePart") and partname == v.ClassName then
+	            if partname == "ClickDetector" or partname == "TouchInterest" then v = v.Parent end
+	            local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
+				if withinScreenBounds then
+					local Line = Drawing.new("Line")
+					Line.Visible = true
+					Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
+					Line.To = Vector2.new(PosChar.X, PosChar.Y)
+					Line.Color = Color3.new(255,255,255)
+					Line.Thickness = 2
+					Line.Transparency = 1
+					PartLines[#Lines+1] = Line
+				end
+	        end
+	    elseif partarg == "name" then
+	        if v:IsA("BasePart") and partname == v.Name then
+	            local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
+				if withinScreenBounds then
+					local Line = Drawing.new("Line")
+					Line.Visible = true
+					Line.From = Vector2.new(workspace.Camera.ViewportSize.X / 2, workspace.Camera.ViewportSize.Y)
+					Line.To = Vector2.new(PosChar.X, PosChar.Y)
+					Line.Color = Color3.new(255,255,255)
+					Line.Thickness = 2
+					Line.Transparency = 1
+					PartLines[#Lines+1] = Line
+				end
+	        end
+        end
+	end
+end
+
+PartTracerEnabled = false
+function useCommand.parttracers()
+	if not Drawing then
+		opx("*","Drawing API is not supported on your executor!")
+		return
+	end
+    local arg2 = arguments[2]
+    local arg3 = arguments[3]
+	opx("-","Part Tracers enabled")
+	for i,v in pairs(PartLines) do
+		v:Remove()
+	end
+	PartLines = {}
+	PartTracerEnabled = true
+	while PartTracerEnabled do
+		UpdatePartTracer(arg2,arg3)
+		game:GetService("RunService").RenderStepped:Wait()
+	end
+end
+
+function useCommand.unparttracers()
+	opx("-","Part Tracers disabled")
+	PartTracerEnabled = false
+	for i,v in pairs(PartLines) do
+		v:Remove()
+	end
+	PartLines = {}
 end
 
 function useCommand.removeroot()
