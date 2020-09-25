@@ -19,7 +19,7 @@ local SpotifyMain = Instance.new("ImageLabel", SpotifyPlaceholder)
 SpotifyMain.Name = "SpotifyMain"
 SpotifyMain.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 SpotifyMain.BackgroundTransparency = 1.000
-SpotifyMain.Position = UDim2.new(0, 750, 0, 850)
+SpotifyMain.Position = UDim2.new(0, 750, 0, 450)
 SpotifyMain.Size = UDim2.new(0, 500, 0, 100)
 SpotifyMain.Image = "rbxassetid://3570695787"
 SpotifyMain.ImageColor3 = Color3.fromRGB(17, 17, 17)
@@ -27,6 +27,8 @@ SpotifyMain.ImageTransparency = 0.100
 SpotifyMain.ScaleType = Enum.ScaleType.Slice
 SpotifyMain.SliceCenter = Rect.new(100, 100, 100, 100)
 SpotifyMain.SliceScale = 0.120
+SpotifyMain.Active = true
+SpotifyMain.Draggable = true
 
 local SongTitle = Instance.new("TextLabel", SpotifyMain)
 SongTitle.Name = "SongTitle"
