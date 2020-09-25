@@ -30,18 +30,6 @@ SpotifyMain.SliceScale = 0.120
 SpotifyMain.Active = true
 SpotifyMain.Draggable = true
 
-local SongTitle = Instance.new("TextLabel", SpotifyMain)
-SongTitle.Name = "SongTitle"
-SongTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SongTitle.BackgroundTransparency = 1.000
-SongTitle.Position = UDim2.new(0, 150, 0, -15)
-SongTitle.Size = UDim2.new(0, 200, 0, 50)
-SongTitle.Font = Enum.Font.GothamBold
-SongTitle.Text = "(N/A)"
-SongTitle.TextColor3 = Color3.fromRGB(29, 185, 84)
-SongTitle.TextSize = 15.000
-SongTitle.TextStrokeColor3 = Color3.fromRGB(13, 163, 13)
-
 local DurationHolder = Instance.new("ImageButton", SpotifyMain)
 DurationHolder.Name = "DurationHolder"
 DurationHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -113,18 +101,6 @@ VolumeScroll.ImageColor3 = Color3.fromRGB(29, 185, 84)
 VolumeScroll.ScaleType = Enum.ScaleType.Slice
 VolumeScroll.SliceCenter = Rect.new(100, 100, 100, 100)
 VolumeScroll.SliceScale = 0.120
-
-local SongArtist = Instance.new("TextLabel", SpotifyMain)
-SongArtist.Name = "SongArtist"
-SongArtist.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SongArtist.BackgroundTransparency = 1.000
-SongArtist.Position = UDim2.new(0, 150, 0, 0)
-SongArtist.Size = UDim2.new(0, 200, 0, 50)
-SongArtist.Font = Enum.Font.Gotham
-SongArtist.Text = "(N/A)"
-SongArtist.TextColor3 = Color3.fromRGB(255, 255, 255)
-SongArtist.TextSize = 14.000
-SongArtist.TextStrokeColor3 = Color3.fromRGB(13, 163, 13)
 
 local SongTimeEnd = Instance.new("TextLabel", SpotifyMain)
 SongTimeEnd.Name = "SongTimeEnd"
@@ -216,6 +192,30 @@ TokenLock.ImageTransparency = 0.050
 TokenLock.ScaleType = Enum.ScaleType.Slice
 TokenLock.SliceCenter = Rect.new(100, 100, 100, 100)
 TokenLock.SliceScale = 0.120
+
+local SongTitle = Instance.new("TextLabel", TokenLock)
+SongTitle.Name = "SongTitle"
+SongTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SongTitle.BackgroundTransparency = 1.000
+SongTitle.Position = UDim2.new(0, 150, 0, -15)
+SongTitle.Size = UDim2.new(0, 200, 0, 50)
+SongTitle.Font = Enum.Font.GothamBold
+SongTitle.Text = "Spotify Presence"
+SongTitle.TextColor3 = Color3.fromRGB(29, 185, 84)
+SongTitle.TextSize = 15.000
+SongTitle.TextStrokeColor3 = Color3.fromRGB(13, 163, 13)
+
+local SongArtist = Instance.new("TextLabel", TokenLock)
+SongArtist.Name = "SongArtist"
+SongArtist.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SongArtist.BackgroundTransparency = 1.000
+SongArtist.Position = UDim2.new(0, 150, 0, 0)
+SongArtist.Size = UDim2.new(0, 200, 0, 50)
+SongArtist.Font = Enum.Font.Gotham
+SongArtist.Text = "pigeon#1818"
+SongArtist.TextColor3 = Color3.fromRGB(255, 255, 255)
+SongArtist.TextSize = 14.000
+SongArtist.TextStrokeColor3 = Color3.fromRGB(13, 163, 13)
 
 local TokenBoxRound = Instance.new("ImageLabel", TokenLock)
 TokenBoxRound.Name = "TokenBoxRound"
@@ -545,6 +545,8 @@ function ExpiredToken()
     end)
     wait(1)
     TokenBox.Text = "Token expired or experienced error!"
+    SongTitle.Parent = TokenLock
+    SongArtist.Parent = TokenLock
     wait(1.5)
 end
 
@@ -561,6 +563,8 @@ SpotifyLogo.MouseButton1Down:Connect(function()
         end)
         wait(1.5)
         TokenBox.Text = " "
+        SongTitle.Parent = SpotifyMain
+        SongArtist.Parent = SpotifyMain
         wait(1)
         TokenLock.Visible = false
         _G.connectionsspotify.session = true
