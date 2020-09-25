@@ -1,3 +1,5 @@
+if not syn then Message = Instance.new("Message"); Message.Text = "This script can only be run on Synapse X, x.synapse.to"; wait(5); Message:Destroy(); return end
+
 settings = {
     showbuttonsalways = true,
 }
