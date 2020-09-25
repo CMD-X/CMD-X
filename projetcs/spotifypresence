@@ -325,7 +325,15 @@ function MainFrame()
         if not URL:sub(1,4) == "curr" then return end
         if success == true and type(res) == "table" and #res.Body > 0 then
             local parsed = game:GetService("HttpService"):JSONDecode(res.Body)
-            if parsed.item == nil then ExpiredToken() end
+            if parsed['error'] then ExpiredToken() end
+            if parsed['item'] == nil then
+                return {
+                    Artist = "Token errors could occur if this error is appearing!",
+                    Title = "No song playing",
+                    Time = "0",
+                    TimeEnd = "400",
+                }
+            end
             local Artists = parsed['item']['artists'][1]['name']
             for i,v in pairs(parsed['item']['artists']) do
                 if i ~= 1 then
