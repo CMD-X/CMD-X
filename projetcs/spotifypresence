@@ -292,6 +292,8 @@ TokenHelp.MouseButton1Down:Connect(function()
             wait(.1)
         end
         TokenBoxRound.ImageTransparency = .3
+        SongTitle.Visible = true
+        SongArtist.Visible = true
     elseif TokenExplanation.TextTransparency == 1 then
         for i = 0,7 do
             TokenBoxRound.ImageTransparency = TokenBoxRound.ImageTransparency + .1
@@ -304,6 +306,8 @@ TokenHelp.MouseButton1Down:Connect(function()
             wait(.1)
         end
         TokenExplanation.TextTransparency = 0
+        SongTitle.Visible = false
+        SongArtist.Visible = false
     end
 end)
 
