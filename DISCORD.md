@@ -1,1 +1,1 @@
-https://discord.gg/RKjVgFJ
+https://discord.gg/exe
