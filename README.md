@@ -4,4 +4,4 @@ With over 600 commands and updates coming in daily or bi-daily, we can assure yo
 Not satisfied with the look of CMD-X? Request or create and use a theme.
 While we do have plug-in support, we really don't see what you'd need to add onto CMD-X.
 
-Discord: https://discord.gg/r8gEZgh
+Discord: https://discord.gg/exe
