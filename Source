@@ -350,6 +350,9 @@ end
 Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
 repeat wait() until RunDude == true
 
+Stand("Watch out for scams!","A user by the name of xzy#5001 is a known scammer and is targetting CMD-X.","Do not trust the likes of the user or his friends.","They are known scammers!","Make sure to spread the word.","Gotcha!",true)
+repeat wait() until RunDude == true
+
 -- Variables: ------------------------|
 cmdws = workspace
 local player = cmdlp
