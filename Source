@@ -2928,6 +2928,8 @@ CMDS.commands = {
 	["yesgameteleport"] = "()",
 	["parttracers"] = "Enables tracers on parts.",
 	["unparttracers"] = "()",
+	["lookat"] = "Makes your character stare at player.",
+	["unlookat"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3164,6 +3166,7 @@ CMDS.usage = {
 	["spoofgrouprole"] = "(role)",
 	["chaos"] = "(num)",
 	["parttracers"] = "(name / class) (item)",
+	["lookat"] = "(plr)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -15047,6 +15050,29 @@ function useCommand.grabunanchored()
 		opx("-","Updated anchored parts list from workspace")
 		grabUnanchored(workspace)
 	end
+end
+
+lookingAt = false
+function useCommand.lookat()
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    target = findplr(arguments[2])
+    if not target then
+        opx("*","Player does not exist!")
+        return
+    end
+    opx("-","Now looking at "..target.Name)
+    lookingAt = true
+    repeat game:GetService("RunService").Heartbeat:Wait()
+        cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(cmdlp.Character.HumanoidRootPart.Position, target.Character.HumanoidRootPart.Position)
+    until lookingAt == false
+end
+
+function useCommand.unlookat()
+    opx("-","Stopped looking at")
+    lookingAt = false
 end
 
 function useCommand.setbackunanchored()
