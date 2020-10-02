@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.0"
+local ver = "1.9.1"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2930,6 +2930,9 @@ CMDS.commands = {
 	["unparttracers"] = "()",
 	["lookat"] = "Makes your character stare at player.",
 	["unlookat"] = "()",
+	["spoofclientid"] = "Spoofs your clientid to whatever you want.",
+	["randomspoofclientid"] = "Spoofs your clientid to a random set.",
+	["unspoofclientid"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3167,6 +3170,7 @@ CMDS.usage = {
 	["chaos"] = "(num)",
 	["parttracers"] = "(name / class) (item)",
 	["lookat"] = "(plr)",
+	["spoofclientid"] = "(str)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3694,6 +3698,9 @@ CMDS.aliases = {
 	["yesgtp"] = "yesgameteleport",
 	["ptracers"] = "parttracers",
 	["unptracers"] = "unparttracers",
+	["spoofclid"] = "spoofclientid",
+	["rspoofclid"] = "randomspoofclientid",
+	["unspoofclid"] = "unspoofclientid",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -16813,6 +16820,55 @@ function useCommand.drawingnew()
 	Drawing = newDrawing
 	setreadonly(Drawing, true)
 	opx("-", "Now using new Drawing API")
+end
+
+function useCommand.spoofclientid()
+    if _G.clid then
+        opx("*","ClientID already spoofed")
+        return
+    end
+    opx("-","ClientID spoofed")
+    local mt = getrawmetatable(game)
+    _G.clid = mt.__namecall
+    setreadonly(mt, false)
+    local genid = arguments[2]
+    mt.__namecall = newcclosure(function(self, ...)
+        if getnamecallmethod() == 'GetClientId' then 
+            return genid
+        end
+            return _G.clid(self, ...)
+    end)
+    setreadonly(mt, true)
+end
+function useCommand.randomspoofclientid()
+    if _G.clid then
+        opx("*","ClientID already spoofed")
+        return
+    end
+    opx("-","ClientID spoofed")
+    local mt = getrawmetatable(game)
+    _G.clid = mt.__namecall
+    setreadonly(mt, false)
+    local genid = math.random(1,1000000000)
+    mt.__namecall = newcclosure(function(self, ...)
+        if getnamecallmethod() == 'GetClientId' then 
+            return genid
+        end
+            return _G.clid(self, ...)
+    end)
+    setreadonly(mt, true)
+end
+
+function useCommand.unspoofclientid()
+    if not _G.clid then
+        opx("*","ClientID is not already spoofed")
+        return
+    end
+    opx("-","ClientID no longer spoofed")
+    setreadonly(mt, false)
+	mt.__namecall = _G.clid
+	setreadonly(mt, true)
+	_G.clid = nil
 end
 
 function useCommand.drawingold()
