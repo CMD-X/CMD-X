@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.8.9"
+local ver = "1.9.0"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -354,7 +354,6 @@ Stand("Watch out for scams!","A user by the name of xzy#5001 is a known scammer 
 repeat wait() until RunDude == true
 
 -- Variables: ------------------------|
-cmdws = workspace
 local player = cmdlp
 local cmdl = game:GetService("Lighting")
 local cmdrs = game:GetService("ReplicatedStorage")
@@ -1945,13 +1944,13 @@ function cmd6(plr)
 end
 function x(v)
 	if v then
-		for _,i in pairs(cmdws:GetDescendants()) do
+		for _,i in pairs(workspace:GetDescendants()) do
 			if i:IsA("BasePart") and not i.Parent:FindFirstChild("Humanoid") and not i.Parent.Parent:FindFirstChild("Humanoid") then
 				i.LocalTransparencyModifier = 0.5
 			end
 		end
 	else
-		for _,i in pairs(cmdws:GetDescendants()) do
+		for _,i in pairs(workspace:GetDescendants()) do
 			if i:IsA("BasePart") and not i.Parent:FindFirstChild("Humanoid") and not i.Parent.Parent:FindFirstChild("Humanoid") then
 				i.LocalTransparencyModifier = 0
 			end
@@ -2498,9 +2497,10 @@ CMDS.commands = {
 	["numberprivate"] = "Calls a random number you stated between 2 numbers privately.",
 	["loadcustoms"] = "Lists custom scripts.",
 	["plugin"] = "Loads plugin that you stated.",
-	["find"] = "Locates where your stated user is using the ESP command - (WARNING: May cause log spam.).",
+	["find"] = "Locates where your stated user is using the ESP command.",
 	["unfind"] = "()",
-	["clickdelete"] = "Deletes any part you click on. (WARNING: Broken :/ )",
+	["clickdelete"] = "Deletes any part you click on.",
+	["unclickdelete"] = "()",
 	["logs"] = "Logs all chats including whispers in a GUI.",
 	["test"] = "Old ESP test. (WARNING: Will literally lag your game please don't use this lol)",
 	["testa"] = "DHBaby morph remover.",
@@ -3350,6 +3350,7 @@ CMDS.aliases = {
 	["pluginload"] = "plugin",
 	["p_"] = "plugin",
 	["clickdel"] = "clickdelete",
+	["unclickdel"] = "unclickdelete",
 	["test-1"] = "testa",
 	["rforces"] = "removeforces",
 	["lowgraphics"] = "antilag",
@@ -4275,7 +4276,7 @@ function BodyAimbot()
 		local LPCTorso = cmdlp.Character:FindFirstChild("UpperTorso")
 		local LPCHRPart = cmdlp.Character:FindFirstChild("HumanoidRootPart")
 		local Closest = nil
-		local Camera = cmdws:FindFirstChild("Camera")
+		local Camera = workspace:FindFirstChild("Camera")
 		local aehl = Instance.new("BoxHandleAdornment", cmdlp.PlayerGui)
 		aehl.Name = "ESPhelp"
 		aehl.AlwaysOnTop = true
@@ -5484,7 +5485,7 @@ function useCommand.nilgoto()
 			RootNil = cmdlp.Character.HumanoidRootPart
 			RootNil.Parent = nil
 			cmdlp.Character.Humanoid.Jump = true
-			RootNil.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(gotoPosSide,gotoPosHead,gotoPos)
+			RootNil.CFrame = target.Character.HumanoidRootPart.CFrame
 			RootNil.Parent = cmdlp.Character
 			opx("-","Teleported to player "..target.Name)
 		else
@@ -7716,8 +7717,11 @@ end
 
 function useCommand.lockws()
 	opx("-","Locked workspace")
-	for i,v in pairs(cmdws:GetDescendants()) do
+	local x = 0
+	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") then
+		    x = x + 1
+		    if x == 50 then wait(.1); x = 0 end
 			v.Locked = true
 		end
 	end
@@ -7725,8 +7729,11 @@ end
 
 function useCommand.unlockws()
 	opx("-","Locked workspace")
-	for i,v in pairs(cmdws:GetDescendants()) do
+	local x = 0
+	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") then
+		    x = x + 1
+		    if x == 50 then wait(.1); x = 0 end
 			v.Locked = false
 		end
 	end
@@ -8657,7 +8664,7 @@ function useCommand.goto()
 		target = findplr(arguments[2])
 		if target then
 			cmdlp.Character.Humanoid.Jump = true
-			cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(gotoPosSide,gotoPosHead,gotoPos)
+			cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
 			opx("-","Teleported to player "..target.Name)
 		else
 			opx("*","Player does not exist!")
@@ -10046,13 +10053,23 @@ function useCommand.unfind()
 end
 
 function useCommand.clickdelete()
-	if TextButtonpoo.Visible == false then
-		TextButtonpoo.Visible = true
-		opx("-","Click delete loaded")
-	else
-		TextButtonpoo.Visible = false
-		opx("-","Click delete unloaded")
-	end
+    if _G.connections.clickdel then
+        opx("*","Click delete is already enabled")
+        return
+    end
+    opx("-","Click delete enabled")
+	_G.connections.clickdel = cmdm.Button1Up:Connect(function()
+    	cmdm.Target:Destroy()
+    end)
+end
+
+function useCommand.unclickdelete()
+    if not _G.connections.clickdel then
+        opx("*","Click delete is not enabled")
+        return
+    end
+    opx("-","Click delete disabled")
+	_G.connections.clickdel:Disconnect()
 end
 
 cmdp.PlayerAdded:connect(function(plr)
@@ -11256,7 +11273,7 @@ function useCommand.loopgoto()
 				Loopto = true
 				opx("-","Now LoopTping "..target.Name)
 				while Loopto do
-					cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(gotoPosSide,gotoPosHead,gotoPos)
+					cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
 					wait()
 				end
 			end
