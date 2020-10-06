@@ -24,7 +24,7 @@ for _, v in pairs(Parents[2]:GetDescendants()) do
 end
 
 if game:GetService("UserInputService").VREnabled then 
-	getParent = Parents[2] 
+	getParent = Parents[3]
 end
 
 Unnamed = Instance.new("ScreenGui", getParent)
@@ -163,6 +163,7 @@ end
 Unnamed.Name = "Unnamed";
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
 Unnamed.ResetOnSpawn = false
+Unnamed.DisplayOrder = math.huge
 if not syn then syn = {} end
 if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
@@ -222,6 +223,10 @@ function createDrag(object)
 end
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
+    if game:GetService("UserInputService").VREnabled then 
+        RunDude = true
+        return 
+    end
 	RunDude = false
 	LoadingFrame = Instance.new("Frame", getParent)
 	RandomReason = Instance.new("TextLabel", getParent)
@@ -2935,6 +2940,9 @@ CMDS.commands = {
 	["spoofclientid"] = "Spoofs your clientid to whatever you want.",
 	["randomspoofclientid"] = "Spoofs your clientid to a random set.",
 	["unspoofclientid"] = "()",
+	["cleanhats"] = "Cleans up all hats in workspace.",
+	["smartchat"] = "Punctuates your chat messages.",
+	["unsmartchat"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3703,6 +3711,7 @@ CMDS.aliases = {
 	["spoofclid"] = "spoofclientid",
 	["rspoofclid"] = "randomspoofclientid",
 	["unspoofclid"] = "unspoofclientid",
+	["clnh"] = "cleanhats",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -10645,7 +10654,7 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-	if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook then
+	if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook or _G.smarthook then
 		opx("*", "Bypass is already enabled.")
 		return
 	end
@@ -10685,7 +10694,7 @@ function useCommand.bypass()
 end
 
 function useCommand.nilchatcmds()
-	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook then
+	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook or _G.smarthook then
 		opx("*", "Nil ChatCmds is already enabled.")
 		return
 	end
@@ -10705,8 +10714,43 @@ function useCommand.nilchatcmds()
 	opx("-", "Nil ChatCmds enabled.")
 end
 
+function useCommand.smartchat()
+    if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook or _G.smarthook then
+		opx("*", "Smart chat is already enabled.")
+		return
+    end
+    _G.smarthook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			message = message:sub(1,1):upper()
+			if message:sub(#message,#message) ~= "." then
+			    message = message.."."
+			end
+			return _G.smarthook(event, message, args[2])
+		end
+		return _G.smarthook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Smart chat enabled.")
+end
+
+function useCommand.unsmartchat()
+	if not _G.smarthook then
+		opx("*", "Smart chat is not enabled.")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.smarthook
+	setreadonly(mt, true)
+	opx("-", "Smart chat disabled.")
+	_G.smarthook = nil
+end
+
 function useCommand.retardchat()
-	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook then
+	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook or _G.smarthook then
 		opx("*", "Retard chat is already enabled.")
 		return
 	end
@@ -12770,6 +12814,27 @@ function useCommand.scriptusers()
 	end
 end
 
+function useCommand.cleanhats()
+    opx("-","Cleaning up any hats...")
+    for _,v in pairs(cmdlp.Character:GetChildren()) do if v:IsA("Accessory") then v:Destroy() end end
+    local hatConnection = cmdlp.Character.ChildAdded:Connect(function(c)
+        if c:IsA("Accessory") then
+            game:GetService("RunService").Heartbeat:wait()
+            c:Destroy()
+        end
+    end)
+    while workspace:FindFirstChildOfClass("Accessory") do
+        for _,v in pairs(workspace:GetChildren()) do
+            if v:IsA("Accessory") and v:FindFirstChild("Handle") then
+                firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 0)
+                firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 1)
+            end
+        end
+        game:GetService("RunService").Heartbeat:wait()
+    end
+    hatConnection:Disconnect()
+    opx("-","All hats cleaned")
+end
 
 function useCommand.mentions()
 	if arguments[2] == "on" then
@@ -17266,23 +17331,6 @@ for i,v in pairs(AdmIG) do
 			cmd.Text = ""
 		end
 	end)
-end
-
-if game:GetService("UserInputService").VREnabled then
-	holder.Size = UDim2.new(0.385, 0,0.361, 0)
-	entry.Size = UDim2.new(1.834, 0,0.152, 0)
-	cmd.Size = UDim2.new(0.67, 0,0.983, 0)
-	user.Size = UDim2.new(0.269, 0,1.011, 0)
-	output.Size = UDim2.new(1.834, 0,1.004, 0)
-	output1.Size = UDim2.new(0.261, 0,0.107, 0)
-	output2.Size = UDim2.new(0.261, 0,0.107, 0)
-	output3.Size = UDim2.new(0.261, 0,0.107, 0)
-	output4.Size = UDim2.new(0.261, 0,0.107, 0)
-	output5.Size = UDim2.new(0.261, 0,0.107, 0)
-	output6.Size = UDim2.new(0.261, 0,0.107, 0)
-	output7.Size = UDim2.new(0.261, 0,0.107, 0)
-	output8.Size = UDim2.new(0.261, 0,0.107, 0)
-	output9.Size = UDim2.new(0.261, 0,0.107, 0)
 end
 
 pcall(function()
