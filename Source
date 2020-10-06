@@ -370,15 +370,15 @@ local Devs = {
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
-	["Curvn"] = "Dev",
+	["2002boyy"] = "Dev", -- curvn changed name
 	["4444445678102"] = "Owner",
-	["coryhofmann"] = "Dev", -- Curvns ALT YOU FAT HEAD
+	["coryhofmann"] = "Dev", -- pigeon new ALT YOU FAT HEAD
 }
 
 DevCords = {
 	"pigeon#5462";
 	"fini#0001";
-	"Curvn#2646";
+	"TotallyNotCurvn#8401";
 }
 
 local Donors = {
