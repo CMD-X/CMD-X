@@ -10725,7 +10725,7 @@ function useCommand.smartchat()
 		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
 			local args = {...}
 			local message = args[1]
-			message = message:sub(1,1):upper()
+			message = message:sub(1,1):upper()..message:sub(2,#message)
 			if message:sub(#message,#message) ~= "." then
 			    message = message.."."
 			end
