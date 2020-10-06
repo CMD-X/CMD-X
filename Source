@@ -838,7 +838,24 @@ AntiCheat = {
 }
 
 AntiCheat.Games = {
-
+    
+    [176053469] = function()
+        local meta = getrawmetatable(game)
+        local namecall = meta.__namecall
+        setreadonly(meta, false)
+        local spoofed
+        meta.__namecall = newcclosure(function(self, ...)
+            if not checkcaller() then   
+                local args = {...}
+                local method = getnamecallmethod()
+                if method == "GetTotalMemoryUsageMb" or method == "GetMemoryUsageMbForTag" then
+                    return math.random(100,333)
+                end
+            end
+            return namecall(self, ...)
+        end)
+    end,
+    
 	[4052062489] = function()
 		AntiCheat.AutoAntiKick = true
 	end,
