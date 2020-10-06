@@ -833,27 +833,16 @@ AntiCheat = {
 	PrintingOff = false;
 	NoGui = false;
 	Custom1 = false;
-	Attachment = "HairAttachment",
-	Warning1 = false,
+	Attachment = "HairAttachment";
+	Warning1 = false;
+	CheckFocusBreak = false;
 }
 
 AntiCheat.Games = {
     
     [176053469] = function()
-        local meta = getrawmetatable(game)
-        local namecall = meta.__namecall
-        setreadonly(meta, false)
-        local spoofed
-        meta.__namecall = newcclosure(function(self, ...)
-            if not checkcaller() then   
-                local args = {...}
-                local method = getnamecallmethod()
-                if method == "GetTotalMemoryUsageMb" or method == "GetMemoryUsageMbForTag" then
-                    return math.random(100,333)
-                end
-            end
-            return namecall(self, ...)
-        end)
+        AntiCheat.CheckFocusBreak = true
+        Unnamed.Parent = Parents[3]
     end,
     
 	[4052062489] = function()
@@ -17465,7 +17454,7 @@ for _,v in pairs(cmdlp.PlayerGui:GetDescendants()) do
 	end
 end
 
-if fakefocus then
+if AntiCheat.CheckFocusBreak == false and fakefocus then
 	setreadonly(mt, false)
 	local oldncall = mt.__namecall
 	mt.__namecall = newcclosure(function(...)
