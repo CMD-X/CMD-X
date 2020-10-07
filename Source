@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.2"
+local ver = "1.9.3"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2950,6 +2950,9 @@ CMDS.commands = {
 	["cleanhats"] = "Cleans up all hats in workspace.",
 	["smartchat"] = "Punctuates your chat messages.",
 	["unsmartchat"] = "()",
+	["xboxtagpublic"] = "Shows you the users xbox gamertag if they are using xbox publicly.",
+	["xboxtagprivate"] = "Shows you the users xbox gamertag if they are using xbox privately.",
+	["massxboxtag"] = "Shows everyones xbox gamertag if they are using xbox.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3188,6 +3191,8 @@ CMDS.usage = {
 	["parttracers"] = "(name / class) (item)",
 	["lookat"] = "(plr)",
 	["spoofclientid"] = "(str)",
+	["xboxtagpublic"] = "(plr)",
+	["xboxtagprivate"] = "(plr)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3719,6 +3724,9 @@ CMDS.aliases = {
 	["rspoofclid"] = "randomspoofclientid",
 	["unspoofclid"] = "unspoofclientid",
 	["clnh"] = "cleanhats",
+	["xbtagpu"] = "xboxtagpublic",
+	["xbtagpr"] = "xboxtagprivate",
+	["massxbtag"] = "massxboxtag",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -5474,6 +5482,55 @@ end
 function useCommand.yesnick()
 	opx("-","Unblocked nicknames")
 	xNaming:Disconnect()
+end
+
+function useCommand.xboxtagpublic()
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
+	target = findplr(arguments[2])
+	if not target then
+		opx("*","Player does not exist!")
+		return
+	end
+	if target.PlatformName == "" then
+		opx("*",target.Name.." is not using Xbox!")
+		sayremote:FireServer(target.Name.." is not using Xbox", "All")
+	else
+		opx("*",target.Name.."(s) Xbox gametag is "..target.PlatformName)
+		sayremote:FireServer(target.Name.."(s) Xbox gamertag is "..target.PlatformName, "All")
+	end
+end
+
+function useCommand.xboxtagprivate()
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
+	target = findplr(arguments[2])
+	if not target then
+		opx("*","Player does not exist!")
+		return
+	end
+	if target.PlatformName == "" then
+		opx("*",target.Name.." is not using Xbox!")
+	else
+		opx("*",target.Name.."(s) Xbox gametag is "..target.PlatformName)
+	end
+end
+
+function useCommand.massxboxtag()
+	local xXBTAG = ""
+	for i,v in pairs(cmdp:GetPlayers()) do
+		if v.PlatformName == "" then
+			xXBTAG = xXBTAG..v.Name.." is not using Xbox\n"
+		else
+			xXBTAG = xXBTAG..v.Name.."(s) Xbox gamertag is "..v.PlatformName.."\n"
+		end
+	end
+	opx("-","Showing all gamertags")
+	opxL("Xbox gamertags",xXBTAG)
 end
 
 function useCommand.appearanceidpublic()
