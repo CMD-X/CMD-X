@@ -163,8 +163,7 @@ end
 Unnamed.Name = "Unnamed";
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
 Unnamed.ResetOnSpawn = false
-Unnamed.DisplayOrder = -math.huge
-Unnamed.ZIndex = 2147483647
+Unnamed.DisplayOrder = 2147483647
 if not syn then syn = {} end
 if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
@@ -1098,6 +1097,7 @@ end
 
 holder.Name = "holder"
 holder.Parent = Unnamed
+holder.ZIndex = 2147483647
 holder.BackgroundColor3 = Color3.new(1, 1, 1)
 holder.BackgroundTransparency = 1
 holder.Position = UDim2.new(0, SavedPos.X, 0, SavedPos.Y)
