@@ -404,7 +404,7 @@ local Donors = {
 	["OFFTheBatter"] = "1",
 	["DisturbedCult"] = "1",
 	["hellavzn"] = "1",
-	["Indamage"] = "1",
+	["DAMAGlNG"] = "1",
 
 	["skrask"] = "2",
 	["xniped"] = "2",
