@@ -163,7 +163,8 @@ end
 Unnamed.Name = "Unnamed";
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
 Unnamed.ResetOnSpawn = false
-Unnamed.DisplayOrder = math.huge
+Unnamed.DisplayOrder = -math.huge
+Unnamed.ZIndex = 2147483647
 if not syn then syn = {} end
 if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
