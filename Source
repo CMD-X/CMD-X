@@ -375,7 +375,7 @@ local Devs = {
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
-	["2002boyy"] = "Dev", -- curvn changed name
+	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 	["coryhofmann"] = "Dev", -- pigeon new ALT YOU FAT HEAD
 }
