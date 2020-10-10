@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.3"
+local ver = "1.9.4"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2953,6 +2953,11 @@ CMDS.commands = {
 	["xboxtagpublic"] = "Shows you the users xbox gamertag if they are using xbox publicly.",
 	["xboxtagprivate"] = "Shows you the users xbox gamertag if they are using xbox privately.",
 	["massxboxtag"] = "Shows everyones xbox gamertag if they are using xbox.",
+	["followedintopublic"] = "Shows if user followed someone into game publicly.",
+	["followedintoprivate"] = "Shows if user followed someone into game privately.",
+	["massfollowedinto"] = "Shows everyones user that followed someone into game.",
+	["notifyfollowed"] = "Notifies you if someone follows you into game through your profile.",
+	["unnotifyfollowed"] = "()",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3193,6 +3198,8 @@ CMDS.usage = {
 	["spoofclientid"] = "(str)",
 	["xboxtagpublic"] = "(plr)",
 	["xboxtagprivate"] = "(plr)",
+	["followedintopublic"] = "(plr)",
+	["followedintoprivate"] = "(plr)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3727,6 +3734,8 @@ CMDS.aliases = {
 	["xbtagpu"] = "xboxtagpublic",
 	["xbtagpr"] = "xboxtagprivate",
 	["massxbtag"] = "massxboxtag",
+	["followedintopu"] = "followedintopublic",
+	["followedintopr"] = "followedintoprivate",
 }
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
@@ -5482,6 +5491,63 @@ end
 function useCommand.yesnick()
 	opx("-","Unblocked nicknames")
 	xNaming:Disconnect()
+end
+
+function useCommand.followedintopublic()
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
+	target = findplr(arguments[2])
+	if not target then
+		opx("*","Player does not exist!")
+		return
+	end
+	if target.FollowUserId ~= 0 then
+		opx("-",v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
+		sayremote:FireServer(v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
+	else
+		opx("-",v.Name.." joined the game directly")
+		sayremote:FireServer(v.Name.." joined the game directly")
+	end
+end
+
+function useCommand.followedintoprivate()
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
+	target = findplr(arguments[2])
+	if not target then
+		opx("*","Player does not exist!")
+		return
+	end
+	if target.FollowUserId ~= 0 then
+		opx("-",v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
+	else
+		opx("-",v.Name.." joined the game directly")
+	end
+end
+
+function useCommand.massfollowedinto()
+	local xFollowed = ""
+	for i,v in pairs(cmdp:GetPlayers()) do
+		if v.FollowUserId ~= 0 then
+			xFollowed = xFollowed..v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game\n"
+		end
+	end
+	opx("-","Showing all followed into")
+	opxL("FollowedInto",xFollowed)
+end
+
+function useCommand.notifyfollowed()
+	followedIntoNotify = true
+	opx("-","You will now be notified when someone follows you into game")
+end
+
+function useCommand.unnotifyfollowed()
+	followedIntoNotify = false
+	opx("-","You will no longer be notified")
 end
 
 function useCommand.xboxtagpublic()
@@ -10155,6 +10221,11 @@ function useCommand.unclickdelete()
 end
 
 cmdp.PlayerAdded:connect(function(plr)
+	if followedIntoNotify then
+		if plr.FollowUserId == cmdlp.UserId then
+			opx("-",plr.Name.." followed you into game")
+		end
+	end
 	plr.Chatted:connect(function(msg)
 		if logsEnabled == true and #msg < 200 then
 			wait(.2)
