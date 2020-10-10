@@ -10220,6 +10220,8 @@ function useCommand.unclickdelete()
 	_G.connections.clickdel:Disconnect()
 end
 
+followedIntoNotify = false
+
 cmdp.PlayerAdded:connect(function(plr)
 	if followedIntoNotify then
 		if plr.FollowUserId == cmdlp.UserId then
