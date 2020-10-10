@@ -5504,11 +5504,11 @@ function useCommand.followedintopublic()
 		return
 	end
 	if target.FollowUserId ~= 0 then
-		opx("-",v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
-		sayremote:FireServer(v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
+		opx("-",target.Name.." followed "..cmdp:GetNameFromUserIdAsync(target.FollowUserId).." into game")
+		sayremote:FireServer(target.Name.." followed "..cmdp:GetNameFromUserIdAsync(target.FollowUserId).." into game")
 	else
-		opx("-",v.Name.." joined the game directly")
-		sayremote:FireServer(v.Name.." joined the game directly")
+		opx("-",target.Name.." joined the game directly")
+		sayremote:FireServer(target.Name.." joined the game directly")
 	end
 end
 
@@ -5523,9 +5523,9 @@ function useCommand.followedintoprivate()
 		return
 	end
 	if target.FollowUserId ~= 0 then
-		opx("-",v.Name.." followed "..cmdp:GetNameFromUserIdAsync(v.FollowUserId).." into game")
+		opx("-",target.Name.." followed "..cmdp:GetNameFromUserIdAsync(target.FollowUserId).." into game")
 	else
-		opx("-",v.Name.." joined the game directly")
+		opx("-",target.Name.." joined the game directly")
 	end
 end
 
