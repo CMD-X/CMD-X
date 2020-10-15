@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.5"
+local ver = "1.9.6"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -28,6 +28,13 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 Unnamed = Instance.new("ScreenGui", getParent)
+Unnamed.Name = "Unnamed";
+Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+Unnamed.ResetOnSpawn = false
+Unnamed.DisplayOrder = 2147483647
+if not syn then syn = {} end
+if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
+
 sgui = Instance.new("ScreenGui", Unnamed)
 sgui.IgnoreGuiInset = true
 local function Draw(positionsent, line, thickness)
@@ -159,13 +166,6 @@ if drawingtype == "new" then
 	Drawing = newDrawing
 	setreadonly(Drawing, true)
 end
-
-Unnamed.Name = "Unnamed";
-Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
-Unnamed.ResetOnSpawn = false
-Unnamed.DisplayOrder = 2147483647
-if not syn then syn = {} end
-if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
 local mt = getrawmetatable(game)
 local oldindex = mt.__index
@@ -377,7 +377,7 @@ local Devs = {
 	["CMD_X"] = "Owner",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
-	["coryhofmann"] = "Dev", -- pigeon new ALT YOU FAT HEAD
+	["coryhofmann"] = "Dev",
 }
 
 DevCords = {
@@ -954,8 +954,6 @@ entry = Instance.new("Frame", getParent)
 user = Instance.new("TextLabel", getParent)
 cmd = Instance.new("TextBox", getParent)
 cmdsu = Instance.new("TextLabel", getParent)
-local ScreenGuipoo = Instance.new("ScreenGui", getParent)
-local TextButtonpoo = Instance.new("TextButton", getParent)
 output.Name = "output"
 output.Parent = holder
 output.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
@@ -1341,47 +1339,7 @@ output9.TextSize = 16
 output9.TextXAlignment = Enum.TextXAlignment.Left
 output9.TextWrapped = true
 output9.TextTruncate = Enum.TextTruncate.AtEnd
- 
-ScreenGuipoo.Parent = Unnamed
 
-TextButtonpoo.Parent = ScreenGuipoo
-TextButtonpoo.BackgroundColor3 = Color3.new(0.784314, 0.784314, 0.784314)
-TextButtonpoo.BorderSizePixel = 0
-TextButtonpoo.Position = UDim2.new(0, 0, 0.455743879, 0)
-TextButtonpoo.Size = UDim2.new(0, 186, 0, 35)
-TextButtonpoo.Font = Enum.Font.SourceSans
-TextButtonpoo.Text = "Btools (Off)"
-TextButtonpoo.TextColor3 = Color3.new(0.27451, 0.27451, 0.27451)
-TextButtonpoo.TextScaled = true
-TextButtonpoo.TextSize = 14
-TextButtonpoo.TextWrapped = true
-TextButtonpoo.Visible = false
- 
-local On = Instance.new("StringValue", getParent)
-
-On.Parent = TextButtonpoo
-On.Value = "Off"
-
-TextButtonpoo.MouseButton1Up:Connect(function()
-	if On.Value == "Off" then
-		On.Value = "On"
-		TextButtonpoo.Text = "Btools (On)"
-	else
-		On.Value = "Off"
-		TextButtonpoo.Text = "Btools (Off)"
-	end
-end)
- 
-cmdm.Button1Up:Connect(function()
-	if On.Value == "Off" then
-	else
-		if cmdm.Target.Locked == true then
-			cmdm.Target:Destroy()
-		else
-			cmdm.Target:Destroy()
-		end
-	end
-end)
 function sFLY(vfly)
 	FLYING = false
 	speedofthefly = 1
@@ -1487,53 +1445,6 @@ function sFLY(vfly)
 	end)
 	FLY()
 end
----------------------------------------|
--- Aimbot Whitelist: ------------------|
-PlayersWLsystem = {}
-
-for i,p in pairs(cmdp:GetPlayers()) do 
-	PlayersWLsystem[p.Name] = false
-end
- 
-cmdp.PlayerAdded:Connect(function(plr)
-	PlayersWLsystem[plr.Name] = false
-	for n,p in pairs(Devs) do
-		for i,d in pairs(PlayersWLsystem) do
-			if p == d then
-				p = true
-			end
-		end
-	end
-end)
-
-cmdp.PlayerRemoving:Connect(function(plr)
-	for i,a in pairs(PlayersWLsystem) do
-		if a == plr.Name then
-			table.remove(PlayersWLsystem,i)
-		end
-	end
-end)
-pcall(function()
-	cmdlp.CharacterAdded:Connect(function(char)
-		wait()
-		if conFly then
-			if FLYING then
-				FLYING = false
-				if cmdlp.Character.Humanoid then
-					cmdlp.Character.Humanoid.PlatformStand = false 
-				end
-				sFLY()
-				speedofthefly = permflyspeed
-			end
-		end
-		Enabledaimbot = false
-		if Clip == false then
-			Clip = true
-			wait()
-			Clip = false
-		end
-	end)
-end)
 
 opxholder = Instance.new("Frame", getParent)
 opxviewertitle = Instance.new("TextLabel", getParent)
@@ -1739,7 +1650,7 @@ Save.Text = "Save as .txt"
 Save.TextColor3 = Color3.new(1, 1, 1)
 Save.TextSize = 14
 Save.MouseButton1Down:Connect(function()
-	writestats = "\n"
+	writestats = ""
 	for _,v in pairs(CMDStats) do
 		if v.T ~= 0 then
 			writestats = writestats.."\n".._.." "..v.T
@@ -1789,65 +1700,6 @@ function CreateStatLabel(cmd,times,today)
 	local size22 = sf2.CanvasSize.Y.Offset
 	tl2:TweenPosition(UDim2.new(0,3,0,alls2), 'In', 'Quint', 0.5)
 	tl2.TextTransparency = 0
-end
-function autofriendwl(dowhitelistfriends)
-	local function iterPageItems(pages)
-		return coroutine.wrap(function()
-			local pagenum = 1
-			while true do
-				for _, user in ipairs(pages:GetCurrentPage()) do
-					coroutine.yield(user, pagenum)
-				end
-				if pages.IsFinished then
-					break
-				end
-				pages:AdvanceToNextPageAsync()
-				pagenum = pagenum + 1
-			end
-		end)
-	end
-	   
-	local FP = cmdp:GetFriendsAsync(cmdlp.UserId)
-   
-	if dowhitelistfriends then
-		for user, pageNo in iterPageItems(FP) do
-			PlayersWLsystem[user.Username] = true
-			for a,e in pairs(Devs) do
-				for i,t in pairs(PlayersWLsystem) do
-					if t == e then
-						t = true
-					end
-				end
-			end
-		end
-	elseif not dowhitelistfriends then
-		for user, pageNo in iterPageItems(FP) do
-			for a,e in pairs(Devs) do
-				for i,t in pairs(PlayersWLsystem) do
-					if t == e then
-						t = true
-					elseif t == user.Username then
-						t = false
-					end
-				end
-			end
-		end
-	end
-end
-	   
-function Wl(playerrequested,does)
-	if does then
-		PlayersWLsystem[playerrequested.Name] = true
-	elseif not does then
-		PlayersWLsystem[playerrequested.Name] = false
-		for n,p in pairs(Devs) do
-			for i,d in pairs(PlayersWLsystem) do
-				if p == d then
-					p = true
-				end
-			end
-		end
-	end
 end
 ---------------------------------------|
 -- Functions: -------------------------|
@@ -1946,16 +1798,19 @@ end
 function cmdnum(str)
 	return tonumber(str) ~= nil
 end
+
 function cmd15(plr)
 	if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
 		return true
 	end
 end
+
 function cmd6(plr)
 	if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
 		return true
 	end
 end
+
 function x(v)
 	if v then
 		for _,i in pairs(workspace:GetDescendants()) do
@@ -2246,6 +2101,7 @@ function CreateLabel(Name, Text)
 	end
 	tl.TextTransparency = 0
 end
+
 function CreateADLabel(name,rank)
 	local sf3 = Scrollingad
 	if #sf3:GetChildren() >= 2546 then
@@ -2483,11 +2339,6 @@ CMDS.commands = {
 	["unesp"] = "()",
 	["aimbot"] = "Aims at the closest player to you (Left Ctrl to toggle).",
 	["unaimbot"] = "()",
-	["whitelistfriends"] = "Whitelists friends for aimbot.",
-	["unwhitelistfriends"] = "Unwhitelists friends for aimbot.",
-	["whitelist"] = "Whitelists player for aimbot.",
-	["unwhitelist"] = "Unwhitelists player for aimbot.",
-	["showwhitelist"] = "Shows whitelist for aimbot.",
 	["spectate"] = "Switches your camera view to the player you stated.",
 	["unspectate"] = "()",
 	["resetsaves"] = "Removes your current saves.",
@@ -3743,34 +3594,35 @@ CMDS.aliases = {
 	["repanim"] = "replicateanim",
 	["repanimspeed"] = "replicateanimspeed",
 }
+
 CMDS.suggestions = {}
 for i,_ in pairs(CMDS.aliases) do
 	for v = 1, string.len(i) do
 		CMDS.suggestions[i:sub(1,v)] = i
 	end
 end
+
 for i,_ in pairs(CMDS.commands) do
 	for v = 1, string.len(i) do
 		CMDS.suggestions[i:sub(1,v)] = i
 	end
 end
+
 for command,_ in pairs(CMDS.commands) do
 	CMDS.suggestions[command] = command
 end
+
 for alias,_ in pairs(CMDS.aliases) do
 	CMDS.suggestions[alias] = _
 end
 
 for i,v in pairs(CMDS.suggestions) do
-
 	if CMDS.aliases[i] then
 		v = CMDS.aliases[i]
 	end
-
 	if CMDS.commands[i] then
 		v = CMDS.commands[i]
 	end
-
 end
 
 for i,_ in pairs(CMDS.commands) do
@@ -3957,8 +3809,6 @@ end
 
 PCs = {"using","far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 
-
-
 cmd.Changed:Connect(function()
 	if CMDS.aliases[cmd.Text] then
 		cmdsu.Text = cmd.Text
@@ -3970,9 +3820,11 @@ cmd.Changed:Connect(function()
 		cmdsu.Text = ""
 	end
 end)
+
 cmd.FocusLost:Connect(function()
 	cmdsu.Text = ""
 end)
+
 cmduis.InputBegan:Connect(function()
 	if cmduis:IsKeyDown(Enum.KeyCode.RightShift) and cmd:IsFocused() and cmdsu.Text ~= "" then
 		cmd.Text = cmdsu.Text
@@ -4167,6 +4019,7 @@ Cmdsearch.FocusLost:Connect(function()
 		end
 	end
 end)
+
 function refresh()
 	local oldpos = cmdlp.Character.HumanoidRootPart.CFrame
 	cmdlp.Character:BreakJoints()
@@ -4176,6 +4029,7 @@ function refresh()
 		charadded:Disconnect()
 	end)
 end
+
 function IESP(v)
 	spawn(function()
 		for i,n in pairs(cmdlp.PlayerGui:GetChildren()) do
@@ -4213,6 +4067,7 @@ function IESP(v)
 		TextLabel.Text = v.Name
 	end)
 end
+
 workspace.DescendantAdded:Connect(function(i)
 	if IESPenabled then
 		local pi = i.Name:lower()
@@ -4229,6 +4084,7 @@ workspace.DescendantAdded:Connect(function(i)
 		end
 	end
 end)
+
 workspace.DescendantRemoving:connect(function(i)
 	if IESPenabled then
 		for a,v in pairs(cmdlp.PlayerGui:GetChildren()) do
@@ -4238,6 +4094,7 @@ workspace.DescendantRemoving:connect(function(i)
 		end
 	end
 end)
+
 function ESP(plr)
 	spawn(function()
 		for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
@@ -4307,133 +4164,11 @@ function ESP(plr)
 		end
 	end)
 end
+
 cmdp.PlayerRemoving:connect(function(player)
 	for _,v in pairs(cmdlp.PlayerGui:GetChildren()) do
 		if v.Name == player.Name..'_ESP' or v.Name == player.Name..'_LC' then
 			v:Destroy()
-		end
-	end
-end)
-	   
-Enabledaimbot = false
-function BodyAimbot()
-	if Enabledaimbot == true then
-		repeat wait() until #cmdp:GetPlayers() > 1
-		local SPS = .001
-		local LPCHead = cmdlp.Character:FindFirstChild("Head")
-		local LPCTorso = cmdlp.Character:FindFirstChild("UpperTorso")
-		local LPCHRPart = cmdlp.Character:FindFirstChild("HumanoidRootPart")
-		local Closest = nil
-		local Camera = workspace:FindFirstChild("Camera")
-		local aehl = Instance.new("BoxHandleAdornment", cmdlp.PlayerGui)
-		aehl.Name = "ESPhelp"
-		aehl.AlwaysOnTop = true
-		aehl.ZIndex = 0
-		aehl.Size = Vector3.new(2, 2.1, 1)
-		aehl.Transparency = 0.8
-		aehl.Color3 = Color3.new(255,0,0)
-		local try = 1
-		local teamcount = game.Teams:GetTeams()
-		local teams = false
-		if #teamcount >= 1 then
-			teams = true
-		end
-		local Launch = false
-		local launchCFrame = nil
-		local function searchplr(requestedplr)
-			if PlayersWLsystem[requestedplr.Name] == true then
-				return false
-			elseif PlayersWLsystem[requestedplr.Name] == false then
-				return true
-			end
-		end
-		while Enabledaimbot do
-			local Distance = 100000
-			for count,TargetP in pairs(cmdp:GetPlayers()) do 
-				if searchplr(TargetP) then
-					if (TargetP ~= nil) and TargetP ~= cmdlp then
-					local TC = TargetP.Character
-					local TCHRPart = nil
-					if TC then
-					TCHRPart = TC:FindFirstChild("HumanoidRootPart")
-					end
-						if TCHRPart then
-						try = 1
-						local DistanceMAg = (TCHRPart.Position - LPCHRPart.Position).Magnitude
-							if DistanceMAg < Distance and TCHRPart.Parent.Humanoid.Health > 0 then
-								if teams then
-								if TargetP.Team ~= cmdlp.Team then
-									Closest = TCHRPart
-									launchCFrame = TCHRPart.CFrame
-									Distance = DistanceMAg
-									opx("Target: "..Closest.Parent.Name)
-									aehl.Adornee = TCHRPart
-									Camera.CFrame = CFrame.new(LPCHRPart.Position,Closest.Position)
-								end
-								elseif not teams then
-									Closest = TCHRPart
-									Distance = DistanceMAg
-									aehl.Adornee = TCHRPart
-									Camera.CFrame = CFrame.new(LPCHRPart.Position,Closest.Position)
-								end
-							end
-						elseif not TCHRPart then
-							try = try + 1
-							break
-						end
-					end
-				elseif not searchplr(TargetP) then
-				opx("Target is whitelisted!")
-				end
-			end
-			local currentRP = LPCHRPart:FindFirstChild("Launch")
-			if currentRP ~= nil then
-				currentRP.Target = Closest
-				if Noclipping then
-					currentRP.MaxSpeed = 100
-				elseif not Noclipping then
-					currentRP.MaxSpeed = 1000
-				end
-			end
-			cmduis.InputBegan:connect(function(input)
-				if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and Enabledaimbot then
-					Launch = not Launch
-					local ps = cmdlp.Character.Humanoid.PlatformStand
-					ps = Launch
-					if Launch then
-						local rp = Instance.new("RocketPropulsion")
-						rp.Parent = LPCHRPart
-						rp.CartoonFactor = 1
-						rp.MaxThrust = 5000
-						rp.MaxSpeed = 1000
-						rp.ThrustP = 5000
-						rp.Name = "Launch"
-						currentRP = rp
-						rp:Fire()
-					elseif not Launch then
-						for i,des in pairs(LPCHRPart:GetChildren()) do
-							if des:IsA("RocketPropulsion") and des.Name == "Launch" then
-								des:Destroy()
-							end
-						end
-					end
-				end
-			end)
-			cmdrs2.Heartbeat:Wait()
-		end
-	elseif not Enabledaimbot then
-		local findESP = cmdlp.PlayerGui:FindFirstChild("ESPhelp")
-		 if findESP then
-			findESP:Destroy()
-		 end
-	end
-end
-cmduis.InputBegan:connect(function(input)
-	if cmduis:IsKeyDown(Enum.KeyCode.KeypadPlus) and not Enabledaimbot then
-		for _,des in pairs(cmdlp.Character.HumanoidRootPart:GetChildren()) do
-			if des:IsA("RocketPropulsion") and des.Name == "Launch" then
-				des:Destroy()
-			end
 		end
 	end
 end)
@@ -4455,43 +4190,23 @@ function noclip()
 	end
 	Noclipping = game:GetService('RunService').Stepped:connect(NoclipLoop)
 end
-if cmdlp.Character and cmdlp:FindFirstChildWhichIsA("Humanoid") then
-	cmdlp.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-		if conFly == true then
-			if FLYING == true then
-				repeat wait() until cmdlp.Character and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-				wait(2)
+
+pcall(function()
+	cmdlp.CharacterAdded:Connect(function()
+		wait(1)
+		if conFly then
+			if FLYING then
 				FLYING = false
-				cmdlp.Character.Humanoid.PlatformStand = false 
+				if cmdlp.Character.Humanoid then
+					cmdlp.Character.Humanoid.PlatformStand = false 
+				end
 				sFLY()
 				speedofthefly = permflyspeed
 			end
 		end
-		Enabledaimbot = false
 		if Clip == false then
 			Clip = true
-			wait(1)
-			Clip = false
-		end
-	end)
-end
-cmdlp.CharacterAdded:Connect(function(char)
-	wait(2)
-	char:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
-		if conFly == true then
-			if FLYING == true then
-				repeat wait() until cmdlp.Character ~= nil and cmdlp.Character:FindFirstChild('HumanoidRootPart') and cmdlp.Character:FindFirstChild('Humanoid')
-				wait(.1)
-				FLYING = false
-				cmdlp.Character.Humanoid.PlatformStand = false 
-				sFLY()
-				speedofthefly = permflyspeed
-			end
-		end
-		Enabledaimbot = false
-		if Clip == false then
-			Clip = true
-			wait(1)
+			wait()
 			Clip = false
 		end
 	end)
@@ -9597,36 +9312,44 @@ function GetPlayer()
 	return false
 end
 
-function useCommand.aimbot()
-	if arguments[2] then
-		local AimFor = "Head"
-		if arguments[2] == "Team" then Teamed = true else Teamed = false end
-		local Hotkey = 50
-		AimbotIs = true
-		opx("-","Aimbot enabled (Hold down Left Ctrl to aim)")
-		cmdm.KeyDown:connect(function(Key)
-			Key = Key:lower():byte()
-			if AimbotIs and Key == Hotkey then
-				AimbotEnabled = true
-			end
-		end)
-		cmdm.KeyUp:connect(function(Key)
-			Key = Key:lower():byte()
-			if AimbotIs and Key == Hotkey then
-				AimbotEnabled = false
-			end
-		end)
-		game:GetService("RunService").RenderStepped:connect(function()
-			if AimbotIs and AimbotEnabled then
-				local TargetPlayer = GetPlayer()
-				local Aim = TargetPlayer.Character:FindFirstChild(AimFor)
-				if Aim ~= nil then
-					if Aim then
-						workspace.CurrentCamera.CoordinateFrame = CFrame.new(workspace.CurrentCamera.CoordinateFrame.p, Aim.CFrame.p)
-					end
+AimbotIs = false
+AimbotRunAlready = false
+function BodyAimbot(aimbotarg)
+	local AimFor = "Head"
+	if aimbotarg == "Team" then Teamed = true else Teamed = false end
+	local Hotkey = 50
+	AimbotIs = true
+	opx("-","Aimbot enabled (Hold down Left Ctrl to aim)")
+	if AimbotRunAlready then return end
+	AimbotRunAlready = true
+	cmdm.KeyDown:connect(function(Key)
+		Key = Key:lower():byte()
+		if AimbotIs and Key == Hotkey then
+			AimbotEnabled = true
+		end
+	end)
+	cmdm.KeyUp:connect(function(Key)
+		Key = Key:lower():byte()
+		if AimbotIs and Key == Hotkey then
+			AimbotEnabled = false
+		end
+	end)
+	game:GetService("RunService").RenderStepped:connect(function()
+		if AimbotIs and AimbotEnabled then
+			local TargetPlayer = GetPlayer()
+			local Aim = TargetPlayer.Character:FindFirstChild(AimFor)
+			if Aim ~= nil then
+				if Aim then
+					workspace.CurrentCamera.CoordinateFrame = CFrame.new(workspace.CurrentCamera.CoordinateFrame.p, Aim.CFrame.p)
 				end
 			end
-		end)
+		end
+	end)
+end
+
+function useCommand.aimbot()
+	if arguments[2] then
+		BodyAimbot(arguments[2])
 	else
 		opx("*","2 arguments are required!")
 	end
@@ -9635,40 +9358,6 @@ end
 function useCommand.unaimbot()
 	opx("-","Aimbot disabled")
 	AimbotIs = false
-end
-
-function useCommand.whitelistfriends()
-	opx("-","Every friend of yours was added to the whitelist")
-	autofriendwl(true)
-end
-
-function useCommand.unwhitelistfriends()
-	opx("-","Every friend of yours was removed from the whitelist")
-	autofriendwl(false)
-end
-
-function useCommand.whitelist()
-	Wl(findplr(arguments[2]),true)
-	opx("-","Added "..findplr(arguments[2]).Name.." to the whitelist")
-end
-
-function useCommand.unwhitelist()
-	Wl(findplr(arguments[2]),false)
-	opx("-","Removed "..findplr(arguments[2]).Name.." from the whitelist")
-end
-
-function useCommand.showwhitelist()
-	opx("-","Press F9 to see players list")
-	print("Players whitelisted:")
-	if PlayersWLsystem ~= nil then
-		for i,a in pairs(PlayersWLsystem) do
-			if a == true then
-				print("-"..i)
-			end
-		end
-	elseif PlayersWLsystem == nil then
-		opx("*","Whitelist people to see the whitelist!")
-	end
 end
 
 function useCommand.spectate()
@@ -15254,10 +14943,9 @@ function useCommand.simulationradius()
 		opx("*","sethiddenproperty is not supported on your executor!")
 		return
 	end
+	IHaveSimmed = true
 	if setsimulationradius then
-		IHaveSimmed = true
-		sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
-		setsimulationradius(1e308)
+		setsimulationradius(1e308,1/0)
 	else
 		sethiddenproperty(cmdlp,"MaximumSimulationRadius",1/0)
 		sethiddenproperty(cmdlp,"SimulationRadius",1e308)
@@ -16355,6 +16043,10 @@ function useCommand.replicateanim()
 		opx("*","2 arguments are required!")
 		return
 	end
+	if IHaveSimmed == false then
+		opx("*","You need to run .simulationradius first!")
+		return
+	end
 	opx("-","Now replicating anim, creds to Curvn and Riptxde")
 	local Char = cmdlp.Character
 	local Humanoid = Char.Humanoid
@@ -16364,7 +16056,6 @@ function useCommand.replicateanim()
 		wait(.8)
 		cmdlp.Character.HumanoidRootPart.Anchored = false
 	end)()
-	setsimulationradius(math.huge, math.huge)
 	local Create = function(Obj,Parent)
 		local I = Instance.new(Obj)
 		I.Parent = Parent
@@ -17348,14 +17039,11 @@ cmdm.KeyDown:connect(function(key)
 			noclip()
 		end
 	elseif key == hotkeyaimbot then
-		if Enabledaimbot == false then
-			Enabledaimbot = true
+		if AimbotIs == false then
 			wait()
-			BodyAimbot()
+			BodyAimbot("FFA")
 		else
-			Enabledaimbot = false
-			wait()
-			BodyAimbot()
+			AimbotIs = false
 		end
 	elseif key == hotkeyesp then
 		if ESPenabled == false then
