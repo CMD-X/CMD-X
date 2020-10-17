@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.6"
+local ver = "1.9.7"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2811,6 +2811,9 @@ CMDS.commands = {
 	["unnotifyfollowed"] = "()",
 	["replicateanim"] = "Replicates animation id and plays it. (CREDIT: CURVN, RIPTXDE)",
 	["replicateanimspeed"] = "Changes speed of replicated animation.",
+	["spooffps"] = "Spoofs your fps to whatever you want.",
+	["spoofping"] = "Spoofs your ping to whatever you want.",
+	["spoofmemory"] = "Spoofs your memory to whatever you want.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -3055,6 +3058,9 @@ CMDS.usage = {
 	["followedintoprivate"] = "(plr)",
 	["replicateanim"] = "(id) (speed)",
 	["replicateanimspeed"] = "(speed)",
+	["spooffps"] = "(num)",
+	["spoofping"] = "(num)",
+	["spoofmemory"] = "(num)",
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -16873,6 +16879,99 @@ function useCommand.hotkeyflyhold()
 	opx("-", "Fly enabled on key "..arguments[2]:upper().." on hold")
 end
 
+function useCommand.spooffps()
+	if _G.fpshook then
+		opx("*","Spoof FPS is already enabled!")
+		return
+	end
+	opx("-","Spoof FPS is enabled")
+	local fakefps = arguments[2] or 60
+	local mt = getrawmetatable(game)
+	_G.fpshook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(self, ...)
+	    if (self == game:GetService("Stats").FrameRateManager.AverageFPS and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").FrameRateManager.AverageFPS and getnamecallmethod() == "GetValueString") then
+	        return fakefps
+	    end
+	    return _G.fpshook(self, ...)
+	end)
+	setreadonly(mt, true)
+end
+
+function useCommand.unspooffps()
+	if not _G.fpshook then
+		opx("*","Spoof FPS is not enabled!")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.fpshook
+	setreadonly(mt, true)
+	opx("-","Spoof FPS is disabled")
+	_G.fpshook = nil
+end
+
+function useCommand.spoofping()
+	if _G.pinghook then
+		opx("*","Spoof ping is already enabled!")
+		return
+	end
+	opx("-","Spoof ping is enabled")
+	local fakeping = arguments[2] or 15
+	local mt = getrawmetatable(game)
+	_G.pinghook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(self, ...)
+	    if (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValueString") then
+	        return fakeping
+	    end
+	    return _G.pinghook(self, ...)
+	end)
+	setreadonly(mt, true)
+end
+
+function useCommand.unspoofping()
+	if not _G.pinghook then
+		opx("*","Spoof ping is not enabled!")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.pinghook
+	setreadonly(mt, true)
+	opx("-","Spoof ping is disabled")
+	_G.pinghook = nil
+end
+
+function useCommand.spoofmemory()
+	if _G.memoryhook then
+		opx("*","Spoof memory is already enabled!")
+		return
+	end
+	opx("-","Spoof memory is enabled")
+	local fakememory = arguments[2] or 200
+	local mt = getrawmetatable(game)
+	_G.memoryhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(self, ...)
+	    if (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValueString") then
+	        return fakememory
+	    end
+	    return _G.memoryhook(self, ...)
+	end)
+	setreadonly(mt, true)
+end
+
+function useCommand.unspoofmemory()
+	if not _G.memoryhook then
+		opx("*","Spoof memory is not enabled!")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.memoryhook
+	setreadonly(mt, true)
+	opx("-","Spoof memory is disabled")
+	_G.memoryhook = nil
+end
+
 function useCommand.drawingnew()
 	if newDrawing == Drawing then
 		opx("*", "Already using new drawing.")
@@ -16904,6 +17003,7 @@ function useCommand.spoofclientid()
     end)
     setreadonly(mt, true)
 end
+
 function useCommand.randomspoofclientid()
     if _G.clid then
         opx("*","ClientID already spoofed")
@@ -17434,22 +17534,3 @@ end)
 output.Visible = true
 holder.Visible = true
 holder.Active = true
-fakefocus = nil
-for _,v in pairs(cmdlp.PlayerGui:GetDescendants()) do
-	if v:IsA("TextBox") and v.Visible == true then
-		fakefocus = v
-		break
-	end
-end
-
-if AntiCheat.CheckFocusBreak == false and fakefocus then
-	setreadonly(mt, false)
-	local oldncall = mt.__namecall
-	mt.__namecall = newcclosure(function(...)
-		if not checkcaller() and getnamecallmethod() == "GetFocusedTextBox" or getnamecallmethod() == "TextBoxFocusReleased" and oldncall(...) == cmd then
-			return fakefocus
-		end
-		return oldncall(...)
-	end)
-	setreadonly(mt, true)
-end
