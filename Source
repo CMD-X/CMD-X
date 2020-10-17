@@ -16885,17 +16885,19 @@ function useCommand.spooffps()
 		return
 	end
 	opx("-","Spoof FPS is enabled")
+	local fps = game:GetService("Stats").FrameRateManager.AverageFPS
 	local fakefps = arguments[2] or 60
 	local mt = getrawmetatable(game)
 	_G.fpshook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(self, ...)
-	    if (self == game:GetService("Stats").FrameRateManager.AverageFPS and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").FrameRateManager.AverageFPS and getnamecallmethod() == "GetValueString") then
+	    if self == fps and getnamecallmethod() == "GetValue" then
 	        return fakefps
+	    elseif self == fps and getnamecallmethod() == "GetValueString" then
+	    	return fakefps
 	    end
 	    return _G.fpshook(self, ...)
 	end)
-	setreadonly(mt, true)
 end
 
 function useCommand.unspooffps()
@@ -16926,7 +16928,6 @@ function useCommand.spoofping()
 	    end
 	    return _G.pinghook(self, ...)
 	end)
-	setreadonly(mt, true)
 end
 
 function useCommand.unspoofping()
@@ -16957,7 +16958,6 @@ function useCommand.spoofmemory()
 	    end
 	    return _G.memoryhook(self, ...)
 	end)
-	setreadonly(mt, true)
 end
 
 function useCommand.unspoofmemory()
@@ -16999,7 +16999,7 @@ function useCommand.spoofclientid()
         if getnamecallmethod() == 'GetClientId' then 
             return genid
         end
-            return _G.clid(self, ...)
+        return _G.clid(self, ...)
     end)
     setreadonly(mt, true)
 end
