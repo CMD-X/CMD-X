@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.7"
+local ver = "1.9.8"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -28,8 +28,8 @@ if game:GetService("UserInputService").VREnabled then
 end
 
 Unnamed = Instance.new("ScreenGui", getParent)
-Unnamed.Name = "Unnamed";
-Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+Unnamed.Name = "Unnamed"
+Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
 Unnamed.DisplayOrder = 2147483647
 if not syn then syn = {} end
@@ -3942,7 +3942,7 @@ function CreateCMDLabel(num,name,aliases,func,usage)
 			alls2 = 0
 		end
 	end
-	local tl2 = Instance.new('TextLabel', sf2)
+	local tl2 = Instance.new('TextButton', sf2)
 	tl2.Name = name
 	tl2.ZIndex = 6
 	tl2.Text = num..string.rep(" ", 7 - (#tostring(num)-1)*3).."| "..name.." ("..aliases..")"
@@ -3960,6 +3960,9 @@ function CreateCMDLabel(num,name,aliases,func,usage)
 	tl2.TextColor3 = Color3.fromRGB(255,255,255)
 	tl2.Size = UDim2.new(0,322,0,tl2.TextBounds.Y)
 	tl2.Position = UDim2.new(0,3,0,alls2)
+	tl2.MouseButton1Down:Connect(function()
+		cmd.Text = name.." "
+	end)
 	sf2.CanvasSize = UDim2.new(0,0,0,alls2+tl2.TextBounds.Y)
 	sf2.CanvasPosition = Vector2.new(0,sf2.CanvasPosition.Y+tl2.TextBounds.Y)
 	local size22 = sf2.CanvasSize.Y.Offset
@@ -4028,12 +4031,10 @@ end)
 
 function refresh()
 	local oldpos = cmdlp.Character.HumanoidRootPart.CFrame
-	cmdlp.Character:BreakJoints()
-	local charadded
-	charadded = cmdlp.CharacterAdded:Connect(function(char)
-		char:WaitForChild("HumanoidRootPart").CFrame = oldpos
-		charadded:Disconnect()
-	end)
+	cmdlp.Character.Humanoid.Health = 0
+	if cmdlp.Character:FindFirstChild("Head") then cmdlp.Character.Head:Destroy() end
+	cmdlp.CharacterAdded:Wait()
+	cmdlp.Character:WaitForChild("HumanoidRootPart")
 end
 
 function IESP(v)
@@ -5758,7 +5759,7 @@ function useCommand.banlands()
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
-end
+banlands()end
 
 function useCommand.kill()
 	if arguments[2] then
@@ -11184,38 +11185,34 @@ end
 stopDupeMid = false
 function useCommand.dupegears()
 	if cmdnum(arguments[2]) then
+		local DroppedTools = {}
 		opx("-","Duping tools until it reaches "..arguments[2])
-		InitialPos = cmdlp.Character.HumanoidRootPart.CFrame
-		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,1000000,0)
+		stopDupeMid = false
+		local savepos = cmdlp.Character.HumanoidRootPart.CFrame
+		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,10000000,0)
+		wait(.2)
 		for i = 1,arguments[2] do
 			if stopDupeMid == true then break end
-			cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,1000000,0)
-			wait(.1)
+			cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,10000000,0)
 			for i,a in pairs(cmdlp.Backpack:GetDescendants()) do
 				if a:IsA("Tool") then
 					a.Parent = cmdlp.Character
+					wait(.1)
 					a.Parent = workspace
+					table.insert(DroppedTools, a)
 				end
 			end
-			if Noclipping then
-				Noclipping:Disconnect()
-				Clip = false
-			end
-			refresh()
-			wait(.5)
+			cmdlp.Character:BreakJoints()
+			cmdlp.CharacterAdded:wait()
+			cmdlp.Character:WaitForChild("HumanoidRootPart").CFrame = savepos
+			wait(.1)
 			if stopDupeMid == true then break end
 		end
-		cmdlp.Character.HumanoidRootPart.CFrame = InitialPos
-		wait(2)
-		cmdlp.Character.HumanoidRootPart.Anchored = true
-		for i,v in pairs(workspace:GetChildren()) do
-			if v:IsA("Tool") then
-				v.Handle.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
-			end
+		for _,v in pairs(DroppedTools) do
+			firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 0)
+			firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 1)
 		end
-		wait(.1)
-		cmdlp.Character.HumanoidRootPart.CFrame = InitialPos
-		cmdlp.Character.HumanoidRootPart.Anchored = false
+		cmdlp.Character.HumanoidRootPart.CFrame = savepos
 	else
 		opx("*","This command requires 2 arguments")
 	end
@@ -12628,7 +12625,6 @@ function useCommand.scriptusers()
 		local xUsing = ""
 		local xUsingCount = 0
 		for i,v in pairs(cmdp:GetPlayers()) do
-			wait(.2)
 			local check1 = v.Character:FindFirstChild("Head")
 			if check1 then
 				local check2 = check1:FindFirstChild(AntiCheat.Attachment)
@@ -13520,12 +13516,8 @@ function useCommand.rejoindiff()
 	if syn.queue_on_teleport then
 		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
 	end
-	if not arguments[2] then
-		opx("*","2 arguments are required!")
-		return
-	end
 	opx("-","Starting rejoin different...")
-	local Decision = arguments[2]
+	local Decision = "any" or arguments[2]
 	local GUIDs = {}
 	local maxPlayers = 0
 	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="))
