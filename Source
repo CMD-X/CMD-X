@@ -4035,6 +4035,7 @@ function refresh()
 	if cmdlp.Character:FindFirstChild("Head") then cmdlp.Character.Head:Destroy() end
 	cmdlp.CharacterAdded:Wait()
 	cmdlp.Character:WaitForChild("HumanoidRootPart")
+	cmdlp.Character.HumanoidRootPart.CFrame = oldpos
 end
 
 function IESP(v)
