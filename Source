@@ -3599,6 +3599,7 @@ CMDS.aliases = {
 	["followedintopr"] = "followedintoprivate",
 	["repanim"] = "replicateanim",
 	["repanimspeed"] = "replicateanimspeed",
+	["speed"] = "walkspeed",
 }
 
 CMDS.suggestions = {}
