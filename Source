@@ -411,7 +411,6 @@ local Donors = {
 	["xniped"] = "2",
 	["KinggSeaa"] = "2",
 	["ClydeGrant"] = "2",
-	["bytekeeper"] = "2",
 	["Fxalling_Love"] = "2",
 	
 	["fusionwhy"] = "Custom1",
@@ -420,6 +419,7 @@ local Donors = {
 	["Irritatory"] = "Custom4",
 	["DuBz_Bubby"] = "Custom5", -- top donor {$200}
 	["YanniLove"] = "Custom6",
+	["manufacturedlife"] = "Custom7",
 
 }
 
@@ -463,7 +463,12 @@ local Tier = {
 		Tag = "Classy Cute",
 		Color = Color3.fromRGB(252,144,3),
 		SCHAT = "SUGAR DADDY"
-	}
+	},
+	["Custom7"] = {
+	    Tag = "Duck",
+	    Color = Color3.fromRGB(0,255,255),
+	    SCHAT = "DUCK",
+	},
 }
 
 if isfolder and makefolder and isfile and writefile then
