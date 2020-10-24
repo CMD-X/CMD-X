@@ -392,7 +392,6 @@ local Donors = {
 	["0ccoy"] = "1",
 	["Zuhqu"] = "1",
 	["NitoOV"] = "1",
-	["NAT3ES"] = "1",
 	["LtsDank"] = "1",
 	["614SHAD"] = "1",
 	["tyswrld"] = "1",
@@ -412,6 +411,7 @@ local Donors = {
 	["KinggSeaa"] = "2",
 	["ClydeGrant"] = "2",
 	["Fxalling_Love"] = "2",
+	["emovert"] = "2",
 	
 	["fusionwhy"] = "Custom1",
 	["InternetSpeeds"] = "Custom2",
