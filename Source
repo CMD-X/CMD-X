@@ -377,7 +377,6 @@ local Devs = {
 	["CMD_X"] = "Owner",
 	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
-	["coryhofmann"] = "Dev",
 }
 
 DevCords = {
