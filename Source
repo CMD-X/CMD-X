@@ -386,7 +386,6 @@ DevCords = {
 }
 
 local Donors = {
-	["8dqt"] = "1",
 	["8avu"] = "1",
 	["0ccoy"] = "1",
 	["Zuhqu"] = "1",
@@ -406,6 +405,7 @@ local Donors = {
 	["CubIsMyFavorite"] = "1",
 	["Missingno74"] = "1",
 
+	["8dqt"] = "2",
 	["skrask"] = "2",
 	["xniped"] = "2",
 	["KinggSeaa"] = "2",
