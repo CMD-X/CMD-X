@@ -4869,22 +4869,23 @@ local cmdAdvertise = false
 function useCommand.advertise()
 	cmdAdvertise = true
 	while cmdAdvertise do
-		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		local str = "Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/exe or type in cmd x admin on google!"
+		sayremote:FireServer(str, "All")
 		wait(math.random(1, 6)) 
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
 		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
-		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer(str, "All")
 		wait(math.random(1, 6))
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
-		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("/w "..randomPlayer.Name.." "..str, "All")
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
-		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("/w "..randomPlayer.Name.." "..str, "All")
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
-		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("/w "..randomPlayer.Name.." "..str, "All")
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
-		sayremote:FireServer("/w "..randomPlayer.Name.." Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer("/w "..randomPlayer.Name.." "..str, "All")
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
-		sayremote:FireServer("Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/cmd or type in cmd x pxstebxn on google!", "All")
+		sayremote:FireServer(str, "All")
 		wait(math.random(1, 6))
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
 		cmdlp.Character.Humanoid:MoveTo(randomPlayer.Character.HumanoidRootPart.Position)
