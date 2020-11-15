@@ -10828,6 +10828,18 @@ function useCommand.emote()
 				Tilt = 3334538554;
 				Point = 3344585679;
 				Shrug = 3334392772;
+				["High Wave"] = 5915690960;
+				Applaud = 5915693819;
+				Breakdance = 5915648917;
+				["Rock On"] = 5915714366;
+				Dolphin = 5918726674;
+				["Jumping Cheer"] = 5895324424;
+				Floss = 5917459365;
+				["Country Line Dance"] = 5915712534;
+				Panini = 5915713518;
+				Holiday = 5937558680;
+				Rodeo = 5918728267;
+				["Old Town Road"] = 5937560570;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -13072,6 +13084,18 @@ function useCommand.animsync()
 						Tilt = 3334538554;
 						Point = 3344585679;
 						Shrug = 3334392772;
+						["High Wave"] = 5915690960;
+						Applaud = 5915693819;
+						Breakdance = 5915648917;
+						["Rock On"] = 5915714366;
+						Dolphin = 5918726674;
+						["Jumping Cheer"] = 5895324424;
+						Floss = 5917459365;
+						["Country Line Dance"] = 5915712534;
+						Panini = 5915713518;
+						Holiday = 5937558680;
+						Rodeo = 5918728267;
+						["Old Town Road"] = 5937560570;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
