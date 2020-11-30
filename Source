@@ -10641,7 +10641,7 @@ end
 
 function useCommand.reverse()
 	if arguments[2] then
-			opx("-","Now Reversing")
+			opx("-","Now Reversing credit to plaisoundz")
 			local reversesettings = {
 			delay = arguments[2];
 			}
