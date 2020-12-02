@@ -399,7 +399,7 @@ local Donors = {
 	["DisturbedCult"] = "1",
 	["hellavzn"] = "1",
 	["DAMAGlNG"] = "1",
-	["CubIsMyFavorite"] = "1",
+	["Zukkoe"] = "1",
 	["Missingno74"] = "1",
 	["HelIaSketchers"] = "1",
 	["amazinggeorgedude"] = "1",
@@ -13457,7 +13457,7 @@ function useCommand.credits()
 	Co-Owner - "..DevCords[2].."\
 	Dev - "..DevCords[3].."\
 	Intro Audio - liv#2001\
-	Intro Audio 2 - pitsamika\
+	Intro Audio 2 - Adderalled\
 	Thank you to IY for some functions inside CMD-X\
 	Thank you to Bannable#5005 for animpack\
 	Thank you to 6033#6033 for old-aimbot")
