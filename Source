@@ -2820,7 +2820,7 @@ CMDS.commands = {
 	["massfollowedinto"] = "Shows everyones user that followed someone into game.",
 	["notifyfollowed"] = "Notifies you if someone follows you into game through your profile.",
 	["unnotifyfollowed"] = "()",
-	["replicateanim"] = "Replicates animation id and plays it. (CREDIT: CURVN, RIPTXDE)",
+	["replicateanim"] = "Replicates animation id and plays it. (CREDIT: RIPTXDE)",
 	["replicateanimspeed"] = "Changes speed of replicated animation.",
 	["spooffps"] = "Spoofs your fps to whatever you want.",
 	["spoofping"] = "Spoofs your ping to whatever you want.",
@@ -16085,7 +16085,7 @@ function useCommand.replicateanim()
 		opx("*","You need to run .simulationradius first!")
 		return
 	end
-	opx("-","Now replicating anim, creds to Curvn and Riptxde")
+	opx("-","Now replicating anim, creds to Riptxde")
 	local Char = cmdlp.Character
 	local Humanoid = Char.Humanoid
 	local Frame = 60
