@@ -15740,8 +15740,8 @@ function useCommand.notouch()
 	opx("-","Disabled all touchinterests")
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("TouchTransmitter") then
-			table.insert(notouchTouches, {part = v, pare = v.Parent})
-			v.Parent = game:GetService("PolicyService")
+			table.insert(notouchTouches, {part = v.Parent, pare = v.Parent.Parent})
+			v.Parent.Parent = game:GetService("PolicyService")
 		end
 	end
 end
