@@ -4417,6 +4417,8 @@ cmd.FocusLost:connect(function()
 	end
 end)
 
+opx("*","Do not fall for scams! Our only links are on our discord...")
+
 function useCommand.prefix()
 	opx("-","Your prefix is "..prefix.." or .")
 end
