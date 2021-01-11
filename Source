@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.9"
+local ver = "1.9.9a"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -2825,6 +2825,9 @@ CMDS.commands = {
 	["spooffps"] = "Spoofs your fps to whatever you want.",
 	["spoofping"] = "Spoofs your ping to whatever you want.",
 	["spoofmemory"] = "Spoofs your memory to whatever you want.",
+	["antiwindowafk"] = "Stops the game from AFKing you when you unfocus your window.",
+	["unantiwindowafk"] = "()",
+	["clearcharacter"] = "Clears your character appearance.",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -2954,7 +2957,7 @@ CMDS.usage = {
 	["clicktphotkey"] = "(key)",
 	["permspamspeed"] = "(num)",
 	["playerlogs"] = "(plr)",
-	["rejoindiff"] = "(any, smallest, largest)",
+	["rejoindiff"] = "(any, fast, smallest, largest)",
 	["streamsnipe"] = "(name) (gameid / this)",
 	["hotkeynoclip"] = "(key)",
 	["disableplayer"] = "(plr)",
@@ -3612,6 +3615,11 @@ CMDS.aliases = {
 	["repanim"] = "replicateanim",
 	["repanimspeed"] = "replicateanimspeed",
 	["speed"] = "walkspeed",
+	["clearchar"] = "clearcharacter",
+	["antiwafk"] = "antiwindowafk",
+	["wafk"] = "antiwindowafk",
+	["unantiwafk"] = "unantiwindowafk",
+	["unwafk"] = "unantiwindowafk",
 }
 
 CMDS.suggestions = {}
@@ -4369,6 +4377,35 @@ function executeCommand(com)
 			opx("*",invalidString.." is not a valid command.")
 		end
 	end    
+end
+
+local BlacklistedADM = {
+    ["quickexit"] = "quickexit",
+    ["`"] = "`",
+    ["loop"] = "loop",
+    ["killgui"] = "killgui",
+    ["reload"] = "reload",
+    ["nocmds"] = "nocmds",
+    ["yescmds"] = "yescmds",
+    ["rejoindiff"] = "rejoindiff",
+    ["rjdiff"] = "rjdiff",
+    ["place"] = "place",
+    ["game"] = "game",
+    ["placeid"] = "placeid",
+    ["gameid"] = "gameid",
+    ["directjoin"] = "directjoin",
+    ["dirjoin"] = "dirjoin",
+}
+for i,v in pairs(AdmIG) do
+	cmdp[AdmIG[i]].Chatted:Connect(function(a)
+		local comsToExe = cmd.Text:split(";;")
+    	cmd.Text = ""
+    	for i,v in pairs(comsToExe) do
+    	    if v ~= BlacklistedADM[v] then
+    		    executeCommand(v)
+    		end
+    	end
+	end)
 end
 
 cmd.FocusLost:connect(function()
@@ -9890,6 +9927,11 @@ function useCommand.find()
 			table.insert(FindingTargets, target.Name)
 			opx("-",target.Name.." is now being found")
 			Create(target, target.Character.Head, true)
+            cmdp.PlayersRemoving:Connect(function(v)
+			    if v == target then
+			        cmdlp.PlayerGui["ESP"..target.Name]:Destroy()
+			    end
+			end)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -10508,43 +10550,56 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-	if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook or _G.smarthook then
-		opx("*", "Bypass is already enabled.")
-		return
-	end
-	_G.oldhook = mt.__namecall
-	setreadonly(mt, false)
-	mt.__namecall = newcclosure(function(event, ...)
-		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
-			local args = {...}
-			local message = args[1]
-			local words = message:split(" ")
-			local c = {}
-			c[1] = "\203\129"
-			c[2] = "\217\128"
-			local messagetopass = ""
-			for i = 1, #words do
-				if messagetopass ~= "" then
-					messagetopass = messagetopass.." "
-				end
-				for v = 1, #words[i] do
-					if words[i]:sub(v,v):lower():byte() >= 97 and words[i]:sub(v,v):lower():byte() <= 122 then
-						messagetopass = messagetopass..words[i]:sub(v,v)
-						math.randomseed(v*22+#words[i]:sub(v,v))
-						if math.random(1,3) == 2 then
-							messagetopass = messagetopass..c[math.random(1,2)]
-						end
-					else
-						messagetopass = messagetopass..words[i]:sub(v,v)
-					end
-				end
-			end
-			return _G.oldhook(event, messagetopass, args[2])
-		end
-		return _G.oldhook(event, ...)
-	end)
-	setreadonly(mt, true)
-	opx("-", "Bypass enabled.")
+    if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook or _G.smarthook then
+        opx("*", "Bypass is already enabled.")
+        return
+    end
+    _G.oldhook = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(event, ...)
+        if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+            local args = {...}
+            local message = args[1]
+            local words = message:split(" ")
+            local c = {}
+            c[1] = "\219\166\219\138"
+            local messagetopass = ""
+            for i = 1, #words do
+                words[i] = words[i]:sub(1,1)..c[1]..words[i]:sub(2,#words[i])
+                messagetopass = messagetopass..words[i].."  "
+            end
+            return _G.oldhook(event, messagetopass, args[2])
+        end
+        return _G.oldhook(event, ...)
+    end)
+    setreadonly(mt, true)
+    opx("-", "Bypass enabled.")
+end
+
+function useCommand.clearcharacter()
+    opx("-","Cleared your characters appearance")
+    cmdlp:ClearCharacterAppearance()
+    cmdlp.Character.Head.face:Destroy()
+end
+
+function useCommand.antiwindowafk()
+    if not getconnections then
+        opx("*","Your executor does not support getconnections!")
+        return
+    end
+    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Disable() end
+    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Disable() end
+    opx("-","You will no longer window focus afk")
+end
+
+function useCommand.unantiwindowafk()
+    if not getconnections then
+        opx("*","Your executor does not support getconnections!")
+        return
+    end
+    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Enable() end
+    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Enable() end
+    opx("-","You will now window focus afk")
 end
 
 function useCommand.nilchatcmds()
@@ -11499,75 +11554,77 @@ function useCommand.unforceplay()
 	end
 end
 
-local muteall = false
+_G.connections.muted = {}
+function MuteLoop()
+    _G.connections.plrsMuted = game:GetService("RunService").RenderStepped:Connect(function()
+        for _,v in pairs(_G.connections.muted) do
+            pcall(function()
+                for _,i in pairs(v.Character:GetChildren()) do
+                    if i:IsA("Tool") and i:FindFirstChild("Handle") then
+                        if i.Handle:FindFirstChildOfClass("Sound") then
+                            i.Handle.Sound.Playing = false
+                        end
+                    end
+                end
+                for _,i in pairs(v.Backpack:GetChildren()) do
+                    if i:IsA("Tool") and i:FindFirstChild("Handle") then
+                        if i.Handle:FindFirstChildOfClass("Sound") then
+                            i.Handle.Sound.Playing = false
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end
+MuteLoop()
+
 function useCommand.mute()
-	if arguments[2] then
-		if arguments[2] == "others" then
-			opx("-","Mute others enabled")
-			muteall = false
-			wait(.2)
-			muteall = true
-			for i,v in pairs(cmdp:GetPlayers()) do
-				if v ~= cmdlp then
-					table.insert(Muted,v.Name)
-				end
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(Muted) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = false
-							end
-						end
-					end
-				end
-			until muteall == false
-		elseif arguments[2] == "everyone" or arguments[2] == "all" then
-			opx("-","Mute all enabled")
-			muteall = false
-			wait(.2)
-			muteall = true
-			for i,v in pairs(cmdp:GetPlayers()) do
-				table.insert(Muted,v.Name)
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(Muted) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = false
-							end
-						end
-					end
-				end
-			until muteall == false
-		else
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Mute "..target.Name.." enabled")
-				muteall = false
-				wait(.2)
-				muteall = true
-				table.insert(Muted,target.Name)
-				repeat wait()
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") then
-							for _,x in pairs(Muted) do
-								if v.Parent.Parent.Parent.Name == x then
-									v.Playing = false
-								end
-							end
-						end
-					end
-				until muteall == false
-			else
-				opx("*","Player does not exist!")
-			end
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
-	end
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    if arguments[2] == "all" then
+        opx("-","Muted all")
+        for _,v in pairs(cmdp:GetPlayers()) do
+            if v ~= cmdlp then table.insert(_G.connections.muted, v) end
+        end
+        _G.connections.allMuted = cmdp.PlayerAdded:Connect(function(v)
+            table.insert(_G.connections.muted, v)
+        end)
+    else
+        target = findplr(arguments[2])
+        if not target then
+            opx("*","Player does not exist!")
+            return
+        end
+        opx("-","Muted "..target.Name)
+        table.insert(_G.connections.muted, target)
+    end
+end
+
+function useCommand.unmute()
+    if not arguments[2] then
+        opx("*","2 arguments are required!")
+        return
+    end
+    if arguments[2] == "all" then
+        opx("-","Unmuted all")
+        for i,_ in pairs(_G.connections.muted) do
+            table.remove(_G.connections.muted, i)
+        end
+        _G.connections.allMuted:Disconnect()
+    else
+        target = findplr(arguments[2])
+        if not target then
+            opx("*","Player does not exist!")
+            return
+        end
+        opx("-","Unmuted "..target.Name)
+        for i,v in pairs(_G.connections.muted) do
+            if v == target then table.remove(_G.connections.muted, i) end
+        end
+    end
 end
 
 function FixArgsInDef(x,y)
@@ -11587,80 +11644,6 @@ end
 
 function CheckIfTrue()
 	Stand("You have been server-blacklisted!","Please join another server to use CMD-X again.","","","","Alright",false)
-end
-
-function useCommand.unmute()
-	if arguments[2] then
-		if arguments[2] == "others" then
-			opx("-","Mute others disabled")
-			muteall = false
-			wait(.2)
-			muteall = true
-			for i,v in pairs(Muted) do
-				if v ~= cmdlp.Name then
-					table.remove(Muted,i)
-				end
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(Muted) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = false
-							end
-						end
-					end
-				end
-			until muteall == false
-		elseif arguments[2] == "everyone" or arguments[2] == "all" then
-			opx("-","Mute all disabled")
-			muteall = false
-			wait(.2)
-			muteall = true
-			for i,v in pairs(Muted) do
-				table.remove(Muted,i)
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(Muted) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = false
-							end
-						end
-					end
-				end
-			until muteall == false
-		else
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Mute "..target.Name.." disabled")
-				muteall = false
-				wait(.2)
-				muteall = true
-				for i,v in pairs(Muted) do
-					if v == target.Name then
-						table.remove(Muted,i)
-					end
-				end
-				repeat wait()
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") then
-							for _,x in pairs(Muted) do
-								if v.Parent.Parent.Parent.Name == x then
-									v.Playing = false
-								end
-							end
-						end
-					end
-				until muteall == false
-			else
-				opx("*","Player does not exist!")
-			end
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
-	end
 end
 
 for i,v in pairs(cmdp:GetPlayers()) do
@@ -13552,37 +13535,39 @@ function useCommand.massid()
 end
 
 function useCommand.rejoindiff()
-	rejoining = true
-	if syn.queue_on_teleport then
-		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-	end
-	opx("-","Starting rejoin different...")
-	local Decision = "any" or arguments[2]
-	local GUIDs = {}
-	local maxPlayers = 0
-	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="))
-	for i = 1,100 do
-		for i,v in pairs(Http.data) do
-			if v.playing ~= v.maxPlayers then
-				maxPlayers = v.maxPlayers
-				table.insert(GUIDs, {id = v.id, users = v.playing})
-			end
-		end
-		opx("-","Page searched...")
-		if Http.nextPageCursor ~= null then Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="..Http.nextPageCursor)) else break end
-	end
-	opx("-","Attempting teleport...")
-	if Decision == "any" then
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[math.random(1,#GUIDs)].id, cmdlp)
-	elseif Decision == "smallest" then
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[#GUIDs].id, cmdlp)
-	elseif Decision == "largest" then
-		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[1].id, cmdlp)
-	else
-		opx("*","A valid preset was required!")
-	end
-	wait(3)
-	rejoining = false
+    rejoining = true
+    if syn.queue_on_teleport then
+        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+    end
+    opx("-","Starting rejoin different...")
+    local Decision = arguments[2] or "any"
+    local GUIDs = {}
+    local maxPlayers = 0
+    local pagesToSearch = 100
+    if Decision == "fast" then pagesToSearch = 5 end
+    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="))
+    for i = 1,pagesToSearch do
+        for i,v in pairs(Http.data) do
+            if v.playing ~= v.maxPlayers and v.id ~= game.JobId then
+                maxPlayers = v.maxPlayers
+                table.insert(GUIDs, {id = v.id, users = v.playing})
+            end
+        end
+        opx("-","Page searched...")
+        if Http.nextPageCursor ~= null then Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="..Http.nextPageCursor)) else break end
+    end
+    opx("-","Attempting teleport...")
+    if Decision == "any" or Decision == "fast" then
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[math.random(1,#GUIDs)].id, cmdlp)
+    elseif Decision == "smallest" then
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[#GUIDs].id, cmdlp)
+    elseif Decision == "largest" then
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[1].id, cmdlp)
+    else
+        opx("*","A valid preset was required!")
+    end
+    wait(3)
+    rejoining = false
 end
 
 function useCommand.streamsnipe()
@@ -15809,9 +15794,16 @@ function useCommand.robloxfromdiscordid()
 		opx("*","2 arguments are required!")
 		return
 	end
-	local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
-	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
-	opx("-","User: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
+	pcall(function()
+	    local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
+    	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    	opx("-","Rover user: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
+	end)
+    pcall(function()
+        local URL = ("https://api.blox.link/v1/user/"..arguments[2])
+        local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+    	opx("-","Bloxlink user: "..cmdp:GetNameFromUserIdAsync(Http.primaryAccount))
+    end)
 end
 
 function useCommand.teleportstring()
@@ -17414,50 +17406,6 @@ cmdlp.Chatted:connect(function(v)
 		end
 	end
 end)
-
-for i,v in pairs(AdmIG) do
-	cmdp[AdmIG[i]].Chatted:Connect(function(a)
-		if a:lower():sub(1,#prefix) == prefix then
-			matchCommand = ""
-			alignFunctions(a:sub(#prefix+1,#a))
-			adminargs = a:sub(#prefix+1,#a):split(" ")
-			cmdsy = findCmd(adminargs[1])
-			if cmdsy ~= nil then
-				if Debugging == false then
-					useCommand[cmdsy]()
-				else
-					pcall(function() useCommand[cmdsy]() end)
-				end
-			else
-				invalidString = getstring(1)
-				if #invalidString > 38 then
-					invalidString = invalidString:sub(1,35).."..."
-				end
-				opx("*",invalidString.." is not a valid command.")
-			end
-			cmd.Text = ""
-		elseif a:lower():sub(1,1) == '.' then
-			matchCommand = ""
-			alignFunctions(a:sub(2,#a))
-			adminargs = a:sub(2,#a):split(" ")
-			cmdsy = findCmd(adminargs[1])
-			if cmdsy then
-				if Debugging == false then
-					useCommand[cmdsy]()
-				else
-					pcall(function() useCommand[cmdsy]() end)
-				end
-			else
-				invalidString = getstring(1)
-				if #invalidString > 38 then
-					invalidString = invalidString:sub(1,35).."..."
-				end
-				opx("*",invalidString.." is not a valid command.")
-			end
-			cmd.Text = ""
-		end
-	end)
-end
 
 pcall(function()
 	if AntiCheat.IntroAudioOff == false then
