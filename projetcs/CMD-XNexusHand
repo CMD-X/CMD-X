@@ -1,0 +1,63 @@
+-- CMD-X NexusVR hand plugin.
+-- by pigeon#5462
+-- Load this in using .changestyle
+
+local RightHanded = true
+
+cmduis.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Gamepad1 then
+        if not _G.capturingFocus then
+        	if input.KeyCode == Enum.KeyCode.ButtonB then
+        	   _G.capturingFocus = game:GetService("RunService").Stepped:Connect(function()
+        	        cmd:CaptureFocus()
+        	    end)
+        	end
+        else
+            _G.capturingFocus:Disconnect()
+            _G.capturingFocus = nil
+        end
+    end
+end)
+
+wait(2)
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+    if v:IsA("SurfaceGui") then
+        v:Destroy()
+    end
+end
+local GuiHolder = Instance.new("SurfaceGui", game:GetService("Players").LocalPlayer.PlayerGui)
+function LoadGui()
+    local Hand = game:GetService("Players").LocalPlayer.Character.RightHand
+    if RightHanded then
+        Hand = game:GetService("Players").LocalPlayer.Character.LeftHand
+    end
+    GuiHolder.Adornee = Hand
+    GuiHolder.ClipsDescendants = false
+    GuiHolder.AlwaysOnTop = false
+    GuiHolder.Face = Enum.NormalId.Bottom
+    holder.Parent = GuiHolder
+end
+
+LoadGui()
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
+    LoadGui()
+end)
+
+holder.Position = UDim2.new(0, 450, 0, 0)
+holder.Size = UDim2.new(0, 525, 0, 277)
+output.Size = UDim2.new(0, 800, 0, 400)
+for i,v in pairs(output:GetChildren()) do
+    v.Size = UDim2.new(0, 800, 0, 27)
+    v.TextSize = 27
+end
+entry.Position = UDim2.new(0, -9, 0, 400)
+entry.Size = UDim2.new(0, 800, 0, 60)
+user.Position = UDim2.new(0, 170, 0, 11)
+user.Size = UDim2.new(0, 137, 0, 20)
+user.TextSize = 40
+cmdsu.Position = UDim2.new(0, 350, 0, 4)
+cmdsu.Size = UDim2.new(0, 341, 0, 50)
+cmdsu.TextSize = 30
+cmd.Position = UDim2.new(0, 0, 0, 4)
+cmd.Size = UDim2.new(0, 341, 0, 50)
+cmd.TextSize = 30
