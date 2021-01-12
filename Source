@@ -11433,24 +11433,26 @@ end
 _G.connections.muted = {}
 function MuteLoop()
     _G.connections.plrsMuted = game:GetService("RunService").RenderStepped:Connect(function()
-        for _,v in pairs(_G.connections.muted) do
-            pcall(function()
-                for _,i in pairs(v.Character:GetChildren()) do
-                    if i:IsA("Tool") and i:FindFirstChild("Handle") then
-                        if i.Handle:FindFirstChildOfClass("Sound") then
-                            i.Handle.Sound.Playing = false
+        pcall(function()
+            for _,v in pairs(_G.connections.muted) do
+                pcall(function()
+                    for _,i in pairs(v.Character:GetChildren()) do
+                        if i:IsA("Tool") and i:FindFirstChild("Handle") then
+                            if i.Handle:FindFirstChildOfClass("Sound") then
+                                i.Handle.Sound.Playing = false
+                            end
                         end
                     end
-                end
-                for _,i in pairs(v.Backpack:GetChildren()) do
-                    if i:IsA("Tool") and i:FindFirstChild("Handle") then
-                        if i.Handle:FindFirstChildOfClass("Sound") then
-                            i.Handle.Sound.Playing = false
+                    for _,i in pairs(v.Backpack:GetChildren()) do
+                        if i:IsA("Tool") and i:FindFirstChild("Handle") then
+                            if i.Handle:FindFirstChildOfClass("Sound") then
+                                i.Handle.Sound.Playing = false
+                            end
                         end
                     end
-                end
-            end)
-        end
+                end)
+            end
+        end)
     end)
 end
 MuteLoop()
