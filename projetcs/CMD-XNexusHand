@@ -43,6 +43,9 @@ game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
     LoadGui()
 end)
 
+_G.spamVis = game:GetService("RunService").RenderStepped:Connect(function()
+    holder.Visible = true
+end)
 holder.Position = UDim2.new(0, 450, 0, 0)
 holder.Size = UDim2.new(0, 525, 0, 277)
 output.Size = UDim2.new(0, 800, 0, 400)
