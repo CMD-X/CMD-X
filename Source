@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.9a"
+local ver = "1.9.9b"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -11,6 +11,7 @@ else
 	getParent = Parents[2]
 end
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
+if KRNL_LOADED and gethui then getParent = gethui() end
 
 for _, v in pairs(Parents[1]:GetDescendants()) do
 	if v.Name == "holder" then 
@@ -332,11 +333,6 @@ end
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
 
-if not writefile then
-	Stand("Your exploit does not support writefile!","CMD-X cannot run.","Executors we support;","Paid: Synapse X, Sentinel, ProtoSmasher","Free: KRNL, Fluxus, Oxygen U","Run Anyway",true)
-	repeat wait() until RunDude == true
-end
-
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
@@ -479,285 +475,164 @@ if isfolder and makefolder and isfile and writefile then
 	if not isfile("CMD-X Plugins/template.lua") then writefile("CMD-X Plugins/template.lua","print('test')") end
 end
 
-function writefileExploit()
-	if writefile then
-		return true
-	end
+function loaddefaults()
+    text2 = false
+    hotkeyopen = 'q'
+    hotkeyopx = 'u'
+    hotkeyfocus = ';'
+    hotkeyfly = ''
+    hotkeyxray = ''
+    hotkeyesp = ''
+    hotkeyaimbot = ''
+    prefix = '.'
+    prompt = 'CMD-X Prompt >'
+    enterCMD = {}
+    gotoPos = 0
+    gotoPosSide = 0
+    gotoPosHead = 0
+    WPs = {}
+    Plugins = {}
+    discordTag = ''
+    permfcspeed = 1
+    permflyspeed = 1
+    permwalkspeed = 50
+    permjumppower = 150
+    permhipheight = 20
+    permgravity = 50
+    permmaxsl = 89.99
+    Adm = {}
+    hkBinds = {}
+    dStyle = "rounded"
+    conFly = true
+    suggestions = true
+    CMDStats = {}
+    oldNum = 0
+    hotkeyctp = "LeftControl"
+    permspamspeed = 1
+    mentions = true
+    sDetect = true
+    SavedPos = {X = 800, Y = 300}
+    hotkeynoclip = ""
+    ChatBind = false
+    CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
+    TabsOff = true
+    KeepCMDXOn = false
+    ifKickedAuto = false
+    whyIs = 0
+    combos = {}
+    drawingtype = "old"
 end
  
-local cooldown = false
-function writefileCooldown(name,data)
-	spawn(function()
-		if not cooldown then
-			cooldown = true
-			writefile(name, data)
-			wait(1)
-			cooldown = false
-		end
-		cooldown = false
-	end)
-end
-
-defaultsettings = {
-	text2 = false;
-	hotkeyopen = 'q';
-	hotkeyopx = 'u';
-	hotkeyfocus = ';';
-	hotkeyfly = '';
-	hotkeyxray = '';
-	hotkeyesp = '';
-	hotkeyaimbot = '';
-	prefix = '.';
-	prompt = 'CMD-X Prompt >';
-	enterCMD = {};
-	gotoPos = 0;
-	gotoPosSide = 0;
-	gotoPosHead = 0;
-	WPs = {};
-	Plugins = {};
-	discordTag = '';
-	permfcspeed = 1;
-	permflyspeed = 1;
-	permwalkspeed = 50;
-	permjumppower = 150;
-	permhipheight = 20;
-	permgravity = 50;
-	permmaxsl = 89.99;
-	Adm = {};
-	hkBinds = {};
-	dStyle = "rounded";
-	conFly = true;
-	suggestions = true;
-	CMDStats = {};
-	oldNum = 0;
-	hotkeyctp = "LeftControl";
-	permspamspeed = 1;
-	mentions = true;
-	sDetect = true;
-	SavedPos = {X = 800, Y = 300};
-	hotkeynoclip = "";
-	ChatBind = false;
-	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""};
-	TabsOff = true;
-	KeepCMDXOn = false;
-	ifKickedAuto = false;
-	whyIs = 0;
-	combos = {};
-	drawingtype = "old";
-}
- 
-defaults = game:GetService("HttpService"):JSONEncode(defaultsettings)
-
-function saves()
-	if writefileExploit() then
-		local a, text = pcall(function() readfile("CMD-X.lua") end)
-		if text == "" or text == "\n" or text == "\n\n" or text == " \n" or text == "\n " then
-			Stand("Looks like your config corrupted..","Truly sorry, we're looking for a fix in future updates!","This means your statistics and keybinds have been lost.","","Join the discord if you need any help using the script, false tickets will result in a ban.","Okay",true)
-			writefileCooldown("CMD-X.lua", defaults)
-			wait()
-			saves()
-		end
-		if a and readfile("CMD-X.lua") then
-			local json = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
-			if json.text2 then text2 = json.text2 else text2 = {} end
-			if json.hotkeyopen then hotkeyopen = json.hotkeyopen else hotkeyopen = 'q' end
-			if json.hotkeyopx then hotkeyopx = json.hotkeyopx else hotkeyopx = 'u' end
-			if json.hotkeyfocus then hotkeyfocus = json.hotkeyfocus else hotkeyfocus = ';' end
-			if json.hotkeyfly then hotkeyfly = json.hotkeyfly else hotkeyfly = '' end
-			if json.hotkeyxray then hotkeyxray = json.hotkeyxray else hotkeyxray = '' end
-			if json.prefix then prefix = json.prefix else prefix = '.' end
-			if json.prompt then prompt = json.prompt else prompt = 'CMD-X Prompt >' end
-			if json.enterCMD then enterCMD = json.enterCMD else enterCMD = {} end
-			if json.gotoPos then gotoPos = json.gotoPos else gotoPos = 0 end
-			if json.gotoPosSide then gotoPosSide = json.gotoPosSide else gotoPosSide = 0 end
-			if json.gotoPosHead then gotoPosHead = json.gotoPosHead else gotoPosHead = 0 end
-			if json.WPs then WPs = json.WPs else WPs = {} end
-			if json.Plugins then Plugins = json.Plugins else Plugins = {} end
-			if json.discordTag then discordTag = json.discordTag else discordTag = '' end
-			if json.hotkeyaimbot then hotkeyaimbot = json.hotkeyaimbot else hotkeyaimbot = '' end
-			if json.hotkeyesp then hotkeyesp = json.hotkeyesp else hotkeyesp = '' end
-			if json.permfcspeed then permfcspeed = json.permfcspeed else permfcspeed = 1 end
-			if json.permflyspeed then permflyspeed = json.permflyspeed else permflyspeed = 1 end
-			if json.permwalkspeed then permwalkspeed = json.permwalkspeed else permwalkspeed = 50 end
-			if json.permjumppower then permjumppower = json.permjumppower else permjumppower = 150 end
-			if json.permhipheight then permhipheight = json.permhipheight else permhipheight = 20 end
-			if json.permgravity then permgravity = json.permgravity else permgravity = 50 end
-			if json.permmaxsl then permmaxsl = json.permmaxsl else permmaxsl = 89.99 end
-			if json.Adm then Adm = json.Adm else Adm = {} end
-			if json.hkBinds then hkBinds = json.hkBinds else hkBinds = {} end
-			if json.dStyle then dStyle = json.dStyle else dStyle = "rounded" end
-			if json.conFly then conFly = json.conFly else conFly = true end
-			if json.suggestions then suggestions = json.suggestions else suggestions = true end
-			if json.CMDStats then CMDStats = json.CMDStats else CMDStats = {} end
-			if json.oldNum then oldNum = json.oldNum else oldNum = 0 end
-			if json.hotkeyctp then hotkeyctp = json.hotkeyctp else hotkeyctp = "LeftControl" end
-			if json.permspamspeed then permspamspeed = json.permspamspeed else permspamspeed = 1 end
-			if json.mentions then mentions = json.mentions else mentions = true end
-			if json.sDetect then sDetect = json.sDetect else sDetect = true end
-			if json.SavedPos then SavedPos = json.SavedPos else SavedPos = {X = 800, Y = 300} end
-			if json.hotkeynoclip then hotkeynoclip = json.hotkeynoclip else hotkeynoclip = "" end
-			if json.ChatBind then ChatBind = json.ChatBind else ChatBind = false end
-			if json.CMDTab then CMDTab = json.CMDTab else CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""} end
-			if json.TabsOff then TabsOff = json.TabsOff else TabsOff = true end
-			if json.KeepCMDXOn then KeepCMDXOn = json.KeepCMDXOn else KeepCMDXOn = false end
-			if json.ifKickedAuto then ifKickedAuto = json.ifKickedAuto else ifKickedAuto = false end
-			if json.whyIs then whyIs = json.whyIs else whyIs = 0 end
-			if json.combos then combos = json.combos else combos = {} end
-			if json.drawingtype then drawingtype = json.drawingtype else drawingtype = "old" end
-		else
-			writefileCooldown("CMD-X.lua", defaults)
-			wait()
-			if pcall(function() readfile("CMD-X.lua") end) then
-				saves()
-			else
-				text2 = false
-				hotkeyopen = 'q'
-				hotkeyopx = 'u'
-				hotkeyfocus = ';'
-				hotkeyfly = ''
-				hotkeyxray = ''
-				hotkeyesp = ''
-				hotkeyaimbot = ''
-				prefix = '.'
-				prompt = 'CMD-X Prompt >'
-				enterCMD = {}
-				gotoPos = 0
-				gotoPosSide = 0
-				gotoPosHead = 0
-				WPs = {}
-				Plugins = {}
-				discordTag = ''
-				permfcspeed = 1
-				permflyspeed = 1
-				permwalkspeed = 50
-				permjumppower = 150
-				permhipheight = 20
-				permgravity = 50
-				permmaxsl = 89.99
-				Adm = {}
-				hkBinds = {}
-				dStyle = "rounded"
-				conFly = true
-				suggestions = true
-				CMDStats = {}
-				oldNum = 0
-				hotkeyctp = "LeftControl"
-				permspamspeed = 1
-				mentions = true
-				sDetect = true
-				SavedPos = {X = 800, Y = 300}
-				hotkeynoclip = ""
-				ChatBind = false
-				CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-				TabsOff = true
-				KeepCMDXOn = false
-				ifKickedAuto = false
-				whyIs = 0
-				combos = {}
-				drawingtype = "old"
-			end
-		end
-	else
-		text2 = false
-		hotkeyopen = 'q'
-		hotkeyopx = 'u'
-		hotkeyfocus = ';'
-		hotkeyfly = ''
-		hotkeyxray = ''
-		hotkeyesp = ''
-		hotkeyaimbot = ''
-		prefix = '.'
-		prompt = 'CMD-X Prompt >'
-		enterCMD = {}
-		gotoPos = 0
-		gotoPosSide = 0
-		gotoPosHead = 0
-		WPs = {}
-		Plugins = {}
-		discordTag = ''
-		permfcspeed = 1
-		permflyspeed = 1
-		permwalkspeed = 50
-		permjumppower = 150
-		permhipheight = 20
-		permgravity = 50
-		permmaxsl = 89.99
-		Adm = {}
-		hkBinds = {}
-		dStyle = "rounded"
-		conFly = true
-		suggestions = false
-		CMDStats = {}
-		oldNum = 0
-		hotkeyctp = "LeftControl"
-		permspamspeed = 1
-		mentions = true
-		sDetect = true
-		SavedPos = {X = 800, Y = 300}
-		hotkeynoclip = ""
-		ChatBind = false
-		CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-		TabsOff = true
-		KeepCMDXOn = false
-		ifKickedAuto = false
-		whyIs = 0
-		combos = {}
-		drawingtype = "old"
-	end
-	dp = cmdlp
-end
- 
-saves()
 function updatesaves()
-	if writefileExploit() then
-		local update = {
-			text2 = text2;
-			hotkeyopen = hotkeyopen;
-			hotkeyopx = hotkeyopx;
-			hotkeyfocus = hotkeyfocus;
-			hotkeyfly = hotkeyfly;
-			hotkeyxray = hotkeyxray;
-			hotkeyesp = hotkeyesp;
-			hotkeyaimbot = hotkeyaimbot;
-			prefix = prefix;
-			prompt = prompt;
-			enterCMD = enterCMD;
-			gotoPos = gotoPos;
-			gotoPosSide = gotoPosSide;
-			gotoPosHead = gotoPosHead;
-			WPs = WPs;
-			Plugins = Plugins;
-			discordTag = discordTag;
-			permfcspeed = permfcspeed;
-			permflyspeed = permflyspeed;
-			permwalkspeed = permwalkspeed;
-			permjumppower = permjumppower;
-			permhipheight = permhipheight;
-			permgravity = permgravity;
-			permmaxsl = permmaxsl;
-			Adm = Adm;
-			hkBinds = hkBinds;
-			dStyle = dStyle;
-			conFly = conFly;
-			suggestions = suggestions;
-			CMDStats = CMDStats;
-			oldNum = oldNum;
-			hotkeyctp = hotkeyctp;
-			permspamspeed = permspamspeed;
-			mentions = mentions;
-			sDetect = sDetect;
-			SavedPos = SavedPos;
-			hotkeynoclip = hotkeynoclip;
-			ChatBind = ChatBind;
-			CMDTab = CMDTab;
-			TabsOff = TabsOff;
-			KeepCMDXOn = KeepCMDXOn;
-			ifKickedAuto = ifKickedAuto;
-			whyIs = whyIs;
-			drawingtype = drawingtype;
-		}
-		writefileCooldown("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
-	end
+	local update = {
+		text2 = text2;
+		hotkeyopen = hotkeyopen;
+		hotkeyopx = hotkeyopx;
+		hotkeyfocus = hotkeyfocus;
+		hotkeyfly = hotkeyfly;
+		hotkeyxray = hotkeyxray;
+		hotkeyesp = hotkeyesp;
+		hotkeyaimbot = hotkeyaimbot;
+		prefix = prefix;
+		prompt = prompt;
+		enterCMD = enterCMD;
+		gotoPos = gotoPos;
+		gotoPosSide = gotoPosSide;
+		gotoPosHead = gotoPosHead;
+		WPs = WPs;
+		Plugins = Plugins;
+		discordTag = discordTag;
+		permfcspeed = permfcspeed;
+		permflyspeed = permflyspeed;
+		permwalkspeed = permwalkspeed;
+		permjumppower = permjumppower;
+		permhipheight = permhipheight;
+		permgravity = permgravity;
+		permmaxsl = permmaxsl;
+		Adm = Adm;
+		hkBinds = hkBinds;
+		dStyle = dStyle;
+		conFly = conFly;
+		suggestions = suggestions;
+		CMDStats = CMDStats;
+		oldNum = oldNum;
+    	hotkeyctp = hotkeyctp;
+		permspamspeed = permspamspeed;
+		mentions = mentions;
+		sDetect = sDetect;
+		SavedPos = SavedPos;
+		hotkeynoclip = hotkeynoclip;
+		ChatBind = ChatBind;
+		CMDTab = CMDTab;
+		TabsOff = TabsOff;
+		KeepCMDXOn = KeepCMDXOn;
+		ifKickedAuto = ifKickedAuto;
+		whyIs = whyIs;
+		drawingtype = drawingtype;
+	}
+	writefile("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
+end
+
+function loadsaves()
+    local success, errorsend = pcall(function()
+        saves = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+    end)
+    if not success then
+        loaddefaults()
+        updatesaves()
+        return
+    end
+    text2 = saves.text2 or false
+    hotkeyopen = saves.hotkeyopen or 'q'
+    hotkeyopx = saves.hotkeyopx or 'u'
+    hotkeyfocus = saves.hotkeyfocus or ';'
+    hotkeyfly = saves.hotkeyfly or ''
+    hotkeyxray = saves.hotkeyxray or ''
+    hotkeyesp = saves.hotkeyesp or ''
+    hotkeyaimbot = saves.hotkeyaimbot or ''
+    prefix = saves.prefix or '.'
+    prompt = saves.prompt or 'CMD-X Prompt >'
+    enterCMD = saves.enterCMD or {}
+    gotoPos = saves.gotoPos or 0
+    gotoPosSide = saves.gotoPosSide or 0
+    gotoPosHead = saves.gotoPosHead or 0
+    WPs = saves.WPs or {}
+    Plugins = saves.Plugins or {}
+    discordTag = saves.discordTag or ''
+    permfcspeed = saves.permfcspeed or 1
+    permflyspeed = saves.permflyspeed or 1
+    permwalkspeed = saves.permwalkspeed or 50
+    permjumppower = saves.permjumppower or 150
+    permhipheight = saves.permhipheight or 20
+    permgravity = saves.permgravity or 50
+    permmaxsl = saves.permmaxsl or 89.99
+    Adm = saves.Adm or {}
+    hkBinds = saves.hkBinds or {}
+    dStyle = saves.dStyle or "rounded"
+    conFly = saves.conFly or true
+    suggestions = saves.suggestions or true
+    CMDStats = saves.CMDStats or {}
+    oldNum = saves.oldNum or 0
+    hotkeyctp = saves.hotkeyctp or "LeftControl"
+    permspamspeed = saves.permspamspeed or 1
+    mentions = saves.mentions or true
+    sDetect = saves.sDetect or true
+    SavedPos = saves.SavedPos or {X = 800, Y = 300}
+    hotkeynoclip = saves.hotkeynoclip or ""
+    ChatBind = saves.ChatBind or false
+    CMDTab = saves.CMDTab or {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
+    TabsOff = saves.TabsOff or true
+    KeepCMDXOn = saves.KeepCMDXOn or false
+    ifKickedAuto = saves.ifKickedAuto or false
+    whyIs = saves.whyIs or 0
+    combos = saves.combos or {}
+    drawingtype = saves.drawingtype or "old"
+end
+
+if writefile and readfile then
+    loadsaves()
+else
+    loaddefaults()
 end
 
 checkArg = {
@@ -769,7 +644,7 @@ checkArg = {
 	[303591427.1] = "",
 	[6571024505.1] = "\110\105\99\101\32\116\114\121",
 }
-local requirements = dp["\85\115\101\114\73\100"]
+local requirements = cmdlp["\85\115\101\114\73\100"]
 
 function isDoneLoading(arg)
 	if checkArg[requirements * 290 / 100] then
@@ -4416,8 +4291,6 @@ cmd.FocusLost:connect(function()
 		executeCommand(v)
 	end
 end)
-
-opx("*","Do not fall for scams! Our only links are on our discord...")
 
 function useCommand.prefix()
 	opx("-","Your prefix is "..prefix.." or .")
@@ -13333,9 +13206,9 @@ end
 
 function useCommand.hotkeyfly()
 	if arguments[2] then
+	    opx("Hotkey set to "..arguments[2])
 		hotkeyfly = arguments[2]
 		updatesaves()
-		opx("Hotkey set to "..arguments[2])
 	else
 		opx("A key is required")
 	end
@@ -14297,9 +14170,9 @@ end
 
 function useCommand.hotkeynoclip()
 	if arguments[2] then
+	    opx("-","Added key to noclip")
 		hotkeynoclip = arguments[2]
 		updatesaves()
-		opx("-","Added key to noclip")
 	else
 		opx("*","2 arguments are required!")
 	end
@@ -15737,8 +15610,8 @@ end
 function useCommand.yestouch()
 	opx("-","Enabled all touchinterests")
 	for i,v in pairs(notouchTouches) do
-		table.remove(notuchTouches, i)
 		v.part.Parent = v.pare
+		table.remove(notuchTouches, i)
 	end
 end
 
