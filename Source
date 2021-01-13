@@ -17271,6 +17271,21 @@ pcall(function()
 	end)
 end)
 
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Gamepad1 then
+        if not _G.capturingFocus then
+        	if input.KeyCode == Enum.KeyCode.ButtonB then
+        	   _G.capturingFocus = game:GetService("RunService").Stepped:Connect(function()
+        	        cmd:CaptureFocus()
+        	    end)
+        	end
+        else
+            _G.capturingFocus:Disconnect()
+            _G.capturingFocus = nil
+        end
+    end
+end)
+
 cmdlp.Chatted:connect(function(v)
 	if Inputting then
 		if v:lower():sub(1,#prefix) == prefix then
