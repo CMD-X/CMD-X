@@ -2,7 +2,14 @@
 -- Load this in using .changestyle https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/CMD-XNexusHand
 -- To focus on the command bar press the B button on your controller
 
-local RightHanded = true
+if _G.PartMovement then _G.PartMovement:Disconnect() end
+wait(2)
+
+local VRPart = Instance.new("Part", workspace)
+VRPart.Size = Vector3.new(.1, 1.35, 1.89)
+VRPart.CanCollide = false
+VRPart.Anchored = true
+VRPart.Transparency = 1
 
 cmduis.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.Gamepad1 then
@@ -19,29 +26,22 @@ cmduis.InputBegan:Connect(function(input)
     end
 end)
 
-wait(2)
-for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
     if v:IsA("SurfaceGui") then
         v:Destroy()
     end
 end
-local GuiHolder = Instance.new("SurfaceGui", game:GetService("Players").LocalPlayer.PlayerGui)
-function LoadGui()
-    local Hand = game:GetService("Players").LocalPlayer.Character.RightHand
-    if RightHanded then
-        Hand = game:GetService("Players").LocalPlayer.Character.LeftHand
-    end
-    GuiHolder.Adornee = Hand
-    GuiHolder.ClipsDescendants = false
-    GuiHolder.AlwaysOnTop = false
-    GuiHolder.Face = Enum.NormalId.Bottom
-    holder.Parent = GuiHolder
-end
 
-LoadGui()
-game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function()
-    LoadGui()
+_G.PartMovement = game:GetService("RunService").RenderStepped:Connect(function()
+    VRPart.CFrame = workspace.CurrentCamera.CFrame * game:GetService("VRService"):GetUserCFrame(Enum.UserCFrame.LeftHand)
 end)
+
+local GuiHolder = Instance.new("SurfaceGui", game:GetService("CoreGui"))
+GuiHolder.Adornee = VRPart
+GuiHolder.ClipsDescendants = false
+GuiHolder.AlwaysOnTop = true
+GuiHolder.Face = Enum.NormalId.Right
+holder.Parent = GuiHolder
 
 holder.Position = UDim2.new(0, 450, 0, 0)
 holder.Size = UDim2.new(0, 525, 0, 277)
