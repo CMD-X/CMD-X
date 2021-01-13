@@ -11,21 +11,6 @@ VRPart.CanCollide = false
 VRPart.Anchored = true
 VRPart.Transparency = 1
 
-game:GetService("UserInputService").InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Gamepad1 then
-        if not _G.capturingFocus then
-        	if input.KeyCode == Enum.KeyCode.ButtonB then
-        	   _G.capturingFocus = game:GetService("RunService").Stepped:Connect(function()
-        	        cmd:CaptureFocus()
-        	    end)
-        	end
-        else
-            _G.capturingFocus:Disconnect()
-            _G.capturingFocus = nil
-        end
-    end
-end)
-
 for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
     if v:IsA("SurfaceGui") then
         v:Destroy()
