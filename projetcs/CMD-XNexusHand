@@ -11,7 +11,7 @@ VRPart.CanCollide = false
 VRPart.Anchored = true
 VRPart.Transparency = 1
 
-cmduis.InputBegan:Connect(function(input)
+game:GetService("UserInputService").InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.Gamepad1 then
         if not _G.capturingFocus then
         	if input.KeyCode == Enum.KeyCode.ButtonB then
