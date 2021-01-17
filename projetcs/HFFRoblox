@@ -33,6 +33,8 @@ for _,v in pairs(Player.Character:GetDescendants()) do
 	end
 end
 
+wait(1)
+
 local mt = getrawmetatable(game)
 local oind = mt.__index
 local hrp = Player.Character.HumanoidRootPart
