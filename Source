@@ -368,7 +368,7 @@ local Devs = {
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
-	["SellProduct"] = "Dev",
+	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 }
 
