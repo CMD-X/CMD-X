@@ -11,6 +11,7 @@ else
 	getParent = Parents[2]
 end
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
+if KRNL_LOADED and gethui then getParent = gethui() end
 
 for _, v in pairs(Parents[1]:GetDescendants()) do
 	if v.Name == "holder" then 
