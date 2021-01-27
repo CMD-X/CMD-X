@@ -1,4 +1,4 @@
-local paste = "your raw file"
+local paste = "https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/InGameFlingForTB"
 local message = "ur message"
 if not game:IsLoaded() then game.Loaded:wait() end
 
