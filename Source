@@ -819,7 +819,7 @@ if AntiCheat.OneTimeScramble then
 	Unnamed.Name = math.random(1,100000)
 end
 
-local AudioIds = {5918074665,5032588119}
+local AudioIds = {5032588119}
 
 if AntiCheat.IntroAudioOff == false then
 	local Sound2 = Instance.new("Sound", game:GetService("PolicyService"))
