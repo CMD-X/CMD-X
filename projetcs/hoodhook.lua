@@ -9,7 +9,7 @@ mt.__namecall = newcclosure(function(event, ...)
 		local GangPhrases2 = {["are"] = "iz", ["too"] = "2", ["bro"] = "jit", ["whats up"] = "wassup", ["what is up"] = "wazzup", ["what"] = "wat", ["no"] = "naw", ["discord"] = "mic up", ["sure"] = "fr", ["crazy"] = "wildin", ["mommy"] = "momma", ["mummy"] = "mumma", ["wilding"] = "wylin", ["dude"] = "kuh", ["friend"] = "kuh", ["yes"] = "yuh", ["about"] = "bout", ["hey"] = "yo", ["lol"] = "yhu funni", ["talking"] = "talm", ["you"] = "yhu", ["do"] = "dhu", ["who"] = "whu", ["blacc"] = "black", ["alright"] = "aight", ["ok"] = "ightt", ["cop"] = "opp", ["police"] = "12", ["house"] = "crib", ["gun"] = "chrome", ["shit"] = "sh", ["weird"] = "trippin", ["sus"] = "buggin", ["girl"] = "shordy", ["fire"] = "fie", ["like"] = "lye"}
 		message = GangPhrases1[math.random(1, #GangPhrases1)].." "..message
 		for i,v in pairs(GangPhrases2) do
-		    message = message:gsub(i, v)
+		    message = message:gsub(i,v)
 		end
 		message = message:split(" ")
 		for i,v in pairs(message) do
