@@ -11,16 +11,13 @@ mt.__namecall = newcclosure(function(event, ...)
 		for i,v in pairs(GangPhrases2) do
 		    message = message:gsub(i, v)
 		end
-		if message:sub(#message,#message) ~= "!" then
-		    message = message.."!"
-		end
 		message = message:split(" ")
 		for i,v in pairs(message) do
 		    if v:sub(#v,#v) == "g" then
 		        v = v:sub(1,#v-1)
 		    end
 		end
-		message = table.concat(message, " "):gsub("hoodhoightt", "hoodhook"):upper()
+		message = table.concat(message, " "):gsub("hoodhoightt", "hoodhook"):upper().."!"
 		return _G.hoodhook(event, message, args[2])
 	end
 	return _G.hoodhook(event, ...)
