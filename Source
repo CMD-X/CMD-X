@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.9b"
+local ver = "1.9.9c"
 local cordCode = "https://discord.gg/exe"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -332,7 +332,25 @@ end
 
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
-
+local cg = game:GetService("CoreGui")
+for i,v in pairs(cg:GetChildren()) do
+	if v:IsA("Sound") and v.Volume == 2 and v.Name:sub(16, 16) == "4" then
+		v:Destroy()
+		Stand("Looks like Infinite Yield has something to say.","We have no problem with you using both products","", "We have deleted their text-to-speech message for your convenience","We don't know where such a message is coming from. Please don't show any disrespect to ZWolf or Edge, they had nothing to do with it to my knowledge. -fini","Continue", true)
+		while not RunDude do wait() end
+	end
+end
+local mt = getrawmetatable(game:GetService("CoreGui"))
+local namecall = mt.__namecall
+setreadonly(mt, false)
+mt.__namecall = newcclosure(function(self, ...)
+	if checkcaller() and IY_LOADED and getnamecallmethod() == "Play" and string.sub(tostring(self), 16, 16) == "4" and typeof(self) == "Instance" then
+		Stand("Looks like Infinite Yield has something to say.","We have no problem with you using both products","", "We have deleted their text-to-speech message for your convenience","We don't know where such a message is coming from. Please don't show any disrespect to ZWolf or Edge, they had nothing to do with it to my knowledge. -fini","Continue", true)
+		return nil
+	end
+	return namecall(self, ...)
+end)
+setreadonly(mt, true)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
@@ -403,7 +421,6 @@ local Donors = {
 	["cxpoxxo"] = "1",
 	["Everdurings"] = "1",
 	["M3tamophosis"] = "1",
-	["vurghen"] = "1",
 
 	["8dqt"] = "2",
 	["skrask"] = "2",
