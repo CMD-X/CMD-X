@@ -332,7 +332,7 @@ end
 
 local cmdp = game:GetService("Players")
 local cmdlp = cmdp.LocalPlayer
-local cg = game:GetService("CoreGui")
+--[[local cg = game:GetService("CoreGui")
 for i,v in pairs(cg:GetChildren()) do
 	if v:IsA("Sound") and v.Volume == 2 and v.Name:sub(16, 16) == "4" then
 		v:Destroy()
@@ -350,7 +350,7 @@ mt.__namecall = newcclosure(function(self, ...)
 	end
 	return namecall(self, ...)
 end)
-setreadonly(mt, true)
+setreadonly(mt, true)--]]
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
