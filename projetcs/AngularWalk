@@ -1,6 +1,7 @@
 -- // pigeon#8951 // AngularWalk Roblox
 
-local Player = game.Players.LocalPlayer
+local Player = game:GetService("Players").LocalPlayer
+local DoNoclip = true
 local DesiredAngle = {-180 --[[Lower]], -180 --[[Upper]]}
 
 function MError(MessageTXT)
@@ -78,4 +79,4 @@ function Initiate()
     end
 end
 Initiate()
-Noclip()
+if DoNoclip then Noclip() end
