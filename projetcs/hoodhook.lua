@@ -7,7 +7,7 @@ local GangPhrases3 = {"moneyman", "drip", "4k", "blackboy", "ice", "icedrippin",
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
     local NameFound = false
     for x,y in pairs(Names) do
-        if y.Original == v.Name then
+        if y.Original == v.Name:lower() then
             NameFound = true
         end
     end
@@ -22,7 +22,7 @@ end
 game:GetService("Players").PlayerAdded:Connect(function(v)
     local NameFound = false
     for x,y in pairs(Names) do
-        if y.Original == v.Name then
+        if y.Original == v.Name:lower() then
             NameFound = true
         end
     end
