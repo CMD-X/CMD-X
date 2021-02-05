@@ -366,8 +366,8 @@ if isfile then
 	end
 end
 
-Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
-repeat wait() until RunDude == true
+--Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
+--repeat wait() until RunDude == true
 
 -- Variables: ------------------------|
 local player = cmdlp
