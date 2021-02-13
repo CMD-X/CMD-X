@@ -7439,6 +7439,13 @@ end
 function useCommand.explorer()
 	loadstring(game:GetObjects("rbxassetid://418957341")[1].Source)()
 	opx("-", "Loaded dex")
+	local xCG = game:GetService("CoreGui").ChildAdded:Connect(function(Sound)
+        game:GetService("RunService").RenderStepped:Wait()
+        if Sound:IsA("Sound") then Sound.SoundId = 0; Sound.Volume = 0; Sound.PlayOnRemove = false; Sound:Destroy() end
+    end)
+    wait()
+    xCG:Disconnect()
+    pcall(function() if isfile("cx.ogg") then delfile("cx.ogg") end end) -- Hey Moon, can we talk? pigeon#1818 If you do not want us to have a .dex command we are happy to remove it for you! :) Just DM me!
 end
 
 function useCommand.removeeffects()
