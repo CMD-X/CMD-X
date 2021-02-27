@@ -9655,7 +9655,7 @@ function useCommand.joindatepublic()
 			local Created = tbl["created"]:split("T")
 			local Created2 = Created[2]:split(".")
 			opx("-",target.Name.." joined on: "..Created[1].." "..Created2[1])
-			sayremote:FireServer(target.Name.." joined on: "..Created[1].." "..Created2[1], "All")
+			sayremote:FireServer(target.Name.." joined on: pt"..Created[1].." pt"..Created2[1], "All")
 		else
 			opx("*","Player does not exist!")
 		end
