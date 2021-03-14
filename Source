@@ -12,6 +12,13 @@ else
 end
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
+local IsExe = false;
+if identifyexecutor then
+    if identifyexecutor() == "CmdX.exe" then
+        IsExe = true;
+    end
+end
+
 for _, v in pairs(Parents[1]:GetDescendants()) do
 	if v.Name == "holder" then 
 		v.Parent:Destroy() 
@@ -4142,6 +4149,11 @@ end)
 -- Commands: --------------------------|
 if cmdrs:FindFirstChild("DefaultChatSystemChatEvents") and cmdrs.DefaultChatSystemChatEvents:FindFirstChild("SayMessageRequest") then sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest end
 function opx(f,text)
+
+    if IsExe then
+        SendResponse(text)
+    end
+
 	if not ChatBind then
 		output9.Text = output8.Text
 		output8.Text = output7.Text
@@ -4232,7 +4244,10 @@ end
 fixedArgs = false
 Debugging = false
 local History = {}
-local useCommand = {}
+
+getgenv().useCommand = {}
+getgenv().arguments = {}
+
 function executeCommand(com)
 	wait(.1)
 	if com:lower():sub(1,#prefix) == prefix then
@@ -17447,3 +17462,25 @@ end)
 output.Visible = true
 holder.Visible = true
 holder.Active = true
+
+
+
+if IsExe then
+    for i,v in pairs(CMDS.aliases) do
+    	useCommand[i] = function(...)
+    		return useCommand[v](...)
+    	end
+    end
+
+    for i,v in pairs(CMDS.commands) do
+        local CommandName = i;
+        local CommandDisc = v;
+        SendCommand(CommandName, CommandDisc)
+    end
+
+    for i,v in pairs(CMDS.aliases) do
+        local CommandName = i;
+        SendCommand(CommandName, "Aliases for " .. v)
+    end
+end
+
