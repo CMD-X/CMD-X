@@ -12,12 +12,7 @@ else
 end
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
-local IsExe = false;
-if identifyexecutor then
-    if identifyexecutor() == "CmdX.exe" then
-        IsExe = true;
-    end
-end
+local IsExe = identifyexecutor and identifyexecutor() == "CmdX.exe"
 
 for _, v in pairs(Parents[1]:GetDescendants()) do
 	if v.Name == "holder" then 
@@ -17467,9 +17462,7 @@ holder.Active = true
 
 if IsExe then
     for i,v in pairs(CMDS.aliases) do
-    	useCommand[i] = function(...)
-    		return useCommand[v](...)
-    	end
+	useCommand[i] = useCommand[v];
     end
 
     for i,v in pairs(CMDS.commands) do
