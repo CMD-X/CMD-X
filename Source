@@ -17454,14 +17454,10 @@ cmdp.PlayerAdded:Connect(function(v)
 		colorName(v.Name)
 	end
 end)
-
-opx("-","Live At: twitch.tv/robloxcamera")
 -- End --------------------------------|
 output.Visible = true
 holder.Visible = true
 holder.Active = true
-
-
 
 if IsExe then
     for i,v in pairs(CMDS.aliases) do
@@ -17479,4 +17475,3 @@ if IsExe then
         SendCommand(CommandName, "Aliases for " .. v)
     end
 end
-
