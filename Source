@@ -13191,7 +13191,7 @@ do
 		local randomWords = {}
 
 		for iterator = 1, 9 do
-            table.insert(randomWords, dictionaryTables[iterator][math.random(1, #dictionaryTables[iterator])])
+			table.insert(randomWords, dictionaryTables[iterator][math.random(1, #dictionaryTables[iterator])])
 		end
 
 		local chatMessage = table.concat(randomWords, " ")
