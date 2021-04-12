@@ -13199,8 +13199,6 @@ do
 
         local chatMessage = table.concat(randomWords, " ")
 
-        print(chatMessage)
-
 		opx("-", chatMessage)
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chatMessage, "All")
     end
