@@ -13181,27 +13181,24 @@ end
 
 local useCommand = {}
 do
-    local dictionaryTables = {}
+	local dictionaryTables = {}
 
-    for iterator = 1, 9 do
-        table.insert(dictionaryTables, game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub("[\"{}]", ""):split(","))
-    end
+	for iterator = 1, 9 do
+    	table.insert(dictionaryTables, game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub("[\"{}]", ""):split(","))
+	end
 
-    function useCommand.randomchat()
-        local randomWords = {}
+	function useCommand.randomchat()
+		local randomWords = {}
 
-        for iterator = 1, 9 do
-            table.insert(
-                randomWords, dictionaryTables[iterator]
-                [math.random(1, #dictionaryTables[iterator])]
-            )
-        end
+		for iterator = 1, 9 do
+            table.insert(randomWords, dictionaryTables[iterator][math.random(1, #dictionaryTables[iterator])])
+		end
 
-        local chatMessage = table.concat(randomWords, " ")
+		local chatMessage = table.concat(randomWords, " ")
 
 		opx("-", chatMessage)
 		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chatMessage, "All")
-    end
+	end
 end
 
 function useCommand.enablereset()
