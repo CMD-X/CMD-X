@@ -13184,7 +13184,7 @@ do
 	local dictionaryTables = {}
 
 	for iterator = 1, 9 do
-    	table.insert(dictionaryTables, game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub("[\"{}]", ""):split(","))
+		table.insert(dictionaryTables, game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub("[\"{}]", ""):split(","))
 	end
 
 	function useCommand.randomchat()
