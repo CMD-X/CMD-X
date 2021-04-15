@@ -17390,7 +17390,8 @@ if not _G.RGBDev then
 	_G.RGBDev = {Lettering = {}, Connections = {}}
 end
 
-function RGBDev(name)
+function RGBDev(Player)
+	name = Player.Name
 	if _G.RGBDev.Connections[name] then return end
 	local plm = game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster")
 	if not plm or not plm:FindFirstChild("OffsetUndoFrame", true) then
@@ -17400,7 +17401,7 @@ function RGBDev(name)
 	end
 	_G.RGBDev.Connections[name] = game:GetService("RunService").RenderStepped:Connect(function()
 		for _,v in pairs(plm:GetDescendants()) do
-			if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == name then
+			if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Parent.Parent.Parent.Parent.Parent.Parent.Name == "p_"..Player.UserId then
 				if not _G.RGBDev.Lettering[v] then
 					_G.RGBDev.Lettering[v] = Instance.new("UIGradient", v)
 					v.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -17416,14 +17417,15 @@ function RGBDev(name)
 	end)
 end
 
-function colorName(name)
+function colorName(Player)
+	name = Player.Name
 	local plm = game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster")
 	if not plm then
 		return
 	end
 	plm = plm:FindFirstChild("OffsetUndoFrame", true)
 	for i,v in pairs(plm:GetDescendants()) do
-		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Text == name then
+		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Parent.Parent.Parent.Parent.Parent.Parent.Name == "p_"..Player.UserId then
 			if Donors[name] then
 				if Tier[Donors[name]].Color == "RGBDev" then
 					RGBDev(name)
@@ -17438,20 +17440,20 @@ end
 for _,v in pairs(cmdp:GetPlayers()) do
 	if Devs[v.Name] then
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
-		RGBDev(v.Name)
+		RGBDev(v)
 	elseif Donors[v.Name] then
 		opx("-",v.Name.." is in your server ("..Tier[Donors[v.Name]].Tag..")")
-		colorName(v.Name)
+		colorName(v)
 	end
 end
 
 cmdp.PlayerAdded:Connect(function(v)
 	if Devs[v.Name] then
 		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
-		RGBDev(v.Name)
+		RGBDev(v)
 	elseif Donors[v.Name] then
 		opx("-",v.Name.." is in your server ("..Tier[Donors[v.Name]].Tag..")")
-		colorName(v.Name)
+		colorName(v)
 	end
 end)
 -- End --------------------------------|
