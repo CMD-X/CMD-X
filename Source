@@ -6469,7 +6469,7 @@ function useCommand.cleanfling()
 			Anim = cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId;
 			Grip = tool.GripPos;
 		}
-		tool.GripPos = Vector3.new(100000000000000,100000000000000,100000000000000)
+		tool.GripPos = Vector3.new(5000, 5000, 5000)
 		cmdlp.Character.HumanoidRootPart.CustomPhysicalProperties = PhysicalProperties.new(math.huge,math.huge,math.huge,math.huge,math.huge)
 		tool.Parent = cmdlp.Character
 		pcall(function() cmdlp.Character.Animate.toolnone.ToolNoneAnim.AnimationId = "nil" end)
