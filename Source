@@ -8025,7 +8025,7 @@ function useCommand.filtering()
 end
 
 function useCommand.weed()
-	opx("-","Today is not 4/20")
+	opx("-","go outside and smoke some weed its 4/20")
 end
 
 function useCommand.gameid()
