@@ -697,13 +697,13 @@ function commandsLoaded()
 	return isDoneLoading()
 end
 
-for _,x in pairs(Adm) do
+--[[for _,x in pairs(Adm) do
 	for _,v in pairs(cmdp:GetPlayers()) do 
 		if x == v.Name then
 			table.insert(AdmIG,x)
 		end
 	end
-end
+end]]
 
 Inputting = false
 ChatBar = nil
@@ -2098,16 +2098,17 @@ CMDS.commands = {
 	["removelimbs"] = "Removes your characters limbs.",
 	["removeanim"] = "Removes your characters animations.",
 	["restoreanim"] = "Restores your characters animations.",
-	["removeshirt"] = "Removes your characters shirt.",
-	["removetshirt"] = "Removes your characters tshirt",
-	["removepants"] = "Removes your characters pants.",
-	["removeclothes"] = "Removes your character clothes.",
+	["resizehead"] = "Resizes your characters head.",
+	--["removeshirt"] = "Removes your characters shirt.",
+	--["removetshirt"] = "Removes your characters tshirt",
+	--["removepants"] = "Removes your characters pants.",
+	--["removeclothes"] = "Removes your character clothes.",
 	["removehatsmesh"] = "Removes your characters hat meshes.",
 	["removegearmesh"] = "Removes your current characters gear mesh.",
-	["drophats"] = "Drops your characters hats on the map.",
+	--["drophats"] = "Drops your characters hats on the map.",
 	["dropgears"] = "Drops your characters gears on the map.",
-	["hatspam"] = "Spams your hats onto the map.",
-	["unhatspam"] = "()",
+	--["hatspam"] = "Spams your hats onto the map.",
+	--["unhatspam"] = "()",
 	["removeface"] = "Removes your characters face.",
 	["removehats"] = "Removes your characters hats.",
 	["rheadmesh"] = "Removes the mesh of your characters head.",
@@ -2554,7 +2555,7 @@ CMDS.commands = {
 	["clickdetectormaxdistance"] = "Sets clickdetector distance to the max.",
 	["unclickdetectormaxdistance"] = "()",
 	["gotobpclass"] = "Bypass teleports to class.",
-	["hatgiverspam"] = "Spams hat givers and drops hats if there are any.",
+	--["hatgiverspam"] = "Spams hat givers and drops hats if there are any.",
 	["fakelag"] = "Simulates fake network lag.",
 	["unfakelag"] = "()",
 	["hitboxes"] = "Shows you all hitboxes.",
@@ -3009,11 +3010,11 @@ CMDS.aliases = {
 	["rlimbs"] = "removelimbs",
 	["ranim"] = "removeanim",
 	["reanim"] = "restoreanim",
-	["rshirt"] = "removeshirt",
-	["rtshirt"] = "removetshirt",
-	["rpants"] = "removepants",
-	["naked"] = "removeclothes",
-	["rclothes"] = "removeclothes",
+	--["rshirt"] = "removeshirt",
+	--["rtshirt"] = "removetshirt",
+	--["rpants"] = "removepants",
+	--["naked"] = "removeclothes",
+	--["rclothes"] = "removeclothes",
 	["rhatsmesh"] = "removehatsmesh",
 	["rhm"] = "removehatsmesh",
 	["rgearmesh"] = "removegearmesh",
@@ -5476,7 +5477,7 @@ function useCommand.restoreanim()
 	cmdlp.Character.Animate.Disabled = false
 end
 
-function useCommand.removeshirt()
+--[[function useCommand.removeshirt()
 	opx("-","You have removed your shirt")
 	cmdlp.Character.Shirt:Destroy()
 end
@@ -5498,6 +5499,32 @@ function useCommand.removeclothes()
 			v:Destroy()
 		end
 	end
+end]]
+
+function useCommand.resizehead()
+    if not cmd15(cmdlp) then
+        opx("*","R15 is required!")
+        return
+    end
+    opx("*","Please make sure you are wearing an RThro head!")
+    opx("-","Now resizing head")
+    local HumValues = {}
+    for _,v in pairs(cmdlp.Character.Humanoid:GetChildren()) do
+        if v:IsA("NumberValue") then
+            table.insert(HumValues, v)
+        end
+    end
+    for i = 1,10 do
+        cmdlp.Character.Head.Mesh:WaitForChild("OriginalSize")
+        for i,v in pairs(cmdlp.Character:GetDescendants()) do
+            if v:IsA("Vector3Value") and v.Name == "OriginalSize" then
+                v:Destroy()    
+            end
+        end
+        HumValues[i]:Destroy()
+        wait(.5)
+    end
+    cmdlp.Character.Head.CanCollide = false
 end
 
 function useCommand.removehatsmesh()
@@ -5584,14 +5611,14 @@ function useCommand.bring()
 	end
 end
 
-function useCommand.drophats()
+--[[function useCommand.drophats()
 	opx("-","Dropped your hats")
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
 		if v:IsA("Hat") or v:IsA("Accessory") then
 			v.Parent = workspace
 		end
 	end
-end
+end]]
 
 function useCommand.dropgears()
 	opx("-","Dropped your gears")
@@ -5602,7 +5629,7 @@ function useCommand.dropgears()
 	end
 end
 
-local hatSpam = false
+--[[local hatSpam = false
 function useCommand.hatspam()
 	opx("-","Now spamming hats")
 	hatSpam = true
@@ -5631,7 +5658,7 @@ end
 function useCommand.unhatspam()
 	opx("-","Stopped spamming hats")
 	hatSpam = false
-end
+end]]
 
 function useCommand.removeface()
 	opx("-","Removed face")
@@ -5720,7 +5747,7 @@ function useCommand.banlands()
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
-banlands()end
+end
 
 function useCommand.kill()
 	if arguments[2] then
@@ -15596,7 +15623,7 @@ function useCommand.gotobpclass()
 	end
 end
 
-HATGIVE = false
+--[[HATGIVE = false
 function useCommand.hatgiverspam()
 	opx("-","Now spamming hat givers")
 	local HATS = {}
@@ -15636,7 +15663,7 @@ end
 function useCommand.unhatgiverspam()
 	HATGIVE = false
 	opx("-","No longer spamming hat givers")
-end
+end]]
 
 function useCommand.playingaudios()
 	opx("-","Showing playing audios")
