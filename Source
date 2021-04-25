@@ -14645,20 +14645,18 @@ function useCommand.animspeed()
 	end
 end
 
+NoPrompt = nil
 function useCommand.noprompt()
-	local PromptHandler = game:GetService("CoreGui").PurchasePromptApp.PurchasePromptUI
-	NoPrompt = true
 	opx("-","No prompt enabled")
-	PromptHandler.ChildAdded:Connect(function(AnnoyingRobuxGrabPromptHere) 
-		if NoPrompt == true then
-			AnnoyingRobuxGrabPromptHere:Destroy()
-		end 
+	NoPrompt = game:GetService("CoreGui").PurchasePromptApp.ProductPurchase.ChildAdded:Connect(function(v) 
+		v:Destroy() 
 	end)
 end
 
 function useCommand.yesprompt()
 	opx("-","No prompt disabled")
-	NoPrompt = false
+	NoPrompt:Disconnect()
+	NoPrompt = nil
 end
 
 function useCommand.rappu()
