@@ -2352,8 +2352,6 @@ CMDS.commands = {
 	["curvetools"] = "Curves your tools.",
 	["spiraltools"] = "Spirals your tools.",
 	["toggleconfly"] = "Toggles if your fly starts again after a reset.",
-	["audioglitch"] = "Glitches players audios.",
-	["unaudioglitch"] = "()",
 	["lagchat"] = "Lags chat using _'s.",
 	["trollchat"] = "Picks a random trolly/ annoying chat.",
 	["unbodypositionwalkspeed"] = "()bpws",
@@ -2833,7 +2831,6 @@ CMDS.usage = {
 	["changestyle"] = "(style)",
 	["chat"] = "(str)",
 	["toggleconfly"] = "(on / off)",
-	["audioglitch"] = "(plr / all / others) (num)",
 	["orbit"] = "(plr)",
 	["closeorbit"] = "(plr)",
 	["suggestions"] = "(on / off)",
@@ -3204,8 +3201,6 @@ CMDS.aliases = {
 	["cs"] = "changestyle",
 	["ch"] = "chat",
 	["tcfly"] = "toggleconfly",
-	["aglitch"] = "audioglitch",
-	["unaglitch"] = "unaudioglitch",
 	["tc"] = "trollchat",
 	["unbpws"] = "unbodypositionwalkspeed",
 	["rgears"] = "removegears",
@@ -5668,8 +5663,8 @@ end
 function useCommand.removehats()
 	opx("-","Removed hats")
 	for i,v in pairs(cmdlp.Character:GetChildren()) do
-		if v:IsA("Accessory") then
-			v:Destroy()
+		if v:IsA("Hat") or v:IsA("Accessory") then
+			v.Handle:Destroy()
 		end
 	end
 end
@@ -8006,28 +8001,38 @@ function useCommand.disabledrops()
 	cmdlp.Character:FindFirstChildOfClass("Tool").CanBeDropped = false
 end
 
-local toolsget = false
+function firetouchinterestX(v, x)
+	if firetouchinterest then
+		firetouchinterest(cmdlp.Character.HumanoidRootPart, v, 0)
+		firetouchinterest(cmdlp.Character.HumanoidRootPart, v, 1)
+	else
+		local LoggedFrame = v.CFrame
+		v.CanCollide = false
+		v.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+		wait()
+		v.CFrame = LoggedFrame
+	end
+end
+
+local toolsget = nil
 function useCommand.grabtools()
 	opx("-","Now getting tools")
-	toolsget = true
 	for i,v in pairs(workspace:GetChildren()) do
-		if v:IsA("Tool") then
-			v.Handle.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
+		if v:IsA("Tool") and v:FindFirstChild("Handle") then
+			firetouchinterestX(v.Handle)
 		end
 	end
-	workspace.ChildAdded:Connect(function(pt)
-		if toolsget == true then
-			if pt:IsA("Tool") then
-				wait(.25)
-				pt.Handle.CFrame = cmdlp.Character.HumanoidRootPart.CFrame
-			end
+	toolsget = workspace.ChildAdded:Connect(function(v)
+		if v:IsA("Tool") then
+			firetouchinterestX(v:WaitForChild("Handle"))
 		end
 	end)
 end
 
 function useCommand.ungrabtools()
 	opx("-","No longer getting tools")
-	toolsget = false
+	toolsget:Disconnect()
+	toolsget = nil
 end
 
 function useCommand.earrape()
@@ -8040,7 +8045,7 @@ function useCommand.earrape()
 end
 
 function useCommand.respectfiltering()
-	if game:GetService("SoundService").RespectFilteringEnabled == false then
+	if not game:GetService("SoundService").RespectFilteringEnabled then
 		opx("-","Respect Filtering is disabled")
 	else
 		opx("*","Respect Filtering is enabled")
@@ -11228,7 +11233,7 @@ function useCommand.dupegears()
 		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,10000000,0)
 		wait(.2)
 		for i = 1,arguments[2] do
-			if stopDupeMid == true then break end
+			if stopDupeMid then break end
 			cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0,10000000,0)
 			for i,a in pairs(cmdlp.Backpack:GetDescendants()) do
 				if a:IsA("Tool") then
@@ -11242,11 +11247,10 @@ function useCommand.dupegears()
 			cmdlp.CharacterAdded:wait()
 			cmdlp.Character:WaitForChild("HumanoidRootPart").CFrame = savepos
 			wait(.1)
-			if stopDupeMid == true then break end
+			if stopDupeMid then break end
 		end
 		for _,v in pairs(DroppedTools) do
-			firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 0)
-			firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 1)
+			firetouchinterestX(v.Handle)
 		end
 		cmdlp.Character.HumanoidRootPart.CFrame = savepos
 	else
@@ -11362,226 +11366,286 @@ function useCommand.unsupermute()
 	mutealls = false
 end
 
-FPed = {}
-fpall = false
-function useCommand.forceplay()
-	if arguments[2] then
-		if arguments[2] == "others" then
-			opx("-","ForcePlay others enabled")
-			fpall = false
-			wait(.2)
-			fpall = true
-			for i,v in pairs(cmdp:GetPlayers()) do
-				if v ~= cmdlp then
-					table.insert(FPed,v.Name)
-				end
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(FPed) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = true
-							end
-						end
+local forceplayConns = {}
+local allForcePlayConn = nil
+local forcePlayLoop = nil
+
+function ForcePlayFind(v, tablex, once)
+	if once then
+		local onceAudios = {}
+		for x,y in pairs(v.Character:GetChildren()) do
+			if y:IsA("Tool") then
+				for c,m in pairs(y:GetDescendants()) do
+					if m:IsA("Sound") then
+						m.Playing = true
 					end
 				end
-			until FPed == false
-		elseif arguments[2] == "everyone" or arguments[2] == "all" then
-			opx("-","Forceplay all enabled")
-			fpall = false
-			wait(.2)
-			fpall = true
-			for i,v in pairs(cmdp:GetPlayers()) do
-				table.insert(FPed,v.Name)
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(FPed) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = true
-							end
-						end
-					end
-				end
-			until fpall == false
-		else
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Forceplay "..target.Name.." enabled")
-				fpall = false
-				wait(.2)
-				fpall = true
-				table.insert(FPed,target.Name)
-				repeat wait()
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") then
-							for _,x in pairs(FPed) do
-								if v.Parent.Parent.Parent.Name == x then
-									v.Playing = true
-								end
-							end
-						end
-					end
-				until fpall == false
-			else
-				opx("*","Player does not exist!")
 			end
 		end
-	else
-		opx("*","2 arguments are needed for this command!")
+		for x,y in pairs(v.Backpack:GetDescendants()) do
+			if y:IsA("Sound") then
+				y.Playing = true
+			end
+		end
+		return
+	end
+	pcall(function()
+		for x,y in pairs(v.Character:GetChildren()) do
+			if y:IsA("Tool") then
+				for c,m in pairs(y:GetDescendants()) do
+					if m:IsA("Sound") then
+						m.Playing = true
+					end
+				end
+			end
+		end
+		for x,y in pairs(v.Backpack:GetDescendants()) do
+			if y:IsA("Sound") then
+				y.Playing = true
+			end
+		end
+	end)
+end
+
+function ForcePlayLoop()
+   	forcePlayLoop = game:GetService("RunService").RenderStepped:Connect(function()
+        for i,v in pairs(forceplayConns) do
+            ForcePlayFind(v[1], v)
+        end
+    end)
+end
+
+function useCommand.forceplay()
+	if allForcePlayConn then
+		forceplayConns = {}
+		allForcePlayConn:Disconnect()
+		allForcePlayConn = nil
+		forcePlayLoop:Disconnect()
+		forcePlayLoop = nil
+		opx("-","Force play all is no longer enabled")
+		return
+	end
+	if not arguments[2] or arguments[2] == "all" then
+		opx("-","Force play all is now enabled")
+		forceplayConns = {}
+		for i,v in pairs(cmdp:GetPlayers()) do
+			table.insert(forceplayConns, {v, x = {}})
+		end
+		allForcePlayConn = cmdp.PlayerAdded:Connect(function(v)
+			table.insert(forceplayConns, {v, x = {}})
+		end)
+		if not forcePlayLoop then
+			ForcePlayLoop()
+		end
+	elseif arguments[2] and arguments[2] ~= "all" then
+		local target = findplr(arguments[2])
+		if not target then
+			opx("*","Player does not exist!")
+			return
+		end
+		local targetWasIn = false
+		for i,v in pairs(forceplayConns) do
+			if target == v[1] then
+				targetWasIn = true
+				table.remove(forceplayConns, i)
+			end
+		end
+		if targetWasIn then
+			if #forceplayConns == 0 then
+				forcePlayLoop:Disconnect()
+				forcePlayLoop = nil
+			end
+			opx("-","Force play "..target.Name.." is no longer enabled")
+			return
+		end
+		opx("-","Force play "..target.Name.." is now enabled")
+		table.insert(forceplayConns, {target, x = {}})
+		if not forcePlayLoop then
+			ForcePlayLoop()
+		end
 	end
 end
 
 function useCommand.unforceplay()
-	if arguments[2] then
-		if arguments[2] == "others" then
-			opx("-","Forceplay others disabled")
-			fpall = false
-			wait(.2)
-			fpall = true
-			for i,v in pairs(FPed) do
-				if v ~= cmdlp.Name then
-					table.remove(FPed,i)
-				end
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(FPed) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = true
-							end
-						end
-					end
-				end
-			until fpall == false
-		elseif arguments[2] == "everyone" or arguments[2] == "all" then
-			opx("-","Forceplay all disabled")
-			fpall = false
-			wait(.2)
-			fpall = true
-			for i,v in pairs(FPed) do
-				table.remove(FPed,i)
-			end
-			repeat wait()
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						for _,x in pairs(FPed) do
-							if v.Parent.Parent.Parent.Name == x then
-								v.Playing = true
-							end
-						end
-					end
-				end
-			until fpall == false
-		else
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Forceplay "..target.Name.." disabled")
-				fpall = false
-				wait(.2)
-				fpall = true
-				for i,v in pairs(FPed) do
-					if v == target.Name then
-						table.remove(FPed,i)
-					end
-				end
-				repeat wait()
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") then
-							for _,x in pairs(FPed) do
-								if v.Parent.Parent.Parent.Name == x then
-									v.Playing = true
-								end
-							end
-						end
-					end
-				until fpall == false
-			else
-				opx("*","Player does not exist!")
+	if not arguments[2] or arguments[2] == "all" then
+		forceplayConns = {}
+		pcall(function() allForcePlayConn:Disconnect()
+		allForcePlayConn = nil  end)
+		pcall(function() forcePlayLoop:Disconnect()
+		forcePlayLoop = nil end)
+		opx("-","Force play all is no longer enabled")
+	elseif arguments[2] and arguments[2] ~= "all" then
+		local target = findplr(arguments[2])
+		if not target then
+			opx("*","Player does not exist!")
+			return
+		end
+		local targetWasIn = false
+		for i,v in pairs(forceplayConns) do
+			if target == v[1] then
+				targetWasIn = true
+				table.remove(forceplayConns, i)
 			end
 		end
-	else
-		opx("*","2 arguments are needed for this command!")
+		if targetWasIn then
+			if #forceplayConns == 0 then
+				forcePlayLoop:Disconnect()
+				forcePlayLoop = nil
+			end
+			opx("-","Force play "..target.Name.." is no longer enabled")
+			return
+		else
+			opx("*","Force play "..target.Name.." was not enabled")
+		end
 	end
 end
 
-_G.connections.muted = {}
+local allMuteConn = nil
+local muteConns = {}
+local muteLoop = nil
+
+function MuteFind(v, tablex, once)
+	if once then
+		local onceAudios = {}
+		for x,y in pairs(v.Character:GetChildren()) do
+			if y:IsA("Tool") then
+				for c,m in pairs(y:GetDescendants()) do
+					if m:IsA("Sound") then
+						m.Playing = false
+					end
+				end
+			end
+		end
+		for x,y in pairs(v.Backpack:GetDescendants()) do
+			if y:IsA("Sound") then
+				y.Playing = false
+			end
+		end
+		return
+	end
+	pcall(function()
+		for x,y in pairs(v.Character:GetChildren()) do
+			if y:IsA("Tool") then
+				for c,m in pairs(y:GetDescendants()) do
+					if m:IsA("Sound") then
+						m.Playing = false
+					end
+				end
+			end
+		end
+		for x,y in pairs(v.Backpack:GetDescendants()) do
+			if y:IsA("Sound") then
+				y.Playing = false
+			end
+		end
+	end)
+end
+
 function MuteLoop()
-    _G.connections.plrsMuted = game:GetService("RunService").RenderStepped:Connect(function()
-        pcall(function()
-            for _,v in pairs(_G.connections.muted) do
-                pcall(function()
-                    for _,i in pairs(v.Character:GetChildren()) do
-                        if i:IsA("Tool") and i:FindFirstChild("Handle") then
-                            if i.Handle:FindFirstChildOfClass("Sound") then
-                                i.Handle.Sound.Playing = false
-                            end
-                        end
-                    end
-                    for _,i in pairs(v.Backpack:GetChildren()) do
-                        if i:IsA("Tool") and i:FindFirstChild("Handle") then
-                            if i.Handle:FindFirstChildOfClass("Sound") then
-                                i.Handle.Sound.Playing = false
-                            end
-                        end
-                    end
-                end)
-            end
-        end)
+   	muteLoop = game:GetService("RunService").RenderStepped:Connect(function()
+        for i,v in pairs(muteConns) do
+            MuteFind(v[1], v)
+        end
     end)
 end
-MuteLoop()
 
 function useCommand.mute()
-    if not arguments[2] then
-        opx("*","2 arguments are required!")
-        return
-    end
-    if arguments[2] == "all" then
-        opx("-","Muted all")
-        for _,v in pairs(cmdp:GetPlayers()) do
-            if v ~= cmdlp then table.insert(_G.connections.muted, v) end
-        end
-        _G.connections.allMuted = cmdp.PlayerAdded:Connect(function(v)
-            table.insert(_G.connections.muted, v)
-        end)
-    else
-        target = findplr(arguments[2])
-        if not target then
-            opx("*","Player does not exist!")
-            return
-        end
-        opx("-","Muted "..target.Name)
-        table.insert(_G.connections.muted, target)
-    end
+	if allMuteConn then
+		muteConns = {}
+		allMuteConn:Disconnect()
+		allMuteConn = nil
+		muteLoop:Disconnect()
+		muteLoop = nil
+		opx("-","Mute all is no longer enabled")
+		return
+	end
+    if not arguments[2] or arguments[2] == "all" then
+		opx("-","Mute all is now enabled")
+		muteConns = {}
+		for i,v in pairs(cmdp:GetPlayers()) do
+			table.insert(muteConns, {v, x = {}})
+		end
+		allMuteConn = cmdp.PlayerAdded:Connect(function(v)
+			table.insert(muteConns, {v, x = {}})
+		end)
+		if not muteLoop then
+			MuteLoop()
+		end
+	elseif arguments[2] and arguments[2] ~= "all" then
+		local target = findplr(arguments[2])
+		if not target then
+			opx("*","Player does not exist!")
+			return
+		end
+		local targetWasIn = false
+		for i,v in pairs(muteConns) do
+			if target == v[1] then
+				targetWasIn = true
+				table.remove(muteConns, i)
+			end
+		end
+		if targetWasIn then
+			if #muteConns == 0 then
+				muteLoop:Disconnect()
+				muteLoop = nil
+			end
+			opx("-","Mute "..target.Name.." is no longer enabled")
+			return
+		end
+		opx("-","Mute "..target.Name.." is now enabled")
+		table.insert(muteConns, {target, x = {}})
+		if not muteLoop then
+			MuteLoop()
+		end
+	end
 end
 
-function useCommand.unmute()
-    if not arguments[2] then
-        opx("*","2 arguments are required!")
-        return
-    end
-    if arguments[2] == "all" then
-        opx("-","Unmuted all")
-        for i,_ in pairs(_G.connections.muted) do
-            table.remove(_G.connections.muted, i)
-        end
-        _G.connections.allMuted:Disconnect()
-    else
-        target = findplr(arguments[2])
-        if not target then
-            opx("*","Player does not exist!")
-            return
-        end
-        opx("-","Unmuted "..target.Name)
-        for i,v in pairs(_G.connections.muted) do
-            if v == target then table.remove(_G.connections.muted, i) end
-        end
-    end
+function useCommand.unforceplay()
+	if not arguments[2] or arguments[2] == "all" then
+		muteConns = {}
+		pcall(function() allMuteConn:Disconnect()
+		allMuteConn = nil  end)
+		pcall(function() muteLoop:Disconnect()
+		muteLoop = nil end)
+		opx("-","Mute all is no longer enabled")
+	elseif arguments[2] and arguments[2] ~= "all" then
+		local target = findplr(arguments[2])
+		if not target then
+			opx("*","Player does not exist!")
+			return
+		end
+		local targetWasIn = false
+		for i,v in pairs(muteConns) do
+			if target == v[1] then
+				targetWasIn = true
+				table.remove(muteConns, i)
+			end
+		end
+		if targetWasIn then
+			if #muteConns == 0 then
+				muteLoop:Disconnect()
+				muteLoop = nil
+			end
+			opx("-","Mute "..target.Name.." is no longer enabled")
+			return
+		else
+			opx("*","Mute "..target.Name.." was not enabled")
+		end
+	end
 end
+
+cmdp.PlayerRemoving:Connect(function(targ)
+	for i,v in pairs(muteConns) do
+		if v[1] == targ then
+			table.remove(muteConns, i)
+		end
+	end
+	for i,v in pairs(forceplayConns) do
+		if v[1] == targ then
+			table.remove(forceplayConns, i)
+		end
+	end
+end)
 
 function FixArgsInDef(x,y)
 	local x = findplr(x)
@@ -12388,55 +12452,6 @@ function useCommand.toggleconfly()
 	else
 		opx("*","2 arguments are required for this command")
 	end
-end
-
-local amuteall = false
-function useCommand.audioglitch()
-	if arguments[3] then
-		if arguments[2] == "others" then
-			opx("-","Audio glitch others enabled")
-			amuteall = true
-			repeat wait(1)
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") and v.Parent.Parent.Parent.Name ~= cmdlp.Name then
-						v.TimePosition = arguments[3]
-					end
-				end
-			until amuteall == false
-		elseif arguments[2] == "everyone" or arguments[2] == "all" then
-			opx("-","Audio glitch all enabled")
-			amuteall = true
-			repeat wait(1)
-				for i,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Sound") then
-						v.TimePosition = arguments[3]
-					end
-				end
-			until amuteall == false
-		else
-			target = findplr(arguments[2])
-			if target then
-				opx("-","Audio glitch "..target.Name.." enabled")
-				amuteall = true
-				repeat wait(1)
-					for i,v in pairs(workspace:GetDescendants()) do
-						if v:IsA("Sound") and v.Parent.Parent.Parent.Name == target.Name then
-							v.TimePosition = arguments[3]
-						end
-					end
-				until amuteall == false
-			else
-				opx("*","Player does not exist!")
-			end
-		end
-	else
-		opx("*","3 arguments are needed for this command!")
-	end
-end
-
-function useCommand.unaudioglitch()
-	opx("-","Audio glitch all disabled")
-	amuteall = false
 end
 
 local chatlag = false
