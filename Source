@@ -14,6 +14,8 @@ if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
 local IsExe = identifyexecutor and identifyexecutor() == "CmdX.exe"
 
+local firetouchinterest = firetouchinterest or fake_touch or nil
+
 for _, v in pairs(Parents[1]:GetDescendants()) do
 	if v.Name == "holder" then 
 		v.Parent:Destroy() 
@@ -5563,47 +5565,37 @@ function useCommand.hatgear()
 end
 
 function useCommand.bring()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			opx("-","Brung "..target.Name)
-			NormPos = cmdlp.Character.HumanoidRootPart.CFrame
-			local char = cmdlp.Character
-			local tchar = target.Character
-			local hum = cmdlp.Character.Humanoid
-			local hrp = cmdlp.Character.HumanoidRootPart
-			local hrp2 = target.Character.HumanoidRootPart
-			local camera = workspace.CurrentCamera
-			hum.Name = "1"
-			local newHum = hum:Clone()
-			newHum.Parent = char
-			newHum.Name = "Humanoid"
-			wait(0.1)
-			hum:Destroy()
-			camera.CameraSubject = char
-			newHum.DisplayDistanceType = "None"
-			wait(0.1)
-			v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
-			v.Parent = char
-			hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) * CFrame.new(math.random(-100, 100)/200,math.random(-100, 100)/200,math.random(-100, 100)/200)
-			local n = 0
-			repeat
-				game.RunService.RenderStepped:Wait()
-				n = n + 1
-				hrp.CFrame = hrp2.CFrame
-				wait(.1)
-				hrp.CFrame = NormPos
-			until (not hrp or not hrp2 or not hrp.Parent or not hrp2.Parent or n > 250) and n > 2
-			hrp.CFrame = NormPos
-			camera.CameraType = Enum.CameraType.Custom
-			wait(4)
-			cmdlp.Character.HumanoidRootPart.CFrame = NormPos
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
+    if not firetouchinterest then
+        opx("*","Your exploit requires firetouchinterest!")
+        return
+    end
+    local target = findplr(arguments[2] or cmdlp.Name)
+	if not target then
+		opx("*","Player does not exist!")
+		return
 	end
+	cmdlp.Character.Humanoid.Name = 1
+	local l = cmdlp.Character["1"]:Clone()
+	l.Parent = cmdlp.Character
+	l.Name = "Humanoid"
+	wait(.2)
+	cmdlp.Character["1"]:Destroy()
+	workspace.CurrentCamera.CameraSubject = cmdlp.Character
+	cmdlp.Character.Humanoid.DisplayDistanceType = "None"
+	cmdlp.Character.Humanoid:UnequipTools()
+	local v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
+	if not v then
+		opx("*","Tool not found!")
+		return
+	end
+	v.Parent = cmdlp.Character
+	v.Parent = cmdlp.Character.HumanoidRootPart
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 0)
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 1)
+	pcall(function() cmdlp.Character.HumanoidRootPart.CFrame = NormPos end)
+	wait(.3)
+	cmdlp.Character:Remove()
+	cmdlp.CharacterAdded:Wait()
 end
 
 --[[function useCommand.drophats()
@@ -5682,20 +5674,36 @@ function useCommand.equip()
 end
 
 function useCommand.give()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			newTool = cmdlp.Character:FindFirstChildOfClass("Tool")
-			cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + target.Character.HumanoidRootPart.CFrame.lookVector * -7
-			wait(1)
-			newTool.Parent = workspace
-			opx("-","Gave tool to "..target.Name)
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
+	if not firetouchinterest then
+        opx("*","Your exploit requires firetouchinterest!")
+        return
+    end
+    local target = findplr(arguments[2] or cmdlp.Name)
+	if not target then
+		opx("*","Player does not exist!")
+		return
 	end
+	cmdlp.Character.Humanoid.Name = 1
+	local l = cmdlp.Character["1"]:Clone()
+	l.Parent = cmdlp.Character
+	l.Name = "Humanoid"
+	wait(.2)
+	cmdlp.Character["1"]:Destroy()
+	workspace.CurrentCamera.CameraSubject = cmdlp.Character
+	cmdlp.Character.Humanoid.DisplayDistanceType = "None"
+	cmdlp.Character.Humanoid:UnequipTools()
+	local v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
+	if not v then
+		opx("*","Tool not found!")
+		return
+	end
+	v.Parent = cmdlp.Character
+	v.Parent = cmdlp.Character.HumanoidRootPart
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 0)
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 1)
+	wait(.3)
+	cmdlp.Character:Remove()
+	cmdlp.CharacterAdded:Wait()
 end
 
 function useCommand.using()
@@ -5704,85 +5712,71 @@ function useCommand.using()
 end
 
 function useCommand.banlands()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			opx("-","Banished "..target.Name.." to the banlands")
-			local char = cmdlp.Character
-			local tchar = target.Character
-			local hum = cmdlp.Character.Humanoid
-			local hrp = cmdlp.Character.HumanoidRootPart
-			local hrp2 = target.Character.HumanoidRootPart
-			local camera = workspace.CurrentCamera
-			hum.Name = "1"
-			local newHum = hum:Clone()
-			newHum.Parent = char
-			newHum.Name = "Humanoid"
-			wait(0.1)
-			hum:Destroy()
-			camera.CameraSubject = char
-			newHum.DisplayDistanceType = "None"
-			wait(0.1)
-			v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
-			v.Parent = char
-			hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) * CFrame.new(math.random(-100, 100)/200,math.random(-100, 100)/200,math.random(-100, 100)/200)
-			local n = 0
-			repeat
-				game.RunService.RenderStepped:Wait(0)
-				n = n + 1
-				hrp.CFrame = hrp2.CFrame
-				wait(.1)
-				hrp.CFrame = CFrame.new(0,1000000,0)
-			until (not hrp or not hrp2 or not hrp.Parent or not hrp2.Parent or n > 250) and n > 2
-			hrp.CFrame = CFrame.new(0,1000000,0)
-			camera.CameraType = Enum.CameraType.Custom
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
+    if not firetouchinterest then
+        opx("*","Your exploit requires firetouchinterest!")
+        return
+    end
+    local target = findplr(arguments[2] or cmdlp.Name)
+	if not target then
+		opx("*","Player does not exist!")
+		return
 	end
+	cmdlp.Character.Humanoid.Name = 1
+	local l = cmdlp.Character["1"]:Clone()
+	l.Parent = cmdlp.Character
+	l.Name = "Humanoid"
+	wait(.2)
+	cmdlp.Character["1"]:Destroy()
+	workspace.CurrentCamera.CameraSubject = cmdlp.Character
+	cmdlp.Character.Humanoid.DisplayDistanceType = "None"
+	cmdlp.Character.Humanoid:UnequipTools()
+	local v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
+	if not v then
+		opx("*","Tool not found!")
+		return
+	end
+	v.Parent = cmdlp.Character
+	v.Parent = cmdlp.Character.HumanoidRootPart
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 0)
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 1)
+	pcall(function() cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0, 1000000, 0) end)
+	wait(.3)
+	cmdlp.Character:Remove()
+	cmdlp.CharacterAdded:Wait()
 end
 
 function useCommand.kill()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			opx("-","Killed "..target.Name)
-			local char = cmdlp.Character
-			local tchar = target.Character
-			local hum = cmdlp.Character.Humanoid
-			local hrp = cmdlp.Character.HumanoidRootPart
-			local hrp2 = target.Character.HumanoidRootPart
-			local camera = workspace.CurrentCamera
-			hum.Name = "1"
-			local newHum = hum:Clone()
-			newHum.Parent = char
-			newHum.Name = "Humanoid"
-			wait(0.1)
-			hum:Destroy()
-			camera.CameraSubject = char
-			newHum.DisplayDistanceType = "None"
-			wait(0.1)
-			v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
-			v.Parent = char
-			hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) * CFrame.new(math.random(-100, 100)/200,math.random(-100, 100)/200,math.random(-100, 100)/200)
-			local n = 0
-			repeat
-				game.RunService.RenderStepped:Wait(0)
-				n = n + 1
-				hrp.CFrame = hrp2.CFrame
-				wait(.1)
-				hrp.CFrame = CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999)
-			until (not hrp or not hrp2 or not hrp.Parent or not hrp2.Parent or n > 250) and n > 2
-			hrp.CFrame = CFrame.new(999999, workspace.FallenPartsDestroyHeight + 5,999999)
-			camera.CameraType = Enum.CameraType.Custom
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
+    if not firetouchinterest then
+        opx("*","Your exploit requires firetouchinterest!")
+        return
+    end
+    local target = findplr(arguments[2] or cmdlp.Name)
+	if not target then
+		opx("*","Player does not exist!")
+		return
 	end
+	cmdlp.Character.Humanoid.Name = 1
+	local l = cmdlp.Character["1"]:Clone()
+	l.Parent = cmdlp.Character
+	l.Name = "Humanoid"
+	wait(.2)
+	cmdlp.Character["1"]:Destroy()
+	workspace.CurrentCamera.CameraSubject = cmdlp.Character
+	cmdlp.Character.Humanoid.DisplayDistanceType = "None"
+	cmdlp.Character.Humanoid:UnequipTools()
+	local v = cmdlp.Backpack:FindFirstChildOfClass("Tool")
+	if not v then
+		opx("*","Tool not found!")
+		return
+	end
+	v.Parent = cmdlp.Character
+	v.Parent = cmdlp.Character.HumanoidRootPart
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 0)
+	firetouchinterest(target.Character.HumanoidRootPart, v.Handle, 1)
+	pcall(function() cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(0, workspace.FallenPartsDestroyHeight + 5, 0) end)
+	wait(.3)
+	cmdlp.Character:Remove()
+	cmdlp.CharacterAdded:Wait()
 end
 
 local Flipping = false
