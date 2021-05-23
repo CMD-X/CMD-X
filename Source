@@ -10853,6 +10853,13 @@ function useCommand.emote()
 				Holiday = 5937558680;
 				Rodeo = 5918728267;
 				["Old Town Road"] = 5937560570;
+				["Rock Star - Royal Blood"] = 6533093212;
+				["Drum Master - Royal Blood"] = 6531483720;
+				["Drum Solo - Royal Blood"] = 6532839007;
+				["Rock Guitar - Royal Blood"] = 6532134724;
+				["Take Me Under - Zara Larsson"] = 6797890377;
+				["It Ain't My Fault - Zara Larsson"] = 6797891807;
+				["Hips Poppin' - Zara Larsson"] = 6797888062;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
