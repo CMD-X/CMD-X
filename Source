@@ -369,8 +369,8 @@ if isfile then
 	end
 end
 
-Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
-repeat wait() until RunDude == true
+--Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
+--repeat wait() until RunDude == true
 
 -- Variables: ------------------------|
 local player = cmdlp
@@ -12909,19 +12909,17 @@ function useCommand.statistics()
 		end
 	end
 end
-local bringc = false
+local bringc
 function useCommand.clientbring()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			bringc = true
 			opx("-","Bringing "..target.Name.." on client.")
-			while bringc do
-				wait()
+			bringc = game:GetService("RunService").RenderStepped:Connect(function()
 				if target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-					target.Character.HumanoidRootPart.CFrame = cmdlp.Character.HumanoidRootPart.CFrame + cmdlp.Character.HumanoidRootPart.CFrame.lookVector * 2
+					target.Character.HumanoidRootPart.CFrame = cmdlp.Character.HumanoidRootPart.CFrame + cmdlp.Character.HumanoidRootPart.CFrame.lookVector * 3
 				end
-			end
+			end)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -12931,7 +12929,7 @@ function useCommand.clientbring()
 end
 
 function useCommand.unclientbring()
-	bringc = false
+	bringc:Disconnect()
 	opx("-","Stopped client bringing")
 end
 
