@@ -12909,13 +12909,13 @@ function useCommand.statistics()
 		end
 	end
 end
-local bringc
+local bringc = {}
 function useCommand.clientbring()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
 			opx("-","Bringing "..target.Name.." on client.")
-			bringc = game:GetService("RunService").RenderStepped:Connect(function()
+			bringc[target] = game:GetService("RunService").RenderStepped:Connect(function()
 				if target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
 					target.Character.HumanoidRootPart.CFrame = cmdlp.Character.HumanoidRootPart.CFrame + cmdlp.Character.HumanoidRootPart.CFrame.lookVector * 3
 				end
@@ -12929,8 +12929,17 @@ function useCommand.clientbring()
 end
 
 function useCommand.unclientbring()
-	bringc:Disconnect()
-	opx("-","Stopped client bringing")
+	if arguments[2] then
+		target = findplr(arguments[2])
+		if target then
+			bringc[target]:Disconnect()
+			opx("-","Stopped client bringing "..target.Name)
+		else
+			opx("*","Player does not exist!")
+		end
+	else
+		opx("*","2 arguments are required for this command!")
+	end
 end
 
 function useCommand.clientfreeze()
