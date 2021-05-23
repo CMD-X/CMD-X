@@ -4215,16 +4215,6 @@ end
 
 HDBanString = {["itle"] = "", [""] = ""}
 CMDS.hd = {}
-if HDAdminCheck() then
-	for i,v in pairs(cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Commands.Commands:GetChildren()) do
-		if v:FindFirstChild("Arrow") then
-			if not HDBanString[v.TextLabel.Text:sub(2,#v.TextLabel.Text)] then
-				table.insert(CMDS.hd, v.TextLabel.Text:sub(2,#v.TextLabel.Text))
-				table.insert(CMDS.hd, "un"..v.TextLabel.Text:sub(2,#v.TextLabel.Text))
-			end
-		end
-	end
-end
 
 function CheckHDList(str)
 	for i,v in pairs(CMDS.hd) do
@@ -5343,8 +5333,20 @@ function useCommand.nilfreegoto()
 	end
 end
 
+firstTimeHD = false
 function useCommand.hd()
 	if HDAdminCheck() then
+	    if not firstTimeHD then
+            for i,v in pairs(cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Commands.Commands:GetChildren()) do
+            	if v:FindFirstChild("Arrow") then
+            		if not HDBanString[v.TextLabel.Text:sub(2,#v.TextLabel.Text)] then
+            			table.insert(CMDS.hd, v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+            			table.insert(CMDS.hd, "un"..v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+            		end
+            	end
+            end
+            firstTimeHD = true
+        end
 		if arguments[2] then
 			local cmd = arguments[2]
 			argsHD = ""
@@ -5352,13 +5354,13 @@ function useCommand.hd()
 				argsHD = getstring(3)
 			end
 			local prefixHD = cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Settings.Custom["AE1 Prefix"].SettingValue.TextBox.Text
-			cmdrs.HDAdminClient.Signals.RequestCommand:InvokeServer(";"..cmd.." "..argsHD)
+			cmdrs.HDAdminClient.Signals.RequestCommand:InvokeServer(prefixHD..cmd.." "..argsHD)
 		else
 			opx("*","Command not found!")
 		end
 	else
 		opx("*","HD admin wasnt found!")
-end
+    end
 end
 
 function useCommand.kohls()
