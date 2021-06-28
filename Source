@@ -369,7 +369,7 @@ if isfile then
 	end
 end
 
---Stand("IMPORTANT","CMD-X's server got deleted by discord. F","Join the new one at:",cordCode,"","I joined!",true)
+Stand("IMPORTANT","CMD-X's server is DEAD as FUCK. F","Join the new one to support us at:",cordCode,"","I joined!",true)
 --repeat wait() until RunDude == true
 
 -- Variables: ------------------------|
@@ -395,7 +395,7 @@ local Devs = {
 
 DevCords = {
 	"pigeon#8951";
-	"fini#0001";
+	"alx#6729";
 	"Adam~#2002";
 }
 
