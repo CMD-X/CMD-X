@@ -389,14 +389,14 @@ local Devs = {
 	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
-	["swagcoolboy41"] = "Dev",
+	["Curvn"] = "Dev",
 	["4444445678102"] = "Owner",
 }
 
 DevCords = {
 	"pigeon#8951";
 	"fini#0001";
-	"Curvn#2002";
+	"Adam~#2002";
 }
 
 local Donors = {
