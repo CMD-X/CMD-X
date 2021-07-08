@@ -445,7 +445,7 @@ local Donors = {
 	["DuBz_Bubby"] = "Custom5", -- top donor {$200}
 	["YanniLove"] = "Custom6",
 	["painteatr"] = "Custom7",
-
+	["VII"] = "Custom8",
 }
 
 local Tier = {
@@ -490,9 +490,14 @@ local Tier = {
 		SCHAT = "SUGAR DADDY"
 	},
 	["Custom7"] = {
-	    Tag = "Duck",
-	    Color = Color3.fromRGB(0,255,255),
-	    SCHAT = "DUCK",
+		Tag = "Duck",
+		Color = Color3.fromRGB(0,255,255),
+		SCHAT = "DUCK",
+	},
+	["Custom8"] = {
+		Tag = "7",
+		Color = Color3.fromRGB(255,0,0),
+		SCHAT = "7"
 	},
 }
 
