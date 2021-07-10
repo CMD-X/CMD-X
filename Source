@@ -852,7 +852,12 @@ end
 local AudioIds = {5032588119}
 
 if AntiCheat.IntroAudioOff == false then
-	local Sound2 = Instance.new("Sound", game:GetService("PolicyService"))
+	local Sound2 = Instance.new("Sound", nil)
+	local c = getconnections(game:GetService("PolicyService").ChildAdded)
+	for i,v in pairs(c) do v:Disable() end
+	Sound2.Parent = game:GetService("PolicyService")
+	for i,v in pairs(c) do v:Enable() end
+	Sound2.Name = "19324854"
 	Sound2.SoundId = "http://www.roblox.com/asset/?id="..AudioIds[1]
 	Sound2:Play()
 end
@@ -12475,7 +12480,7 @@ end
 function useCommand.clearchat()
 	opx("-","Cleared chat")
 	for i = 1,3 do
-		sayremote:FireServer(string.rep("â¸»", 200), "All")
+		sayremote:FireServer(string.rep("Ã¢Â¸Â»", 200), "All")
 	end
 end
 
