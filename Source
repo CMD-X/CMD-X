@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.9d"
+local ver = "1.9.9e"
 local cordCode = "https://discord.gg/r8gEZgh"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -1712,7 +1712,7 @@ function findplr(args)
 		return vAges[math.random(1,#vAges)]
 	else 
 		for _,v in pairs(cmdp:GetPlayers()) do
-			if string.find(string.lower(v.Name),string.lower(args)) then
+			if v.Name:lower():find(args:lower()) or v.DisplayName:lower():find(args:lower()) then
 				return v
 			end
 		end
