@@ -2,31 +2,64 @@
     Aslong as a bot is sending spam messages or advertising a discord server this should work.
     After it's reported the bot it will take about 1 hour before the bot is banned for 1 day.
     Hopefully, this clears the air a little bit. If not then atleast making it a little more risky.
+    Since the bots use SayMessageRequest, the chat handler is edited a little bit.
 ]]
 
 if not setfflag then error("setfflag is needed to mitigate abuse report screenshots.") return end
 setfflag("AbuseReportScreenshotPercentage", 0)
 setfflag("DFFlagAbuseReportScreenshot", "False")
 
-local players = game:GetService("Players")
 local optmessage = "User is spamming in the chat and advertising!"
 local reason = "Spamming"
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
 
-players.PlayerAdded:Connect(function(player)
-    local currenttime = os.time()
-    local text = {}
-    player.Chatted:Connect(function(txt)
-        if not text[txt] then text[txt] = 0 end 
-        text[txt] = text[txt] + 1
-        if text[txt] > 4 and os.time() - currenttime < 60 then
+local TimedPlayers = {}
+
+Players.PlayerAdded:Connect(function(Target)
+    TimedPlayers[Target.DisplayName] = os.time()
+end)
+
+for i,v in pairs(Players:GetPlayers()) do
+    TimedPlayers[v.DisplayName] = os.time()    
+end
+
+local playertext = {}
+Player.PlayerGui.Chat.Frame.ChatChannelParentFrame["Frame_MessageLogDisplay"].Scroller.ChildAdded:Connect(function(v)
+    wait(1)
+    if v:FindFirstChild("TextLabel") then
+        if not v.TextLabel:FindFirstChild("TextButton") then return end
+        local txt = v.TextLabel.Text
+        local targeted = v.TextLabel.TextButton.Text:sub(2, #v.TextLabel.TextButton.Text - 2)
+        local currenttime = TimedPlayers[targeted]
+        if not currenttime then return end
+        print(currenttime, targeted, txt)
+        if not playertext[targeted] then playertext[targeted] = 0 end
+        playertext[targeted] = playertext[targeted] + 1
+        print(playertext[targeted])
+        if playertext[targeted] > 4 and os.time() - currenttime < 30 then
             for i = 1, 10 do
-                players:ReportAbuse(player, reason, optmessage)
+                local target2 = nil
+                for i,v in pairs(Players:GetPlayers()) do
+                    if v.DisplayName == targeted then
+                        target2 = v
+                    end
+                end
+                print("report plS:(")
+                Players:ReportAbuse(target2, reason, optmessage)
             end
         end
-        if txt:find(".gg") and os.time() - currenttime < 60 then
+        if txt:find(".gg/") and os.time() - currenttime < 60 then
             for i = 1, 10 do
-                players:ReportAbuse(player, reason, optmessage)
+                local target2 = nil
+                for i,v in pairs(Players:GetPlayers()) do
+                    if v.DisplayName == targeted then
+                        target2 = v
+                    end
+                end
+                print("report plS:(")
+                Players:ReportAbuse(target2, reason, optmessage)
             end
         end
-    end)
+    end
 end)
