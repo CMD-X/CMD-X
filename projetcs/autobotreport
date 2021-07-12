@@ -2,7 +2,7 @@
     Aslong as a bot is sending spam messages or advertising a discord server this should work.
     After it's reported the bot it will take about 1 hour before the bot is banned for 1 day.
     Hopefully, this clears the air a little bit. If not then atleast making it a little more risky.
-    Since the bots use SayMessageRequest, the chat handler is edited a little bit.
+    Since the bots use SayMessageRequest, the chat handler is edited a little bit. Which may = some false positives. Sorry!
 ]]
 
 if not setfflag then error("setfflag is needed to mitigate abuse report screenshots.") return end
@@ -19,10 +19,6 @@ local TimedPlayers = {}
 Players.PlayerAdded:Connect(function(Target)
     TimedPlayers[Target.DisplayName] = os.time()
 end)
-
-for i,v in pairs(Players:GetPlayers()) do
-    TimedPlayers[v.DisplayName] = os.time()    
-end
 
 local playertext = {}
 Player.PlayerGui.Chat.Frame.ChatChannelParentFrame["Frame_MessageLogDisplay"].Scroller.ChildAdded:Connect(function(v)
