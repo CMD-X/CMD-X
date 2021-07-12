@@ -1,0 +1,31 @@
+--[[
+    Aslong as a bot is sending spam messages or advertising a discord server this should work.
+    After it's reported the bot it will take about 1 hour before the bot is banned for 1 day.
+    Hopefully, this clears the air a little bit. If not then atleast making it a little more risky.
+]]
+
+if not setfflag then error("setfflag is needed to mitigate abuse report screenshots.") return end
+setfflag("AbuseReportScreenshotPercentage", 0)
+setfflag("DFFlagAbuseReportScreenshot", "False")
+
+local players = game:GetService("Players")
+local optmessage = "User is spamming in the chat and advertising!"
+local reason = "Spamming"
+
+players.PlayerAdded:Connect(function(player)
+    local currenttime = os.time()
+    local text = {}
+    player.Chatted:Connect(function(txt)
+        text[txt] = text[txt] + 1
+        if text[txt] > 4 and os.time() - currenttime < 60 then
+            for i = 1, 10 do
+                players:ReportAbuse(player, reason, optmessage)
+            end
+        end
+        if txt:find(".gg") and os.time() - currenttime < 60 then
+            for i = 1, 10 do
+                players:ReportAbuse(player, reason, optmessage)
+            end
+        end
+    end)
+end)
