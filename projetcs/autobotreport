@@ -16,6 +16,7 @@ players.PlayerAdded:Connect(function(player)
     local currenttime = os.time()
     local text = {}
     player.Chatted:Connect(function(txt)
+        if not text[txt] then text[txt] = 0 end 
         text[txt] = text[txt] + 1
         if text[txt] > 4 and os.time() - currenttime < 60 then
             for i = 1, 10 do
