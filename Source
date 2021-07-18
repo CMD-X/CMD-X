@@ -2575,7 +2575,7 @@ CMDS.commands = {
 	["anticheat"] = "Sets anticheat variables on or off.",
 	["anticheats"] = "Lists anticheat variables.",
 	["unfriend"] = "()",
-	["cutforceplayloop"] = "Cuts forceplay loops that are running.",
+	["cutbackpackplayloop"] = "Cuts backpackplay loops that are running.",
 	["freecamgoto"] = "Teleports freecam to a player.",
 	["vnoclip"] = "Turns on vehicle noclip.",
 	["vclip"] = "()",
@@ -2599,8 +2599,8 @@ CMDS.commands = {
 	["robloxversion"] = "Shows you the version of Roblox you are on.",
 	["freecamloadpos"] = "Teleports freecam to waypoint.",
 	["rejoinrefresh"] = "Rejoins and places you back at the spot you were at.",
-	["forceplay"] = "Loop plays plrs audio to stop muting.",
-	["unforceplay"] = "()",
+	["backpackplay"] = "Loop plays plrs audio to stop muting.",
+	["unbackpackplay"] = "()",
 	["migratesaves"] = "Migrates save files/backups to CMD-X.lua.",
 	["resetguipos"] = "Resets GUI position.",
 	["properties"] = "Lists all properties of class in Roblox using an API.",
@@ -2938,8 +2938,8 @@ CMDS.usage = {
 	["vgotoclass"] = "(name)",
 	["vloadpos"] = "(name)",
 	["freecamloadpos"] = "(name)",
-	["forceplay"] = "(plr)",
-	["unforceplay"] = "(plr)",
+	["backpackplay"] = "(plr)",
+	["unbackpackplay"] = "(plr)",
 	["migratesaves"] = "(file)",
 	["properties"] = "(class)",
 	["loopfling"] = "(plr)",
@@ -3374,7 +3374,7 @@ CMDS.aliases = {
 	["ac"] = "anticheat",
 	["acs"] = "anticheats",
 	["unfr"] = "unfriend",
-	["cutfploop"] = "cutforceplayloop",
+	["cutbploop"] = "cutbackpackplayloop",
 	["fcgoto"] = "freecamgoto",
 	["fcto"] = "freecamgoto",
 	["fctp"] = "freecamgoto",
@@ -3405,8 +3405,8 @@ CMDS.aliases = {
 	["rver"] = "robloxversion",
 	["fcloadpos"] = "freecamloadpos",
 	["rjre"] = "rejoinrefresh",
-	["fp"] = "forceplay",
-	["unfp"] = "unforceplay",
+	["bpp"] = "backpackplay",
+	["unbpp"] = "unbackpackplay",
 	["msaves"] = "migratesaves",
 	["rguipos"] = "resetguipos",
 	["props"] = "properties",
@@ -11428,18 +11428,18 @@ function ForcePlayLoop()
     end)
 end
 
-function useCommand.forceplay()
+function useCommand.backpackplay()
 	if allForcePlayConn then
 		forceplayConns = {}
 		allForcePlayConn:Disconnect()
 		allForcePlayConn = nil
 		forcePlayLoop:Disconnect()
 		forcePlayLoop = nil
-		opx("-","Force play all is no longer enabled")
+		opx("-","Backpack play all is no longer enabled")
 		return
 	end
 	if not arguments[2] or arguments[2] == "all" then
-		opx("-","Force play all is now enabled")
+		opx("-","Backpack play all is now enabled")
 		forceplayConns = {}
 		for i,v in pairs(cmdp:GetPlayers()) do
 			table.insert(forceplayConns, {v, x = {}})
@@ -11468,10 +11468,10 @@ function useCommand.forceplay()
 				forcePlayLoop:Disconnect()
 				forcePlayLoop = nil
 			end
-			opx("-","Force play "..target.Name.." is no longer enabled")
+			opx("-","Backpack play "..target.Name.." is no longer enabled")
 			return
 		end
-		opx("-","Force play "..target.Name.." is now enabled")
+		opx("-","Backpack play "..target.Name.." is now enabled")
 		table.insert(forceplayConns, {target, x = {}})
 		if not forcePlayLoop then
 			ForcePlayLoop()
@@ -11613,7 +11613,7 @@ function useCommand.mute()
 	end
 end
 
-function useCommand.unforceplay()
+function useCommand.unmute()
 	if not arguments[2] or arguments[2] == "all" then
 		muteConns = {}
 		pcall(function() allMuteConn:Disconnect()
@@ -15910,9 +15910,9 @@ function useCommand.unfriend()
 	end
 end
 
-function useCommand.cutforceplayloop()
+function useCommand.cutbackpackplayloop()
 	fpall = false
-	opx("-","Stopped forceplay loop")
+	opx("-","Stopped backpackplay loop")
 end
 
 function useCommand.rejoinrefresh()
