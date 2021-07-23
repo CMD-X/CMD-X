@@ -17453,7 +17453,7 @@ end
 function RGBDev(Player)
 	name = Player.Name
 	if _G.RGBDev.Connections[name] then return end
-	local plm = game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster")
+	local plm = game:GetService("CoreGui").PlayerList:FindFirstChild("PlayerListMaster")
 	if not plm or not plm:FindFirstChild("OffsetUndoFrame", true) then
 		return
 	else
