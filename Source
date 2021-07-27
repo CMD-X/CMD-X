@@ -17347,10 +17347,15 @@ game:GetService("UserInputService").InputBegan:Connect(function(input)
             _G.capturingFocus = nil
         end
     end
+    if input.KeyCode == Enum.KeyCode.Return
+    	asdflkasdfasdf = true
+    end
 end)
 
 cmdlp.Chatted:connect(function(v)
-	if Inputting then
+	game:GetService("RunService").RenderStepped:Wait()
+	if Inputting and asdflkasdfasdf == true then
+		asdflkasdfasdf = false
 		if v:lower():sub(1,#prefix) == prefix then
 			cmd:CaptureFocus()
 			cmd.Text = v:sub(#prefix+1,#v)
