@@ -12313,25 +12313,10 @@ function useCommand.changestyle()
 				dStyle = "lightblue"
 				updatesaves()
 			end
-		else
-			loadstring(game:HttpGet((arguments[2]),true))()
-			dStyle = arguments[2]
-			updatesaves()
 		end
 	else
 		opx("*","2 arguments are needed for this command!")
 	end
-end
-
-function useCommand.csinfo()
-	opx("-","Listed info about changestyle")
-	opxL("Change-style Info","For the default theme/ rounded theme type in: cs rounded\
-	For a custom background type in: cs bg (id)\
-	For a squared theme type in: cs squared\
-	For a blended theme type in: cs blended\
-	For a smalled theme type in: cs smalled\
-	For a lightmode theme type in: cs light(blue/green/red)\
-	For a custom theme type in: cs (raw link)")
 end
 
 function useCommand.chat()
@@ -17309,8 +17294,6 @@ elseif styleAS[1] == "bg" then
 	output9.Parent = iBG
 	iBG.Image = getAsset(styleAS[2])
 	iBG.ScaleType = Enum.ScaleType.Crop
-else
-	loadstring(game:HttpGet((dStyle),true))()
 end
  
 ---------------------------------------|
@@ -17349,6 +17332,8 @@ game:GetService("UserInputService").InputBegan:Connect(function(input)
     end
     if input.KeyCode == Enum.KeyCode.Return
     	asdflkasdfasdf = true
+    else
+    	asdflkasdfasdf = false
     end
 end)
 
