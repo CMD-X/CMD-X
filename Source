@@ -17330,7 +17330,7 @@ game:GetService("UserInputService").InputBegan:Connect(function(input)
             _G.capturingFocus = nil
         end
     end
-    if input.KeyCode == Enum.KeyCode.Return
+    if input.KeyCode == Enum.KeyCode.Return then
     	asdflkasdfasdf = true
     else
     	asdflkasdfasdf = false
