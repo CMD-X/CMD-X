@@ -460,9 +460,9 @@ local Tier = {
 		SCHAT = "DONOR"
 	},
 	["Custom1"] = {
-		Tag = "Administrator",
+		Tag = "cr",
 		Color = Color3.fromRGB(209,156,240),
-		SCHAT = "ADMINISTRATOR"
+		SCHAT = "CR"
 	},
 	["Custom2"] = {
 		Tag = "Infernal",
