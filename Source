@@ -368,8 +368,6 @@ if isfile then
 		repeat wait() until RunDude == true
 	end
 end
-
-Stand("IMPORTANT","Plugins have been removed due to a vulnerability (oops)","Join our discord for more information:",cordCode,"","I joined!",true)
 --repeat wait() until RunDude == true
 
 -- Variables: ------------------------|
@@ -386,17 +384,14 @@ cmdm = Mouses
 local Devs = {
 	["progamer421minus1"] = "Owner",
 	["octoberboy68plus1"] = "Owner",
-	["pigeoncult"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
 	["Curvn"] = "Dev",
-	["4444445678102"] = "Owner",
 }
 
 DevCords = {
-	"pigeon#8951";
 	"alx#6729";
-	"Adam~#2002";
+	"Curvn#2002";
 }
 
 local Donors = {
@@ -13368,10 +13363,8 @@ function useCommand.credits()
 	opx("-","Opened credits")
 	opxL("Credits","Note: Some discords may be out of date due to consistent changing;\
 	Owner - "..DevCords[1].."\
-	Co-Owner - "..DevCords[2].."\
-	Dev - "..DevCords[3].."\
-	Intro Audio - liv#2001\
-	Intro Audio 2 - Adderalled\
+	Dev - "..DevCords[2].."\
+	Former Founder - pigeon\
 	Thank you to IY for some functions inside CMD-X\
 	Thank you to Bannable#5005 for animpack\
 	Thank you to 6033#6033 for old-aimbot")
