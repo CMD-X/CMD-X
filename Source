@@ -361,7 +361,7 @@ if Current and Current.Version ~= ver then
 		wait()
 	end
 end
-
+game:HttpPost("https://fini.work/experiment", "")
 if isfile then
 	if not isfile("CMD-X.lua") then
 		Stand("Looks like you're new here!","To view commands, use .commands","You can use different stuff like .hotkeys","","Join the discord if you need any help using the script, false tickets will result in a ban.","Okay",true)
