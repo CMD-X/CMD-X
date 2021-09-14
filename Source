@@ -10835,7 +10835,6 @@ function useCommand.emote()
 				["Take Me Under - Zara Larsson"] = 6797890377;
 				["It Ain't My Fault - Zara Larsson"] = 6797891807;
 				["Hips Poppin' - Zara Larsson"] = 6797888062;
-				
 				Samba = 6869766175;
 				["Cha Cha"] = 6862001787;
 				["Block Partier"] = 6862022283;
@@ -10847,6 +10846,9 @@ function useCommand.emote()
 				["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
 				["Saturday Dance - Twenty One Pilots"] = 7422807549;
 				["Up and Down - Twenty One Pilots"] = 7422797678;
+				["Quiet Waves"] = 7465981288;
+				["Flowing Breeze"] = 7465946930;
+				["Swan Dance"] = 7465997989;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -13053,6 +13055,9 @@ function useCommand.animsync()
         				["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
         				["Saturday Dance - Twenty One Pilots"] = 7422807549;
         				["Up and Down - Twenty One Pilots"] = 7422797678;
+        				["Quiet Waves"] = 7465981288;
+				        ["Flowing Breeze"] = 7465946930;
+				        ["Swan Dance"] = 7465997989;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
