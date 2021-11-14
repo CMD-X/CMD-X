@@ -448,6 +448,7 @@ local Donors = {
 	["emovert"] = "2",
 	["shifde"] = "2",
 	["RusskiSlavv"] = "2",
+	["xudet"] = "2",
 	
 	["overreaction"] = "Custom1",
 	["InternetSpeeds"] = "Custom2",
