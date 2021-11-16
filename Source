@@ -10850,6 +10850,9 @@ function useCommand.emote()
 				["Quiet Waves"] = 7465981288;
 				["Flowing Breeze"] = 7465946930;
 				["Swan Dance"] = 7465997989;
+				["Cobra Arms - Tai Verdes"] = 7942890105;
+				["AOK - Tai Verdes"] = 7942885103;
+				["Lasso Turn - Tai Verdes"] = 7942896991;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -12956,26 +12959,29 @@ function useCommand.animsync()
 						Rodeo = 5918728267;
 						["Old Town Road"] = 5937560570;
 						["Rock Star - Royal Blood"] = 6533093212;
-        				["Drum Master - Royal Blood"] = 6531483720;
-        				["Drum Solo - Royal Blood"] = 6532839007;
-        				["Rock Guitar - Royal Blood"] = 6532134724;
-        				["Take Me Under - Zara Larsson"] = 6797890377;
-        				["It Ain't My Fault - Zara Larsson"] = 6797891807;
-        				["Hips Poppin' - Zara Larsson"] = 6797888062;
-        				Samba = 6869766175;
-        				["Cha Cha"] = 6862001787;
-        				["Block Partier"] = 6862022283;
-        				["Boxing Punch - KSI"] = 7202863182;
-        				["Show Dem Wrist - KSI"] = 7198989668;
-        				["Wake Up Call - KSI"] = 7199000883;
-        				["Drummer Moves - Twenty One Pilots"] = 7422527690;
-        				["On The Outside - Twenty One Pilots"] = 7422779536;
-        				["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
-        				["Saturday Dance - Twenty One Pilots"] = 7422807549;
-        				["Up and Down - Twenty One Pilots"] = 7422797678;
-        				["Quiet Waves"] = 7465981288;
-				        ["Flowing Breeze"] = 7465946930;
-				        ["Swan Dance"] = 7465997989;
+        					["Drum Master - Royal Blood"] = 6531483720;
+        					["Drum Solo - Royal Blood"] = 6532839007;
+        					["Rock Guitar - Royal Blood"] = 6532134724;
+        					["Take Me Under - Zara Larsson"] = 6797890377;
+        					["It Ain't My Fault - Zara Larsson"] = 6797891807;
+        					["Hips Poppin' - Zara Larsson"] = 6797888062;
+        					Samba = 6869766175;
+        					["Cha Cha"] = 6862001787;
+        					["Block Partier"] = 6862022283;
+        					["Boxing Punch - KSI"] = 7202863182;
+        					["Show Dem Wrist - KSI"] = 7198989668;
+        					["Wake Up Call - KSI"] = 7199000883;
+        					["Drummer Moves - Twenty One Pilots"] = 7422527690;
+        					["On The Outside - Twenty One Pilots"] = 7422779536;
+        					["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
+        					["Saturday Dance - Twenty One Pilots"] = 7422807549;
+        					["Up and Down - Twenty One Pilots"] = 7422797678;
+        					["Quiet Waves"] = 7465981288;
+				        	["Flowing Breeze"] = 7465946930;
+				        	["Swan Dance"] = 7465997989;
+						["Cobra Arms - Tai Verdes"] = 7942890105;
+						["AOK - Tai Verdes"] = 7942885103;
+						["Lasso Turn - Tai Verdes"] = 7942896991;
 					}
 					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						x:Stop()
