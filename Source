@@ -37,6 +37,7 @@ Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Unnamed.ResetOnSpawn = false
 Unnamed.DisplayOrder = 2147483647
 if not syn then syn = {} end
+if not syn.queue_on_teleport then syn.queue_on_teleport = queue_on_teleport end
 if not is_sirhurt_closure and syn.protect_gui then syn.protect_gui(Unnamed) end
 
 sgui = Instance.new("ScreenGui", Unnamed)
@@ -17306,18 +17307,16 @@ game:GetService("UserInputService").InputBegan:Connect(function(input)
 end)
 
 cmdlp.Chatted:connect(function(v)
-	game:GetService("RunService").RenderStepped:Wait()
+    game:GetService("RunService").RenderStepped:Wait()
 	if Inputting and asdflkasdfasdf == true then
 		asdflkasdfasdf = false
 		if v:lower():sub(1,#prefix) == prefix then
-			cmd:CaptureFocus()
-			cmd.Text = v:sub(#prefix+1,#v)
-			cmd:ReleaseFocus()
+			cmd.Text = v:sub(#prefix + 1, #v)
 		elseif v:lower():sub(1,1) == '.' then
-			cmd:CaptureFocus()
-			cmd.Text = v:sub(2,#v)
-			cmd:ReleaseFocus()
+			cmd.Text = v:sub(2, #v)
 		end
+        executeCommand(cmd.Text)
+        cmd.Text = ""
 	end
 end)
 
