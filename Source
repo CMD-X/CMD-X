@@ -13118,24 +13118,29 @@ function useCommand.height()
 	end
 end
 
-local deadRefresh = false
+local deadRefresh = {}
 function useCommand.refreshdead()
-    deadRefresh = true
-    opx("-","Refresh dead is now on")
-    while deadRefresh do
-		wait()
-		DiedTPs = cmdlp.Character.HumanoidRootPart.CFrame
-		if cmdlp.Character.Humanoid.Health == 0 then
-			_G.connections.dRefresh = cmdlp.CharacterAdded:Connect(function(char)
-        		wait(2)
-        		cmdlp.Character.HumanoidRootPart.CFrame = DiedTPs
-			end)
-		end
+	if deadRefresh.died then
+		return opx("*", "Already active")
 	end
+	deadRefresh.pos = cmdlp.Character.HumanoidRootPart.CFrame
+	deadRefresh.died = cmdlp.Character.Humanoid.Died:Connect(function()
+		deadRefresh.pos = cmdlp.Character.HumanoidRootPart.CFrame
+		deadRefresh.respawned = cmdlp.CharacterAdded:Connect(function(character)
+			task.wait()
+			character.HumanoidRootPart.CFrame = deadRefresh.pos
+			deadRefresh.respawned:Disconnect()
+		end)
+	end)
+    opx("-","Refresh dead is now on")
 end
 
 function useCommand.unrefreshdead()
-	deadRefresh = false
+	deadRefresh.pos = nil
+	deadRefresh.died:Disconnect()
+	if deadRefresh.respawned then
+		deadRefresh.respawned:Disconnect()
+	end
 	opx("-", "Refresh dead is now off")
 end
 
@@ -17315,7 +17320,8 @@ cmdlp.Chatted:connect(function(v)
 		elseif v:lower():sub(1,1) == '.' then
 			cmd.Text = v:sub(2, #v)
 		end
-        executeCommand(cmd.Text)
+        pcall(executeCommand, cmd.Text)
+		task.wait()
         cmd.Text = ""
 	end
 end)
