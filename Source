@@ -2,7 +2,7 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
 local ver = "1.9.9e"
-local cordCode = "https://discord.gg/r8gEZgh"
+local cordCode = "https://discord.gg/JyzvQ6zdfg"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
 if Parents[1] then
@@ -228,10 +228,10 @@ function createDrag(object)
 end
 
 function Stand(Text1,Text2,Text3,Text4,Text5,Text6,Btn)
-    if game:GetService("UserInputService").VREnabled then 
-        RunDude = true
-        return 
-    end
+	if game:GetService("UserInputService").VREnabled then 
+		RunDude = true
+		return 
+	end
 	RunDude = false
 	LoadingFrame = Instance.new("Frame", getParent)
 	RandomReason = Instance.new("TextLabel", getParent)
@@ -355,6 +355,11 @@ mt.__namecall = newcclosure(function(self, ...)
 	return namecall(self, ...)
 end)
 setreadonly(mt, true)--]]
+
+Stand("CMD-X V2 is in development.", "Please join the discord for development updates.", "You can get the discord invite by using the .discord command.", "", "", "Continue", true)
+
+wait(.5)
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
 if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
@@ -364,20 +369,20 @@ if Current and Current.Version ~= ver then
 end
 local _S__ = ""
 if identifyexecutor then
-    _S__ = select(1, identifyexecutor())
+	_S__ = select(1, identifyexecutor())
 end
 if request or syn and syn.request then
-    local re = request or syn.request
-    re({
-        Url = "https://fini.work/experiment",
-        Method = "POST",
-        Headers = {
-            requester = "Client",
-            ezD = _S__
-        }
-    })
+	local re = request or syn.request
+	re({
+		Url = "https://fini.work/experiment",
+		Method = "POST",
+		Headers = {
+			requester = "Client",
+			ezD = _S__
+		}
+	})
 elseif game.HttpPost then
-    game:HttpPost("https://fini.work/experiment", "", _S__)
+	game:HttpPost("https://fini.work/experiment", "", _S__)
 end
 if isfile then
 	if not isfile("CMD-X.lua") then
@@ -407,7 +412,7 @@ local Devs = {
 }
 
 DevCords = {
-	"alx#0516";
+	"alx#9999";
 	"Curvn#2002";
 }
 
@@ -515,57 +520,55 @@ local Tier = {
 }
 
 function loaddefaults()
-    text2 = false
-    hotkeyopen = 'q'
-    hotkeyopx = 'u'
-    hotkeyfocus = ';'
-    hotkeyfly = ''
-    hotkeyxray = ''
-    hotkeyesp = ''
-    hotkeyaimbot = ''
-    prefix = '.'
-    prompt = 'CMD-X Prompt >'
-    enterCMD = {}
-    gotoPos = 0
-    gotoPosSide = 0
-    gotoPosHead = 0
-    WPs = {}
-    discordTag = ''
-    permfcspeed = 1
-    permflyspeed = 1
-    permwalkspeed = 50
-    permjumppower = 150
-    permhipheight = 20
-    permgravity = 50
-    permmaxsl = 89.99
-    Adm = {}
-    hkBinds = {}
-    dStyle = "rounded"
-    conFly = true
-    suggestions = true
-    CMDStats = {}
-    oldNum = 0
-    hotkeyctp = "LeftControl"
-    permspamspeed = 1
-    mentions = true
-    sDetect = true
-    SavedPos = {X = 800, Y = 300}
-    hotkeynoclip = ""
-    ChatBind = false
-    CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
-    TabsOff = true
-    KeepCMDXOn = false
-    ifKickedAuto = false
-    whyIs = 0
-    combos = {}
-    drawingtype = "old"
+	text2 = false
+	hotkeyopen = 'q'
+	hotkeyfocus = ';'
+	hotkeyfly = ''
+	hotkeyxray = ''
+	hotkeyesp = ''
+	hotkeyaimbot = ''
+	prefix = '.'
+	prompt = 'CMD-X Prompt >'
+	enterCMD = {}
+	gotoPos = 0
+	gotoPosSide = 0
+	gotoPosHead = 0
+	WPs = {}
+	discordTag = ''
+	permfcspeed = 1
+	permflyspeed = 1
+	permwalkspeed = 50
+	permjumppower = 150
+	permhipheight = 20
+	permgravity = 50
+	permmaxsl = 89.99
+	Adm = {}
+	hkBinds = {}
+	dStyle = "rounded"
+	conFly = true
+	suggestions = true
+	CMDStats = {}
+	oldNum = 0
+	hotkeyctp = "LeftControl"
+	permspamspeed = 1
+	mentions = true
+	sDetect = true
+	SavedPos = {X = 800, Y = 300}
+	hotkeynoclip = ""
+	ChatBind = false
+	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
+	TabsOff = true
+	KeepCMDXOn = false
+	ifKickedAuto = false
+	whyIs = 0
+	combos = {}
+	drawingtype = "old"
 end
  
 function updatesaves()
 	local update = {
 		text2 = text2;
 		hotkeyopen = hotkeyopen;
-		hotkeyopx = hotkeyopx;
 		hotkeyfocus = hotkeyfocus;
 		hotkeyfly = hotkeyfly;
 		hotkeyxray = hotkeyxray;
@@ -593,7 +596,7 @@ function updatesaves()
 		suggestions = suggestions;
 		CMDStats = CMDStats;
 		oldNum = oldNum;
-    	hotkeyctp = hotkeyctp;
+		hotkeyctp = hotkeyctp;
 		permspamspeed = permspamspeed;
 		mentions = mentions;
 		sDetect = sDetect;
@@ -611,64 +614,63 @@ function updatesaves()
 end
 
 function loadsaves()
-    local success, errorsend = pcall(function()
-        saves = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
-    end)
-    if not success then
-        loaddefaults()
-        updatesaves()
-        return
-    end
-    text2 = saves.text2
-    hotkeyopen = saves.hotkeyopen
-    hotkeyopx = saves.hotkeyopx
-    hotkeyfocus = saves.hotkeyfocus
-    hotkeyfly = saves.hotkeyfly
-    hotkeyxray = saves.hotkeyxray
-    hotkeyesp = saves.hotkeyesp
-    hotkeyaimbot = saves.hotkeyaimbot
-    prefix = saves.prefix
-    prompt = saves.prompt
-    enterCMD = saves.enterCMD
-    gotoPos = saves.gotoPos
-    gotoPosSide = saves.gotoPosSide
-    gotoPosHead = saves.gotoPosHead
-    WPs = saves.WPs
-    discordTag = saves.discordTag
-    permfcspeed = saves.permfcspeed
-    permflyspeed = saves.permflyspeed
-    permwalkspeed = saves.permwalkspeed
-    permjumppower = saves.permjumppower
-    permhipheight = saves.permhipheight
-    permgravity = saves.permgravity
-    permmaxsl = saves.permmaxsl
-    Adm = saves.Adm
-    hkBinds = saves.hkBinds
-    dStyle = saves.dStyle
-    conFly = saves.conFly
-    suggestions = saves.suggestions
-    CMDStats = saves.CMDStats
-    oldNum = saves.oldNum
-    hotkeyctp = saves.hotkeyctp
-    permspamspeed = saves.permspamspeed
-    mentions = saves.mentions
-    sDetect = saves.sDetect
-    SavedPos = saves.SavedPos
-    hotkeynoclip = saves.hotkeynoclip
-    ChatBind = saves.ChatBind
-    CMDTab = saves.CMDTab
-    TabsOff = saves.TabsOff
-    KeepCMDXOn = saves.KeepCMDXOn
-    ifKickedAuto = saves.ifKickedAuto
-    whyIs = saves.whyIs
-    combos = saves.combos
-    drawingtype = saves.drawingtype
+	local success, errorsend = pcall(function()
+		saves = game:GetService("HttpService"):JSONDecode(readfile("CMD-X.lua"))
+	end)
+	if not success then
+		loaddefaults()
+		updatesaves()
+		return
+	end
+	text2 = saves.text2
+	hotkeyopen = saves.hotkeyopen
+	hotkeyfocus = saves.hotkeyfocus
+	hotkeyfly = saves.hotkeyfly
+	hotkeyxray = saves.hotkeyxray
+	hotkeyesp = saves.hotkeyesp
+	hotkeyaimbot = saves.hotkeyaimbot
+	prefix = saves.prefix
+	prompt = saves.prompt
+	enterCMD = saves.enterCMD
+	gotoPos = saves.gotoPos
+	gotoPosSide = saves.gotoPosSide
+	gotoPosHead = saves.gotoPosHead
+	WPs = saves.WPs
+	discordTag = saves.discordTag
+	permfcspeed = saves.permfcspeed
+	permflyspeed = saves.permflyspeed
+	permwalkspeed = saves.permwalkspeed
+	permjumppower = saves.permjumppower
+	permhipheight = saves.permhipheight
+	permgravity = saves.permgravity
+	permmaxsl = saves.permmaxsl
+	Adm = saves.Adm
+	hkBinds = saves.hkBinds
+	dStyle = saves.dStyle
+	conFly = saves.conFly
+	suggestions = saves.suggestions
+	CMDStats = saves.CMDStats
+	oldNum = saves.oldNum
+	hotkeyctp = saves.hotkeyctp
+	permspamspeed = saves.permspamspeed
+	mentions = saves.mentions
+	sDetect = saves.sDetect
+	SavedPos = saves.SavedPos
+	hotkeynoclip = saves.hotkeynoclip
+	ChatBind = saves.ChatBind
+	CMDTab = saves.CMDTab
+	TabsOff = saves.TabsOff
+	KeepCMDXOn = saves.KeepCMDXOn
+	ifKickedAuto = saves.ifKickedAuto
+	whyIs = saves.whyIs
+	combos = saves.combos
+	drawingtype = saves.drawingtype
 end
 
 if writefile and readfile then
-    loadsaves()
+	loadsaves()
 else
-    loaddefaults()
+	loaddefaults()
 end
 
 checkArg = {
@@ -701,7 +703,6 @@ if game:GetService("UserInputService").VREnabled then
 	SavedPos = {X = 147, Y = 324}
 end
 
-_G.hotkeyopx = hotkeyopx
 
 AdmIG = {}
 
@@ -761,12 +762,12 @@ AntiCheat = {
 }
 
 AntiCheat.Games = {
-    
-    [176053469] = function()
-        AntiCheat.CheckFocusBreak = true
-        Unnamed.Parent = Parents[3]
-    end,
-    
+	
+	[176053469] = function()
+		AntiCheat.CheckFocusBreak = true
+		Unnamed.Parent = Parents[3]
+	end,
+	
 	[4052062489] = function()
 		AntiCheat.AutoAntiKick = true
 	end,
@@ -2080,7 +2081,6 @@ CMDS.commands = {
 	["promptnew"] = "Changes your prompt text to something else.",
 	["prefixnew"] = "Changes chat prefix.",
 	["hotkeyopen"] = "Changes your hotkey for opening the GUI.",
-	["hotkeyoutput"] = "Changes your hotkey for opening the output GUI.",
 	["hotkeyfocus"] = "Changes your hotkey for focusing on the cmdbar.",
 	["entercmdnew"] = "Adds a new command which runs when you first execute CMD-X.",
 	["entercmds"] = "Allows you to add entercmds.",
@@ -2744,12 +2744,12 @@ CMDS.commands = {
 	["antiwindowafk"] = "Stops the game from AFKing you when you unfocus your window.",
 	["unantiwindowafk"] = "()",
 	["clearcharacter"] = "Clears your character appearance.",
+	["discord"] = "Sets your clipboard to a CMD-X discord invite."
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
 	["prefixnew"] = "(str)",
 	["hotkeyopen"] = "(str)",
-	["hotkeyoutput"] = "(str)",
 	["hotkeyfocus"] = "(str)",
 	["entercmdnew"] = "(str)",
 	["entercmddel"] = "(str)",
@@ -3532,6 +3532,7 @@ CMDS.aliases = {
 	["wafk"] = "antiwindowafk",
 	["unantiwafk"] = "unantiwindowafk",
 	["unwafk"] = "unantiwindowafk",
+	["cord"] = "discord",
 }
 
 CMDS.suggestions = {}
@@ -4157,9 +4158,9 @@ end)
 if cmdrs:FindFirstChild("DefaultChatSystemChatEvents") and cmdrs.DefaultChatSystemChatEvents:FindFirstChild("SayMessageRequest") then sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest end
 function opx(f,text)
 
-    if IsExe then
-        SendResponse(text)
-    end
+	if IsExe then
+		SendResponse(text)
+	end
 
 	if not ChatBind then
 		output9.Text = output8.Text
@@ -4290,31 +4291,31 @@ function executeCommand(com)
 end
 
 local BlacklistedADM = {
-    ["quickexit"] = "quickexit",
-    ["`"] = "`",
-    ["loop"] = "loop",
-    ["killgui"] = "killgui",
-    ["reload"] = "reload",
-    ["nocmds"] = "nocmds",
-    ["yescmds"] = "yescmds",
-    ["rejoindiff"] = "rejoindiff",
-    ["rjdiff"] = "rjdiff",
-    ["place"] = "place",
-    ["game"] = "game",
-    ["placeid"] = "placeid",
-    ["gameid"] = "gameid",
-    ["directjoin"] = "directjoin",
-    ["dirjoin"] = "dirjoin",
+	["quickexit"] = "quickexit",
+	["`"] = "`",
+	["loop"] = "loop",
+	["killgui"] = "killgui",
+	["reload"] = "reload",
+	["nocmds"] = "nocmds",
+	["yescmds"] = "yescmds",
+	["rejoindiff"] = "rejoindiff",
+	["rjdiff"] = "rjdiff",
+	["place"] = "place",
+	["game"] = "game",
+	["placeid"] = "placeid",
+	["gameid"] = "gameid",
+	["directjoin"] = "directjoin",
+	["dirjoin"] = "dirjoin",
 }
 for i,v in pairs(AdmIG) do
 	cmdp[AdmIG[i]].Chatted:Connect(function(a)
 		local comsToExe = cmd.Text:split(";;")
-    	cmd.Text = ""
-    	for i,v in pairs(comsToExe) do
-    	    if v ~= BlacklistedADM[v] then
-    		    executeCommand(v)
-    		end
-    	end
+		cmd.Text = ""
+		for i,v in pairs(comsToExe) do
+			if v ~= BlacklistedADM[v] then
+				executeCommand(v)
+			end
+		end
 	end)
 end
 
@@ -4381,15 +4382,6 @@ function useCommand.hotkeyopen()
 	end
 end
 
-function useCommand.hotkeyoutput()
-	if arguments[2] then
-		hotkeyopx = arguments[2]:lower()
-		updatesaves()
-		opx("-","Hotkey set to "..arguments[2])
-	else
-		opx("*","2 arguments are required for this command!")
-	end
-end
 
 function useCommand.hotkeyfocus()
 	if arguments[2] then
@@ -5349,17 +5341,17 @@ end
 firstTimeHD = false
 function useCommand.hd()
 	if HDAdminCheck() then
-	    if not firstTimeHD then
-            for i,v in pairs(cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Commands.Commands:GetChildren()) do
-            	if v:FindFirstChild("Arrow") then
-            		if not HDBanString[v.TextLabel.Text:sub(2,#v.TextLabel.Text)] then
-            			table.insert(CMDS.hd, v.TextLabel.Text:sub(2,#v.TextLabel.Text))
-            			table.insert(CMDS.hd, "un"..v.TextLabel.Text:sub(2,#v.TextLabel.Text))
-            		end
-            	end
-            end
-            firstTimeHD = true
-        end
+		if not firstTimeHD then
+			for i,v in pairs(cmdlp.PlayerGui.HDAdminGUIs.MainFrame.Pages.Commands.Commands:GetChildren()) do
+				if v:FindFirstChild("Arrow") then
+					if not HDBanString[v.TextLabel.Text:sub(2,#v.TextLabel.Text)] then
+						table.insert(CMDS.hd, v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+						table.insert(CMDS.hd, "un"..v.TextLabel.Text:sub(2,#v.TextLabel.Text))
+					end
+				end
+			end
+			firstTimeHD = true
+		end
 		if arguments[2] then
 			local cmd = arguments[2]
 			argsHD = ""
@@ -5373,7 +5365,7 @@ function useCommand.hd()
 		end
 	else
 		opx("*","HD admin wasnt found!")
-    end
+	end
 end
 
 function useCommand.kohls()
@@ -5514,29 +5506,29 @@ function useCommand.removeclothes()
 end]]
 
 function useCommand.resizehead()
-    if not cmd15(cmdlp) then
-        opx("*","R15 is required!")
-        return
-    end
-    opx("*","Please make sure you are wearing an RThro head!")
-    opx("-","Now resizing head")
-    local HumValues = {}
-    for _,v in pairs(cmdlp.Character.Humanoid:GetChildren()) do
-        if v:IsA("NumberValue") then
-            table.insert(HumValues, v)
-        end
-    end
-    for i = 1,10 do
-        cmdlp.Character.Head.Mesh:WaitForChild("OriginalSize")
-        for i,v in pairs(cmdlp.Character:GetDescendants()) do
-            if v:IsA("Vector3Value") and v.Name == "OriginalSize" then
-                v:Destroy()    
-            end
-        end
-        HumValues[i]:Destroy()
-        wait(.5)
-    end
-    cmdlp.Character.Head.CanCollide = false
+	if not cmd15(cmdlp) then
+		opx("*","R15 is required!")
+		return
+	end
+	opx("*","Please make sure you are wearing an RThro head!")
+	opx("-","Now resizing head")
+	local HumValues = {}
+	for _,v in pairs(cmdlp.Character.Humanoid:GetChildren()) do
+		if v:IsA("NumberValue") then
+			table.insert(HumValues, v)
+		end
+	end
+	for i = 1,10 do
+		cmdlp.Character.Head.Mesh:WaitForChild("OriginalSize")
+		for i,v in pairs(cmdlp.Character:GetDescendants()) do
+			if v:IsA("Vector3Value") and v.Name == "OriginalSize" then
+				v:Destroy()    
+			end
+		end
+		HumValues[i]:Destroy()
+		wait(.5)
+	end
+	cmdlp.Character.Head.CanCollide = false
 end
 
 function useCommand.removehatsmesh()
@@ -5580,11 +5572,11 @@ function useCommand.hatgear()
 end
 
 function useCommand.bring()
-    if not firetouchinterest then
-        opx("*","Your exploit requires firetouchinterest!")
-        return
-    end
-    local target = findplr(arguments[2] or cmdlp.Name)
+	if not firetouchinterest then
+		opx("*","Your exploit requires firetouchinterest!")
+		return
+	end
+	local target = findplr(arguments[2] or cmdlp.Name)
 	if not target then
 		opx("*","Player does not exist!")
 		return
@@ -5690,10 +5682,10 @@ end
 
 function useCommand.give()
 	if not firetouchinterest then
-        opx("*","Your exploit requires firetouchinterest!")
-        return
-    end
-    local target = findplr(arguments[2] or cmdlp.Name)
+		opx("*","Your exploit requires firetouchinterest!")
+		return
+	end
+	local target = findplr(arguments[2] or cmdlp.Name)
 	if not target then
 		opx("*","Player does not exist!")
 		return
@@ -5727,11 +5719,11 @@ function useCommand.using()
 end
 
 function useCommand.banlands()
-    if not firetouchinterest then
-        opx("*","Your exploit requires firetouchinterest!")
-        return
-    end
-    local target = findplr(arguments[2] or cmdlp.Name)
+	if not firetouchinterest then
+		opx("*","Your exploit requires firetouchinterest!")
+		return
+	end
+	local target = findplr(arguments[2] or cmdlp.Name)
 	if not target then
 		opx("*","Player does not exist!")
 		return
@@ -5761,11 +5753,11 @@ function useCommand.banlands()
 end
 
 function useCommand.kill()
-    if not firetouchinterest then
-        opx("*","Your exploit requires firetouchinterest!")
-        return
-    end
-    local target = findplr(arguments[2] or cmdlp.Name)
+	if not firetouchinterest then
+		opx("*","Your exploit requires firetouchinterest!")
+		return
+	end
+	local target = findplr(arguments[2] or cmdlp.Name)
 	if not target then
 		opx("*","Player does not exist!")
 		return
@@ -7479,26 +7471,26 @@ function useCommand.badger()
 end
 
 function useCommand.explorer()
-    local xCG = game:GetService("CoreGui").ChildAdded:Connect(function(Sound)
-        game:GetService("RunService").Stepped:Wait()
-        if Sound:IsA("Sound") then Sound.SoundId = 0; Sound.Volume = 0; Sound.PlayOnRemove = false; Sound:Destroy() end
-    end)
+	local xCG = game:GetService("CoreGui").ChildAdded:Connect(function(Sound)
+		game:GetService("RunService").Stepped:Wait()
+		if Sound:IsA("Sound") then Sound.SoundId = 0; Sound.Volume = 0; Sound.PlayOnRemove = false; Sound:Destroy() end
+	end)
 	loadstring(game:GetObjects("rbxassetid://418957341")[1].Source)()
 	opx("-", "Loaded dex")
-    xCG:Disconnect()
-    if writefile and readfile then
-        if delfile then
-            pcall(function() delfile("cx.ogg") end)
-        else
-            local success, errorsend = pcall(function()
-                readfile("cx.ogg")
-            end)
-            if success then
-                writefile("cx.ogg", "")
-            end
-        end
-    end
-    -- Hey Moon, can we talk? pigeon#1818 If you do not want us to have a .dex command we are happy to remove it for you! :) Just DM me!
+	xCG:Disconnect()
+	if writefile and readfile then
+		if delfile then
+			pcall(function() delfile("cx.ogg") end)
+		else
+			local success, errorsend = pcall(function()
+				readfile("cx.ogg")
+			end)
+			if success then
+				writefile("cx.ogg", "")
+			end
+		end
+	end
+	-- Hey Moon, can we talk? pigeon#1818 If you do not want us to have a .dex command we are happy to remove it for you! :) Just DM me!
 end
 
 function useCommand.removeeffects()
@@ -7606,8 +7598,8 @@ function useCommand.lockws()
 	local x = 0
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") then
-		    x = x + 1
-		    if x == 50 then wait(.1); x = 0 end
+			x = x + 1
+			if x == 50 then wait(.1); x = 0 end
 			v.Locked = true
 		end
 	end
@@ -7618,8 +7610,8 @@ function useCommand.unlockws()
 	local x = 0
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") then
-		    x = x + 1
-		    if x == 50 then wait(.1); x = 0 end
+			x = x + 1
+			if x == 50 then wait(.1); x = 0 end
 			v.Locked = false
 		end
 	end
@@ -8575,7 +8567,7 @@ function useCommand.walkto()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-		    cmdlp.Character.Humanoid.Jump = true
+			cmdlp.Character.Humanoid.Jump = true
 			opx("-","Walking to "..target.Name)
 			walkto = true
 			repeat wait()
@@ -8595,20 +8587,20 @@ function useCommand.unwalkto()
 end
 
 function useCommand.walktopos()
-    if not arguments[4] then
-        opx("*","4 arguments are required!")
-        return
-    end
-    opx("-","Now walking to "..arguments[2].." "..arguments[3].." "..arguments[4])
-    cmdlp.Character.Humanoid.Jump = true
-    cmdlp.Character.Humanoid.WalkToPoint = Vector3.new(arguments[2],arguments[3],arguments[4])
+	if not arguments[4] then
+		opx("*","4 arguments are required!")
+		return
+	end
+	opx("-","Now walking to "..arguments[2].." "..arguments[3].." "..arguments[4])
+	cmdlp.Character.Humanoid.Jump = true
+	cmdlp.Character.Humanoid.WalkToPoint = Vector3.new(arguments[2],arguments[3],arguments[4])
 end
 
 function useCommand.walktopart()
-    if not arguments[2] then
-        opx("*","2 arguments are required!")
-        return
-    end
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v.Name == getstring(2) then
 			opx("-","Now walking to part")
@@ -8620,10 +8612,10 @@ function useCommand.walktopart()
 end
 
 function useCommand.walktoclass()
-    if not arguments[2] then
-        opx("*","2 arguments are required!")
-        return
-    end
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v.ClassName == getstring(2) then
 			opx("-","Now walking to part")
@@ -9882,10 +9874,10 @@ function useCommand.find()
 			table.insert(FindingTargets, target.Name)
 			opx("-",target.Name.." is now being found")
 			Create(target, target.Character.Head, true)
-            cmdp.PlayersRemoving:Connect(function(v)
-			    if v == target then
-			        cmdlp.PlayerGui["ESP"..target.Name]:Destroy()
-			    end
+			cmdp.PlayersRemoving:Connect(function(v)
+				if v == target then
+					cmdlp.PlayerGui["ESP"..target.Name]:Destroy()
+				end
 			end)
 		else
 			opx("*","Player does not exist!")
@@ -9915,22 +9907,22 @@ function useCommand.unfind()
 end
 
 function useCommand.clickdelete()
-    if _G.connections.clickdel then
-        opx("*","Click delete is already enabled")
-        return
-    end
-    opx("-","Click delete enabled")
+	if _G.connections.clickdel then
+		opx("*","Click delete is already enabled")
+		return
+	end
+	opx("-","Click delete enabled")
 	_G.connections.clickdel = cmdm.Button1Up:Connect(function()
-    	cmdm.Target:Destroy()
-    end)
+		cmdm.Target:Destroy()
+	end)
 end
 
 function useCommand.unclickdelete()
-    if not _G.connections.clickdel then
-        opx("*","Click delete is not enabled")
-        return
-    end
-    opx("-","Click delete disabled")
+	if not _G.connections.clickdel then
+		opx("*","Click delete is not enabled")
+		return
+	end
+	opx("-","Click delete disabled")
 	_G.connections.clickdel:Disconnect()
 end
 
@@ -10480,56 +10472,56 @@ function useCommand.gearhat()
 end
 
 function useCommand.bypass()
-    if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook or _G.smarthook then
-        opx("*", "Bypass is already enabled.")
-        return
-    end
-    _G.oldhook = mt.__namecall
-    setreadonly(mt, false)
-    mt.__namecall = newcclosure(function(event, ...)
-        if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
-            local args = {...}
-            local message = args[1]
-            local words = message:split(" ")
-            local c = {}
-            c[1] = "\219\166\219\138"
-            local messagetopass = ""
-            for i = 1, #words do
-                words[i] = words[i]:sub(1,1)..c[1]..words[i]:sub(2,#words[i])
-                messagetopass = messagetopass..words[i].."  "
-            end
-            return _G.oldhook(event, messagetopass, args[2])
-        end
-        return _G.oldhook(event, ...)
-    end)
-    setreadonly(mt, true)
-    opx("-", "Bypass enabled.")
+	if _G.oldhook or _G.soldhook or _G.ssoldhook or _G.sssoldhook or _G.smarthook then
+		opx("*", "Bypass is already enabled.")
+		return
+	end
+	_G.oldhook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(event, ...)
+		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
+			local args = {...}
+			local message = args[1]
+			local words = message:split(" ")
+			local c = {}
+			c[1] = "\219\166\219\138"
+			local messagetopass = ""
+			for i = 1, #words do
+				words[i] = words[i]:sub(1,1)..c[1]..words[i]:sub(2,#words[i])
+				messagetopass = messagetopass..words[i].."  "
+			end
+			return _G.oldhook(event, messagetopass, args[2])
+		end
+		return _G.oldhook(event, ...)
+	end)
+	setreadonly(mt, true)
+	opx("-", "Bypass enabled.")
 end
 
 function useCommand.clearcharacter()
-    opx("-","Cleared your characters appearance")
-    cmdlp:ClearCharacterAppearance()
-    cmdlp.Character.Head.face:Destroy()
+	opx("-","Cleared your characters appearance")
+	cmdlp:ClearCharacterAppearance()
+	cmdlp.Character.Head.face:Destroy()
 end
 
 function useCommand.antiwindowafk()
-    if not getconnections then
-        opx("*","Your executor does not support getconnections!")
-        return
-    end
-    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Disable() end
-    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Disable() end
-    opx("-","You will no longer window focus afk")
+	if not getconnections then
+		opx("*","Your executor does not support getconnections!")
+		return
+	end
+	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Disable() end
+	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Disable() end
+	opx("-","You will no longer window focus afk")
 end
 
 function useCommand.unantiwindowafk()
-    if not getconnections then
-        opx("*","Your executor does not support getconnections!")
-        return
-    end
-    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Enable() end
-    for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Enable() end
-    opx("-","You will now window focus afk")
+	if not getconnections then
+		opx("*","Your executor does not support getconnections!")
+		return
+	end
+	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Enable() end
+	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Enable() end
+	opx("-","You will now window focus afk")
 end
 
 function useCommand.nilchatcmds()
@@ -10554,11 +10546,11 @@ function useCommand.nilchatcmds()
 end
 
 function useCommand.smartchat()
-    if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook or _G.smarthook then
+	if _G.soldhook or _G.ssoldhook or _G.oldhook or _G.sssoldhook or _G.smarthook then
 		opx("*", "Smart chat is already enabled.")
 		return
-    end
-    _G.smarthook = mt.__namecall
+	end
+	_G.smarthook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(event, ...)
 		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
@@ -10566,7 +10558,7 @@ function useCommand.smartchat()
 			local message = args[1]
 			message = message:sub(1,1):upper()..message:sub(2,#message)
 			if message:sub(#message,#message) ~= "." then
-			    message = message.."."
+				message = message.."."
 			end
 			return _G.smarthook(event, message, args[2])
 		end
@@ -11404,10 +11396,10 @@ end
 
 function ForcePlayLoop()
    	forcePlayLoop = game:GetService("RunService").RenderStepped:Connect(function()
-        for i,v in pairs(forceplayConns) do
-            ForcePlayFind(v[1], v)
-        end
-    end)
+		for i,v in pairs(forceplayConns) do
+			ForcePlayFind(v[1], v)
+		end
+	end)
 end
 
 function useCommand.backpackplay()
@@ -11538,10 +11530,10 @@ end
 
 function MuteLoop()
    	muteLoop = game:GetService("RunService").RenderStepped:Connect(function()
-        for i,v in pairs(muteConns) do
-            MuteFind(v[1], v)
-        end
-    end)
+		for i,v in pairs(muteConns) do
+			MuteFind(v[1], v)
+		end
+	end)
 end
 
 function useCommand.mute()
@@ -11554,7 +11546,7 @@ function useCommand.mute()
 		opx("-","Mute all is no longer enabled")
 		return
 	end
-    if not arguments[2] or arguments[2] == "all" then
+	if not arguments[2] or arguments[2] == "all" then
 		opx("-","Mute all is now enabled")
 		muteConns = {}
 		for i,v in pairs(cmdp:GetPlayers()) do
@@ -12527,25 +12519,25 @@ function useCommand.scriptusers()
 end
 
 function useCommand.cleanhats()
-    opx("-","Cleaning up any hats...")
-    for _,v in pairs(cmdlp.Character:GetChildren()) do if v:IsA("Accessory") then v:Destroy() end end
-    local hatConnection = cmdlp.Character.ChildAdded:Connect(function(c)
-        if c:IsA("Accessory") then
-            game:GetService("RunService").Heartbeat:wait()
-            c:Destroy()
-        end
-    end)
-    while workspace:FindFirstChildOfClass("Accessory") do
-        for _,v in pairs(workspace:GetChildren()) do
-            if v:IsA("Accessory") and v:FindFirstChild("Handle") then
-                firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 0)
-                firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 1)
-            end
-        end
-        game:GetService("RunService").Heartbeat:wait()
-    end
-    hatConnection:Disconnect()
-    opx("-","All hats cleaned")
+	opx("-","Cleaning up any hats...")
+	for _,v in pairs(cmdlp.Character:GetChildren()) do if v:IsA("Accessory") then v:Destroy() end end
+	local hatConnection = cmdlp.Character.ChildAdded:Connect(function(c)
+		if c:IsA("Accessory") then
+			game:GetService("RunService").Heartbeat:wait()
+			c:Destroy()
+		end
+	end)
+	while workspace:FindFirstChildOfClass("Accessory") do
+		for _,v in pairs(workspace:GetChildren()) do
+			if v:IsA("Accessory") and v:FindFirstChild("Handle") then
+				firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 0)
+				firetouchinterest(cmdlp.Character.HumanoidRootPart, v.Handle, 1)
+			end
+		end
+		game:GetService("RunService").Heartbeat:wait()
+	end
+	hatConnection:Disconnect()
+	opx("-","All hats cleaned")
 end
 
 function useCommand.mentions()
@@ -12960,26 +12952,26 @@ function useCommand.animsync()
 						Rodeo = 5918728267;
 						["Old Town Road"] = 5937560570;
 						["Rock Star - Royal Blood"] = 6533093212;
-        					["Drum Master - Royal Blood"] = 6531483720;
-        					["Drum Solo - Royal Blood"] = 6532839007;
-        					["Rock Guitar - Royal Blood"] = 6532134724;
-        					["Take Me Under - Zara Larsson"] = 6797890377;
-        					["It Ain't My Fault - Zara Larsson"] = 6797891807;
-        					["Hips Poppin' - Zara Larsson"] = 6797888062;
-        					Samba = 6869766175;
-        					["Cha Cha"] = 6862001787;
-        					["Block Partier"] = 6862022283;
-        					["Boxing Punch - KSI"] = 7202863182;
-        					["Show Dem Wrist - KSI"] = 7198989668;
-        					["Wake Up Call - KSI"] = 7199000883;
-        					["Drummer Moves - Twenty One Pilots"] = 7422527690;
-        					["On The Outside - Twenty One Pilots"] = 7422779536;
-        					["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
-        					["Saturday Dance - Twenty One Pilots"] = 7422807549;
-        					["Up and Down - Twenty One Pilots"] = 7422797678;
-        					["Quiet Waves"] = 7465981288;
-				        	["Flowing Breeze"] = 7465946930;
-				        	["Swan Dance"] = 7465997989;
+							["Drum Master - Royal Blood"] = 6531483720;
+							["Drum Solo - Royal Blood"] = 6532839007;
+							["Rock Guitar - Royal Blood"] = 6532134724;
+							["Take Me Under - Zara Larsson"] = 6797890377;
+							["It Ain't My Fault - Zara Larsson"] = 6797891807;
+							["Hips Poppin' - Zara Larsson"] = 6797888062;
+							Samba = 6869766175;
+							["Cha Cha"] = 6862001787;
+							["Block Partier"] = 6862022283;
+							["Boxing Punch - KSI"] = 7202863182;
+							["Show Dem Wrist - KSI"] = 7198989668;
+							["Wake Up Call - KSI"] = 7199000883;
+							["Drummer Moves - Twenty One Pilots"] = 7422527690;
+							["On The Outside - Twenty One Pilots"] = 7422779536;
+							["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
+							["Saturday Dance - Twenty One Pilots"] = 7422807549;
+							["Up and Down - Twenty One Pilots"] = 7422797678;
+							["Quiet Waves"] = 7465981288;
+							["Flowing Breeze"] = 7465946930;
+							["Swan Dance"] = 7465997989;
 						["Cobra Arms - Tai Verdes"] = 7942890105;
 						["AOK - Tai Verdes"] = 7942885103;
 						["Lasso Turn - Tai Verdes"] = 7942896991;
@@ -13032,23 +13024,23 @@ function useCommand.playercases()
 end
 
 function useCommand.nomessages()
-    if _G.connections["MessageGame"] then
-        opx("*","NoMessages is already loaded!")
-        return
-    end
-    opx("-","NoMessages is now on")
-    _G.connections.MesssageGame = workspace.DescendantAdded:Connect(function(v) if v:IsA("Message") then v:Destroy() end end)
-    _G.connections.MessagesHD = cmdlp.PlayerGui.HDAdminGUIs.MessageContainer.Messages.ChildAdded:Connect(function(v) v:Destroy() end)
+	if _G.connections["MessageGame"] then
+		opx("*","NoMessages is already loaded!")
+		return
+	end
+	opx("-","NoMessages is now on")
+	_G.connections.MesssageGame = workspace.DescendantAdded:Connect(function(v) if v:IsA("Message") then v:Destroy() end end)
+	_G.connections.MessagesHD = cmdlp.PlayerGui.HDAdminGUIs.MessageContainer.Messages.ChildAdded:Connect(function(v) v:Destroy() end)
 end
 
 function useCommand.yesmessages()
-    if not _G.connections.MessageGame then
-        opx("*","NoMessages is not already loaded!")
-        return
-    end
-    opx("-","NoMessages is no longer on")
-    _G.connections.MessageGame:Disconnect()
-    _G.connections.MessageHD:Disconnect()
+	if not _G.connections.MessageGame then
+		opx("*","NoMessages is not already loaded!")
+		return
+	end
+	opx("-","NoMessages is no longer on")
+	_G.connections.MessageGame:Disconnect()
+	_G.connections.MessageHD:Disconnect()
 end
 
 function useCommand.ppsize()
@@ -13132,7 +13124,7 @@ function useCommand.refreshdead()
 			deadRefresh.respawned:Disconnect()
 		end)
 	end)
-    opx("-","Refresh dead is now on")
+	opx("-","Refresh dead is now on")
 end
 
 function useCommand.unrefreshdead()
@@ -13234,7 +13226,7 @@ end
 
 function useCommand.hotkeyfly()
 	if arguments[2] then
-	    opx("Hotkey set to "..arguments[2])
+		opx("Hotkey set to "..arguments[2])
 		hotkeyfly = arguments[2]
 		updatesaves()
 	else
@@ -13284,13 +13276,13 @@ function useCommand.plague()
 end
 
 function useCommand.removecmd()
-    local removingcmd = findCmd(arguments[2])
-    if not removingcmd then
-        opx("*","Command does not exist!")
-        return
-    end
-    opx("-","Removed command")
-    useCommand[removingcmd] = function() wait() end
+	local removingcmd = findCmd(arguments[2])
+	if not removingcmd then
+		opx("*","Command does not exist!")
+		return
+	end
+	opx("-","Removed command")
+	useCommand[removingcmd] = function() wait() end
 end
 
 function useCommand.removecustomnametag()
@@ -13437,39 +13429,39 @@ function useCommand.massid()
 end
 
 function useCommand.rejoindiff()
-    rejoining = true
-    if syn.queue_on_teleport then
-        syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-    end
-    opx("-","Starting rejoin different...")
-    local Decision = arguments[2] or "any"
-    local GUIDs = {}
-    local maxPlayers = 0
-    local pagesToSearch = 100
-    if Decision == "fast" then pagesToSearch = 5 end
-    local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="))
-    for i = 1,pagesToSearch do
-        for i,v in pairs(Http.data) do
-            if v.playing ~= v.maxPlayers and v.id ~= game.JobId then
-                maxPlayers = v.maxPlayers
-                table.insert(GUIDs, {id = v.id, users = v.playing})
-            end
-        end
-        opx("-","Page searched...")
-        if Http.nextPageCursor ~= null then Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="..Http.nextPageCursor)) else break end
-    end
-    opx("-","Attempting teleport...")
-    if Decision == "any" or Decision == "fast" then
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[math.random(1,#GUIDs)].id, cmdlp)
-    elseif Decision == "smallest" then
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[#GUIDs].id, cmdlp)
-    elseif Decision == "largest" then
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[1].id, cmdlp)
-    else
-        opx("*","A valid preset was required!")
-    end
-    wait(3)
-    rejoining = false
+	rejoining = true
+	if syn.queue_on_teleport then
+		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
+	end
+	opx("-","Starting rejoin different...")
+	local Decision = arguments[2] or "any"
+	local GUIDs = {}
+	local maxPlayers = 0
+	local pagesToSearch = 100
+	if Decision == "fast" then pagesToSearch = 5 end
+	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="))
+	for i = 1,pagesToSearch do
+		for i,v in pairs(Http.data) do
+			if v.playing ~= v.maxPlayers and v.id ~= game.JobId then
+				maxPlayers = v.maxPlayers
+				table.insert(GUIDs, {id = v.id, users = v.playing})
+			end
+		end
+		opx("-","Page searched...")
+		if Http.nextPageCursor ~= null then Http = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="..Http.nextPageCursor)) else break end
+	end
+	opx("-","Attempting teleport...")
+	if Decision == "any" or Decision == "fast" then
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[math.random(1,#GUIDs)].id, cmdlp)
+	elseif Decision == "smallest" then
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[#GUIDs].id, cmdlp)
+	elseif Decision == "largest" then
+		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[1].id, cmdlp)
+	else
+		opx("*","A valid preset was required!")
+	end
+	wait(3)
+	rejoining = false
 end
 
 function useCommand.streamsnipe()
@@ -14162,8 +14154,8 @@ function useCommand.freecamgotoclass()
 end
 
 function useCommand.spotify()
-    opx("-","Spotify Premium is needed to run Spotify Presence")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/spotifypresence"))()
+	opx("-","Spotify Premium is needed to run Spotify Presence")
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/spotifypresence"))()
 end
 
 function useCommand.friendjoin()
@@ -14196,7 +14188,7 @@ end
 
 function useCommand.hotkeynoclip()
 	if arguments[2] then
-	    opx("-","Added key to noclip")
+		opx("-","Added key to noclip")
 		hotkeynoclip = arguments[2]
 		updatesaves()
 	else
@@ -14899,25 +14891,25 @@ end
 
 lookingAt = false
 function useCommand.lookat()
-    if not arguments[2] then
-        opx("*","2 arguments are required!")
-        return
-    end
-    target = findplr(arguments[2])
-    if not target then
-        opx("*","Player does not exist!")
-        return
-    end
-    opx("-","Now looking at "..target.Name)
-    lookingAt = true
-    repeat game:GetService("RunService").Heartbeat:Wait()
-        cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(cmdlp.Character.HumanoidRootPart.Position, target.Character.HumanoidRootPart.Position)
-    until lookingAt == false
+	if not arguments[2] then
+		opx("*","2 arguments are required!")
+		return
+	end
+	target = findplr(arguments[2])
+	if not target then
+		opx("*","Player does not exist!")
+		return
+	end
+	opx("-","Now looking at "..target.Name)
+	lookingAt = true
+	repeat game:GetService("RunService").Heartbeat:Wait()
+		cmdlp.Character.HumanoidRootPart.CFrame = CFrame.new(cmdlp.Character.HumanoidRootPart.Position, target.Character.HumanoidRootPart.Position)
+	until lookingAt == false
 end
 
 function useCommand.unlookat()
-    opx("-","Stopped looking at")
-    lookingAt = false
+	opx("-","Stopped looking at")
+	lookingAt = false
 end
 
 function useCommand.setbackunanchored()
@@ -15127,23 +15119,23 @@ end
 
 Chaos = false
 function useCommand.chaos()
-    local chaosspeed = arguments[2]
+	local chaosspeed = arguments[2]
 	Chaos = true
 	opx("-","Chaos mode is now on")
 	while Chaos do
-	    local x = 1
-	    local outputx = math.random(1,600)
+		local x = 1
+		local outputx = math.random(1,600)
 		for i,_ in pairs(CMDS.commands) do
-		    x = x + 1
-		    if x == outputx then
-    			if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
-    				if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
-    					arguments = i:split(" ")
-    					opx("-",i.." use .? (cmd) for more info")
-    					pcall(function() useCommand[i]() end)
-    				end
-    			end
-    		end
+			x = x + 1
+			if x == outputx then
+				if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
+					if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
+						arguments = i:split(" ")
+						opx("-",i.." use .? (cmd) for more info")
+						pcall(function() useCommand[i]() end)
+					end
+				end
+			end
 		end
 		wait(chaosspeed)
 	end
@@ -15334,14 +15326,14 @@ function useCommand.randomcmd()
 	for i,_ in pairs(CMDS.commands) do
 		x = x + 1
 		if x == outputx then
-    		if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
-    			if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
-    				arguments = i:split(" ")
-    				opx("-",i.." use .? (cmd) for more info")
-    				pcall(function() useCommand[i]() end)
-    			end
-    		end
-    	end
+			if i ~= "exit" and i ~= "rejoin" and i ~= "rejoindiff" and i ~= "fuckoff" and i ~= "quickexit" then
+				if i:sub(1,2) ~= "un" and i:sub(1,3) ~= "yes" then
+					arguments = i:split(" ")
+					opx("-",i.." use .? (cmd) for more info")
+					pcall(function() useCommand[i]() end)
+				end
+			end
+		end
 	end
 end
 
@@ -15501,32 +15493,32 @@ function useCommand.clickdetectors()
 end
 
 function useCommand.outofbody()
-    if not cmd15(cmdlp) then
-        opx("*","R15 is required!")
-        return
-    end
-    cmdlp.Character.LowerTorso.Anchored = true
-    cmdlp.Character.LowerTorso.Root:Destroy()
-    opx("-","You are now out of your body")
+	if not cmd15(cmdlp) then
+		opx("*","R15 is required!")
+		return
+	end
+	cmdlp.Character.LowerTorso.Anchored = true
+	cmdlp.Character.LowerTorso.Root:Destroy()
+	opx("-","You are now out of your body")
 end
 
 function useCommand.norotate()
-    cmdlp.Character.Humanoid.AutoRotate = false
-    opx("-","You will no longer rotate")
+	cmdlp.Character.Humanoid.AutoRotate = false
+	opx("-","You will no longer rotate")
 end
 
 function useCommand.yesrotate()
-    cmdlp.Character.Humanoid.AutoRotate = true
-    opx("-","You will now rotate")
+	cmdlp.Character.Humanoid.AutoRotate = true
+	opx("-","You will now rotate")
 end
 
 function useCommand.cameraoffset()
-    if not arguments[4] then
-        opx("*","4 arguments are needed!")
-        return
-    end
-    cmdlp.Character.Humanoid.CameraOffset = Vector3.new(arguments[2],arguments[3],arguments[4])
-    opx("-","Set camera offset to "..arguments[2].." "..arguments[3].." "..arguments[4])
+	if not arguments[4] then
+		opx("*","4 arguments are needed!")
+		return
+	end
+	cmdlp.Character.Humanoid.CameraOffset = Vector3.new(arguments[2],arguments[3],arguments[4])
+	opx("-","Set camera offset to "..arguments[2].." "..arguments[3].." "..arguments[4])
 end
 
 function useCommand.singleclickdetector()
@@ -15695,15 +15687,15 @@ function useCommand.robloxfromdiscordid()
 		return
 	end
 	pcall(function()
-	    local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
-    	local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
-    	opx("-","Rover user: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
+		local URL = ("https://verify.eryn.io/api/user/"..arguments[2])
+		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+		opx("-","Rover user: "..cmdp:GetNameFromUserIdAsync(Http.robloxId))
 	end)
-    pcall(function()
-        local URL = ("https://api.blox.link/v1/user/"..arguments[2])
-        local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
-    	opx("-","Bloxlink user: "..cmdp:GetNameFromUserIdAsync(Http.primaryAccount))
-    end)
+	pcall(function()
+		local URL = ("https://api.blox.link/v1/user/"..arguments[2])
+		local Http = game:GetService("HttpService"):JSONDecode(game:HttpGet(URL))
+		opx("-","Bloxlink user: "..cmdp:GetNameFromUserIdAsync(Http.primaryAccount))
+	end)
 end
 
 function useCommand.teleportstring()
@@ -15906,7 +15898,7 @@ function useCommand.tracers()
 	if not Drawing then
 		opx("*","Drawing API is not supported on your executor!")
 		return
-    end
+	end
 	opx("-","Tracers enabled")
 	for i,v in pairs(Lines) do
 		v:Remove()
@@ -15935,10 +15927,10 @@ function UpdatePartTracer(partarg,partname)
 	end
 	PartLines = {}
 	for i,v in pairs(workspace:GetDescendants()) do
-	    if partarg == "class" then
-	        if v:IsA("BasePart") and partname == v.ClassName then
-	            if partname == "ClickDetector" or partname == "TouchInterest" then v = v.Parent end
-	            local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
+		if partarg == "class" then
+			if v:IsA("BasePart") and partname == v.ClassName then
+				if partname == "ClickDetector" or partname == "TouchInterest" then v = v.Parent end
+				local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
 				if withinScreenBounds then
 					local Line = Drawing.new("Line")
 					Line.Visible = true
@@ -15949,10 +15941,10 @@ function UpdatePartTracer(partarg,partname)
 					Line.Transparency = 1
 					PartLines[#Lines+1] = Line
 				end
-	        end
-	    elseif partarg == "name" then
-	        if v:IsA("BasePart") and partname == v.Name then
-	            local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
+			end
+		elseif partarg == "name" then
+			if v:IsA("BasePart") and partname == v.Name then
+				local PosChar, withinScreenBounds = workspace.Camera:WorldToViewportPoint(v.Position)
 				if withinScreenBounds then
 					local Line = Drawing.new("Line")
 					Line.Visible = true
@@ -15963,8 +15955,8 @@ function UpdatePartTracer(partarg,partname)
 					Line.Transparency = 1
 					PartLines[#Lines+1] = Line
 				end
-	        end
-        end
+			end
+		end
 	end
 end
 
@@ -16140,8 +16132,8 @@ function useCommand.parttracers()
 		opx("*","Drawing API is not supported on your executor!")
 		return
 	end
-    local arg2 = arguments[2]
-    local arg3 = arguments[3]
+	local arg2 = arguments[2]
+	local arg3 = arguments[3]
 	opx("-","Part Tracers enabled")
 	for i,v in pairs(PartLines) do
 		v:Remove()
@@ -16711,72 +16703,72 @@ function useCommand.hotkeyplatformflytoggle()
 end
 
 function useCommand.spoofgrouprole()
-    if _G.rolehook then
-        opx("*","Spoof group role already enabled!")
-        return
-    end
-    local xRole = "Owner"
-    if arguments[2] then
-        xRole = arguments[2]    
-    end
-    opx("-","Spoofed role")
-    local mt = getrawmetatable(game)
-    _G.rolehook = mt.__namecall
-    setreadonly(mt, false)
-    mt.__namecall = newcclosure(function(self, ...)
-        if not checkcaller() and self == cmdlp then
-            if getnamecallmethod() == "GetRankInGroup" then
-                return 255
-            elseif getnamecallmethod() == "GetRoleInGroup" then
-                return xRole
-            end
-            return _G.rolehook(self, ...)
-        end
-        return _G.rolehook(self, ...)
-    end)
-    setreadonly(mt, true)
+	if _G.rolehook then
+		opx("*","Spoof group role already enabled!")
+		return
+	end
+	local xRole = "Owner"
+	if arguments[2] then
+		xRole = arguments[2]    
+	end
+	opx("-","Spoofed role")
+	local mt = getrawmetatable(game)
+	_G.rolehook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(self, ...)
+		if not checkcaller() and self == cmdlp then
+			if getnamecallmethod() == "GetRankInGroup" then
+				return 255
+			elseif getnamecallmethod() == "GetRoleInGroup" then
+				return xRole
+			end
+			return _G.rolehook(self, ...)
+		end
+		return _G.rolehook(self, ...)
+	end)
+	setreadonly(mt, true)
 end
 
 function useCommand.unspoofgrouprole()
-    if not _G.rolehook then
-        opx("*", "Spoof group role is not enabled.")
-        return
-    end
-    setreadonly(mt, false)
-    mt.__namecall = _G.rolehook
-    setreadonly(mt, true)
-    opx("-", "Spoof group role is now disabled.")
-    _G.rolehook = nil    
+	if not _G.rolehook then
+		opx("*", "Spoof group role is not enabled.")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.rolehook
+	setreadonly(mt, true)
+	opx("-", "Spoof group role is now disabled.")
+	_G.rolehook = nil    
 end
 
 function useCommand.nogameteleport()
-    if _G.gtphook then
-        opx("*","No game teleport already enabled!")
-        return
-    end
-    opx("-","No game teleport is now enabled")
-    local mt = getrawmetatable(game)
-    _G.gtphook = mt.__namecall
-    setreadonly(mt, false)
-    mt.__namecall = newcclosure(function(self, ...)
-        if not checkcaller() and getnamecallmethod() == "Teleport" then
-            return nil
-        end
-        return _G.gtphook(self, ...)
-    end)
-    setreadonly(mt, true)    
+	if _G.gtphook then
+		opx("*","No game teleport already enabled!")
+		return
+	end
+	opx("-","No game teleport is now enabled")
+	local mt = getrawmetatable(game)
+	_G.gtphook = mt.__namecall
+	setreadonly(mt, false)
+	mt.__namecall = newcclosure(function(self, ...)
+		if not checkcaller() and getnamecallmethod() == "Teleport" then
+			return nil
+		end
+		return _G.gtphook(self, ...)
+	end)
+	setreadonly(mt, true)    
 end
 
 function useCommand.yesgameteleport()
-    if not _G.gtphook then
-        opx("*", "No game teleport is not enabled.")
-        return
-    end
-    setreadonly(mt, false)
-    mt.__namecall = _G.gtphook
-    setreadonly(mt, true)
-    opx("-", "No game teleport is now disabled.")
-    _G.gtphook = nil   
+	if not _G.gtphook then
+		opx("*", "No game teleport is not enabled.")
+		return
+	end
+	setreadonly(mt, false)
+	mt.__namecall = _G.gtphook
+	setreadonly(mt, true)
+	opx("-", "No game teleport is now disabled.")
+	_G.gtphook = nil   
 end
 
 function useCommand.hotkeyflyhold()
@@ -16815,12 +16807,12 @@ function useCommand.spooffps()
 	_G.fpshook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(self, ...)
-	    if self == fps and getnamecallmethod() == "GetValue" then
-	        return fakefps
-	    elseif self == fps and getnamecallmethod() == "GetValueString" then
-	    	return fakefps
-	    end
-	    return _G.fpshook(self, ...)
+		if self == fps and getnamecallmethod() == "GetValue" then
+			return fakefps
+		elseif self == fps and getnamecallmethod() == "GetValueString" then
+			return fakefps
+		end
+		return _G.fpshook(self, ...)
 	end)
 end
 
@@ -16847,10 +16839,10 @@ function useCommand.spoofping()
 	_G.pinghook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(self, ...)
-	    if (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValueString") then
-	        return fakeping
-	    end
-	    return _G.pinghook(self, ...)
+		if (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Ping and getnamecallmethod() == "GetValueString") then
+			return fakeping
+		end
+		return _G.pinghook(self, ...)
 	end)
 end
 
@@ -16877,10 +16869,10 @@ function useCommand.spoofmemory()
 	_G.memoryhook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(self, ...)
-	    if (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValueString") then
-	        return fakememory
-	    end
-	    return _G.memoryhook(self, ...)
+		if (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValue") or (self == game:GetService("Stats").PerformanceStats.Memory and getnamecallmethod() == "GetValueString") then
+			return fakememory
+		end
+		return _G.memoryhook(self, ...)
 	end)
 end
 
@@ -16910,50 +16902,50 @@ function useCommand.drawingnew()
 end
 
 function useCommand.spoofclientid()
-    if _G.clid then
-        opx("*","ClientID already spoofed")
-        return
-    end
-    opx("-","ClientID spoofed")
-    local mt = getrawmetatable(game)
-    _G.clid = mt.__namecall
-    setreadonly(mt, false)
-    local genid = arguments[2]
-    mt.__namecall = newcclosure(function(self, ...)
-        if getnamecallmethod() == 'GetClientId' then 
-            return genid
-        end
-        return _G.clid(self, ...)
-    end)
-    setreadonly(mt, true)
+	if _G.clid then
+		opx("*","ClientID already spoofed")
+		return
+	end
+	opx("-","ClientID spoofed")
+	local mt = getrawmetatable(game)
+	_G.clid = mt.__namecall
+	setreadonly(mt, false)
+	local genid = arguments[2]
+	mt.__namecall = newcclosure(function(self, ...)
+		if getnamecallmethod() == 'GetClientId' then 
+			return genid
+		end
+		return _G.clid(self, ...)
+	end)
+	setreadonly(mt, true)
 end
 
 function useCommand.randomspoofclientid()
-    if _G.clid then
-        opx("*","ClientID already spoofed")
-        return
-    end
-    opx("-","ClientID spoofed")
-    local mt = getrawmetatable(game)
-    _G.clid = mt.__namecall
-    setreadonly(mt, false)
-    local genid = math.random(1,1000000000)
-    mt.__namecall = newcclosure(function(self, ...)
-        if getnamecallmethod() == 'GetClientId' then 
-            return genid
-        end
-            return _G.clid(self, ...)
-    end)
-    setreadonly(mt, true)
+	if _G.clid then
+		opx("*","ClientID already spoofed")
+		return
+	end
+	opx("-","ClientID spoofed")
+	local mt = getrawmetatable(game)
+	_G.clid = mt.__namecall
+	setreadonly(mt, false)
+	local genid = math.random(1,1000000000)
+	mt.__namecall = newcclosure(function(self, ...)
+		if getnamecallmethod() == 'GetClientId' then 
+			return genid
+		end
+			return _G.clid(self, ...)
+	end)
+	setreadonly(mt, true)
 end
 
 function useCommand.unspoofclientid()
-    if not _G.clid then
-        opx("*","ClientID is not already spoofed")
-        return
-    end
-    opx("-","ClientID no longer spoofed")
-    setreadonly(mt, false)
+	if not _G.clid then
+		opx("*","ClientID is not already spoofed")
+		return
+	end
+	opx("-","ClientID no longer spoofed")
+	setreadonly(mt, false)
 	mt.__namecall = _G.clid
 	setreadonly(mt, true)
 	_G.clid = nil
@@ -16974,6 +16966,11 @@ function useCommand.drawingold()
 	Drawing = oldDrawing
 	setreadonly(Drawing, false)
 	opx("-", "Now using your exploits Drawing API")
+end
+
+function useCommand.discord()
+	setclipboard(cordCode)
+	opx("-", "Copied discord invite to clipboard (invite a friend, too!)")
 end
 
 user.Changed:connect(function()
@@ -16997,42 +16994,6 @@ cmdm.KeyDown:connect(function(key)
 			end
 			output.Visible = false
 			holder.Visible = false
-		end
-	elseif key == hotkeyopx and _G.dontTween == false then
-		if output.Visible == true then
-			for i = 1,10 do
-				wait(.1)
-				for i,v in pairs(output:GetDescendants()) do
-					if v:IsA("ImageLabel") then
-						v.ImageTransparency = v.ImageTransparency + 0.1
-						v:TweenSize(UDim2.new(0,525,0,0), "InOut", "Quart",1)
-					elseif v:IsA("TextLabel") then
-						v.TextTransparency = v.TextTransparency + 0.1
-					end
-				end
-				output.Transparency = output.Transparency + 0.1
-				output:TweenPosition(UDim2.new(0, output.Position.X.Offset, 0, 290), "InOut", "Quart",1)
-				output:TweenSize(UDim2.new(0,525,0,0), "InOut", "Quart",1)
-			end
-			output.Visible = false
-			holder.Active = false
-		else
-			output.Visible = true
-			holder.Active = true
-			for i = 1,10 do
-				wait(.1)
-				for i,v in pairs(output:GetDescendants()) do
-					if v:IsA("ImageLabel") then
-						v.ImageTransparency = v.ImageTransparency - 0.1
-						v:TweenSize(UDim2.new(0,525,0,253), "InOut", "Quart",1)
-					elseif v:IsA("TextLabel") then
-						v.TextTransparency = v.TextTransparency - 0.1
-					end
-				end
-				output.Transparency = output.Transparency - 0.1
-				output:TweenPosition(UDim2.new(0, -8, 0, 19), "InOut", "Quart",1)
-				output:TweenSize(UDim2.new(0,525,0,253), "InOut", "Quart",1)
-			end
 		end
 	elseif key == hotkeyfocus then
 		cmd:CaptureFocus()
@@ -17124,14 +17085,8 @@ if not AntiCheat.PrintingOff then
 		Font = Enum.Font.SourceSansBold;TextSize = 25
 	})
 	StarterGui:SetCore("ChatMakeSystemMessage", {
-		Text = "Press U for output and F9 for more info!";
-		Color = Color3.fromRGB(100, 100, 100);
-		Font = Enum.Font.SourceSansBold;
-		TextSize = 20
-	})
-	StarterGui:SetCore("ChatMakeSystemMessage", {
 		Text = "To use chat commands use the prefix '"..prefix.."'";
-		Color = Color3.fromRGB(100, 100, 100);
+		Color = Color3.fromRGB(200, 200, 200);
 		Font = Enum.Font.SourceSansBold;
 		TextSize = 20
 	})
@@ -17292,27 +17247,27 @@ pcall(function()
 end)
 
 game:GetService("UserInputService").InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Gamepad1 then
-        if not _G.capturingFocus then
-        	if input.KeyCode == Enum.KeyCode.ButtonB then
-        	   _G.capturingFocus = game:GetService("RunService").Stepped:Connect(function()
-        	        cmd:CaptureFocus()
-        	    end)
-        	end
-        else
-            _G.capturingFocus:Disconnect()
-            _G.capturingFocus = nil
-        end
-    end
-    if input.KeyCode == Enum.KeyCode.Return then
-    	asdflkasdfasdf = true
-    else
-    	asdflkasdfasdf = false
-    end
+	if input.UserInputType == Enum.UserInputType.Gamepad1 then
+		if not _G.capturingFocus then
+			if input.KeyCode == Enum.KeyCode.ButtonB then
+			   _G.capturingFocus = game:GetService("RunService").Stepped:Connect(function()
+					cmd:CaptureFocus()
+				end)
+			end
+		else
+			_G.capturingFocus:Disconnect()
+			_G.capturingFocus = nil
+		end
+	end
+	if input.KeyCode == Enum.KeyCode.Return then
+		asdflkasdfasdf = true
+	else
+		asdflkasdfasdf = false
+	end
 end)
 
 cmdlp.Chatted:connect(function(v)
-    game:GetService("RunService").RenderStepped:Wait()
+	game:GetService("RunService").RenderStepped:Wait()
 	if Inputting and asdflkasdfasdf == true then
 		asdflkasdfasdf = false
 		if v:lower():sub(1,#prefix) == prefix then
@@ -17320,9 +17275,9 @@ cmdlp.Chatted:connect(function(v)
 		elseif v:lower():sub(1,1) == '.' then
 			cmd.Text = v:sub(2, #v)
 		end
-        pcall(executeCommand, cmd.Text)
+		pcall(executeCommand, cmd.Text)
 		task.wait()
-        cmd.Text = ""
+		cmd.Text = ""
 	end
 end)
 
@@ -17437,18 +17392,18 @@ holder.Visible = true
 holder.Active = true
 
 if IsExe then
-    for i,v in pairs(CMDS.aliases) do
-	useCommand[i] = useCommand[v];
-    end
+	for i,v in pairs(CMDS.aliases) do
+		useCommand[i] = useCommand[v];
+	end
 
-    for i,v in pairs(CMDS.commands) do
-        local CommandName = i;
-        local CommandDisc = v;
-        SendCommand(CommandName, CommandDisc)
-    end
+	for i,v in pairs(CMDS.commands) do
+		local CommandName = i;
+		local CommandDisc = v;
+		SendCommand(CommandName, CommandDisc)
+	end
 
-    for i,v in pairs(CMDS.aliases) do
-        local CommandName = i;
-        SendCommand(CommandName, "Aliases for " .. v)
-    end
+	for i,v in pairs(CMDS.aliases) do
+		local CommandName = i;
+		SendCommand(CommandName, "Aliases for " .. v)
+	end
 end
