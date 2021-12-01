@@ -564,7 +564,7 @@ function loaddefaults()
 	combos = {}
 	drawingtype = "old"
 end
- 
+
 function updatesaves()
 	local update = {
 		text2 = text2;
@@ -590,6 +590,7 @@ function updatesaves()
 		permgravity = permgravity;
 		permmaxsl = permmaxsl;
 		Adm = Adm;
+		AdmIG = AdmIG;
 		hkBinds = hkBinds;
 		dStyle = dStyle;
 		conFly = conFly;
@@ -645,6 +646,7 @@ function loadsaves()
 	permgravity = saves.permgravity
 	permmaxsl = saves.permmaxsl
 	Adm = saves.Adm
+	AdmIG = saves.AdmIG
 	hkBinds = saves.hkBinds
 	dStyle = saves.dStyle
 	conFly = saves.conFly
@@ -710,13 +712,13 @@ function commandsLoaded()
 	return isDoneLoading()
 end
 
---[[for _,x in pairs(Adm) do
+for _,x in pairs(Adm) do
 	for _,v in pairs(cmdp:GetPlayers()) do 
 		if x == v.Name then
 			table.insert(AdmIG,x)
 		end
 	end
-end]]
+end
 
 Inputting = false
 ChatBar = nil
@@ -4308,9 +4310,9 @@ local BlacklistedADM = {
 	["dirjoin"] = "dirjoin",
 }
 for i,v in pairs(AdmIG) do
-	cmdp[AdmIG[i]].Chatted:Connect(function(a)
-		local comsToExe = cmd.Text:split(";;")
-		cmd.Text = ""
+	print(v)
+	cmdp[v].Chatted:Connect(function(a)
+		local comsToExe = a:split(";;")
 		for i,v in pairs(comsToExe) do
 			if v ~= BlacklistedADM[v] then
 				executeCommand(v)
@@ -11761,7 +11763,7 @@ function useCommand.admin()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			Adm[#Adm+1] = target.Name
+			AdmIG[#AdmIG+1] = target.Name
 			updatesaves()
 			opx("-","Added "..target.Name.." to admins, please re-execute")
 		else
@@ -11778,9 +11780,9 @@ end
 
 function useCommand.unadmin()
 	if arguments[2] then
-		for i,v in pairs(Adm) do
-			if arguments[2] == Adm[i] then
-				table.remove(Adm[i])
+		for i,v in pairs(AdmIG) do
+			if arguments[2] == AdmIG[i] then
+				table.remove(AdmIG[i])
 				updatesaves()
 			end
 		end
@@ -11792,15 +11794,15 @@ end
 
 function useCommand.admins()
 	xAdm = #Adm.." | "
-	for i,v in pairs(Adm) do
-		xAdm = xAdm..Adm[i]..", "
+	for i,v in pairs(AdmIG) do
+		xAdm = xAdm..AdmIG[i]..", "
 	end
 	opx("-","Listed admins")
 	opxL("Admins",xAdm)
 end
 
 function useCommand.adminclr()
-	Adm = {}
+	AdmIG = {}
 	updatesaves()
 	opx("-","Cleared all admins, please re-execute")
 end
