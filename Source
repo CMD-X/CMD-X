@@ -11625,7 +11625,7 @@ function useCommand.admin()
 		target = findplr(arguments[2])
 		if target then
 			AdmIG[#AdmIG+1] = target.Name
-			cmdp[v].Chatted:Connect(function(a)
+			target.Chatted:Connect(function(a)
 				local comsToExe = a:split(";;")
 				for i,v in pairs(comsToExe) do
 					if v ~= BlacklistedADM[v] then
