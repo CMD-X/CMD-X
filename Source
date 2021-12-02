@@ -12358,7 +12358,7 @@ end
 function useCommand.clearchat()
 	opx("-","Cleared chat")
 	for i = 1,3 do
-		sayremote:FireServer(string.rep("ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¸Ãƒâ€šÃ‚Â»", 200), "All")
+		sayremote:FireServer(string.rep("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â»", 200), "All")
 	end
 end
 
@@ -16997,6 +16997,8 @@ cmdm.KeyDown:connect(function(key)
 			output.Visible = false
 			holder.Visible = false
 		end
+	elseif key == 'u' then
+        output.Visible = not output.Visible
 	elseif key == hotkeyfocus then
 		cmd:CaptureFocus()
 		game:GetService("RunService").RenderStepped:Wait()
