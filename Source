@@ -404,6 +404,7 @@ local Mouses = cmdlp:GetMouse()
 cmdm = Mouses
 -- we dont have this many owners just alts
 local Devs = {
+	["Heimershinger"] = "Owner",
 	["progamer421minus1"] = "Owner",
 	["octoberboy68plus1"] = "Owner",
 	["knifemarks"] = "Owner",
