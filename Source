@@ -13018,27 +13018,26 @@ function useCommand.ungod()
 	cmdlp.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
 end
 
-function useCommand.randomchat()
-	local tbl1 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/3"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/4"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/5"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/6"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/7"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/8"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/9"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-	local r1 = math.random(1,#tbl1)
-	local r2 = math.random(1,#tbl2)
-	local r3 = math.random(1,#tbl3)
-	local r4 = math.random(1,#tbl4)
-	local r5 = math.random(1,#tbl5)
-	local r6 = math.random(1,#tbl6)
-	local r7 = math.random(1,#tbl7)
-	local r8 = math.random(1,#tbl8)
-	local r9 = math.random(1,#tbl9)
-	opx("-",tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9])
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9],"All")
+local useCommand = {}
+do
+	local dictionaryTables = {}
+
+	for iterator = 1, 9 do
+		table.insert(dictionaryTables, game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub("[\"{}]", ""):split(","))
+	end
+
+	function useCommand.randomchat()
+		local randomWords = {}
+
+		for iterator = 1, 9 do
+			table.insert(randomWords, dictionaryTables[iterator][math.random(1, #dictionaryTables[iterator])])
+		end
+
+		local chatMessage = table.concat(randomWords, " ")
+
+		opx("-", chatMessage)
+		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chatMessage, "All")
+	end
 end
 
 function useCommand.enablereset()
