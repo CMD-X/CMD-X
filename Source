@@ -357,6 +357,7 @@ end)
 setreadonly(mt, true)--]]
 
 Stand("CMD-X V2 is in development.", "Please join the discord for development updates.", "You can get the discord invite by using the .discord command.", "", "", "Continue", true)
+while not RunDude do wait() end
 
 wait(.5)
 
