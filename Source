@@ -1637,93 +1637,102 @@ function CreateStatLabel(cmd,times,today)
 end
 ---------------------------------------|
 -- Functions: -------------------------|
-function findplr(args)
-	if args == "me" then
-		return cmdlp
-	elseif args == "random" then 
-		return cmdp:GetPlayers()[math.random(1,#cmdp:GetPlayers())]
-	elseif args == "new" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.AccountAge < 30 and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "old" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.AccountAge > 30 and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "bacon" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "friend" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "notfriend" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if not v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "ally" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Team == cmdlp.Team and v ~= cmdlp then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "enemy" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Team ~= cmdlp.Team then
-				vAges[#vAges+1] = v
-			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "near" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v ~= cmdlp then
-				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
-				if math < 30 then
+function findplr(args, tbl)
+	if tbl == nil then
+		local tbl = cmdp:GetPlayers()
+		if args == "me" then
+			return cmdlp
+		elseif args == "random" then 
+			return tbl[math.random(1,#tbl)]
+		elseif args == "new" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v.AccountAge < 30 and v ~= cmdlp then
 					vAges[#vAges+1] = v
 				end
 			end
-		end
-		return vAges[math.random(1,#vAges)]
-	elseif args == "far" then
-		local vAges = {} 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v ~= cmdlp then
-				local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
-				if math > 30 then
+			return vAges[math.random(1,#vAges)]
+		elseif args == "old" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v.AccountAge > 30 and v ~= cmdlp then
 					vAges[#vAges+1] = v
 				end
 			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "bacon" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v.Character:FindFirstChild("Pal Hair") or v.Character:FindFirstChild("Kate Hair") and v ~= cmdlp then
+					vAges[#vAges+1] = v
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "friend" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
+					vAges[#vAges+1] = v
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "notfriend" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if not v:IsFriendsWith(cmdlp.UserId) and v ~= cmdlp then
+					vAges[#vAges+1] = v
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "ally" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v.Team == cmdlp.Team and v ~= cmdlp then
+					vAges[#vAges+1] = v
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "enemy" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v.Team ~= cmdlp.Team then
+					vAges[#vAges+1] = v
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "near" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v ~= cmdlp then
+					local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
+					if math < 30 then
+						vAges[#vAges+1] = v
+					end
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		elseif args == "far" then
+			local vAges = {} 
+			for _,v in pairs(tbl) do
+				if v ~= cmdlp then
+					local math = (v.Character:FindFirstChild("HumanoidRootPart").Position - cmdlp.Character.HumanoidRootPart.Position).magnitude
+					if math > 30 then
+						vAges[#vAges+1] = v
+					end
+				end
+			end
+			return vAges[math.random(1,#vAges)]
+		else 
+			for _,v in pairs(tbl) do
+				if v.Name:lower():find(args:lower()) or v.DisplayName:lower():find(args:lower()) then
+					return v
+				end
+			end
 		end
-		return vAges[math.random(1,#vAges)]
-	else 
-		for _,v in pairs(cmdp:GetPlayers()) do
-			if v.Name:lower():find(args:lower()) or v.DisplayName:lower():find(args:lower()) then
-				return v
+	else
+		for _, plr in pairs(tbl) do
+			if plr.UserName:lower():find(args:lower()) or plr.DisplayName:lower():find(args:lower()) then
+				return plr
 			end
 		end
 	end
@@ -2756,7 +2765,7 @@ CMDS.usage = {
 	["entercmddel"] = "(str)",
 	["eightballpu"] = "(str)",
 	["eightballpr"] = "(str)",
-	["friendjoin"] = "(full plr name)",
+	["friendjoin"] = "(friend name)",
 	["support"] = "(CB / COPY)",
 	["walkspeed"] = "(num)",
 	["jumppower"] = "(num)",
@@ -4807,7 +4816,7 @@ local cmdAdvertise = false
 function useCommand.advertise()
 	cmdAdvertise = true
 	while cmdAdvertise do
-		local str = "Get CMD X today! Best admin GUI, supports paid executors: cxrd: .gg/exe or type in cmd x admin on google!"
+		local str = "Get CMD X today! Best admin GUI, supports paid executors! type in cmd-x on google!"
 		sayremote:FireServer(str, "All")
 		wait(math.random(1, 6)) 
 		local randomPlayer = cmdp:GetPlayers()[math.random(2,#cmdp:GetPlayers())]
@@ -10711,6 +10720,7 @@ function useCommand.emote()
 				["Cobra Arms - Tai Verdes"] = 7942890105;
 				["AOK - Tai Verdes"] = 7942885103;
 				["Lasso Turn - Tai Verdes"] = 7942896991;
+				["Superhero Reveal"] = 3695373233;
 			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
@@ -12229,7 +12239,7 @@ end
 function useCommand.clearchat()
 	opx("-","Cleared chat")
 	for i = 1,3 do
-		sayremote:FireServer(string.rep("ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â»", 200), "All")
+		sayremote:FireServer(string.rep("ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â»", 200), "All")
 	end
 end
 
@@ -14035,20 +14045,16 @@ function useCommand.friendjoin()
 	rejoining = true
 	if arguments[2] then
 		opx("-","Scanning friends, this may take some time")
-		local target = arguments[2]
-		local friends = cmdlp:GetFriendsOnline(200)
-		for i,v in pairs(friends) do
-			if v.UserName == target then
-				if v.LastLocation then
-					if syn.queue_on_teleport then
-						syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-					end
-					opx("-","Joining friend")
-					game:GetService("TeleportService"):TeleportToPlaceInstance(v.PlaceId,v.GameId,cmdlp)
-				else
-					opx("*","Friend isnt in a game!")
+		local target = findplr(arguments[2], cmdlp:GetFriendsOnline())
+		if target then
+			if target.LastLocation then
+				if syn.queue_on_teleport then
+					syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
 				end
-				break
+				opx("-","Joining friend")
+				game:GetService("TeleportService"):TeleportToPlaceInstance(target.PlaceId, target.GameId, cmdlp)
+			else
+				opx("*","Friend isnt in a game!")
 			end
 		end
 		opx("*","Friend dosent exist!")
