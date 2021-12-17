@@ -1,7 +1,7 @@
 ---------------------------------------|
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 -- Constraints: -----------------------|
-local ver = "1.9.9e"
+local ver = "1.9.9f"
 local cordCode = "https://discord.gg/JyzvQ6zdfg"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
@@ -29,6 +29,7 @@ end
 
 if game:GetService("UserInputService").VREnabled then 
 	getParent = Parents[3]
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/nexus_support.lua"))()
 end
 
 Unnamed = Instance.new("ScreenGui", getParent)
@@ -361,7 +362,7 @@ while not RunDude do wait() end
 
 wait(.5)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Version.lua",true))()
 if Current and Current.Version ~= ver then
 	Stand("CMD-X is not up to par!","CMD-X cannot run.","","Your version: "..ver,"Current version: "..Current.Version,"Run Anyway",true)
 	while not RunDude do
@@ -549,7 +550,6 @@ function loaddefaults()
 	dStyle = "rounded"
 	conFly = true
 	suggestions = true
-	CMDStats = {}
 	oldNum = 0
 	hotkeyctp = "LeftControl"
 	permspamspeed = 1
@@ -565,6 +565,7 @@ function loaddefaults()
 	whyIs = 0
 	combos = {}
 	drawingtype = "old"
+	aliases = {}
 end
 
 function updatesaves()
@@ -597,7 +598,6 @@ function updatesaves()
 		dStyle = dStyle;
 		conFly = conFly;
 		suggestions = suggestions;
-		CMDStats = CMDStats;
 		oldNum = oldNum;
 		hotkeyctp = hotkeyctp;
 		permspamspeed = permspamspeed;
@@ -612,6 +612,7 @@ function updatesaves()
 		ifKickedAuto = ifKickedAuto;
 		whyIs = whyIs;
 		drawingtype = drawingtype;
+		aliases = aliases;
 	}
 	writefile("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 end
@@ -653,7 +654,6 @@ function loadsaves()
 	dStyle = saves.dStyle
 	conFly = saves.conFly
 	suggestions = saves.suggestions
-	CMDStats = saves.CMDStats
 	oldNum = saves.oldNum
 	hotkeyctp = saves.hotkeyctp
 	permspamspeed = saves.permspamspeed
@@ -669,6 +669,7 @@ function loadsaves()
 	whyIs = saves.whyIs
 	combos = saves.combos
 	drawingtype = saves.drawingtype
+	aliases = saves.aliases
 end
 
 if writefile and readfile then
@@ -1495,146 +1496,6 @@ if sDetect then
 	end)
 end
 
-local statholder = Instance.new("Frame", getParent)
-local statviewertitle = Instance.new("TextLabel", getParent)
-local xoutofstats = Instance.new("TextButton", getParent)
-local statscrollholder = Instance.new("Frame", getParent)
-local referer = Instance.new("TextLabel", getParent)
-local splitting = Instance.new("Frame", getParent)
-local Scrollingstats = Instance.new("ScrollingFrame", getParent)
-local Save = Instance.new("TextButton", getParent)
-
-statholder.Name = "statholder"
-statholder.Parent = Unnamed
-statholder.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-statholder.BorderSizePixel = 0
-statholder.Position = UDim2.new(0.217357904, 0, 0.208845213, 0)
-statholder.Size = UDim2.new(0, 424, 0, 294)
-statholder.Visible = false
-statholder.Active = true
-createDrag(statholder)
-
-statviewertitle.Name = "statviewertitle"
-statviewertitle.Parent = statholder
-statviewertitle.BackgroundColor3 = Color3.new(1, 1, 1)
-statviewertitle.BackgroundTransparency = 1
-statviewertitle.Position = UDim2.new(0.264150947, 0, 0, 0)
-statviewertitle.Size = UDim2.new(0, 200, 0, 22)
-statviewertitle.Font = Enum.Font.GothamBold
-statviewertitle.Text = "CMD-X STATISTICS VIEWER"
-statviewertitle.TextColor3 = Color3.new(1, 1, 1)
-statviewertitle.TextSize = 14
-
-xoutofstats.Name = "xoutofstats"
-xoutofstats.Parent = statholder
-xoutofstats.BackgroundColor3 = Color3.new(1, 1, 1)
-xoutofstats.BackgroundTransparency = 1
-xoutofstats.Position = UDim2.new(0.948113203, 0, 0, 0)
-xoutofstats.Size = UDim2.new(0, 22, 0, 22)
-xoutofstats.Font = Enum.Font.GothamBold
-xoutofstats.Text = "X"
-xoutofstats.TextColor3 = Color3.new(1, 1, 1)
-xoutofstats.TextSize = 20
-xoutofstats.MouseButton1Down:Connect(function()
-	statholder.Visible = false
-end)
-
-statscrollholder.Name = "statscrollholder"
-statscrollholder.Parent = statholder
-statscrollholder.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
-statscrollholder.BorderSizePixel = 0
-statscrollholder.Position = UDim2.new(0.0306603778, 0, 0.0748299286, 0)
-statscrollholder.Size = UDim2.new(0, 397, 0, 232)
-
-referer.Name = "referer"
-referer.Parent = statscrollholder
-referer.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
-referer.BorderSizePixel = 0
-referer.Size = UDim2.new(0, 397, 0, 20)
-referer.Font = Enum.Font.Gotham
-referer.Text = " Name | All time"
-referer.TextColor3 = Color3.new(1, 1, 1)
-referer.TextSize = 14
-referer.TextXAlignment = Enum.TextXAlignment.Left
-
-splitting.Name = "splitting"
-splitting.Parent = statscrollholder
-splitting.BackgroundColor3 = Color3.new(1, 1, 1)
-splitting.BorderColor3 = Color3.new(1, 1, 1)
-splitting.Position = UDim2.new(0.0100755664, 0, 0.0892857313, 0)
-splitting.Size = UDim2.new(0, 389, 0, 0)
-
-Scrollingstats.Name = "Scrollingstats"
-Scrollingstats.Parent = statscrollholder
-Scrollingstats.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
-Scrollingstats.BorderColor3 = Color3.new(0.117647, 0.117647, 0.117647)
-Scrollingstats.BorderSizePixel = 0
-Scrollingstats.Position = UDim2.new(0.00986763742, 0, 0.102678575, 0)
-Scrollingstats.Size = UDim2.new(0, 389, 0, 204)
-Scrollingstats.ScrollBarThickness = 10
-
-Save.Name = "Save"
-Save.Parent = statholder
-Save.BackgroundColor3 = Color3.new(0.164706, 0.164706, 0.164706)
-Save.BorderSizePixel = 0
-Save.Position = UDim2.new(0.275943398, 0, 0.887755096, 0)
-Save.Size = UDim2.new(0, 188, 0, 26)
-Save.Font = Enum.Font.GothamBold
-Save.Text = "Save as .txt"
-Save.TextColor3 = Color3.new(1, 1, 1)
-Save.TextSize = 14
-Save.MouseButton1Down:Connect(function()
-	writestats = ""
-	for _,v in pairs(CMDStats) do
-		if v.T ~= 0 then
-			writestats = writestats.."\n".._.." "..v.T
-		end
-	end
-	writefile("CMD-X Stats "..math.random(1000)..".txt",tostring(writestats))
-end)
-
-function CreateStatLabel(cmd,times,today)
-	local sf2 = Scrollingstats
-	if #sf2:GetChildren() >= 2546 then
-		sf2:ClearAllChildren()
-	end
-	local alls2 = 0
-	for _,v in pairs(sf2:GetChildren()) do
-		if v then
-			alls2 = v.Size.Y.Offset + alls2
-		end
-		if not v then
-			alls2 = 0
-		end
-	end
-	local tl2 = Instance.new('TextLabel', sf2)
-	local il2 = Instance.new('Frame', tl2)
-	tl2.Name = cmd
-	tl2.ZIndex = 6
-	tl2.Text = cmd.." | "..times
-	tl2.Size = UDim2.new(0,322,0,50)
-	tl2.BackgroundTransparency = 1
-	tl2.BorderSizePixel = 0
-	tl2.Font = "SourceSansBold"
-	tl2.Position = UDim2.new(-1,0,0,alls2)
-	tl2.TextTransparency = 1
-	tl2.TextScaled = false
-	tl2.TextSize = 14
-	tl2.TextWrapped = true
-	tl2.TextXAlignment = "Left"
-	tl2.TextYAlignment = "Top"
-	il2.BackgroundTransparency = 1
-	il2.BorderSizePixel = 0
-	il2.Size = UDim2.new(0,12,1,0)
-	il2.Position = UDim2.new(0,316,0,0)
-	tl2.TextColor3 = Color3.fromRGB(255,255,255)
-	tl2.Size = UDim2.new(0,322,0,tl2.TextBounds.Y)
-	sf2.CanvasSize = UDim2.new(0,0,0,alls2+tl2.TextBounds.Y)
-	sf2.CanvasPosition = Vector2.new(0,sf2.CanvasPosition.Y+tl2.TextBounds.Y)
-	local size22 = sf2.CanvasSize.Y.Offset
-	tl2:TweenPosition(UDim2.new(0,3,0,alls2), 'In', 'Quint', 0.5)
-	tl2.TextTransparency = 0
-end
 ---------------------------------------|
 -- Functions: -------------------------|
 function findplr(args, tbl)
@@ -2410,7 +2271,6 @@ CMDS.commands = {
 	["gaysize"] = "Shows how gay a player is. (RANDOM)",
 	["matchmake"] = "Shows how much of a match 2 players are. (RANDOM)",
 	["height"] = "Shows how tall a player is. (RANDOM)",
-	["randomchat"] = "Chats a randomly generated message.",
 	["grabtools"] = "Grabs tools that enter workspace.",
 	["ungrabtools"] = "()",
 	["earrape"] = "Plays all sounds in workspace.",
@@ -2420,7 +2280,6 @@ CMDS.commands = {
 	["unclientfreeze"] = "()",
 	["refreshdead"] = "Refreshes your character when death occurs.",
 	["unrefreshdead"] = "()",
-	["god"] = "Gods your character (wont work on games that use :LoadCharacter()).",
 	["avatar"] = "Shows UserId's avatar.",
 	["statistics"] = "Shows your most used commands.",
 	["grabip"] = "Grabs a fake IP designed to scare the player (RANDOM).",
@@ -2433,7 +2292,6 @@ CMDS.commands = {
 	["loadtools"] = "Loads tools.",
 	["hotkeyfly"] = "Saves a toggle for fly.",
 	["hotkeyxray"] = "Saves a toggle for x-ray",
-	["ungod"] = "()",
 	["animsync"] = "Syncs anim with player if caller is /e or .e",
 	["unanimsync"] = "()",
 	["clicktphotkey"] = "Changes the hotkey for clicktp.",
@@ -2671,7 +2529,6 @@ CMDS.commands = {
 	["combodel"] = "Removes a combo.",
 	["combosclr"] = "Clears all combos.",
 	["hd"] = "HD Admin hook.",
-	["clearchat"] = "Clears chat using a long string.",
 	["colourbubbles"] = "Gives you coloured chat bubbles to your custom.",
 	["uncolourbubbles"] = "()",
 	["kohls"] = "Kohls Admin hook.",
@@ -2688,8 +2545,6 @@ CMDS.commands = {
 	["firstperson"] = "Sets your camera to first person.",
 	["xraycamera"] = "Allows your camera to look through walls.",
 	["unxraycamera"] = "()",
-	["randomizechat"] = "Randomizes your chat on message posting.",
-	["unrandomizechat"] = "()",
 	["retardchat"] = "Retards your chat on message posting.",
 	["unretardchat"] = "()",
 	["scriptusers"] = "Shows people currently using CMD-X.",
@@ -2754,7 +2609,10 @@ CMDS.commands = {
 	["antiwindowafk"] = "Stops the game from AFKing you when you unfocus your window.",
 	["unantiwindowafk"] = "()",
 	["clearcharacter"] = "Clears your character appearance.",
-	["discord"] = "Sets your clipboard to a CMD-X discord invite."
+	["discord"] = "Sets your clipboard to a CMD-X discord invite.",
+	["alias"] = "Creates a custom alias for a command (can not replace commands)",
+	["delalias"] = "Removes a custom alias",
+	["aliases"] = "Lists custom aliases",
 }
 CMDS.usage = {
 	["promptnew"] = "(str/name)",
@@ -2997,6 +2855,7 @@ CMDS.usage = {
 	["spooffps"] = "(num)",
 	["spoofping"] = "(num)",
 	["spoofmemory"] = "(num)",
+	["alias"] = "(new_name) (cmd)"
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3248,7 +3107,6 @@ CMDS.aliases = {
 	["pp"] = "ppsize",
 	["gay"] = "gaysize",
 	["match"] = "matchmake",
-	["rc"] = "randomchat",
 	["gtools"] = "grabtools",
 	["ungtools"] = "ungrabtools",
 	["rfe"] = "respectfiltering",
@@ -3539,42 +3397,42 @@ CMDS.aliases = {
 	["unantiwafk"] = "unantiwindowafk",
 	["unwafk"] = "unantiwindowafk",
 	["cord"] = "discord",
+	["serverhop"] = "rejoindiff",
 }
 
 CMDS.suggestions = {}
-for i,_ in pairs(CMDS.aliases) do
-	for v = 1, string.len(i) do
-		CMDS.suggestions[i:sub(1,v)] = i
+aliases = aliases or {}
+
+for alias, command in pairs(aliases) do
+	CMDS.aliases[alias] = command
+end
+
+for alias in pairs(CMDS.aliases) do
+	for alias_idx = 1, string.len(alias) do
+		CMDS.suggestions[alias:sub(1, alias_idx)] = alias
 	end
 end
 
-for i,_ in pairs(CMDS.commands) do
-	for v = 1, string.len(i) do
-		CMDS.suggestions[i:sub(1,v)] = i
+for command in pairs(CMDS.commands) do
+	for command_idx = 1, string.len(command) do
+		CMDS.suggestions[command:sub(1, command_idx)] = command
 	end
 end
 
-for command,_ in pairs(CMDS.commands) do
+for command in pairs(CMDS.commands) do
 	CMDS.suggestions[command] = command
 end
 
-for alias,_ in pairs(CMDS.aliases) do
-	CMDS.suggestions[alias] = _
+for alias, command in pairs(CMDS.aliases) do
+	CMDS.suggestions[alias] = alias
 end
 
-for i,v in pairs(CMDS.suggestions) do
-	if CMDS.aliases[i] then
-		v = CMDS.aliases[i]
+for alias in pairs(CMDS.suggestions) do
+	if CMDS.aliases[alias] then
+		CMDS.suggestions[alias] = CMDS.aliases[alias]
 	end
-	if CMDS.commands[i] then
-		v = CMDS.commands[i]
-	end
-end
-
-for i,_ in pairs(CMDS.commands) do
-	if not CMDStats[i] then
-		CMDStats[i] = {}
-		CMDStats[i].T = 0
+	if CMDS.commands[alias] then
+		CMDS.suggestions[alias] = alias
 	end
 end
 
@@ -3594,166 +3452,6 @@ end
 if ifKickedAuto then
 	ifKicked()
 end
-
-RoundHold = Instance.new("ImageLabel", getParent)
-exitplease = Instance.new("TextButton", getParent)
-fileworkspace = Instance.new("TextLabel", getParent)
-fileext = Instance.new("TextLabel", getParent)
-dropkick = Instance.new("ScrollingFrame", getParent)
-
-RoundHold.Name = "RoundHold"
-RoundHold.Parent = Unnamed
-RoundHold.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-RoundHold.BackgroundTransparency = 1.000
-RoundHold.Position = UDim2.new(0.679210365, 0, 0.245700255, 0)
-RoundHold.Size = UDim2.new(0, 329, 0, 411)
-RoundHold.Image = "rbxassetid://3570695787"
-RoundHold.ImageColor3 = Color3.fromRGB(29, 29, 29)
-RoundHold.ScaleType = Enum.ScaleType.Slice
-RoundHold.SliceCenter = Rect.new(100, 100, 100, 100)
-RoundHold.SliceScale = 0.120
-RoundHold.Active = true
-createDrag(RoundHold)
-RoundHold.Visible = false
-
-exitplease.Name = "exitplease"
-exitplease.Parent = RoundHold
-exitplease.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-exitplease.BackgroundTransparency = 1.000
-exitplease.BorderSizePixel = 0
-exitplease.Position = UDim2.new(0.896656513, 0, -0.00243308954, 0)
-exitplease.Size = UDim2.new(0, 35, 0, 39)
-exitplease.Font = Enum.Font.GothamBold
-exitplease.Text = "X"
-exitplease.TextColor3 = Color3.fromRGB(255, 255, 255)
-exitplease.TextSize = 20.000
-exitplease.MouseButton1Down:Connect(function()
-	RoundHold.Visible = false    
-end)
-
-fileworkspace.Name = "fileworkspace"
-fileworkspace.Parent = RoundHold
-fileworkspace.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-fileworkspace.BackgroundTransparency = 1.000
-fileworkspace.Position = UDim2.new(0.0351015925, 0, -0.00124643743, 0)
-fileworkspace.Size = UDim2.new(0, 305, 0, 40)
-fileworkspace.Font = Enum.Font.GothamBold
-fileworkspace.Text = "Choose a file:"
-fileworkspace.TextColor3 = Color3.fromRGB(255, 255, 255)
-fileworkspace.TextSize = 20.000
-
-fileext.Name = "fileext"
-fileext.Parent = RoundHold
-fileext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-fileext.BackgroundTransparency = 1.000
-fileext.Position = UDim2.new(0.0351015218, 0, 0.925760746, 0)
-fileext.Size = UDim2.new(0, 305, 0, 20)
-fileext.Font = Enum.Font.GothamBold
-fileext.Text = "plugins go inside CMD-X Plugins folder located in workspace"
-fileext.TextColor3 = Color3.fromRGB(255, 255, 255)
-fileext.TextScaled = true
-fileext.TextSize = 15.000
-fileext.TextWrapped = true
-
-dropkick.Name = "dropkick"
-dropkick.Parent = RoundHold
-dropkick.Active = true
-dropkick.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
-dropkick.BorderSizePixel = 0
-dropkick.Position = UDim2.new(0.0351015925, 0, 0.0941223204, 0)
-dropkick.Size = UDim2.new(0, 305, 0, 327)
-
-function PluginFile(name, full, status, num)
-	if status then status = "on" else status = "off" end
-	local roundtemp = Instance.new("ImageLabel", getParent)
-	local nameof = Instance.new("TextLabel", getParent)
-	local roundtempbut = Instance.new("TextButton", getParent)
-	local tempround = Instance.new("ImageLabel", getParent)
-	local tempframelab = Instance.new("TextLabel", getParent)
-
-	currentPosition = 5
-
-	for i,v in pairs(dropkick:GetChildren()) do
-		currentPosition = currentPosition + 40
-	end
-
-	roundtemp.Name = "roundtemp"
-	roundtemp.Parent = dropkick
-	roundtemp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	roundtemp.BackgroundTransparency = 1.000
-	roundtemp.Position = UDim2.new(0, 5, 0, currentPosition)
-	roundtemp.Size = UDim2.new(0, 277, 0, 35)
-	roundtemp.Image = "rbxassetid://3570695787"
-	roundtemp.ImageColor3 = Color3.fromRGB(59, 59, 59)
-	roundtemp.ScaleType = Enum.ScaleType.Slice
-	roundtemp.SliceCenter = Rect.new(100, 100, 100, 100)
-	roundtemp.SliceScale = 0.120
-
-	nameof.Name = "nameof"
-	nameof.Parent = roundtemp
-	nameof.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	nameof.BackgroundTransparency = 1.000
-	nameof.Position = UDim2.new(0.0590518415, 0, 0.00727887824, 0)
-	nameof.Size = UDim2.new(0, 191, 0, 35)
-	nameof.Font = Enum.Font.GothamBold
-	nameof.Text = name.." | "..full.." | "..status
-	nameof.TextColor3 = Color3.fromRGB(255, 255, 255)
-	nameof.TextSize = 14.000
-	nameof.TextXAlignment = Enum.TextXAlignment.Left
-	nameof.TextWrapped = true
-
-	roundtempbut.Name = "roundtempbut"
-	roundtempbut.Parent = roundtemp
-	roundtempbut.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
-	roundtempbut.BackgroundTransparency = 1.000
-	roundtempbut.BorderSizePixel = 0
-	roundtempbut.Position = UDim2.new(0.750902534, 0, 0.142857149, 0)
-	roundtempbut.Size = UDim2.new(0, 62, 0, 25)
-	roundtempbut.Font = Enum.Font.GothamBold
-	roundtempbut.Text = "Add"
-	roundtempbut.TextColor3 = Color3.fromRGB(255, 255, 255)
-	roundtempbut.TextSize = 14.000
-	roundtempbut.MouseButton1Down:Connect(function()
-		if tempframelab.Text == "turn on" then
-			Plugins[num].Status = true
-			tempframelab.Text = "turn off"
-		else
-			Plugins[num].Status = false
-			tempframelab.Text = "turn on" 
-		end
-		updatesaves()
-	end)
-
-	tempround.Name = "tempround"
-	tempround.Parent = roundtempbut
-	tempround.Active = true
-	tempround.AnchorPoint = Vector2.new(0.5, 0.5)
-	tempround.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	tempround.BackgroundTransparency = 1.000
-	tempround.Position = UDim2.new(0.5, 0, 0.5, 0)
-	tempround.Selectable = true
-	tempround.Size = UDim2.new(1, 0, 1, 0)
-	tempround.Image = "rbxassetid://3570695787"
-	tempround.ImageColor3 = Color3.fromRGB(83, 83, 83)
-	tempround.ScaleType = Enum.ScaleType.Slice
-	tempround.SliceCenter = Rect.new(100, 100, 100, 100)
-	tempround.SliceScale = 0.120
-
-	tempframelab.Name = "tempframelab"
-	tempframelab.Parent = tempround
-	tempframelab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	tempframelab.BackgroundTransparency = 1.000
-	tempframelab.Position = UDim2.new(-1.11290324, 0, -0.479999989, 0)
-	tempframelab.Size = UDim2.new(0, 200, 0, 50)
-	tempframelab.Font = Enum.Font.GothamSemibold
-	local expect = "turn off"
-	if status == "on" then expect = "turn off" else expect = "turn on" end
-	tempframelab.Text = expect
-	tempframelab.TextColor3 = Color3.fromRGB(255, 255, 255)
-	tempframelab.TextSize = 14.000
-end
-
-PCs = {"using","far","random","new","old","bacon","friend","notfriend","ally","enemy","near","me"}
 
 cmd.Changed:Connect(function()
 	if CMDS.aliases[cmd.Text] then
@@ -4265,11 +3963,6 @@ function executeCommand(com)
 		local cmdsy = findCmd(arguments[1])
 		if cmdsy then
 			History[#History+1] = com
-			for _,v in pairs(CMDStats) do
-				if cmdsy == _ then
-					v.T = v.T + 1
-				end
-			end
 			updatesaves()
 			if fixedArgs == false then
 				if commandsLoaded() and noCMD == false then
@@ -7466,12 +7159,12 @@ function useCommand.remotespy()
 end
 
 function useCommand.playerstalker()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/PlayerStalkerV2",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/PlayerStalkerV2.lua",true))()
 	opx("-","Loaded PlayerStalker")
 end
 
 function useCommand.badger()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/badger",true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/badger.lua",true))()
 	opx("-","Loaded Badger V2")
 end
 
@@ -9838,15 +9531,6 @@ function useCommand.logs()
 	end
 end
 
-function useCommand.test()
-	opx("-","")
-end
-
-function useCommand.testa()
-	opx("-","grr fucking baby niggas")
-	workspace.Baby:Destroy()
-end
-
 function useCommand.time()
 	if arguments[2] then
 		local URL = ("http://worldclockapi.com/api/json/"..arguments[2].."/now")
@@ -9857,7 +9541,7 @@ function useCommand.time()
 		sayremote:FireServer("The time in "..arguments[2].." is "..Time,"All")
 	else
 		opx("*","2 arguments are required!")
-end
+	end
 end
 
 function useCommand.removeforces()
@@ -10225,7 +9909,7 @@ end
 
 function useCommand.antiwrldsgui()
 	opx("-","antiwrldsGUI loading")
-	loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/main'),true))()
+	loadstring(game:HttpGet(('https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/antiwrldsgui/main.lua'),true))()
 	opx("-","antiwrldsGUI loaded")
 end
 
@@ -10459,7 +10143,7 @@ function useCommand.retardchat()
 		opx("*", "Retard chat is already enabled.")
 		return
 	end
-	local stringka = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/unicode"):split(",")
+	local stringka = {"UwU","uwu","^w^",">w<","(´•ω•`)","><",">>",":3",">:3",":D"}
 	_G.sssoldhook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(event, ...)
@@ -10583,42 +10267,7 @@ function useCommand.unxraycamera()
 	cmdlp.CameraMaxZoomDistance = SavedCamera.Max
 end
 
-function useCommand.randomizechat()
-	if _G.ssoldhook or _G.soldhook or _G.oldhook or _G.sssoldhook then
-		opx("*", "Randomize chat is already enabled.")
-		return
-	end
-	_G.ssoldhook = mt.__namecall
-	setreadonly(mt, false)
-	mt.__namecall = newcclosure(function(event, ...)
-		if not checkcaller() and event.Name == "SayMessageRequest" and getnamecallmethod() == "FireServer" then
-			local args = {...}
-			local message = args[1]
-			local x4 = ""
-			for i = 1,#message do
-				local x2 = math.random(1,#message)
-				local x3 = message:sub(x2,x2)
-				x4 = x4..x3
-			end
-			return _G.ssoldhook(event, x4, args[2])
-		end
-		return _G.ssoldhook(event, ...)
-	end)
-	setreadonly(mt, true)
-	opx("-", "Randomize chat enabled.")
-end
 
-function useCommand.unrandomizechat()
-	if not _G.ssoldhook then
-		opx("*", "Randomize chat is not enabled.")
-		return
-	end
-	setreadonly(mt, false)
-	mt.__namecall = _G.ssoldhook
-	setreadonly(mt, true)
-	opx("-", "Randomize chat disabled.")
-	_G.ssoldhook = nil
-end
 
 function useCommand.emote()
 	if arguments[2] then
@@ -12236,13 +11885,6 @@ function useCommand.lagchat()
 	end
 end
 
-function useCommand.clearchat()
-	opx("-","Cleared chat")
-	for i = 1,3 do
-		sayremote:FireServer(string.rep("ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¸ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â»", 200), "All")
-	end
-end
-
 function useCommand.funfact()
 	local URL = ("https://uselessfacts.jsph.pl/random.json?language=en")
 	local fuck = game:HttpGet(URL)
@@ -12670,16 +12312,6 @@ function useCommand.suggestions()
 	end
 end
 
-function useCommand.statistics()
-	opx("-","Loaded CMD Statistics")
-	Scrollingstats:ClearAllChildren()
-	statholder.Visible = true
-	for i,v in pairs(CMDStats) do
-		if v.T ~= 0 then
-			CreateStatLabel(i,v.T)
-		end
-	end
-end
 local bringc = {}
 function useCommand.clientbring()
 	if arguments[2] then
@@ -12981,8 +12613,8 @@ function useCommand.height()
 		target = findplr(arguments[2])
 		if target then
 			math.randomseed(target.UserId)
-			local height1 = math.random(0,7)
-			local height2 = math.random(0,10)
+			local height1 = math.random(4,7)
+			local height2 = math.random(0,11)
 			opx("-",target.Name.." is "..height1.."'"..height2)
 			sayremote:FireServer(target.Name.." is "..height1.."'"..height2,"All")
 		else
@@ -13017,39 +12649,6 @@ function useCommand.unrefreshdead()
 		deadRefresh.respawned:Disconnect()
 	end
 	opx("-", "Refresh dead is now off")
-end
-
-function useCommand.god()
-	cmdlp.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
-	opx("-","Godded character, may not work on some games")
-end
-
-function useCommand.ungod()
-	opx("-","Ungodded character")
-	cmdlp.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
-end
-
-function useCommand.randomchat()
-	local tbl1 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/3"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/4"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/5"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/6"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/7"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/8"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/9"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-	local r1 = math.random(1,#tbl1)
-	local r2 = math.random(1,#tbl2)
-	local r3 = math.random(1,#tbl3)
-	local r4 = math.random(1,#tbl4)
-	local r5 = math.random(1,#tbl5)
-	local r6 = math.random(1,#tbl6)
-	local r7 = math.random(1,#tbl7)
-	local r8 = math.random(1,#tbl8)
-	local r9 = math.random(1,#tbl9)
-	opx("-",tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9])
-	cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9],"All")
 end
 
 function useCommand.enablereset()
@@ -13444,7 +13043,7 @@ function useCommand.directjoin()
 	end
 end
 
-pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/depthoffield",true))() end)
+pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/depthoffield.lua",true))() end)
 -- Thanks to MrAsyncRoblox on github, full credits.
 
 function useCommand.timedcmd()
@@ -14038,7 +13637,7 @@ end
 
 function useCommand.spotify()
 	opx("-","Spotify Premium is needed to run Spotify Presence")
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/spotifypresence"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/spotify.lua"))()
 end
 
 function useCommand.friendjoin()
@@ -14199,7 +13798,7 @@ end
 
 function useCommand.sentinelexplorer()
 	opx("-","Loading SENTINEL DEX")
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sdex", true))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/sdex.lua", true))()
 	opx("-","Loaded SENTINEL DEX")
 end
 
@@ -16058,49 +15657,6 @@ function useCommand.removeroot()
 	cmdlp.Character.HumanoidRootPart.Parent = workspace
 end
 
-function useCommand.logchat()
-	local msg = ""
-	if arguments[2] then
-		msg = getstring(2)
-	else
-		msg = string.rep("CMD-X Gang", 100)
-	end
-	require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(msg)
-	opx("-","Chatted to logs")
-end
-
-function useCommand.logspam()
-	local msg = ""
-	if arguments[2] then
-		msg = getstring(2)
-	else
-		msg = string.rep("CMD-X Gang", 100)    
-	end
-	mostSpam = game:GetService("RunService").Heartbeat:Connect(function()
-		require(cmdlp.PlayerScripts.ChatScript.ChatMain).MessagePosted:fire(msg)
-	end)
-	opx("-","Now spamming logs")
-end
-
-function useCommand.unlogspam()
-	opx("-","Stopped spamming logs")
-	mostSpam:Disconnect()    
-end
-
-function useCommand.multispam()
-	if not arguments[2] then
-		opx("*","2 arguments are required!")
-		return
-end
-	speedofthespam = permspamspeed
-	spammies = true
-	local topstring = getstring(2):split(",")
-	opx("-","You are now spamming")
-	repeat wait(speedofthespam)
-		cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(topstring[math.random(1,#topstring)], "All")
-	until spammies == false
-end
-
 function useCommand.antifling()
 	if antifling == nil then 
 		antifling = true
@@ -16850,6 +16406,21 @@ end
 function useCommand.discord()
 	setclipboard(cordCode)
 	opx("-", "Copied discord invite to clipboard (invite a friend, too!)")
+end
+
+function useCommand.alias()
+	if arguments[3] == nil then
+		return opx("*", "2 arguments are required! (new_alias, command_name)")
+	end
+
+	local command = CMDS.commands[arguments[3]] and arguments[3] or CMDS.aliases[arguments[3]]
+	if command ~= nil then
+		aliases[arguments[2]] = command
+		updatesaves()
+		return opx("-", ("Created alias (%s) for (%s)"):format(arguments[2], command))
+	else
+		return opx("*", "Argument 2 is an invalid command")
+	end
 end
 
 user.Changed:connect(function()
