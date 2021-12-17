@@ -12,8 +12,6 @@ else
 end
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
-local IsExe = identifyexecutor and identifyexecutor() == "CmdX.exe"
-
 local firetouchinterest = firetouchinterest or fake_touch or nil
 
 for _, v in pairs(Parents[1]:GetDescendants()) do
@@ -555,7 +553,7 @@ function loaddefaults()
 	permspamspeed = 1
 	mentions = true
 	sDetect = true
-	SavedPos = {X = 800, Y = 300}
+	SavedPos = {X = 900, Y = 600}
 	hotkeynoclip = ""
 	ChatBind = false
 	CMDTab = {"commands","credits","plugin","changestyle","hotkeys","entercmds","support","",""}
@@ -566,6 +564,7 @@ function loaddefaults()
 	combos = {}
 	drawingtype = "old"
 	aliases = {}
+	clicktplimit = 0
 end
 
 function updatesaves()
@@ -613,6 +612,7 @@ function updatesaves()
 		whyIs = whyIs;
 		drawingtype = drawingtype;
 		aliases = aliases;
+		clicktplimit = clicktplimit;
 	}
 	writefile("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 end
@@ -670,6 +670,7 @@ function loadsaves()
 	combos = saves.combos
 	drawingtype = saves.drawingtype
 	aliases = saves.aliases
+	clicktplimit = saves.clicktplimit
 end
 
 if writefile and readfile then
@@ -704,7 +705,7 @@ function isDoneLoading(arg)
 	end
 end
 
-if game:GetService("UserInputService").VREnabled then
+if cmduis.VREnabled then
 	SavedPos = {X = 147, Y = 324}
 end
 
@@ -739,14 +740,14 @@ function Check()
 end
 
 function InputBegan()
-	if game:GetService("UserInputService"):GetFocusedTextBox() then
-		ChatBar = game:GetService("UserInputService"):GetFocusedTextBox()
+	if cmduis:GetFocusedTextBox() then
+		ChatBar = cmduis:GetFocusedTextBox()
 		Inputting = true
 		Current = ChatBar.FocusLost
 		Disconnection = Current:Connect(Check)
 	end
 end
-InputConnect = game:GetService("UserInputService").InputBegan:Connect(InputBegan)
+InputConnect = cmduis.InputBegan:Connect(InputBegan)
 
 AntiCheat = {
 	ScriptDetectOff = false;
@@ -2040,7 +2041,7 @@ CMDS.commands = {
 	["monstermash"] = "Monster mashes your character. (R6 ONLY)",
 	["ragdoll"] = "Stuns your character.",
 	["unragdoll"] = "()",
-	["animpack"] = "Loads the animation you state; toy/ pirate/ knight/ astronaut/ vampire/ robot/ levitation/ bubbly/ werewolf/ stylish/ mage/ cartoony/ zombie/ superhero/ ninja/ elder/ old. (R15 ONLY)",
+	["animpack"] = "Loads the animation you state; toy/ pirate/ knight/ astronaut/ vampire/ robot/ levitation/ bubbly/ werewolf/ stylish/ mage/ cartoony/ zombie/ superhero/ ninja/ elder/ old/ toilet. (R15 ONLY)",
 	["spin"] = "Spins your character around like a beyblade.",
 	["unspin"] = "()",
 	["hatspin"] = "Spins your characters hats around your head.",
@@ -2125,6 +2126,8 @@ CMDS.commands = {
 	["platform"] = "Allows your character to walk on an invisible platform.",
 	["unplatform"] = "()",
 	["clicktp"] = "Press CTRL to teleport your character to your cursor.",
+	["clicktplimit"] = "Limits the distance you can teleport using clicktp.",
+	["unclicktplimit"] = "Resets your clicktp limit",
 	["infjump"] = "Allows you to infinitely go higher by pressing space.",
 	["uninfjump"] = "()",
 	["fly"] = "Allows your character to fly.",
@@ -2171,8 +2174,6 @@ CMDS.commands = {
 	["clickdelete"] = "Deletes any part you click on.",
 	["unclickdelete"] = "()",
 	["logs"] = "Logs all chats including whispers in a GUI.",
-	["test"] = "Old ESP test. (WARNING: Will literally lag your game please don't use this lol)",
-	["testa"] = "DHBaby morph remover.",
 	["time"] = "Lists the current time of this timezone.",
 	["removeforces"] = "Removes forces from your character.",
 	["audiologger"] = "Logs all audios it finds from players in a loop.",
@@ -2244,7 +2245,7 @@ CMDS.commands = {
 	["toggleconfly"] = "Toggles if your fly starts again after a reset.",
 	["lagchat"] = "Lags chat using _'s.",
 	["trollchat"] = "Picks a random trolly/ annoying chat.",
-	["unbodypositionwalkspeed"] = "()bpws",
+	["unbodypositionwalkspeed"] = "()",
 	["removegears"] = "Removes all your tools.",
 	["unclicktp"] = "()",
 	["unswimwalk"] = "()",
@@ -2367,7 +2368,6 @@ CMDS.commands = {
 	["nohurtoverlay"] = "Turns off hurt overlay/animation.",
 	["yeshurtoverlay"] = "()",
 	["gotofreecam"] = "Teleports your character to freecams current position.",
-	["compilecommand"] = "Compiles a command in table form.",
 	["restorelocalscripts"] = "Restores local scripts.",
 	["newaudios"] = "Lists newest audio IDs uploaded to roblox.",
 	["removecustomnametag"] = "Removes custom nametag if the game gives it to you.",
@@ -2855,7 +2855,8 @@ CMDS.usage = {
 	["spooffps"] = "(num)",
 	["spoofping"] = "(num)",
 	["spoofmemory"] = "(num)",
-	["alias"] = "(new_name) (cmd)"
+	["alias"] = "(new_name) (cmd)",
+	["clicktplimit"] = "(num)"
 }
 CMDS.aliases = {
 	["8ballpu"] = "eightballpu",
@@ -3040,7 +3041,6 @@ CMDS.aliases = {
 	["p_"] = "plugin",
 	["clickdel"] = "clickdelete",
 	["unclickdel"] = "unclickdelete",
-	["test-1"] = "testa",
 	["rforces"] = "removeforces",
 	["lowgraphics"] = "antilag",
 	["clr"] = "clear",
@@ -3178,7 +3178,6 @@ CMDS.aliases = {
 	["tofreecam"] = "gotofreecam",
 	["gotofc"] = "gotofreecam",
 	["tofc"] = "gotofreecam",
-	["ccmd"] = "compilecommand",
 	["relocalscripts"] = "restorelocalscripts",
 	["rels"] = "restorelocalscripts",
 	["rcnt"] = "removecustomnametag",
@@ -3398,43 +3397,54 @@ CMDS.aliases = {
 	["unwafk"] = "unantiwindowafk",
 	["cord"] = "discord",
 	["serverhop"] = "rejoindiff",
+	["ctrltplimit"] = "clicktplimit",
+	["ctp"] = "clicktp",
+	["unctp"] = "unclicktp",
+	["ctplimit"] = "clicktplimit",
+	["unctplimit"] = "unclicktplimit",
+	["ctrltplimit"] = "clicktplimit",
+	["unctrltplimit"] = "unclicktplimit",
+	["headsit"] = "piggyback",
 }
 
-CMDS.suggestions = {}
-aliases = aliases or {}
+local function suggestions_update()
+	CMDS.suggestions = {}
+	aliases = aliases or {}
 
-for alias, command in pairs(aliases) do
-	CMDS.aliases[alias] = command
-end
-
-for alias in pairs(CMDS.aliases) do
-	for alias_idx = 1, string.len(alias) do
-		CMDS.suggestions[alias:sub(1, alias_idx)] = alias
+	for alias, command in pairs(aliases) do
+		CMDS.aliases[alias] = command
 	end
-end
 
-for command in pairs(CMDS.commands) do
-	for command_idx = 1, string.len(command) do
-		CMDS.suggestions[command:sub(1, command_idx)] = command
+	for alias in pairs(CMDS.aliases) do
+		for alias_idx = 1, string.len(alias) do
+			CMDS.suggestions[alias:sub(1, alias_idx)] = alias
+		end
 	end
-end
 
-for command in pairs(CMDS.commands) do
-	CMDS.suggestions[command] = command
-end
-
-for alias, command in pairs(CMDS.aliases) do
-	CMDS.suggestions[alias] = alias
-end
-
-for alias in pairs(CMDS.suggestions) do
-	if CMDS.aliases[alias] then
-		CMDS.suggestions[alias] = CMDS.aliases[alias]
+	for command in pairs(CMDS.commands) do
+		for command_idx = 1, string.len(command) do
+			CMDS.suggestions[command:sub(1, command_idx)] = command
+		end
 	end
-	if CMDS.commands[alias] then
+
+	for command in pairs(CMDS.commands) do
+		CMDS.suggestions[command] = command
+	end
+
+	for alias, command in pairs(CMDS.aliases) do
 		CMDS.suggestions[alias] = alias
 	end
+
+	for alias in pairs(CMDS.suggestions) do
+		if CMDS.aliases[alias] then
+			CMDS.suggestions[alias] = CMDS.aliases[alias]
+		end
+		if CMDS.commands[alias] then
+			CMDS.suggestions[alias] = alias
+		end
+	end
 end
+task.spawn(suggestions_update)
 
 if KeepCMDXOn and syn.queue_on_teleport then
 	syn.queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()')
@@ -3861,11 +3871,6 @@ end)
 -- Commands: --------------------------|
 if cmdrs:FindFirstChild("DefaultChatSystemChatEvents") and cmdrs.DefaultChatSystemChatEvents:FindFirstChild("SayMessageRequest") then sayremote = cmdrs.DefaultChatSystemChatEvents.SayMessageRequest end
 function opx(f,text)
-
-	if IsExe then
-		SendResponse(text)
-	end
-
 	if not ChatBind then
 		output9.Text = output8.Text
 		output8.Text = output7.Text
@@ -3882,9 +3887,9 @@ function opx(f,text)
 		end
 	else
 		if f == "*" then
-			sayremote:FireServer("[CMD-X*] "..text,"All")
+			sayremote:FireServer("[CMD-X] [*] "..text, "All")
 		elseif f == "-" then
-			sayremote:FireServer("[CMD-X-] "..text,"All")
+			sayremote:FireServer("[CMD-X] [-] "..text, "All")
 		end
 	end
 end
@@ -6539,7 +6544,8 @@ function useCommand.unragdoll()
 end
 
 function useCommand.animpack()
-	if arguments[2] == "sneaky" then
+	local animpack = arguments[2]:lower()
+	if animpack == "sneaky" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
@@ -6550,7 +6556,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1132500520"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1132506407"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
-	elseif arguments[2] == "old" then
+	elseif animpack == "old" then
 		local Char = cmdlp.Character
 		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=387947158"
 		Char.Animate.idle.Animation1.Weight.Value = "9"
@@ -6560,7 +6566,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616092998"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616094091"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=382460631"
-	elseif arguments[2] == "toy" then
+	elseif animpack == "toy" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
@@ -6573,7 +6579,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=782844582"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=782845186"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=782843345"
-	elseif arguments[2] == "pirate" then
+	elseif animpack == "pirate" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=750779899"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=750780242"
@@ -6586,7 +6592,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=750784579"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=750785176"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=750785693"
-	elseif arguments[2] == "knight" then
+	elseif animpack == "knight" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
@@ -6599,7 +6605,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=657560551"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=657557095"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=657552124"
-	elseif arguments[2] == "astronaut" then
+	elseif animpack == "astronaut" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
@@ -6612,7 +6618,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=891639666"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=891663592"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
-	elseif arguments[2] == "vampire" then
+	elseif animpack == "vampire" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
@@ -6625,7 +6631,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1083464683"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1083467779"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
-	elseif arguments[2] == "robot" then
+	elseif animpack == "robot" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616086039"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616087089"
@@ -6638,7 +6644,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616092998"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616094091"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616095330"
-	elseif arguments[2] == "levitation" then
+	elseif animpack == "levitation" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
@@ -6651,7 +6657,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616011509"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616012453"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
-	elseif arguments[2] == "bubbly" then
+	elseif animpack == "bubbly" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=909997997"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=910001910"
@@ -6664,7 +6670,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=910028158"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=910030921"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=910034870"
-	elseif arguments[2] == "werewolf" then
+	elseif animpack == "werewolf" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
@@ -6677,7 +6683,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1083222527"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1083225406"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083178339"
-	elseif arguments[2] == "stylish" then
+	elseif animpack == "stylish" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616133594"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616134815"
@@ -6690,7 +6696,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616143378"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616144772"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616146177"
-	elseif arguments[2] == "mage" then
+	elseif animpack == "mage" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
@@ -6703,7 +6709,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=707876443"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=707894699"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
-	elseif arguments[2] == "cartoony" then
+	elseif animpack == "cartoony" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
@@ -6716,7 +6722,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=742639220"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=742639812"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=742640026"
-	elseif arguments[2] == "zombie" then
+	elseif animpack == "zombie" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
@@ -6729,7 +6735,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616165109"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616166655"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
-	elseif arguments[2] == "superhero" then
+	elseif animpack == "superhero" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
@@ -6742,7 +6748,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=616119360"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=616120861"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616122287"
-	elseif arguments[2] == "ninja" then
+	elseif animpack == "ninja" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
@@ -6755,7 +6761,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=656119721"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=656121397"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=656121766"
-	elseif arguments[2] == "elder" then
+	elseif animpack == "elder" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
@@ -6768,7 +6774,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=845401742"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=845403127"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=845403856"
-	elseif arguments[2] == "oldschool" then
+	elseif animpack == "oldschool" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=5319816685"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=5319839762"
@@ -6781,7 +6787,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=5319850266"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=5319852613"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=5319847204"
-	elseif arguments[2] == "confident" then
+	elseif animpack == "confident" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1069946257"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1069973677"
@@ -6794,7 +6800,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1070009914"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1070012133"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1070017263"
-	elseif arguments[2] == "popstar" then
+	elseif animpack == "popstar" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1213044953"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1212900995"
@@ -6807,7 +6813,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1212852603"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1212998578"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980338"
-	elseif arguments[2] == "patrol" then
+	elseif animpack == "patrol" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1148811837"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1148863382"
@@ -6820,7 +6826,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1151204998"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1151221899"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1151231493"
-	elseif arguments[2] == "princess" then
+	elseif animpack == "princess" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=940996062"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=941000007"
@@ -6833,7 +6839,7 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=941018893"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=941025398"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=941028902"
-	elseif arguments[2] == "cowboy" then
+	elseif animpack == "cowboy" then
 		local Char = cmdlp.Character
 		Char.Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1014380606"
 		Char.Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1014384571"
@@ -6846,6 +6852,11 @@ function useCommand.animpack()
 		Char.Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=1014406523"
 		Char.Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=1014411816"
 		Char.Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1014421541"
+	elseif animpack == "toilet" then
+		local Char = cmdlp.Character
+		Char.Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=4417977954"
+		Char.Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=4417977954"
+		Char.Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=4417979645"
 	else
 		opx("*","2 arguments are required for this command!")
 	end
@@ -6922,13 +6933,14 @@ function useCommand.facefuck()
 				if ff == true then
 					ff = false
 					opx("-","Stopped facefucking/faceraping")
-					cmdlp.Character.Humanoid.Sit = false				
+					cmdlp.Character.Humanoid.Sit = false			
 				return
 				else ff = true
 					opx("-","Facefucking/faceraping enabled")
 					while ff do
 						cmdlp.Character.Humanoid.Sit = true
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0,1.6,0.4)
+						cmdlp.Character.HumanoidRootPart.AssemblyLinearVelocity = Vector3.new()
 						wait()
 					end
 				end
@@ -6966,6 +6978,7 @@ function useCommand.facefuckanim()
 					opx("-","Facefucking/faceraping enabled")
 					while ff2 do
 						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(180),0)* CFrame.new(0.4,1.6,0.4)
+						cmdlp.Character.HumanoidRootPart.AssemblyLinearVelocity = Vector3.new()
 						wait()
 					end
 				end
@@ -6995,13 +7008,15 @@ function useCommand.piggyback()
 					pb = false
 					opx("-","Stopped riding/piggybacking")
 					cmdlp.Character.Humanoid.Sit = false
-				return
-				else pb = true
+					return
+				else
+					pb = true
 					opx("-","Riding/piggybacking enabled")
 					while pb do
 						cmdlp.Character.Humanoid.Sit = true
-						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,math.rad(0),0)* CFrame.new(0,1.6,0.4)
-						wait()
+						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0,1.6,0.4)
+						cmdlp.Character.HumanoidRootPart.AssemblyLinearVelocity = Vector3.new()
+						game:GetService("RunService").RenderStepped:Wait()
 					end
 				end
 			end
@@ -7039,8 +7054,8 @@ function useCommand.fuck()
 				else Bang = true
 					opx("-","Fuck/rape enabled")
 					while Bang do
-						cmdlp.Character.HumanoidRootPart.CFrame=
-						target.Character.HumanoidRootPart.CFrame +  target.Character.HumanoidRootPart.CFrame.lookVector * flwnum
+						cmdlp.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame + target.Character.HumanoidRootPart.CFrame.lookVector * flwnum
+						cmdlp.Character.HumanoidRootPart.AssemblyLinearVelocity = Vector3.new()
 						wait()
 					end
 				end
@@ -8322,17 +8337,26 @@ function useCommand.unplatform()
 	end
 end
 
+clicktplimit = clicktplimit or 0
 local clicktps = false
 function useCommand.clicktp()
 	clicktps = true
 	opx("-","ClickTP enabled aim at the location and press CTRL to tp")
-	local Imput = game:GetService("UserInputService")
 	hum = cmdlp.Character.HumanoidRootPart
 	if hotkeyctp == "LeftControl" then
-		Imput.InputBegan:Connect(function(input)
-			if Imput:IsKeyDown(Enum.KeyCode.LeftControl) and clicktps == true then
+		cmduis.InputBegan:Connect(function(input)
+			if cmduis:IsKeyDown(Enum.KeyCode.LeftControl) and clicktps == true then
 				if cmdm.Target then
-					hum.CFrame = CFrame.new(cmdm.Hit.x, cmdm.Hit.y + 5, cmdm.Hit.z)
+					local desired_position = CFrame.new(cmdm.Hit.X, cmdm.Hit.Y + 5, cmdm.Hit.Z)
+					local direction = CFrame.new(hum.Position, desired_position.p).LookVector
+					local distance = (hum.Position - desired_position.p).Magnitude
+					if clicktplimit == 0 then
+						hum.CFrame = hum.CFrame + direction * distance
+					elseif distance > clicktplimit then
+						hum.CFrame = hum.CFrame + direction * clicktplimit
+					else
+						hum.CFrame = hum.CFrame + direction * distance
+					end
 				end
 			end
 		end)
@@ -8340,18 +8364,46 @@ function useCommand.clicktp()
 		mouse.KeyDown:connect(function(key)
 			if key == hotkeyctp and clicktps == true then
 				if cmdm.Target then
-					hum.CFrame = CFrame.new(cmdm.Hit.x, cmdm.Hit.y + 5, cmdm.Hit.z)
+					local desired_position = CFrame.new(cmdm.Hit.X, cmdm.Hit.Y + 5, cmdm.Hit.Z)
+					local direction = CFrame.new(hum.Position, desired_position.p).LookVector
+					local distance = (hum.Position - desired_position.p).Magnitude
+					if clicktplimit == 0 then
+						hum.CFrame = hum.CFrame + direction * distance
+					elseif distance > clicktplimit then
+						hum.CFrame = hum.CFrame + direction * clicktplimit
+					else
+						hum.CFrame = hum.CFrame + direction * distance
+					end
 				end
 			end
 		end)
 	end
 end
 
+function useCommand.clicktplimit()
+	if arguments[2] == nil then
+		return opx("*", "1 argument required!")
+	end
+	local value = tonumber(arguments[2])
+	if value == nil then
+		return opx("*", "Argument 1 must be a number")
+	end
+
+	clicktplimit = value
+
+	return opx("-", ("Set clicktp distance limit to %s"):format(value))
+end
+
+function useCommand.unclicktplimit()
+	clicktplimit = 0
+	return opx("-", "Removed clicktp distance limit")
+end
+
 local infiniteJump = false
 function useCommand.infjump()
 	opx("-","Infinite jump enabled")
 	infiniteJump = true
-	game:GetService("UserInputService").JumpRequest:Connect(function()
+	cmduis.JumpRequest:Connect(function()
 		if infiniteJump == true then
 			cmdlp.Character.Humanoid:ChangeState("Jumping")
 		end
@@ -9858,7 +9910,7 @@ function useCommand.autokey()
 		Key = entered0x:byte()
 		while autoKey do
 			wait(arguments[3])
-			if not game:GetService("UserInputService"):GetFocusedTextBox() then
+			if not cmduis:GetFocusedTextBox() then
 				keypress(Key)
 				wait(arguments[3])
 				keyrelease(Key)
@@ -10067,8 +10119,8 @@ function useCommand.antiwindowafk()
 		opx("*","Your executor does not support getconnections!")
 		return
 	end
-	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Disable() end
-	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Disable() end
+	for _,v in pairs(getconnections(cmduis.WindowFocused)) do v:Disable() end
+	for _,v in pairs(getconnections(cmduis.WindowFocusReleased)) do v:Disable() end
 	opx("-","You will no longer window focus afk")
 end
 
@@ -10077,8 +10129,8 @@ function useCommand.unantiwindowafk()
 		opx("*","Your executor does not support getconnections!")
 		return
 	end
-	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocused)) do v:Enable() end
-	for _,v in pairs(getconnections(game:GetService("UserInputService").WindowFocusReleased)) do v:Enable() end
+	for _,v in pairs(getconnections(cmduis.WindowFocused)) do v:Enable() end
+	for _,v in pairs(getconnections(cmduis.WindowFocusReleased)) do v:Enable() end
 	opx("-","You will now window focus afk")
 end
 
@@ -10267,143 +10319,40 @@ function useCommand.unxraycamera()
 	cmdlp.CameraMaxZoomDistance = SavedCamera.Max
 end
 
-
+local animationlist = {}
 
 function useCommand.emote()
 	if arguments[2] then
 		if cmd15(cmdlp) then
-			animations = {
-				Agree = 4841397952;
-				Disagree = 4841401869;
-				["Power Blast"] = 4841403964;
-				Happy = 4841405708;
-				Sad = 4841407203;
-				["Bunny Hop"] = 4641985101;
-				["Peanut Butter Jelly Dance"] = 4406555273;
-				["Around Town"] = 3303391864;
-				["Top Rock"] = 3361276673;
-				["Jumping Wave"] = 4940564896;
-				["Keeping Time"] = 4555808220;
-				Fashionable = 3333331310;
-				Robot = 3338025566;
-				Twirl = 3334968680;
-				Jacks = 3338066331;
-				TPose = 3338010159;
-				Shy = 3337978742;
-				Monkey = 3333499508;
-				["Borock's Rage"] = 3236842542;
-				["Ud'zal's Summoning"] = 3303161675;
-				["Hype Dance"] = 3695333486;
-				Godlike = 3337994105;
-				Swoosh = 3361481910;
-				Sneaky = 3334424322;
-				["Side to Side"] = 3333136415;
-				Greatest = 3338042785;
-				Louder = 3338083565;
-				Celebrate = 3338097973;
-				Haha = 3337966527;
-				["Get Out"] = 3333272779;
-				Tree = 4049551434;
-				Fishing = 3334832150;
-				["Fast Hands"] = 4265701731;
-				Y = 4349285876;
-				Zombie = 4210116953;
-				["Baby Dance"] = 4265725525;
-				["Line Dance"] = 4049037604;
-				Dizzy = 3361426436;
-				Shuffle = 4349242221;
-				["Dorky Dance"] = 4212455378;
-				BodyBuilder = 3333387824;
-				Idol = 4101966434;
-				["Fancy Feet"] = 3333432454;
-				Curtsy = 4555816777;
-				["Air Dance"] = 4555782893;
-				["Chicken Dance"] = 4841399916;
-				Disagree = 4841401869;
-				Sleep = 4686925579;
-				["Hero Landing"] = 5104344710;
-				Confused = 4940561610;
-				Cower = 4940563117;
-				Tantrum = 5104341999;
-				Bored = 5230599789;
-				Beckon = 5230598276;
-				Hello = 3344650532;
-				Salute = 3333474484;
-				Stadium = 3338055167;
-				Tilt = 3334538554;
-				Point = 3344585679;
-				Shrug = 3334392772;
-				["High Wave"] = 5915690960;
-				Applaud = 5915693819;
-				Breakdance = 5915648917;
-				["Rock On"] = 5915714366;
-				Dolphin = 5918726674;
-				["Jumping Cheer"] = 5895324424;
-				Floss = 5917459365;
-				["Country Line Dance"] = 5915712534;
-				Panini = 5915713518;
-				Holiday = 5937558680;
-				Rodeo = 5918728267;
-				["Old Town Road"] = 5937560570;
-				["Rock Star - Royal Blood"] = 6533093212;
-				["Drum Master - Royal Blood"] = 6531483720;
-				["Drum Solo - Royal Blood"] = 6532839007;
-				["Rock Guitar - Royal Blood"] = 6532134724;
-				["Take Me Under - Zara Larsson"] = 6797890377;
-				["It Ain't My Fault - Zara Larsson"] = 6797891807;
-				["Hips Poppin' - Zara Larsson"] = 6797888062;
-				Samba = 6869766175;
-				["Cha Cha"] = 6862001787;
-				["Block Partier"] = 6862022283;
-				["Boxing Punch - KSI"] = 7202863182;
-				["Show Dem Wrist - KSI"] = 7198989668;
-				["Wake Up Call - KSI"] = 7199000883;
-				["Drummer Moves - Twenty One Pilots"] = 7422527690;
-				["On The Outside - Twenty One Pilots"] = 7422779536;
-				["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
-				["Saturday Dance - Twenty One Pilots"] = 7422807549;
-				["Up and Down - Twenty One Pilots"] = 7422797678;
-				["Quiet Waves"] = 7465981288;
-				["Flowing Breeze"] = 7465946930;
-				["Swan Dance"] = 7465997989;
-				["Cobra Arms - Tai Verdes"] = 7942890105;
-				["AOK - Tai Verdes"] = 7942885103;
-				["Lasso Turn - Tai Verdes"] = 7942896991;
-				["Superhero Reveal"] = 3695373233;
-			}
 			animationdebounce = false
 			cmdlp.Character.Animate.Disabled = true
 			for i,v in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 				v:Stop()
 			end
-			function PlayAnim(id)
-				animationdebounce = true
-				local Anim = Instance.new("Animation")
-				Anim.AnimationId = "rbxassetid://"..id
-				local salute = cmdlp.Character.Humanoid:LoadAnimation(Anim)
-				salute.Name = "AP"
-				salute:Play()
-				salute.Stopped:Connect(function()
-					cmdlp.Character.Animate.Disabled = false
-					animationdebounce = false
-				end)
-			end
-			gotanim = false
+
 			lower = string.lower(arguments[2])
-			for i,v in pairs(animations) do
-				if lower == string.sub(string.lower(tostring(i)), 1, #lower) and gotanim == false then
-					gotanim = true
-					PlayAnim(v)
+			for i,animid in pairs(animationlist) do
+				if lower == string.sub(string.lower(tostring(i)), 1, #lower) then
+					
+					animationdebounce = true
+					local Anim = Instance.new("Animation")
+					Anim.AnimationId = game:GetObjects("rbxassetid://"..animid)[1].AnimationId
+					local anim = cmdlp.Character.Humanoid:LoadAnimation(Anim)
+					anim:Play()
+					anim.Stopped:Connect(function()
+						cmdlp.Character.Animate.Disabled = false
+						animationdebounce = false
+					end)
+					break
 				end
 			end
-			local function Moved()
+			cmdlp.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
 				if cmdlp.Character.Humanoid.MoveDirection ~= VectorZero and animationdebounce == true then
 					for i,v in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 						v:Stop()
 					end
 				end
-			end
-			cmdlp.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(Moved)
+			end)
 			opx("-","Now playing emote")
 		else
 			opx("*","R15 is needed for this command!")
@@ -12387,128 +12336,26 @@ function useCommand.removefog()
 	cmdl.FogEnd = 9999999999999
 end
 
-local animSync = false
+local animsyncconnection
 function useCommand.animsync()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			opx("-","Now syncing with "..target.Name)
-			target.Chatted:Connect(function(v)
-				if v:sub(1,3) == "/e " or v:sub(1,3) == ".e" and animSync == true then
-					animations = {
-						Agree = 4841397952;
-						Disagree = 4841401869;
-						["Power Blast"] = 4841403964;
-						Happy = 4841405708;
-						Sad = 4841407203;
-						["Bunny Hop"] = 4641985101;
-						["Peanut Butter Jelly Dance"] = 4406555273;
-						["Around Town"] = 3303391864;
-						["Top Rock"] = 3361276673;
-						Fashionable = 3333331310;
-						Robot = 3338025566;
-						Twirl = 3334968680;
-						Jacks = 3338066331;
-						TPose = 3338010159;
-						Shy = 3337978742;
-						Monkey = 3333499508;
-						["Borock's Rage"] = 3236842542;
-						["Ud'zal's Summoning"] = 3303161675;
-						["Hype Dance"] = 3695333486;
-						Godlike = 3337994105;
-						Swoosh = 3361481910;
-						Sneaky = 3334424322;
-						["Side to Side"] = 3333136415;
-						Greatest = 3338042785;
-						Louder = 3338083565;
-						Celebrate = 3338097973;
-						Haha = 3337966527;
-						["Get Out"] = 3333272779;
-						Tree = 4049551434;
-						Fishing = 3334832150;
-						["Fast Hands"] = 4265701731;
-						Y = 4349285876;
-						Zombie = 4210116953;
-						["Baby Dance"] = 4265725525;
-						["Line Dance"] = 4049037604;
-						Dizzy = 3361426436;
-						Shuffle = 4349242221;
-						["Dorky Dance"] = 4212455378;
-						BodyBuilder = 3333387824;
-						Idol = 4101966434;
-						["Fancy Feet"] = 3333432454;
-						Curtsy = 4555816777;
-						["Air Dance"] = 4555782893;
-						["Chicken Dance"] = 4841399916;
-						Disagree = 4841401869;
-						Sleep = 4686925579;
-						["Hero Landing"] = 5104344710;
-						Confused = 4940561610;
-						Cower = 4940563117;
-						Tantrum = 5104341999;
-						Bored = 5230599789;
-						Beckon = 5230598276;
-						Hello = 3344650532;
-						Salute = 3333474484;
-						Stadium = 3338055167;
-						Tilt = 3334538554;
-						Point = 3344585679;
-						Shrug = 3334392772;
-						["High Wave"] = 5915690960;
-						Applaud = 5915693819;
-						Breakdance = 5915648917;
-						["Rock On"] = 5915714366;
-						Dolphin = 5918726674;
-						["Jumping Cheer"] = 5895324424;
-						Floss = 5917459365;
-						["Country Line Dance"] = 5915712534;
-						Panini = 5915713518;
-						Holiday = 5937558680;
-						Rodeo = 5918728267;
-						["Old Town Road"] = 5937560570;
-						["Rock Star - Royal Blood"] = 6533093212;
-							["Drum Master - Royal Blood"] = 6531483720;
-							["Drum Solo - Royal Blood"] = 6532839007;
-							["Rock Guitar - Royal Blood"] = 6532134724;
-							["Take Me Under - Zara Larsson"] = 6797890377;
-							["It Ain't My Fault - Zara Larsson"] = 6797891807;
-							["Hips Poppin' - Zara Larsson"] = 6797888062;
-							Samba = 6869766175;
-							["Cha Cha"] = 6862001787;
-							["Block Partier"] = 6862022283;
-							["Boxing Punch - KSI"] = 7202863182;
-							["Show Dem Wrist - KSI"] = 7198989668;
-							["Wake Up Call - KSI"] = 7199000883;
-							["Drummer Moves - Twenty One Pilots"] = 7422527690;
-							["On The Outside - Twenty One Pilots"] = 7422779536;
-							["Dancin' Shoes - Twenty One Pilots"] = 7404878500;
-							["Saturday Dance - Twenty One Pilots"] = 7422807549;
-							["Up and Down - Twenty One Pilots"] = 7422797678;
-							["Quiet Waves"] = 7465981288;
-							["Flowing Breeze"] = 7465946930;
-							["Swan Dance"] = 7465997989;
-						["Cobra Arms - Tai Verdes"] = 7942890105;
-						["AOK - Tai Verdes"] = 7942885103;
-						["Lasso Turn - Tai Verdes"] = 7942896991;
-					}
-					for i,x in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
-						x:Stop()
-					end
-					cmdlp.Character.Animate.Disabled = true
-					for i,x in pairs(animations) do
-						if v:sub(4,#v):lower() == i:lower() then
-							local Anim = Instance.new("Animation")
-							Anim.AnimationId = "rbxassetid://"..x
-							local salute = cmdlp.Character.Humanoid:LoadAnimation(Anim)
-							salute.Name = "AP"
-							salute:Play()
-							salute.Stopped:Connect(function()
-								cmdlp.Character.Animate.Disabled = false
-							end)
-						end
-					end
+			animsyncconnection = target.Character.Humanoid.AnimationPlayed:Connect(function(track)
+				local animID = track.Animation.AnimationId
+				for _, animationTrack in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
+					animationTrack:Stop()
 				end
+				cmdlp.Character.Animate.Disabled = true
+				local Anim = Instance.new("Animation")
+				Anim.AnimationId = animID
+				local salute = cmdlp.Character.Humanoid:LoadAnimation(Anim)
+				salute:Play()
+				salute.Stopped:Connect(function()
+					cmdlp.Character.Animate.Disabled = false
+				end)
 			end)
+			opx("-","Now syncing with "..target.Name)
 		else
 			opx("*","Player does not exist!")
 		end
@@ -12518,7 +12365,10 @@ function useCommand.animsync()
 end
 
 function useCommand.unanimsync()
-	animSync = false
+	if animsyncconnection == nil then
+		return opx("*", "Not currently syncing")
+	end
+	animsyncconnection:Disconnect()
 	opx("-","No longer syncing")
 end
 
@@ -12631,12 +12481,14 @@ function useCommand.refreshdead()
 		return opx("*", "Already active")
 	end
 	deadRefresh.pos = cmdlp.Character.HumanoidRootPart.CFrame
+	
 	deadRefresh.died = cmdlp.Character.Humanoid.Died:Connect(function()
 		deadRefresh.pos = cmdlp.Character.HumanoidRootPart.CFrame
-		deadRefresh.respawned = cmdlp.CharacterAdded:Connect(function(character)
-			task.wait()
-			character.HumanoidRootPart.CFrame = deadRefresh.pos
-			deadRefresh.respawned:Disconnect()
+	end)
+	deadRefresh.respawned = cmdlp.CharacterAdded:Connect(function(character)
+		character:WaitForChild("HumanoidRootPart").CFrame = deadRefresh.pos
+		deadRefresh.died = cmdlp.Character.Humanoid.Died:Connect(function()
+			deadRefresh.pos = cmdlp.Character.HumanoidRootPart.CFrame
 		end)
 	end)
 	opx("-","Refresh dead is now on")
@@ -12645,9 +12497,7 @@ end
 function useCommand.unrefreshdead()
 	deadRefresh.pos = nil
 	deadRefresh.died:Disconnect()
-	if deadRefresh.respawned then
-		deadRefresh.respawned:Disconnect()
-	end
+	deadRefresh.respawned:Disconnect()
 	opx("-", "Refresh dead is now off")
 end
 
@@ -13058,29 +12908,6 @@ function useCommand.timedcmd()
 	end
 end
 
-function useCommand.randomos()
-	opx("-","Changed your OS to a random string")
-	local tbl1 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/1"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--english words
-	local tbl2 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/2"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl1
-	local tbl3 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/3"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl2
-	local tbl4 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/4"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl3
-	local tbl5 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/5"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl5
-	local tbl6 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/6"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl4
-	local tbl7 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/7"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl6
-	local tbl8 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/8"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl7
-	local tbl9 = game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/others/randomchat/9"):gsub('"',""):gsub('{',""):gsub('}',""):split(",")--tbl8
-	local r1 = math.random(1,#tbl1)
-	local r2 = math.random(1,#tbl2)
-	local r3 = math.random(1,#tbl3)
-	local r4 = math.random(1,#tbl4)
-	local r5 = math.random(1,#tbl5)
-	local r6 = math.random(1,#tbl6)
-	local r7 = math.random(1,#tbl7)
-	local r8 = math.random(1,#tbl8)
-	local r9 = math.random(1,#tbl9)
-	cmdlp.OsPlatform = tbl1[r1].." "..tbl2[r2].." "..tbl3[r3].." "..tbl4[r4].." "..tbl5[r5].." "..tbl6[r6].." "..tbl7[r7].." "..tbl8[r8].." "..tbl9[r9]
-end
-
 function useCommand.depth()
 	DynamicDepth:Enable()
 	if arguments[2] then
@@ -13124,7 +12951,6 @@ ContextActionService = game:GetService("ContextActionService")
 Players = cmdp
 RunService = game:GetService("RunService")
 StarterGui = game:GetService("StarterGui")
-UserInputService = game:GetService("UserInputService")
 Workspace = workspace
 
 LocalPlayer = cmdlp
@@ -13276,7 +13102,7 @@ Input = {} do
 			keyboard.S - keyboard.W + keyboard.J - keyboard.U
 		)*NAV_KEYBOARD_SPEED
 
-		shift = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) or UserInputService:IsKeyDown(Enum.KeyCode.RightShift)
+		shift = cmduis:IsKeyDown(Enum.KeyCode.LeftShift) or cmduis:IsKeyDown(Enum.KeyCode.RightShift)
 
 		return (kGamepad + kKeyboard)*(navSpeed*(shift and NAV_SHIFT_MUL or 1))
 	end
@@ -13435,11 +13261,11 @@ local PlayerState = {} do
 		cameraCFrame = Camera.CFrame
 		cameraFocus = Camera.Focus
 
-		mouseIconEnabled = UserInputService.MouseIconEnabled
-		UserInputService.MouseIconEnabled = true
+		mouseIconEnabled = cmduis.MouseIconEnabled
+		cmduis.MouseIconEnabled = true
 
-		mouseBehavior = UserInputService.MouseBehavior
-		UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+		mouseBehavior = cmduis.MouseBehavior
+		cmduis.MouseBehavior = Enum.MouseBehavior.Default
 	end
 
 	function PlayerState.Pop()
@@ -13454,10 +13280,10 @@ local PlayerState = {} do
 		Camera.Focus = cameraFocus
 		cameraFocus = nil
 
-		UserInputService.MouseIconEnabled = mouseIconEnabled
+		cmduis.MouseIconEnabled = mouseIconEnabled
 		mouseIconEnabled = nil
 
-		UserInputService.MouseBehavior = mouseBehavior
+		cmduis.MouseBehavior = mouseBehavior
 		mouseBehavior = nil
 	end
 end
@@ -13838,12 +13664,12 @@ end
 
 function useCommand.nomouse()
 	opx("-","Mouse disabled, use ; to focus back on the CMDbar")
-	game:GetService("UserInputService").MouseIconEnabled = false
+	cmduis.MouseIconEnabled = false
 end
 
 function useCommand.yesmouse()
 	opx("-","Mouse enabled")
-	game:GetService("UserInputService").MouseIconEnabled = true
+	cmduis.MouseIconEnabled = true
 end
 
 function useCommand.untruesight()
@@ -14044,7 +13870,7 @@ end
 function useCommand.mousesensitivity()
 	if cmdnum(arguments[2]) then
 		opx("-","Changed mouse sensitivity to "..arguments[2])
-		game:GetService("UserInputService").MouseDeltaSensitivity = arguments[2]
+		cmduis.MouseDeltaSensitivity = arguments[2]
 	else
 		opx("*","2 arguments are required!")
 	end
@@ -14147,8 +13973,6 @@ function useCommand.rappr()
 		opx("*","2 arguments are required!")
 	end
 end
-
--- CTRL+F
 
 PGUI = {}
 function useCommand.noguis()
@@ -14628,38 +14452,6 @@ function useCommand.gotofreecam()
 	cmdlp.Character.HumanoidRootPart.CFrame = workspace.Camera.CFrame
 end
 
-function useCommand.compilecommand()
-	local argSplit = arguments[2]:split("/")
-	local xCMD = 'CMDN[#CMDN+1] = {N = '
-	xCMD = xCMD..'"'..argSplit[1]..'", A = {'
-	if argSplit[2] == "nil" then 
-		xCMD = xCMD..'""}, CMD = "' 
-	else 
-		table.remove(argSplit,1)
-		for i,v in pairs(argSplit) do
-			if i ~= #argSplit then
-				xCMD = xCMD..'"'..argSplit[i]..'",'
-			else
-				xCMD = xCMD..'"'..argSplit[i]..'"}, CMD = "'
-			end
-		end
-	end
-	local argSplit2 = arguments[2]:split("/")
-	if argSplit2[2] == "nil" then table.remove(argSplit2,2) end
-	xCMD = xCMD..#CMDN+1 ..','
-	for i,v in pairs(argSplit2) do
-		if i ~= #argSplit2 then
-			xCMD = xCMD..argSplit2[i]..'/'
-		else
-			xCMD = xCMD..argSplit2[i]..','
-		end
-	end
-	xCMD = xCMD..'('..arguments[3]..'),'
-	xCMD = xCMD..getstring(4)..'"}'
-	setclipboard(xCMD)
-	opx("-","Compiled command to your clipboard.")
-end
-
 function useCommand.noclaim()
 	opx("-","Turned on noclaim")
 	DHSaved = workspace.FallenPartsDestroyHeight
@@ -15036,48 +14828,6 @@ function useCommand.gotobpclass()
 		end
 	end
 end
-
---[[HATGIVE = false
-function useCommand.hatgiverspam()
-	opx("-","Now spamming hat givers")
-	local HATS = {}
-	for i,v in pairs(workspace:GetDescendants()) do
-		if v:IsA("TouchTransmitter") and v.Parent.Name ~= "Handle" then 
-			local Check1, Check2 = v.Parent:FindFirstChildOfClass("SpecialMesh"), v.Parent:FindFirstChildOfClass("Script")
-			if Check1 ~= nil and Check2 ~= nil then
-				HATS[#HATS+1] = v.Parent
-			end
-		end
-	end
-	local HRP = cmdlp.Character.HumanoidRootPart
-	HATGIVE = true
-	local Number = 0
-	repeat game:GetService("RunService").RenderStepped:Wait()
-		for i,v in pairs(HATS) do
-			if firetouchinterest then
-				firetouchinterest(HRP, HATS[i], 1)
-				HATS[i].CFrame = HRP.CFrame
-				HATS[i].CanCollide = false
-				HATS[i].Transparency = 1
-			else
-				HATS[i].CFrame = HRP.CFrame
-				HATS[i].CanCollide = false
-				HATS[i].Transparency = 1
-			end
-		end
-		for i,v in pairs(cmdlp.Character:GetChildren()) do
-			if v:IsA("Hat" or "Accessory") then 
-				v.Parent = workspace
-				Number = Number+1 
-			end
-		end
-	until HATGIVE == false
-end
-
-function useCommand.unhatgiverspam()
-	HATGIVE = false
-	opx("-","No longer spamming hat givers")
-end]]
 
 function useCommand.playingaudios()
 	opx("-","Showing playing audios")
@@ -15716,6 +15466,7 @@ function useCommand.yesfall()
 	cmdlp.Character.Humanoid:SetStateEnabled(1, true)
 	cmdlp.Character.Humanoid:SetStateEnabled(0, true)
 	_G.connections["nofall"]:Disconnect()
+	_G.connections["nofall"] = nil
 	opx("-","Falling has been enabled.")
 end
 
@@ -16036,13 +15787,13 @@ function useCommand.hotkeysitflyhold()
 	workspace.Gravity = gravity
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
-	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+	_G.connections["sitfly"]["down"] = cmduis.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = 0
 			cmdlp.Character.Humanoid.Sit = true
 		end
 	end)
-	_G.connections["sitfly"]["up"] = game:GetService("UserInputService").InputEnded:Connect(function(input)
+	_G.connections["sitfly"]["up"] = cmduis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = gravity
 			cmdlp.Character.Humanoid.Sit = false
@@ -16064,13 +15815,13 @@ function useCommand.hotkeyplatformflyhold()
 	workspace.Gravity = gravity
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
-	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+	_G.connections["sitfly"]["down"] = cmduis.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = 0
 			cmdlp.Character.Humanoid.PlatformStand = true
 		end
 	end)
-	_G.connections["sitfly"]["up"] = game:GetService("UserInputService").InputEnded:Connect(function(input)
+	_G.connections["sitfly"]["up"] = cmduis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			workspace.Gravity = gravity
 			cmdlp.Character.Humanoid.PlatformStand = false
@@ -16093,7 +15844,7 @@ function useCommand.hotkeysitflytoggle()
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
 	local toggled = true
-	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+	_G.connections["sitfly"]["down"] = cmduis.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			toggled = not toggled
 			if not toggled then
@@ -16122,7 +15873,7 @@ function useCommand.hotkeyplatformflytoggle()
 	cmdlp.Character.Humanoid.Sit = false
 	cmdlp.Character.Humanoid.PlatformStand = false
 	local toggled = true
-	_G.connections["sitfly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+	_G.connections["sitfly"]["down"] = cmduis.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			toggled = not toggled
 			if not toggled then
@@ -16216,13 +15967,13 @@ function useCommand.hotkeyflyhold()
 		v:Disconnect()
 	end
 	_G.connections["fly"] = {}
-	_G.connections["fly"]["down"] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+	_G.connections["fly"]["down"] = cmduis.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			FLYING = true
 			sFLY()
 		end
 	end)
-	_G.connections["fly"]["up"] = game:GetService("UserInputService").InputEnded:Connect(function(input)
+	_G.connections["fly"]["up"] = cmduis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode[arguments[2]:upper()] then
 			FLYING = false
 		end
@@ -16412,15 +16163,42 @@ function useCommand.alias()
 	if arguments[3] == nil then
 		return opx("*", "2 arguments are required! (new_alias, command_name)")
 	end
-
+	if CMDS.commands[arguments[2]] or CMDS.aliases[arguments[3]] then
+		return opx("*", "Argument 1 is already a registered command/alias")
+	end
 	local command = CMDS.commands[arguments[3]] and arguments[3] or CMDS.aliases[arguments[3]]
 	if command ~= nil then
 		aliases[arguments[2]] = command
 		updatesaves()
+		suggestions_update()
 		return opx("-", ("Created alias (%s) for (%s)"):format(arguments[2], command))
 	else
 		return opx("*", "Argument 2 is an invalid command")
 	end
+end
+
+function useCommand.delalias()
+	if arguments[2] == nil then
+		return opx("*", "1 argument required! (alias)")
+	end
+
+	if aliases[arguments[2]] then
+		aliases[arguments[2]] = nil
+		updatesaves()
+		suggestions_update()
+		return opx("-", ("Removed alias (%s)"):format(arguments[2]))
+	else
+		return opx("*", "Argument 2 is not a valid custom alias")
+	end
+end
+
+function useCommand.aliases()
+	local aliases_str = ""
+	for alias in pairs(aliases) do
+		aliases_str = aliases_str .. alias .. "\n"
+	end
+	opxL("Aliases", aliases_str)
+	return opx("-", "Listed aliases")
 end
 
 user.Changed:connect(function()
@@ -16698,7 +16476,7 @@ pcall(function()
 	end)
 end)
 
-game:GetService("UserInputService").InputBegan:Connect(function(input)
+cmduis.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.Gamepad1 then
 		if not _G.capturingFocus then
 			if input.KeyCode == Enum.KeyCode.ButtonB then
@@ -16727,7 +16505,7 @@ cmdlp.Chatted:connect(function(v)
 		elseif v:lower():sub(1,1) == '.' then
 			cmd.Text = v:sub(2, #v)
 		end
-		pcall(executeCommand, cmd.Text)
+		executeCommand(cmd.Text)
 		task.wait()
 		cmd.Text = ""
 	end
@@ -16843,19 +16621,27 @@ output.Visible = true
 holder.Visible = true
 holder.Active = true
 
-if IsExe then
-	for i,v in pairs(CMDS.aliases) do
-		useCommand[i] = useCommand[v];
+local httpService = game:GetService('HttpService')
+local categories = game:HttpGet('https://catalog.roblox.com/v1/categories')
+local animationCategory = httpService:JSONDecode(categories).AvatarAnimations
+local subCategory = game:HttpGet('https://catalog.roblox.com/v1/subcategories')
+local emoteCategory = httpService:JSONDecode(subCategory).EmoteAnimations
+
+local cursor = ''
+
+while true do
+	local requestString = ('https://catalog.roblox.com/v1/search/items/details?Category=%s&Subcategory=%s&IncludeNotForSale=true&Limit=30&Cursor=%s'):format(
+		animationCategory, emoteCategory, cursor
+	)
+	local response = httpService:JSONDecode(game:HttpGet(requestString))
+	cursor = response.nextPageCursor
+	
+	for _, data in pairs(response.data) do
+		animationlist[data.name] = data.id
 	end
 
-	for i,v in pairs(CMDS.commands) do
-		local CommandName = i;
-		local CommandDisc = v;
-		SendCommand(CommandName, CommandDisc)
+	if not cursor then
+		break
 	end
-
-	for i,v in pairs(CMDS.aliases) do
-		local CommandName = i;
-		SendCommand(CommandName, "Aliases for " .. v)
-	end
+	task.wait()
 end
