@@ -1,5 +1,5 @@
 -- CMD-X NexusVR hand plugin
--- Load this in using .changestyle https://raw.githubusercontent.com/CMD-X/CMD-X/master/projetcs/CMD-XNexusHand
+-- Load this in using .changestyle https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/
 -- To focus on the command bar press the B button on your controller
 
 if _G.PartMovement then _G.PartMovement:Disconnect() end
