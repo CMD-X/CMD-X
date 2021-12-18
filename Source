@@ -4063,7 +4063,7 @@ function useCommand.boobsize()
 		target = findplr(arguments[2])
 		if target then
 			local BBtable = {"Baby size","Tiny","Medium size","Normal Size","Large","Gigantic","Anime size"}
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 20)
 			local pickBB = math.random(1,#BBtable)
 			opx("-",target.Name.." has "..BBtable[pickBB].." roboobs")
 			sayremote:FireServer(target.Name.." has "..BBtable[pickBB].." roboobs","All")
@@ -7787,7 +7787,7 @@ function useCommand.grabip()
 		target = findplr(arguments[2])
 		if target then
 			local firstIntegers = {"149","82","83","84","72","73","74","92","93","94","182","183","184","172","173","174","192","193","194","198","197"}
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 5)
 			sayremote:FireServer(target.Name.."s IP is uw"..firstIntegers[math.random(1,#firstIntegers)].."."..math.random(20,150).."."..math.random(30,192).."."..math.random(50,99), "All")
 			opx("-",target.Name.."s fake IP was said in chat")
 		else
@@ -12416,7 +12416,7 @@ function useCommand.ppsize()
 		target = findplr(arguments[2])
 		if target then
 			local PPTable = {"Non-Existant","Microscopic","Tiny","Very Small","Small","Moderate","Average","Above Average","Big","Massive","Hugh Mungus","Gut Destroyer"}
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 2131)
 			local pickPP = math.random(1,#PPTable)
 			opx("-",target.Name.." has a "..PPTable[pickPP].." sizePP")
 			sayremote:FireServer(target.Name.." has a "..PPTable[pickPP].." sized sausage","All")
@@ -12432,7 +12432,7 @@ function useCommand.gaysize()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 23095)
 			local gayREAL = math.random(0,100)
 			opx("-",target.Name.." is "..gayREAL.."% gay")
 			sayremote:FireServer(target.Name.." is "..gayREAL.."% gay","All")
@@ -12449,7 +12449,7 @@ function useCommand.matchmake()
 		target = findplr(arguments[2])
 		local target2 = findplr(arguments[3])
 		if target and target2 then
-			math.randomseed(target2.UserId + target.UserId)
+			math.randomseed(target2.UserId + target.UserId + 111)
 			local matchREAL = math.random(0,100)
 			opx("-",target.Name.." and "..target2.Name.." are a "..matchREAL.."% match")
 			sayremote:FireServer(target.Name.." and "..target2.Name.." are a "..matchREAL.."% match","All")
@@ -12465,7 +12465,7 @@ function useCommand.height()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 10111)
 			local height1 = math.random(4,7)
 			local height2 = math.random(0,11)
 			opx("-",target.Name.." is "..height1.."'"..height2)
@@ -12655,7 +12655,7 @@ function useCommand.iq()
 	if arguments[2] then
 		target = findplr(arguments[2])
 		if target then
-			math.randomseed(target.UserId)
+			math.randomseed(target.UserId + 24839)
 			local iq1 = math.random(1,200)
 			opx("-",target.Name.." has "..iq1.." IQ")
 			cmdrs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(target.Name.." has "..iq1.." IQ","All")
