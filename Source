@@ -10195,7 +10195,7 @@ function useCommand.retardchat()
 		opx("*", "Retard chat is already enabled.")
 		return
 	end
-	local stringka = {"UwU","uwu","^w^",">w<","(´•ω•`)","><",">>",":3",">:3",":D"}
+	local stringka = {"UwU","uwu","^w^",">w<","(Â´â€¢Ï‰â€¢`)","><",">>",":3",">:3",":D"}
 	_G.sssoldhook = mt.__namecall
 	setreadonly(mt, false)
 	mt.__namecall = newcclosure(function(event, ...)
@@ -10329,8 +10329,11 @@ function useCommand.emote()
 			for i,v in pairs(cmdlp.Character.Humanoid:GetPlayingAnimationTracks()) do
 				v:Stop()
 			end
-
-			lower = string.lower(arguments[2])
+            local emote_name = {unpack(arguments)}
+            table.remove(emote_name, 1)
+            emote_name = table.concat(emote_name, " ")
+            
+			lower = string.lower(emote_name)
 			for i,animid in pairs(animationlist) do
 				if lower == string.sub(string.lower(tostring(i)), 1, #lower) then
 					
