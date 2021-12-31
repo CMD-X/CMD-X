@@ -1970,6 +1970,7 @@ CMDS.commands = {
 	["unadvertise"] = "()",
 	["version"] = "Shows version.",
 	["walkspeed"] = "Sets your characters walkspeed.",
+	["walkspeedbypass"] = "Uses CFrame to increment walkspeed.",
 	["defaultwalkspeed"] = "()",
 	["jumppower"] = "Sets your characters jumppower.",
 	["defaultjumppower"] = "()",
@@ -2626,6 +2627,7 @@ CMDS.usage = {
 	["friendjoin"] = "(friend name)",
 	["support"] = "(CB / COPY)",
 	["walkspeed"] = "(num)",
+	["walkspeedbypass"] = "(num)",
 	["jumppower"] = "(num)",
 	["hipheight"] = "(num)",
 	["gravity"] = "(num)",
@@ -2878,6 +2880,9 @@ CMDS.aliases = {
 	["grav"] = "gravity",
 	["dgrav"] = "defaultgravity",
 	["bpws"] = "bodypositionwalkspeed",
+	["wsb"] = "walkspeedbypass",
+	["wsbypass"] = "walkspeedbypass",
+	["cws"] = "walkspeedbypass",
 	["decapitate"] = "halve",
 	["rhands"] = "removehands",
 	["rfeet"] = "removefeet",
@@ -4570,6 +4575,28 @@ function useCommand.walkspeed()
 		cmdlp.Character.Humanoid.WalkSpeed = permwalkspeed
 		opx("-","Walkspeed set to "..permwalkspeed)
 	end
+end
+
+local currentspeed = 16
+local ranloop
+function useCommand.walkspeedbypass()
+    if arguments[2] and cmdnum(arguments[2]) then
+        currentspeed = arguments[2]
+        opx("-","Walkspeed set to "..arguments[2])
+    else
+        currentspeed = permwalkspeed
+        opx("-","Walkspeed set to "..permwalkspeed)
+    end
+    if not ranloop then
+        ranloop = true
+        while task.wait() do
+            local character = cmdlp.Character
+            local humanoid = character and character:FindFirstChild("Humanoid")
+            if character and humanoid then
+                character:PivotTo(character:GetPivot()+(humanoid.MoveDirection*(currentspeed/math.max(humanoid.WalkSpeed,1))))
+            end
+        end
+    end
 end
 
 function useCommand.defaultwalkspeed()
@@ -15416,10 +15443,23 @@ function useCommand.antifling()
 	else
 		antifling = not antifling
 	end
+    local targets = {}
+    -- moved the connection outside of the loops so you only use one, jesus christ that was awful
+    -- also properly disconnecting events cuz memory leak
+    -- also made it so it only remove collision if they have rotvelocity
 	local function Collisionless(person)
+        if not person or not person.Parent then
+            for i,v in pairs(targets) do
+                if v == person then
+                    table.remove(targets,i)
+                    break
+                end
+            end
+            return
+        end
 		if antifling and person.Character then
 			for _,child in pairs(person.Character:GetDescendants()) do
-				if child:IsA("BasePart") and child.CanCollide then
+				if child:IsA("BasePart") and child.RotVelocity.Magnitude > 50 then
 					child.CanCollide = false
 				end
 			end
@@ -15427,21 +15467,24 @@ function useCommand.antifling()
 	end
 	for _,v in pairs(cmdp:GetPlayers()) do
 		if v ~= cmdlp then
-			local antifling = game:GetService('RunService').Stepped:connect(function()
-				Collisionless(v)
-			end)
+            table.insert(targets, v)
 		end
 	end
-	cmdp.PlayerAdded:Connect(function()
+	local plraddedconnection; plraddeconnection = cmdp.PlayerAdded:Connect(function()
 		if v ~= cmdlp and antifling then
-			local antifling = game:GetService('RunService').Stepped:connect(function()
-				Collisionless(v)
-			end)
+            table.insert(targets, v)
 		end
 	end)
+    local antiflingconnection; antiflingconnection = game:GetService('RunService').Stepped:connect(function()
+        for i,v in pairs(targets) do
+            Collisionless(v)
+        end
+    end)
 	if antifling then
 		opx("-","Antifling enabled.")
 	else
+        antiflingconnection:Disconnect()
+        plraddedconnection:Disconnect()
 		opx("-","Antifling disabled.")
 	end
 end
