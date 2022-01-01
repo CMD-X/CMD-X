@@ -15459,7 +15459,7 @@ function useCommand.antifling()
         end
 		if antifling and person.Character then
 			for _,child in pairs(person.Character:GetDescendants()) do
-				if child:IsA("BasePart") and child.RotVelocity.Magnitude > 50 then
+				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 50 or child.Velocity.Magnitude > 500) then
 					child.CanCollide = false
 				end
 			end
