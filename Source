@@ -2628,6 +2628,7 @@ CMDS.usage = {
 	["support"] = "(CB / COPY)",
 	["walkspeed"] = "(num)",
 	["walkspeedbypass"] = "(num)",
+	["unwalkspeedbypass"] = "(num)",
 	["jumppower"] = "(num)",
 	["hipheight"] = "(num)",
 	["gravity"] = "(num)",
@@ -2883,6 +2884,8 @@ CMDS.aliases = {
 	["wsb"] = "walkspeedbypass",
 	["wsbypass"] = "walkspeedbypass",
 	["cws"] = "walkspeedbypass",
+	["uncws"] = "unwalkspeedbypass",
+	["unwsb"] = "unwalkspeedbypass",
 	["decapitate"] = "halve",
 	["rhands"] = "removehands",
 	["rfeet"] = "removefeet",
@@ -4579,6 +4582,7 @@ end
 
 local currentspeed = 16
 local ranloop
+local walkspeedcon
 function useCommand.walkspeedbypass()
     if arguments[2] and cmdnum(arguments[2]) then
         currentspeed = arguments[2]
@@ -4589,14 +4593,18 @@ function useCommand.walkspeedbypass()
     end
     if not ranloop then
         ranloop = true
-        while task.wait() do
+        walkspeedcon = RunService.Heartbeat:Connect(function()
             local character = cmdlp.Character
             local humanoid = character and character:FindFirstChild("Humanoid")
             if character and humanoid then
                 character:PivotTo(character:GetPivot()+(humanoid.MoveDirection*(currentspeed/math.max(humanoid.WalkSpeed,1))))
             end
-        end
+        end)
     end
+end
+function useCommand.unwalkspeedbypass()
+	ranloop = false
+	if walkspeedcon then walkspeedcon:Disconnect() end
 end
 
 function useCommand.defaultwalkspeed()
