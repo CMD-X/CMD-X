@@ -4581,7 +4581,6 @@ function useCommand.walkspeed()
 end
 
 local currentspeed = 16
-local ranloop
 local walkspeedcon
 function useCommand.walkspeedbypass()
     if arguments[2] and cmdnum(arguments[2]) then
@@ -4591,20 +4590,19 @@ function useCommand.walkspeedbypass()
         currentspeed = permwalkspeed
         opx("-","Walkspeed set to "..permwalkspeed)
     end
-    if not ranloop then
-        ranloop = true
-        walkspeedcon = RunService.Heartbeat:Connect(function()
+    if not walkspeedcon then 
+        walkspeedcon = RunService.RenderStepped:Connect(function(dt)
             local character = cmdlp.Character
             local humanoid = character and character:FindFirstChild("Humanoid")
             if character and humanoid then
-                character:PivotTo(character:GetPivot()+(humanoid.MoveDirection*(currentspeed/math.max(humanoid.WalkSpeed,1))))
+                character:PivotTo(character:GetPivot()+(humanoid.MoveDirection*((currentspeed-math.max(humanoid.WalkSpeed-1,1))*dt)))
             end
         end)
     end
 end
 function useCommand.unwalkspeedbypass()
-	ranloop = false
 	if walkspeedcon then walkspeedcon:Disconnect() end
+	walkspeedcon = nil
 end
 
 function useCommand.defaultwalkspeed()
