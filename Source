@@ -15464,9 +15464,18 @@ function useCommand.antifling()
             return
         end
 		if antifling and person.Character then
+		local isflinging = false
 			for _,child in pairs(person.Character:GetDescendants()) do
-				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 50 or child.Velocity.Magnitude > 500) then
-					child.CanCollide = false
+				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 50 or child.Velocity.Magnitude > 75) then
+					isflinging = true
+					break
+				end
+			end
+			if isflinging then
+				for _,child in pairs(person.Character:GetDescendants()) do
+					if child:IsA("BasePart") then
+						child.CanCollide = false
+					end
 				end
 			end
 		end
