@@ -7716,20 +7716,34 @@ function useCommand.enabledrops()
 end
 
 local noVoid = false
+local novoidconnections = 0
 function useCommand.novoid()
-	opx("-","NoVoid is now enabled")
-	noVoid = true
-	cmdlp.Character.ChildAdded:Connect(function(rg)
-		if rg:IsA("Tool") and noVoid == true then
-			rg:Destroy()
+	noVoid = not noVoid
+	opx("-","NoVoid is now "..(noVoid and "Enabled" or "Disabled"))
+	local t = tick()
+	for i,v in pairs(cmdlp.Backpack:GetChildren()) do
+		v:SetAttribute("OwnedByLP", t)
+	end
+	for i,v in pairs(cmdlp.Character:GetChildren()) do
+		if v:IsA("Tool") then
+			v:SetAttribute("OwnedByLP", t)
 		end
-	end)
+	end
+	if novoidconnections == 0 then
+		novoidconnections = 1
+		cmdlp.Backpack.ChildAdded:Connect(function(tool)
+			tool:SetAttribute("OwnedByLP", t)
+		end)
+		cmdlp.Character.ChildAdded:Connect(function(rg)
+			if rg:IsA("Tool") and noVoid == true and rg:GetAttribute("OwnedByLP") ~= t then
+				repeat task.wait(.05)
+				rg:Destroy()
+				until rg.Parent ~= cmdlp.Character
+			end
+		end)
+	end
 end
 
-function useCommand.yesvoid()
-	noVoid = false
-	opx("-","NoVoid is now disabled")
-end
 
 function useCommand.disabledrops()
 	opx("-","Disabled tool dropping")
