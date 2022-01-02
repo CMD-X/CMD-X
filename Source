@@ -7741,6 +7741,15 @@ function useCommand.novoid()
 				until rg.Parent ~= cmdlp.Character
 			end
 		end)
+		if cmdlp.Character:FindFirstChildOfClass("Humanoid") then --needs to be ran before its gone, its just so ik if the game has humanoids
+			RunService.Stepped:Connect(function()
+				for i,v in pairs(Players:GetPlayers()) do
+					if v ~= cmdlp and v.Character and not v.Character:FindFirstChildOfClass("Humanoid") and noVoid then
+						v.Character:Destroy()
+					end
+				end
+			end)
+		end
 	end
 end
 
@@ -15480,7 +15489,7 @@ function useCommand.antifling()
 		if antifling and person.Character then
 		local isflinging = false
 			for _,child in pairs(person.Character:GetDescendants()) do
-				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 50 or child.Velocity.Magnitude > 75) then
+				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 25 or child.Velocity.Magnitude > 75) then
 					isflinging = true
 					break
 				end
