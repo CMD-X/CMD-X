@@ -1500,6 +1500,7 @@ end
 ---------------------------------------|
 -- Functions: -------------------------|
 function findplr(args, tbl)
+	args = args:lower()
 	if tbl == nil then
 		local tbl = cmdp:GetPlayers()
 		if args == "me" then
@@ -1586,14 +1587,14 @@ function findplr(args, tbl)
 			return vAges[math.random(1,#vAges)]
 		else 
 			for _,v in pairs(tbl) do
-				if v.Name:lower():find(args:lower()) or v.DisplayName:lower():find(args:lower()) then
+				if v.Name:lower():find(args) or v.DisplayName:lower():find(args) then
 					return v
 				end
 			end
 		end
 	else
 		for _, plr in pairs(tbl) do
-			if plr.UserName:lower():find(args:lower()) or plr.DisplayName:lower():find(args:lower()) then
+			if plr.UserName:lower():find(args) or plr.DisplayName:lower():find(args) then
 				return plr
 			end
 		end
