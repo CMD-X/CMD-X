@@ -5073,7 +5073,7 @@ end
 
 function useCommand.kohls()
 	if workspace:FindFirstChild("Kohl's Admin Infinite") then
-		if agruments[2] then
+		if arguments[2] then
 			local cmd = arguments[2]
 			argsHD = ""
 			if arguments[3] then
