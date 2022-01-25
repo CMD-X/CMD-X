@@ -25,7 +25,6 @@ for _, v in pairs(Parents[2]:GetDescendants()) do
 	end
 end
 
-
 Unnamed = Instance.new("ScreenGui", getParent)
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
