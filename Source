@@ -709,19 +709,8 @@ if cmduis.VREnabled then
 	SavedPos = {X = 147, Y = 324}
 end
 
-
-AdmIG = {}
-
 function commandsLoaded()
 	return isDoneLoading()
-end
-
-for _,x in pairs(Adm) do
-	for _,v in pairs(cmdp:GetPlayers()) do 
-		if x == v.Name then
-			table.insert(AdmIG,x)
-		end
-	end
 end
 
 Inputting = false
@@ -2229,10 +2218,6 @@ CMDS.commands = {
 	["mute"] = "Mutes players sounds in a loop including radios.",
 	["unmute"] = "()",
 	["vgoto"] = "Teleports to a player while in a vehicle.",
-	["admin"] = "Allows a player to run commands on you (RE-EXECUTE AFTER RUNNING).",
-	["unadmin"] = "() (RE-EXECUTE AFTER RUNNING)",
-	["admins"] = "Lists all admins.",
-	["adminclr"] = "Removes all admins (RE-EXECUTE AFTER RUNNING).",
 	["hotkeynew"] = "Adds a new hotkey to the list of hotkeys that are activated when you press the keybind.",
 	["hotkeys"] = "Allows you to add hotkeys.",
 	["hotkeydel"] = "Deletes a hotkey in the hotkeys list.",
@@ -2708,8 +2693,6 @@ CMDS.usage = {
 	["gotobp"] = "(plr)",
 	["unmute"] = "(plr/all/others)",
 	["vgoto"] = "(plr)",
-	["admin"] = "(plr)",
-	["unadmin"] = "(plr)",
 	["hotkeynew"] = "(key) (cmd)",
 	["hotkeydel"] = "(cmd)",
 	["changestyle"] = "(style)",
@@ -3992,34 +3975,6 @@ function executeCommand(com)
 			opx("*",invalidString.." is not a valid command.")
 		end
 	end    
-end
-
-local BlacklistedADM = {
-	["quickexit"] = "quickexit",
-	["`"] = "`",
-	["loop"] = "loop",
-	["killgui"] = "killgui",
-	["reload"] = "reload",
-	["nocmds"] = "nocmds",
-	["yescmds"] = "yescmds",
-	["rejoindiff"] = "rejoindiff",
-	["rjdiff"] = "rjdiff",
-	["place"] = "place",
-	["game"] = "game",
-	["placeid"] = "placeid",
-	["gameid"] = "gameid",
-	["directjoin"] = "directjoin",
-	["dirjoin"] = "dirjoin",
-}
-for i,v in pairs(AdmIG) do
-	cmdp[v].Chatted:Connect(function(a)
-		local comsToExe = a:split(";;")
-		for i,v in pairs(comsToExe) do
-			if v ~= BlacklistedADM[v] then
-				executeCommand(v)
-			end
-		end
-	end)
 end
 
 cmd.FocusLost:connect(function()
@@ -11233,61 +11188,10 @@ function useCommand.vclip()
 	end
 end
 
-function useCommand.admin()
-	if arguments[2] then
-		target = findplr(arguments[2])
-		if target then
-			AdmIG[#AdmIG+1] = target.Name
-			target.Chatted:Connect(function(a)
-				local comsToExe = a:split(";;")
-				for i,v in pairs(comsToExe) do
-					if v ~= BlacklistedADM[v] then
-						executeCommand(v)
-					end
-				end
-			end)
-			updatesaves()
-			opx("-","Added "..target.Name.." to admins.")
-		else
-			opx("*","Player does not exist!")
-		end
-	else
-		opx("*","2 arguments are needed for this command!")
-	end
-end
-
 function useCommand.robloxversion()
 	opx("-","Roblox is on version: "..version().." - ".._VERSION)
 end
 
-function useCommand.unadmin()
-	if arguments[2] then
-		for i,v in pairs(AdmIG) do
-			if arguments[2] == AdmIG[i] then
-				table.remove(AdmIG[i])
-				updatesaves()
-			end
-		end
-		opx("-","Removed that player from admins, please re-execute")
-	else
-		opx("*","2 arguments are needed for this command!")
-	end
-end
-
-function useCommand.admins()
-	xAdm = #Adm.." | "
-	for i,v in pairs(AdmIG) do
-		xAdm = xAdm..AdmIG[i]..", "
-	end
-	opx("-","Listed admins")
-	opxL("Admins",xAdm)
-end
-
-function useCommand.adminclr()
-	AdmIG = {}
-	updatesaves()
-	opx("-","Cleared all admins, please re-execute")
-end
 
 ManageHolderHotkey = Instance.new("Frame", getParent)
 MangeScrollHotkey = Instance.new("ScrollingFrame", getParent)
