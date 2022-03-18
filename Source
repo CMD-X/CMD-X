@@ -5,11 +5,7 @@ local ver = "1.9.9f"
 local cordCode = "https://discord.gg/JyzvQ6zdfg"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
-if Parents[1] then
-	getParent = Parents[1]
-else
-	getParent = Parents[2]
-end
+getParent = gethui()
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
 local firetouchinterest = firetouchinterest or fake_touch or nil
@@ -824,11 +820,11 @@ end
 
 if AntiCheat.HideParentInExploit then
 	if syn.protect_gui then
-		getParent = syn.protect_gui
-		syn.protect_gui(Unnamed)
+		--getParent = syn.protect_gui
+		--syn.protect_gui(Unnamed)
 	elseif get_hidden_gui then
-		getParet = get_hidden_gui
-		Unnamed.Parent = get_hidden_gui()
+		--getParet = get_hidden_gui
+		--Unnamed.Parent = get_hidden_gui()
 	else
 		Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","","Run Anyway",true)
 		repeat wait() until RunDude == true
