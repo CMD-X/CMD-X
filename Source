@@ -409,10 +409,12 @@ local Devs = {
 	["octoberboy68plus1"] = "Owner",
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
+	["9igeon"] = "Owner",
 }
 
 DevCords = {
 	"alx#9999";
+	"pigeon#0256";
 }
 
 local Donors = {
@@ -1171,7 +1173,7 @@ output3.BackgroundTransparency = 1
 output3.Position = UDim2.new(0.0157605428, 0, 0.639753819, 0)
 output3.Size = UDim2.new(0, 500, 0, 27)
 output3.Font = Enum.Font.Code
-output3.Text = "Made by "..DevCords[1]
+output3.Text = "Made by "..DevCords[1].." & "..DevCords[2]
 output3.TextColor3 = Color3.new(0.698039, 0.698039, 0.698039)
 output3.TextSize = 16
 output3.TextXAlignment = Enum.TextXAlignment.Left
@@ -12572,8 +12574,7 @@ end
 function useCommand.credits()
 	opx("-","Opened credits")
 	opxL("Credits","Note: Some discords may be out of date due to consistent changing;\
-	Owner - "..DevCords[1].."\
-	Former Founder - pigeon\
+	Owner - "..DevCords[1].." & "..DevCords[2].."\
 	Thank you to IY for some functions inside CMD-X\
 	Thank you to Bannable#5005 for animpack\
 	Thank you to 6033#6033 for old-aimbot")
