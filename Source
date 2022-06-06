@@ -410,11 +410,14 @@ local Devs = {
 	["knifemarks"] = "Owner",
 	["CMD_X"] = "Owner",
 	["9igeon"] = "Owner",
+	["Curvn"] = "Dev",
+	["Boasted"] = "Dev",
 }
 
 DevCords = {
 	"alx#9999";
 	"pigeon#0256";
+	"Curvn#2002"
 }
 
 local Donors = {
@@ -12575,6 +12578,7 @@ function useCommand.credits()
 	opx("-","Opened credits")
 	opxL("Credits","Note: Some discords may be out of date due to consistent changing;\
 	Owner - "..DevCords[1].." & "..DevCords[2].."\
+	Dev - "..DevCords[3].."\
 	Thank you to IY for some functions inside CMD-X\
 	Thank you to Bannable#5005 for animpack\
 	Thank you to 6033#6033 for old-aimbot")
