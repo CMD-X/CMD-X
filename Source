@@ -5,7 +5,7 @@ local ver = "1.9.9f"
 local cordCode = "https://discord.gg/JyzvQ6zdfg"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
-getParent = gethui()
+getParent = gethui and gethui() or Parents[1]
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
 local firetouchinterest = firetouchinterest or fake_touch or nil
