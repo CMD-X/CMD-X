@@ -404,14 +404,10 @@ local Mouses = cmdlp:GetMouse()
 cmdm = Mouses
 -- we dont have this many owners just alts
 local Devs = {
-	["Heimershinger"] = "Owner",
-	["progamer421minus1"] = "Owner",
-	["octoberboy68plus1"] = "Owner",
-	["knifemarks"] = "Owner",
-	["CMD_X"] = "Owner",
-	["9igeon"] = "Owner",
-	["Curvn"] = "Dev",
-	["L0z"] = "Dev",
+	[39081] = "Owner", -- Fini
+	[23899181] = "Owner", -- Pigeon
+	[1112499510] = "Dev", -- Curvn
+	[8826296] = "Dev", -- Curvns Alt
 }
 
 DevCords = {
@@ -421,54 +417,47 @@ DevCords = {
 }
 
 local Donors = {
-	["8avu"] = "1",
-	["0ccoy"] = "1",
-	["Bannable"] = "1",
-	["NitoOV"] = "1",
-	["LtsDank"] = "1",
-	["614SHAD"] = "1",
-	["tyswrld"] = "1",
-	["teejay6x"] = "1",
-	["Yarhibol"] = "1",
-	["Schewpid"] = "1",
-	["goresyard"] = "1",
-	["HyperLink3"] = "1",
-	["OFFTheBatter"] = "1",
-	["DisturbedCult"] = "1",
-	["hellavzn"] = "1",
-	["DAMAGlNG"] = "1",
-	["Zukkoe"] = "1",
-	["Missingno74"] = "1",
-	["HelIaSketchers"] = "1",
-	["amazinggeorgedude"] = "1",
-	["TheBlankProdigy"] = "1",
-	["cxpoxxo"] = "1",
-	["reseiz"] = "1",
-	["M3tamophosis"] = "1",
-	["vsize"] = "1",
-	["guest863325"] = "1",
-	["xuyed"] = "1",
-	["vosuli"] = "1",
+	[27857816] = "1",
+	[1593530598] = "1",
+	[1210065667] = "1",
+	[1675012876] = "1",
+	[601259819] = "1",
+	[1705160893] = "1",
+	[721317702] = "1",
+	[381299060] = "1",
+	[62254438] = "1",
+	[80660070] = "1",
+	[68822680] = "1",
+	[143626710] = "1",
+	[38027403] = "1",
+	[13913098] = "1",
+	[64101399] = "1",
+	[19665148] = "1",
+	[24308208] = "1",
+	[1132193781] = "1",
+	[50296684] = "1",
+	[541776532] = "1",
+	[366030180] = "1",
+	[381515262] = "1",
 
-	["8dqt"] = "2",
-	["skrask"] = "2",
-	["xniped"] = "2",
-	["KinggSeaa"] = "2",
-	["ClydeGrant"] = "2",
-	["Fxalling_Love"] = "2",
-	["emovert"] = "2",
-	["shifde"] = "2",
-	["RusskiSlavv"] = "2",
-	["xudet"] = "2",
+	[1401506430] = "2",
+	[676116823] = "2",
+	[869278474] = "2",
+	[1837905336] = "2",
+	[102584667] = "2",
+	[1608042178] = "2",
+	[76075913] = "2",
+	[77464736] = "2",
+	[199876604] = "2",
+	[901149570] = "2",
 	
-	["overreaction"] = "Custom1",
-	["InternetSpeeds"] = "Custom2",
-	["TheChosenOne123"] = "Custom3",
-	["Irritatory"] = "Custom4",
-	["DuBz_Bubby"] = "Custom5", -- top donor {$200}
-	["YanniLove"] = "Custom6",
-	["painteatr"] = "Custom7",
-	["VII"] = "Custom8",
+	[908657] = "Custom1",
+	[376132] = "Custom3",
+	[1406394712] = "Custom4",
+	[89579038] = "Custom5", -- top donor {$200}
+	[18923632] = "Custom6",
+	[272502925] = "Custom7",
+	[453568] = "Custom8",
 }
 
 local Tier = {
@@ -11884,13 +11873,13 @@ function useCommand.scriptusers()
 			if check1 then
 				local check2 = check1:FindFirstChild(AntiCheat.Attachment)
 				if not check2 then
-					local v = v.Name
+					local v = v.UserId
 					if Devs[v] then
-						xUsing = xUsing.."["..Devs[v]:upper().."]"..v.."\n"
+						xUsing = xUsing.."["..Devs[v]:upper().."]"..Players:GetNameFromUserIdAsync(v).."\n"
 					elseif Donors[v] then
-						xUsing = xUsing.."["..Tier[Donors[v]].SCHAT.."]"..v.."\n"
+						xUsing = xUsing.."["..Tier[Donors[v]].SCHAT.."]"..Players:GetNameFromUserIdAsync(v).."\n"
 					else
-						xUsing = xUsing.."[USER]"..v.."\n"
+						xUsing = xUsing.."[USER]"..Players:GetNameFromUserIdAsync(v).."\n"
 					end
 					xUsingCount = xUsingCount + 1
 				end
@@ -16488,19 +16477,20 @@ function RGBDev(Player)
 end
 
 function colorName(Player)
-	name = Player.Name
-	local plm = game:GetService("CoreGui").RobloxGui:FindFirstChild("PlayerListMaster")
+	usid = Player.UserId
+	local plm = game:GetService("CoreGui").PlayerList:FindFirstChild("PlayerListMaster")
 	if not plm then
+		print("Playerlist Isn't being found please Message ".. DevCords[3])
 		return
 	end
 	plm = plm:FindFirstChild("OffsetUndoFrame", true)
 	for i,v in pairs(plm:GetDescendants()) do
 		if v:IsA("TextLabel") and v.Name == "PlayerName" and v.Parent.Parent.Parent.Parent.Parent.Parent.Name == "p_"..Player.UserId then
-			if Donors[name] then
-				if Tier[Donors[name]].Color == "RGBDev" then
+			if Donors[usid] then
+				if Tier[Donors[usid]].Color == "RGBDev" then
 					RGBDev(name)
 				else
-					v.TextColor3 = Tier[Donors[name]].Color
+					v.TextColor3 = Tier[Donors[usid]].Color
 				end
 			end
 		end
@@ -16508,21 +16498,21 @@ function colorName(Player)
 end
 
 for _,v in pairs(cmdp:GetPlayers()) do
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
+	if Devs[v.UserId] then
+		opx("-",v.Name.." is in your server ("..Devs[v.UserId].." of CMD-X)")
 		RGBDev(v)
-	elseif Donors[v.Name] then
-		opx("-",v.Name.." is in your server ("..Tier[Donors[v.Name]].Tag..")")
+	elseif Donors[v.UserId] then
+		opx("-",v.Name.." is in your server ("..Tier[Donors[v.UserId]].Tag..")")
 		colorName(v)
 	end
 end
 
 cmdp.PlayerAdded:Connect(function(v)
-	if Devs[v.Name] then
-		opx("-",v.Name.." is in your server ("..Devs[v.Name].." of CMD-X)")
+	if Devs[v.UserId] then
+		opx("-",v.Name.." is in your server ("..Devs[v.UserId].." of CMD-X)")
 		RGBDev(v)
-	elseif Donors[v.Name] then
-		opx("-",v.Name.." is in your server ("..Tier[Donors[v.Name]].Tag..")")
+	elseif Donors[v.UserId] then
+		opx("-",v.Name.." is in your server ("..Tier[Donors[v.UserId]].Tag..")")
 		colorName(v)
 	end
 end)
