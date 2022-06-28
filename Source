@@ -16477,6 +16477,7 @@ function RGBDev(Player)
 end
 
 function colorName(Player)
+	wait(1)
 	usid = Player.UserId
 	local plm = game:GetService("CoreGui").PlayerList:FindFirstChild("PlayerListMaster")
 	if not plm then
