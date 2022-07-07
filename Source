@@ -535,7 +535,7 @@ function loaddefaults()
 	permwalkspeed = 50
 	permjumppower = 150
 	permhipheight = 20
-	permgravity = 50
+	permgravity = 196.2
 	permmaxsl = 89.99
 	Adm = {}
 	hkBinds = {}
