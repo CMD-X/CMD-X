@@ -459,6 +459,7 @@ local Donors = {
 	[18923632] = "Custom6",
 	[272502925] = "Custom7",
 	[453568] = "Custom8",
+	[432122324] = "Custom9"
 }
 
 local Tier = {
@@ -512,6 +513,11 @@ local Tier = {
 		Color = Color3.fromRGB(255,0,0),
 		SCHAT = "7"
 	},
+	["Custom9"] = {
+		Tag = "NO BITCHES?"
+		Color = Color3.fromRGB(176, 0, 0)
+		SCHAT = "NO BITCHES?"
+	}
 }
 
 function loaddefaults()
@@ -16418,6 +16424,7 @@ if not _G.RGBDev then
 end
 
 function RGBDev(Player)
+	usid = Player.UserId
 	name = Player.Name
 	if _G.RGBDev.Connections[name] then return end
 	local plm = game:GetService("CoreGui").PlayerList:FindFirstChild("PlayerListMaster")
@@ -16436,7 +16443,7 @@ function RGBDev(Player)
 					_G.RGBDev.Lettering[v].Color = _G.colorSequences[math.ceil((math.fmod(tick(), 1))*80)]
 				end
 				v.Rotation = math.random(-1,1)
-				if Devs[name] then
+				if Devs[usid] then
 					v.Parent.Parent.PlayerIcon.Image = "rbxasset://textures/ui/icon_admin-16.png"
 				end
 			end
