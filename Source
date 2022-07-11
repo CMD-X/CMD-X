@@ -514,10 +514,10 @@ local Tier = {
 		SCHAT = "7"
 	},
 	["Custom9"] = {
-		Tag = "NO BITCHES?"
-		Color = Color3.fromRGB(176, 0, 0)
+		Tag = "NO BITCHES?",
+		Color = Color3.fromRGB(176, 0, 0),
 		SCHAT = "NO BITCHES?"
-	}
+	},
 }
 
 function loaddefaults()
