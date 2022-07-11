@@ -459,7 +459,7 @@ local Donors = {
 	[18923632] = "Custom6",
 	[272502925] = "Custom7",
 	[453568] = "Custom8",
-	[432122324] = "Custom9"
+	[432122324] = "Custom9",
 }
 
 local Tier = {
