@@ -8363,15 +8363,16 @@ function useCommand.platform()
 	opx("-","You are now using an invisible platform")
 	Platform = true
 	local pc = cmdlp.Character
-	if pc and not pc:FindFirstChild("pf") then
-		local pf = Instance.new('Part', pc)
+	local parent = workspace.Terrain
+	if pc and not parent:FindFirstChild("pf") then
+		local pf = Instance.new('Part', parent)
 		pf.Name = 'pf'
 		pf.Transparency = 1
 		pf.Size = Vector3.new(6,1,6)
 		pf.Anchored = true
 		pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
-		while wait(0.1) do
-			if pc:FindFirstChild("pf") then
+		while task.wait() do
+			if parent:FindFirstChild("pf") then
 				pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
 			else
 				break
@@ -8383,8 +8384,9 @@ end
 function useCommand.unplatform()
 	Platform = false
 	local pc = cmdlp.Character
+	local parent = workspace.Terrain
 	opx("-","You are no longer using an invisible platform")
-	if pc:FindFirstChild("pf") then
+	if parent:FindFirstChild("pf") then
 		pc.pf:Destroy()
 	end
 end
