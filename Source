@@ -8379,11 +8379,11 @@ end
 
 function useCommand.rejoin()
 	rejoining = true
-	if syn.queue_on_teleport then
+	--[[if syn.queue_on_teleport then -- broken??
 		syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
-	end
+	end]]
 	opx("-","Rejoining game")
-	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, cmdp)
+	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId)
 	wait(3)
 	rejoining = false
 end
