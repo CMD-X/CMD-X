@@ -10270,6 +10270,7 @@ function useCommand.emote()
 					Anim.AnimationId = game:GetObjects("rbxassetid://"..animid)[1].AnimationId
 					local anim = cmdlp.Character.Humanoid:LoadAnimation(Anim)
 					anim:Play()
+                    anim:AdjustWeight(10)
 					anim.Stopped:Connect(function()
 						cmdlp.Character.Animate.Disabled = false
 						animationdebounce = false
@@ -12231,6 +12232,7 @@ function useCommand.animsync()
 				Anim.AnimationId = animID
 				local salute = cmdlp.Character.Humanoid:LoadAnimation(Anim)
 				salute:Play()
+                salute:AdjustWeight(10)
 				salute.Stopped:Connect(function()
 					cmdlp.Character.Animate.Disabled = false
 				end)
