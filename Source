@@ -788,7 +788,13 @@ AntiCheat.Games = {
 	[2988554876] = function()
 		cmdrs.AC:Destroy()
 		cmdlp.PlayerScripts.AntiCheat:Destroy()
-	end
+	end,
+
+    [10019007167] = function()
+        AntiCheat.ScriptDetectOff = true
+        AntiCheat.IntroAudioOff = true
+		Unnamed.Parent = Parents[3]
+    end,
 }
 
 if AntiCheat.Games[game.PlaceId] then
