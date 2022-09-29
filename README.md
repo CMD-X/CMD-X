@@ -1,4 +1,3 @@
-# CMD-X
-A ROBLOX admin script with over 600 commands. Under reformation, V2.0.0 coming soon or something I guess.
+# CMD-X2
 
-Discord: https://discord.gg/JbrnMxXPH4
+my own version of cmd-x
