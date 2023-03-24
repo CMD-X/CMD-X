@@ -402,11 +402,11 @@ local cmdvu = game:GetService("VirtualUser")
 local cmduis = game:GetService("UserInputService")
 local Mouses = cmdlp:GetMouse()
 cmdm = Mouses
--- we dont have this many owners just alts
+
 local Devs = {
 	[39081] = "Owner", -- Fini
 	[23899181] = "Owner", -- Pigeon
-	[1112499510] = "Dev", -- Curvn
+	[142804804] = "Dev", -- Curvn
 }
 
 DevCords = {
