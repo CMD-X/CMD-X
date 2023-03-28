@@ -406,13 +406,13 @@ cmdm = Mouses
 local Devs = {
 	[39081] = "Owner", -- Fini
 	[23899181] = "Owner", -- Pigeon
-	[142804804] = "Dev", -- Curvn
+	[142804804] = "Dev", -- Adam
 }
 
 DevCords = {
 	"alx#9999";
 	"pigeon#0256";
-	"Curvn#2002"
+	"adam.#0004"
 }
 
 local Donors = {
