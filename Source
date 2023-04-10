@@ -613,6 +613,7 @@ function updatesaves()
 		drawingtype = drawingtype;
 		aliases = aliases;
 		clicktplimit = clicktplimit;
+		combos = combos;
 	}
 	writefile("CMD-X.lua", game:GetService("HttpService"):JSONEncode(update))
 end
@@ -16218,23 +16219,25 @@ if AntiCheat.Warning1 then opx("*","This game is known to have a float/fly antic
 ---------------------------------------|
 -- Start CMDs: ------------------------|
 if #enterCMD > 0 then
-	for i = 1,#enterCMD do
-		arguments = enterCMD[i].N:split(" ")
-		local cmdsy = findCmd(arguments[1])
-		if cmdsy ~= nil then
-			if Debugging == false then
-				useCommand[cmdsy]()
+	pcall(function()
+		for i = 1,#enterCMD do
+			arguments = enterCMD[i].N:split(" ")
+			local cmdsy = findCmd(arguments[1])
+			if cmdsy ~= nil then
+				if Debugging == false then
+					useCommand[cmdsy]()
+				else
+					pcall(function() useCommand[cmdsy]() end)
+				end
 			else
-				pcall(function() useCommand[cmdsy]() end)
+				invalidString = enterCMD[i].N
+				if #invalidString > 38 then
+					invalidString = invalidString:sub(1,35).."..."
+				end
+				opx("*",invalidString.." is not a valid command.")
 			end
-		else
-			invalidString = enterCMD[i].N
-			if #invalidString > 38 then
-				invalidString = invalidString:sub(1,35).."..."
-			end
-			opx("*",invalidString.." is not a valid command.")
 		end
-	end
+	end)
 end
 user.Changed:connect(function()
 	user.Text = user.Text:sub(1,13)..">"
