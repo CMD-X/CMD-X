@@ -259,7 +259,7 @@ Credits.TextSize = 16
 local CurrentId = 1
 local CurrentGame = 1
 local CurrentPlace = 1
-function RefreshChoices(UserId)
+local function RefreshChoices(UserId)
     Rap.Text = "RAP: 0"
     OnlineNot = "false"
     local URL = ("http://api.roblox.com/users/"..UserId)
