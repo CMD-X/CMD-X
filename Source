@@ -5,11 +5,7 @@ local ver = "1.9.9f"
 local cordCode = "https://discord.gg/JyzvQ6zdfg"
 ---------------------------------------|
 Parents = {[1] = game:GetService("CoreGui"):FindFirstChild("RobloxGui"), [2] = game:GetService("CoreGui"), [3] = game:GetService("Players").LocalPlayer.PlayerGui}
-if Parents[1] then
-	getParent = Parents[1]
-else
-	getParent = Parents[2]
-end
+getParent = gethui and gethui() or Parents[1]
 if PROTOSMASHER_LOADED and get_hidden_gui then getParent = get_hidden_gui() end
 
 local firetouchinterest = firetouchinterest or fake_touch or nil
@@ -815,11 +811,11 @@ end
 
 if AntiCheat.HideParentInExploit then
 	if syn.protect_gui then
-		getParent = syn.protect_gui
-		syn.protect_gui(Unnamed)
+		--getParent = syn.protect_gui
+		--syn.protect_gui(Unnamed)
 	elseif get_hidden_gui then
-		getParet = get_hidden_gui
-		Unnamed.Parent = get_hidden_gui()
+		--getParet = get_hidden_gui
+		--Unnamed.Parent = get_hidden_gui()
 	else
 		Stand("Your exploit does not support syn.protect_gui/get_hidden_gui!","CMD-X cannot run.","Explanation;","This game has an anti-cheat and our way of stopping it is through syn.protect_gui/get_hidden_gui.","","Run Anyway",true)
 		repeat wait() until RunDude == true
@@ -1961,6 +1957,7 @@ CMDS.commands = {
 	["unadvertise"] = "()",
 	["version"] = "Shows version.",
 	["walkspeed"] = "Sets your characters walkspeed.",
+	["walkspeedbypass"] = "Uses CFrame to increment walkspeed.",
 	["defaultwalkspeed"] = "()",
 	["jumppower"] = "Sets your characters jumppower.",
 	["defaultjumppower"] = "()",
@@ -2611,6 +2608,8 @@ CMDS.usage = {
 	["friendjoin"] = "(friend name)",
 	["support"] = "(CB / COPY)",
 	["walkspeed"] = "(num)",
+	["walkspeedbypass"] = "(num)",
+	["unwalkspeedbypass"] = "(num)",
 	["jumppower"] = "(num)",
 	["hipheight"] = "(num)",
 	["gravity"] = "(num)",
@@ -2861,6 +2860,11 @@ CMDS.aliases = {
 	["grav"] = "gravity",
 	["dgrav"] = "defaultgravity",
 	["bpws"] = "bodypositionwalkspeed",
+	["wsb"] = "walkspeedbypass",
+	["wsbypass"] = "walkspeedbypass",
+	["cws"] = "walkspeedbypass",
+	["uncws"] = "unwalkspeedbypass",
+	["unwsb"] = "unwalkspeedbypass",
 	["decapitate"] = "halve",
 	["rhands"] = "removehands",
 	["rfeet"] = "removefeet",
@@ -4523,6 +4527,31 @@ function useCommand.walkspeed()
 		cmdlp.Character.Humanoid.WalkSpeed = permwalkspeed
 		opx("-","Walkspeed set to "..permwalkspeed)
 	end
+end
+
+local currentspeed = 16
+local walkspeedcon
+function useCommand.walkspeedbypass()
+    if arguments[2] and cmdnum(arguments[2]) then
+        currentspeed = arguments[2]
+        opx("-","Walkspeed set to "..arguments[2])
+    else
+        currentspeed = permwalkspeed
+        opx("-","Walkspeed set to "..permwalkspeed)
+    end
+    if not walkspeedcon then 
+        walkspeedcon = RunService.RenderStepped:Connect(function(dt)
+            local character = cmdlp.Character
+            local humanoid = character and character:FindFirstChild("Humanoid")
+            if character and humanoid then
+                character:PivotTo(character:GetPivot()+(humanoid.MoveDirection*((currentspeed-math.max(humanoid.WalkSpeed-1,1))*dt)))
+            end
+        end)
+    end
+end
+function useCommand.unwalkspeedbypass()
+	if walkspeedcon then walkspeedcon:Disconnect() end
+	walkspeedcon = nil
 end
 
 function useCommand.defaultwalkspeed()
@@ -7613,20 +7642,43 @@ function useCommand.enabledrops()
 end
 
 local noVoid = false
+local novoidconnections = 0
 function useCommand.novoid()
-	opx("-","NoVoid is now enabled")
-	noVoid = true
-	cmdlp.Character.ChildAdded:Connect(function(rg)
-		if rg:IsA("Tool") and noVoid == true then
-			rg:Destroy()
+	noVoid = not noVoid
+	opx("-","NoVoid is now "..(noVoid and "Enabled" or "Disabled"))
+	local t = tick()
+	for i,v in pairs(cmdlp.Backpack:GetChildren()) do
+		v:SetAttribute("OwnedByLP", t)
+	end
+	for i,v in pairs(cmdlp.Character:GetChildren()) do
+		if v:IsA("Tool") then
+			v:SetAttribute("OwnedByLP", t)
 		end
-	end)
+	end
+	if novoidconnections == 0 then
+		novoidconnections = 1
+		cmdlp.Backpack.ChildAdded:Connect(function(tool)
+			tool:SetAttribute("OwnedByLP", t)
+		end)
+		cmdlp.Character.ChildAdded:Connect(function(rg)
+			if rg:IsA("Tool") and noVoid == true and rg:GetAttribute("OwnedByLP") ~= t then
+				repeat task.wait(.05)
+				rg:Destroy()
+				until rg.Parent ~= cmdlp.Character
+			end
+		end)
+		if cmdlp.Character:FindFirstChildOfClass("Humanoid") then --needs to be ran before its gone, its just so ik if the game has humanoids
+			RunService.Stepped:Connect(function()
+				for i,v in pairs(Players:GetPlayers()) do
+					if v ~= cmdlp and v.Character and not v.Character:FindFirstChildOfClass("Humanoid") and noVoid then
+						v.Character:Destroy()
+					end
+				end
+			end)
+		end
+	end
 end
 
-function useCommand.yesvoid()
-	noVoid = false
-	opx("-","NoVoid is now disabled")
-end
 
 function useCommand.disabledrops()
 	opx("-","Disabled tool dropping")
@@ -8241,15 +8293,16 @@ function useCommand.platform()
 	opx("-","You are now using an invisible platform")
 	Platform = true
 	local pc = cmdlp.Character
-	if pc and not pc:FindFirstChild("pf") then
-		local pf = Instance.new('Part', pc)
+	local parent = workspace.Terrain
+	if pc and not parent:FindFirstChild("pf") then
+		local pf = Instance.new('Part', parent)
 		pf.Name = 'pf'
 		pf.Transparency = 1
 		pf.Size = Vector3.new(6,1,6)
 		pf.Anchored = true
 		pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
-		while wait(0.1) do
-			if pc:FindFirstChild("pf") then
+		while task.wait() do
+			if parent:FindFirstChild("pf") then
 				pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
 			else
 				break
@@ -8261,8 +8314,9 @@ end
 function useCommand.unplatform()
 	Platform = false
 	local pc = cmdlp.Character
+	local parent = workspace.Terrain
 	opx("-","You are no longer using an invisible platform")
-	if pc:FindFirstChild("pf") then
+	if parent:FindFirstChild("pf") then
 		pc.pf:Destroy()
 	end
 end
@@ -15290,32 +15344,57 @@ function useCommand.antifling()
 	else
 		antifling = not antifling
 	end
+    local targets = {}
+    -- moved the connection outside of the loops so you only use one, jesus christ that was awful
+    -- also properly disconnecting events cuz memory leak
+    -- also made it so it only remove collision if they have rotvelocity
 	local function Collisionless(person)
+        if not person or not person.Parent then
+            for i,v in pairs(targets) do
+                if v == person then
+                    table.remove(targets,i)
+                    break
+                end
+            end
+            return
+        end
 		if antifling and person.Character then
+		local isflinging = false
 			for _,child in pairs(person.Character:GetDescendants()) do
-				if child:IsA("BasePart") and child.CanCollide then
-					child.CanCollide = false
+				if child:IsA("BasePart") and (child.RotVelocity.Magnitude > 25 or child.Velocity.Magnitude > 75) then
+					isflinging = true
+					break
+				end
+			end
+			if isflinging then
+				for _,child in pairs(person.Character:GetDescendants()) do
+					if child:IsA("BasePart") then
+						child.CanCollide = false
+					end
 				end
 			end
 		end
 	end
 	for _,v in pairs(cmdp:GetPlayers()) do
 		if v ~= cmdlp then
-			local antifling = game:GetService('RunService').Stepped:connect(function()
-				Collisionless(v)
-			end)
+            table.insert(targets, v)
 		end
 	end
-	cmdp.PlayerAdded:Connect(function()
+	local plraddedconnection; plraddeconnection = cmdp.PlayerAdded:Connect(function()
 		if v ~= cmdlp and antifling then
-			local antifling = game:GetService('RunService').Stepped:connect(function()
-				Collisionless(v)
-			end)
+            table.insert(targets, v)
 		end
 	end)
+    local antiflingconnection; antiflingconnection = game:GetService('RunService').Stepped:connect(function()
+        for i,v in pairs(targets) do
+            Collisionless(v)
+        end
+    end)
 	if antifling then
 		opx("-","Antifling enabled.")
 	else
+        antiflingconnection:Disconnect()
+        plraddedconnection:Disconnect()
 		opx("-","Antifling disabled.")
 	end
 end
