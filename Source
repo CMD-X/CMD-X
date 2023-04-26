@@ -25,11 +25,6 @@ for _, v in pairs(Parents[2]:GetDescendants()) do
 	end
 end
 
-if game:GetService("UserInputService").VREnabled then 
-	getParent = Parents[3]
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/nexus_support.lua"))()
-end
-
 Unnamed = Instance.new("ScreenGui", getParent)
 Unnamed.Name = "Unnamed"
 Unnamed.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -16531,4 +16526,9 @@ while true do
 		break
 	end
 	task.wait()
+end
+
+if game:GetService("UserInputService").VREnabled then 
+	getParent = Parents[3]
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/projects/nexus_support.lua"))()
 end
