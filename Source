@@ -4018,8 +4018,8 @@ function useCommand.boobsize()
 			local BBtable = {"Baby size","Tiny","Medium size","Normal Size","Large","Gigantic","Anime size"}
 			math.randomseed(target.UserId + 20)
 			local pickBB = math.random(1,#BBtable)
-			opx("-",target.Name.." has "..BBtable[pickBB].." roboobs")
-			sayremote:FireServer(target.Name.." has "..BBtable[pickBB].." roboobs","All")
+			opx("-",target.Name.." has "..BBtable[pickBB].." b⭕⭕bs")
+			sayremote:FireServer(target.Name.." has "..BBtable[pickBB].." b⭕⭕bs","All")
 		else
 			opx("*","Player does not exist!")
 		end
