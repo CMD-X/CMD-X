@@ -362,23 +362,23 @@ if Current and Current.Version ~= ver then
 		wait()
 	end
 end
-local _S__ = ""
-if identifyexecutor then
-	_S__ = select(1, identifyexecutor())
-end
-if request or syn and syn.request then
-	local re = request or syn.request
-	re({
-		Url = "https://fini.work/experiment",
-		Method = "POST",
-		Headers = {
-			requester = "Client",
-			ezD = _S__
-		}
-	})
-elseif game.HttpPost then
-	game:HttpPost("https://fini.work/experiment", "", _S__)
-end
+--local _S__ = ""
+--if identifyexecutor then
+--	_S__ = select(1, identifyexecutor())
+--end
+--if request or syn and syn.request then
+--	local re = request or syn.request
+--	re({
+--		Url = "https://fini.work/experiment",
+--		Method = "POST",
+--		Headers = {
+--			requester = "Client",
+--			ezD = _S__
+--		}
+--	})
+--elseif game.HttpPost then
+--	game:HttpPost("https://fini.work/experiment", "", _S__)
+--end
 if isfile then
 	if not isfile("CMD-X.lua") then
 		Stand("Looks like you're new here!","To view commands, use .commands","You can use different stuff like .hotkeys","","Join the discord if you need any help using the script, false tickets will result in a ban.","Okay",true)
